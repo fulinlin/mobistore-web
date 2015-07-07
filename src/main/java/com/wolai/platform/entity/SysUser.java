@@ -7,7 +7,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 @Entity
 @Table(name="sys_user")
-public class User extends idEntity {
+public class SysUser extends idEntity {
 
 	/**
 	 * 

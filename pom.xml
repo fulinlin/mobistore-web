@@ -144,6 +144,12 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.hibernate.common</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>4.0.5.Final</version>
+		</dependency>
+
 		<!-- 数据库连接池 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
