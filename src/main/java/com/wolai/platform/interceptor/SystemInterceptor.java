@@ -35,8 +35,8 @@ public class SystemInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     	  if(handler.getClass().isAssignableFrom(HandlerMethod.class)){
     		  AuthPassport authPassport = ((HandlerMethod) handler).getMethodAnnotation(AuthPassport.class);
-    		//没有声明需要权限,或者声明不验证权限
-              if(authPassport == null || authPassport.validate() == false){
+    		//声明不验证权限
+              if(authPassport.validate() == false){
             	  return true;
               }else{
             	  // TODO 验证

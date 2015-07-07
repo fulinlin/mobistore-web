@@ -51,5 +51,4 @@ public final class Constant {
     public static final String STRING_TRUE="true";
     
     public static final String STRING_FALSE="false";
-
 }

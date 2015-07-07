@@ -80,22 +80,14 @@ public class SysAccount extends idEntity{
 	 */
 	private BigDecimal remaint;
 	
-	@Column(name="customer_id")
-	private Long customerId;
+	@Column(name="user_id")
+	private String  userId;
 	/**
 	 * 付费帐户
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "customer_id", insertable = false, updatable = false)
-	private SysCustomer customer;
-
-	public SysCustomer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(SysCustomer customer) {
-		this.customer = customer;
-	}
+	@JoinColumn(name = "user_id", insertable = false, updatable = false)
+	private SysUser user;
 
 	public AccountType getAccountType() {
 		return accountType;
@@ -121,14 +113,6 @@ public class SysAccount extends idEntity{
 		this.remaint = remaint;
 	}
 
-	public Long getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(Long customerId) {
-		this.customerId = customerId;
-	}
-
 	public String getSignKey() {
 		return signKey;
 	}
@@ -143,5 +127,21 @@ public class SysAccount extends idEntity{
 
 	public void setCvs2(String cvs2) {
 		this.cvs2 = cvs2;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public SysUser getUser() {
+		return user;
+	}
+
+	public void setUser(SysUser user) {
+		this.user = user;
 	}
 }

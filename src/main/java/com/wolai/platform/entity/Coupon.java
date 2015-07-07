@@ -56,6 +56,11 @@ public class Coupon extends idEntity {
     @JoinColumn(name = "owner_id", insertable = false, updatable = false)
     private SysUser owner;
   	
+    /**
+     * 绑定车牌号
+     */
+  	private String carNo;
+  	
   	/**
   	 * 优惠券类型：money(抵用券)，time(抵时券)
   	 */
@@ -162,5 +167,13 @@ public class Coupon extends idEntity {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public String getCarNo() {
+		return carNo;
+	}
+
+	public void setCarNo(String carNo) {
+		this.carNo = carNo;
 	}
 }

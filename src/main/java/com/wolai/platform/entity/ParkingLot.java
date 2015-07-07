@@ -6,10 +6,10 @@ import javax.persistence.Table;
 
 /**
  * 停车场实体
- * @author Ethan
+ * @author xuxiang
  */
 @Entity
-@Table(name="wo_coupon")
+@Table(name="wo_parking_lot")
 public class ParkingLot extends idEntity {
 
 	/**
@@ -38,6 +38,22 @@ public class ParkingLot extends idEntity {
 	 */
 	private String latitude;
 
+	/**
+	 * 地址
+	 */
+	private String address;
+	
+	/**
+	 * 简介
+	 */
+	@Lob
+	private String info;
+	
+	/**
+	 * 是否为喔来自营停车场
+	 */
+	private Boolean isProprietary=Boolean.TRUE;
+	
 	public String getName() {
 		return name;
 	}
@@ -68,5 +84,29 @@ public class ParkingLot extends idEntity {
 
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public Boolean getIsProprietary() {
+		return isProprietary;
+	}
+
+	public void setIsProprietary(Boolean isProprietary) {
+		this.isProprietary = isProprietary;
 	}
 }

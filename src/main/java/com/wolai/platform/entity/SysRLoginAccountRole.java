@@ -20,8 +20,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "sys_r_user_role")
-public class SysRUserRole extends idEntity {
+@Table(name = "sys_r_login_account_role")
+public class SysRLoginAccountRole extends idEntity {
 
     /**
      * 
@@ -31,15 +31,15 @@ public class SysRUserRole extends idEntity {
     /**
      * 用户id
      */
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "login_account_id")
+    private String loginAccountId;
     
     /**
      * 用户
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private SysUser user;
+    @JoinColumn(name = "login_account_id", insertable = false, updatable = false)
+    private SysLoginAccount loginAccount;
     
     /**
      * 角色id
@@ -53,22 +53,6 @@ public class SysRUserRole extends idEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", insertable = false, updatable = false)
     private SysRole role;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public SysUser getUser() {
-        return user;
-    }
-
-    public void setUser(SysUser user) {
-        this.user = user;
-    }
 
     public String getRoleId() {
         return roleId;
@@ -85,5 +69,21 @@ public class SysRUserRole extends idEntity {
     public void setRole(SysRole role) {
         this.role = role;
     }
+
+	public String getLoginAccountId() {
+		return loginAccountId;
+	}
+
+	public void setLoginAccountId(String loginAccountId) {
+		this.loginAccountId = loginAccountId;
+	}
+
+	public SysLoginAccount getLoginAccount() {
+		return loginAccount;
+	}
+
+	public void setLoginAccount(SysLoginAccount loginAccount) {
+		this.loginAccount = loginAccount;
+	}
 
 }

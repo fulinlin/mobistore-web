@@ -8,8 +8,8 @@ import javax.persistence.Table;
  * @author Ethan
  */
 @Entity
-@Table(name="wo_user")
-public class Car extends idEntity{
+@Table(name="wo_car_no")
+public class LicensePlate extends idEntity{
 
 	/**
 	 * 
@@ -31,6 +31,11 @@ public class Car extends idEntity{
 	 */
 	private String brand;
 
+	/**
+	 * 支付方式
+	 */
+	private Boolean isPostpaid=Boolean.FALSE;
+	
 	public String getCarNo() {
 		return carNo;
 	}
@@ -53,5 +58,13 @@ public class Car extends idEntity{
 
 	public void setBrand(String brand) {
 		this.brand = brand;
+	}
+
+	public Boolean getIsPostpaid() {
+		return isPostpaid;
+	}
+
+	public void setIsPostpaid(Boolean isPostpaid) {
+		this.isPostpaid = isPostpaid;
 	}
 }
