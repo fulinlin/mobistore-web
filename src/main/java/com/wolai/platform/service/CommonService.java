@@ -8,7 +8,7 @@ import org.hibernate.criterion.DetachedCriteria;
 
 import com.wolai.platform.bean.Page;
 
-public interface CommonService {
+public interface CommonService extends BaseService {
 	
 	  /**
      * <根据HQL语句查找唯一实体>

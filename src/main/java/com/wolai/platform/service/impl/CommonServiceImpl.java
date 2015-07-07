@@ -12,7 +12,7 @@ import com.wolai.platform.service.BaseService;
 import com.wolai.platform.service.CommonService;
 
 @Service
-public class CommonServiceImpl extends BaseService implements CommonService {
+public class CommonServiceImpl extends BaseServiceImpl implements CommonService {
 
 	@Override
 	public Object getByHQL(String hqlString, Object... values) {
