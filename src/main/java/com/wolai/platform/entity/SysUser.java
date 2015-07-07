@@ -1,5 +1,7 @@
 package com.wolai.platform.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -97,7 +99,7 @@ public class SysUser extends idEntity {
 
     private String authToken;
     
-    private String lastLoginTile;
+    private Date lastLoginTime;
     
 	public UserType getCustomerType() {
 		return customerType;
@@ -163,11 +165,12 @@ public class SysUser extends idEntity {
 		this.authToken = authToken;
 	}
 
-	public String getLastLoginTile() {
-		return lastLoginTile;
+	public Date getLastLoginTime() {
+		return lastLoginTime;
 	}
 
-	public void setLastLoginTile(String lastLoginTile) {
-		this.lastLoginTile = lastLoginTile;
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
 	}
+
 }
