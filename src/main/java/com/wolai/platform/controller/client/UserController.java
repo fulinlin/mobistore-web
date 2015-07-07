@@ -38,6 +38,7 @@ public class UserController {
 
 		String newToken = userService.login(token, email, password);
 		if (StringUtils.isNotEmpty(newToken)) {
+			ret.put("token", newToken);
 			ret.put("code", RespCode.SUCCESS.Code());
 		} else {
 			ret.put("code", RespCode.FAIL.Code());
