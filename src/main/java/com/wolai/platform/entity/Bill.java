@@ -122,7 +122,7 @@ public class Bill extends idEntity {
 	 * 是否已出票
 	 * @return
 	 */
-	private
+	private  Boolean isSendedInvoice;
 	
 	public String getCarNo() {
 		return carNo;
@@ -226,6 +226,14 @@ public class Bill extends idEntity {
 
 	public void setLicensePlate(LicensePlate licensePlate) {
 		this.licensePlate = licensePlate;
+	}
+
+	public Boolean getIsSendedInvoice() {
+		return isSendedInvoice;
+	}
+
+	public void setIsSendedInvoice(Boolean isSendedInvoice) {
+		this.isSendedInvoice = isSendedInvoice;
 	}
 	
 }
