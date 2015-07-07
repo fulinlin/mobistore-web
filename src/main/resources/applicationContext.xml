@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+   	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xsi:schemaLocation="  
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">  
+		
+    
+    <context:property-placeholder location="classpath:config.properties"/>
+	<context:annotation-config />
+	<context:component-scan base-package="com.wolai.platform.config"></context:component-scan>
+	<context:component-scan base-package="com.wolai.platform.entity"></context:component-scan>
+	<context:component-scan base-package="com.wolai.platform.service"></context:component-scan>
+	<context:component-scan base-package="com.wolai.platform.service.impl"></context:component-scan>
+	<context:component-scan base-package="com.wolai.platform.dao"></context:component-scan>
+	<context:component-scan base-package="com.wolai.platform.util"></context:component-scan>
+	<context:component-scan base-package="com.wolai.platform.dao.impl"></context:component-scan>
+	<context:component-scan base-package="com.wolai.platform.job"></context:component-scan>
+    <context:component-scan base-package="com.wolai.platform.controller"></context:component-scan>
+	
+    <!-- 定时任务注解配置 -->  
+    <task:annotation-driven/>
+    
+ 	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->  
+	<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+      <property name="features">  
+        <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">  
+           <value>DisableCircularReferenceDetect</value>  
+        </array>  
+      </property>  
+   </bean>  
+	
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+            <list>
+                 <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+                 <ref bean="jacksonMessageConverter"/>
+            </list>
+        </property>
+	</bean>
+    
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+		<property name="prefix" value="/WEB-INF/jsp/"/>  
+		<property name="suffix" value=".jsp"/>  
+	</bean>  
+	
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+    
+	
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
+      <!-- 基本属性 url、user、password -->
+      <property name="url" value="${datasource.jdbc.url}" />
+      <property name="username" value="${datasource.jdbc.username" />
+      <property name="password" value="${datasource.jdbc.password}" />
+
+      <!-- 配置初始化大小、最小、最大 -->
+      <property name="initialSize" value="${datasource.minPoolSize}" />
+      <property name="minIdle" value="${datasource.minPoolSize}" /> 
+      <property name="maxActive" value="${datasource.maxPoolSize}" />
+
+      <!-- 配置获取连接等待超时的时间 -->
+      <property name="maxWait" value="60000" />
+
+      <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+      <property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+      <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+      <property name="minEvictableIdleTimeMillis" value="300000" />
+
+      <property name="validationQuery" value="SELECT 'x'" />
+      <property name="testWhileIdle" value="true" />
+      <property name="testOnBorrow" value="false" />
+      <property name="testOnReturn" value="false" />
+
+      <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+      <property name="poolPreparedStatements" value="true" />
+      <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+
+      <!-- 配置监控统计拦截的filters -->
+      <property name="filters" value="stat-filter" /> 
+       <property name="useGloalDataSourceStat" value="true" />
+  </bean>
+  
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+    	<property name="mergeSql" value="true" />
+    	<property name="slowSqlMillis" value="10000" />
+   		 <property name="logSlowSql" value="true" />
+	</bean>
+	
+	
+    <!-- 使用Annotation映射的sessionFactory -->
+    <bean id="sessionFactory"  class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+       <property name="dataSource"  ref="dataSource"/>
+       <property name="hibernateProperties">
+       		<props>
+       			<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+       			<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+       			 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.generate_statistics">true</prop>
+                <prop key="hibernate.connection.release_mode">auto</prop>
+                <prop key="hibernate.autoReconnect">true</prop>
+                <!-- this for oracle -->
+                <!-- 
+                <prop key="hibernate.default_schema">${hibernate.default_schema}</prop>
+                 -->
+                <prop key="hibernate.jdbc.fetch_size">${hibernate.jdbc.fetch_size}</prop>
+                <prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.cache.provider_configuration_file_resource_path">classpath:ehcache.xml</prop>
+                <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
+                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+                <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+       		</props>
+       </property>
+       
+       
+       
+       <property name="packagesToScan">
+         	<list>
+         		 <value>${hibernate.packagesToScan}</value>  
+         	</list>
+         </property>
+       <property name="namingStrategy" ref="namingStrategy"></property>
+    </bean>
+    
+ 	<bean id="namingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy"/>
+         
+    <!-- 事务管理器，此处为Hibernate的事务管理器 -->
+   <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager" >
+    	<property name="sessionFactory" ref="sessionFactory"></property>
+    </bean> 
+    <!-- 事务 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="edit*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="create*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="new*" propagation="REQUIRED" />
+			<tx:method name="set*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="clean*" propagation="REQUIRED" />
+			<tx:method name="change*" propagation="REQUIRED" />
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="load*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="*" propagation="REQUIRED" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+    
+    <aop:config proxy-target-class="true">
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.wolai.platform.service..*.*(..))" />
+    </aop:config>
+    
+
+    <bean class="com.tinypace.platform.util.SpringContextHolder" lazy-init="false"/>
+ 
+    <bean id="configBean" class="com.wolai.platform.util.CustomizedPropertyConfigurer">  
+        <property name="location" value="classpath:config.properties" />  
+    </bean>
+    
+
+    <mvc:interceptors>
+       <mvc:interceptor>
+           <mvc:mapping path="/**"/>
+           <mvc:exclude-mapping path="/index.jsp"/>
+           <bean class="com.wolai.platform.interceptor.SystemInterceptor"/>
+       </mvc:interceptor>
+    </mvc:interceptors>
+    
+</beans>
+

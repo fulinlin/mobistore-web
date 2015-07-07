@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"  
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee   
+          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"  
+          version="3.0">  
+
+  <!-- Spring ApplicationContext配置文件的路径可使用通配符，多个路径用,号分隔，此参数用于后面的Spring-Context loader -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+    
+   <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+    <!-- SpringMVC 分派器及相关映射 -->
+   <servlet>
+     <servlet-name>dispatcherServlet</servlet-name>  
+     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+      <init-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value
+    </init-param>
+     <load-on-startup>1</load-on-startup>  
+   </servlet>  
+  
+    <servlet-mapping>  
+         <servlet-name>dispatcherServlet</servlet-name>  
+         <url-pattern>/</url-pattern> 
+     </servlet-mapping> 
+   
+    <servlet>
+	    <servlet-name>DruidStatView</servlet-name>
+	    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>DruidStatView</servlet-name>
+	    <url-pattern>/dbmonitor/*</url-pattern>
+	</servlet-mapping>
+	    
+    
+     <!-- Spring 刷新Introspector防止内存泄露 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+   
+     <!-- Character Encoding filter -->
+    <filter>
+        <filter-name>setCharacterEncoding</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>setCharacterEncoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+     <!--Hibernate Open Session in View Filter-->
+    <filter>
+      <filter-name>hibernateFilter</filter-name>
+      <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+     </filter>
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    
+    <!-- druid监控相关 -->
+    <filter>
+    <filter-name>DruidWebStatFilter</filter-name>
+    <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+    <init-param>
+        <param-name>exclusions</param-name>
+        <param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/dbmonitor/*</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>DruidWebStatFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
+     <session-config>
+        <session-timeout>30</session-timeout>    	
+    </session-config>
+	<welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    
+   </web-app>
