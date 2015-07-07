@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.wolai</groupId>
 	<artifactId>wolai</artifactId>
@@ -13,6 +13,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<spring.version>4.1.6.RELEASE</spring.version>
 		<hibernate.version>4.3.10.Final</hibernate.version>
+		<jackson.version>2.2.1</jackson.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -91,20 +92,44 @@
 		</dependency>
 
 		<!-- spring-mvc json支持 -->
-		<!-- <dependency> <groupId>org.codehaus.jackson</groupId> <artifactId>jackson-core-lgpl</artifactId> 
-			<version>1.9.4</version> </dependency> <dependency> <groupId>org.codehaus.jackson</groupId> 
-			<artifactId>jackson-mapper-lgpl</artifactId> <version>1.9.4</version> </dependency> 
-			<dependency> <groupId>org.codehaus.jackson</groupId> <artifactId>jackson-mapper-asl</artifactId> 
-			<version>1.9.4</version> </dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId> 
-			<artifactId>jackson-core</artifactId> <version>2.4.4</version> </dependency> 
-			<dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> 
-			<version>2.4.4</version> </dependency> -->
+		<!-- jackson json -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jaxb-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.1.41</version>
 		</dependency>
+
+		<!-- AOP begin -->
+		<!-- <dependency> <groupId>org.aspectj</groupId> <artifactId>aspectjrt</artifactId> 
+			<version>1.7.4</version> </dependency> -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.0</version>
+		</dependency>
+		<!-- <dependency> <groupId>cglib</groupId> <artifactId>cglib</artifactId> 
+			<version>3.1</version> <scope>runtime</scope> </dependency> -->
 
 		<!-- hibernate -->
 		<dependency>

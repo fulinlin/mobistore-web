@@ -2,6 +2,7 @@ package com.wolai.platform.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 
@@ -33,6 +34,7 @@ public class idEntity implements Serializable {
 		this.id = IdGen.uuid();
 	}
 
+	@Id
 	public String getId() {
 		return id;
 	}
