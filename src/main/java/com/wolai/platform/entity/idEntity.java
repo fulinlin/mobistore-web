@@ -7,6 +7,7 @@ import javax.persistence.PrePersist;
 
 import com.wolai.platform.util.IdGen;
 
+
 /**
  * 基础实体
  * 
@@ -22,10 +23,21 @@ public class idEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = -1831643589158410558L;
 
-	protected String id;		// 编号
+	/**
+	 * 编号
+	 */
+	protected String id;
 	
 	@PrePersist
 	public void prePersist(){
 		this.id = IdGen.uuid();
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }
