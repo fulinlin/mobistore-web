@@ -12,7 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+/**
+ * 优惠券
+ * @author xuxiang
+ *
+ */
 @Entity
 @Table(name="wo_coupon")
 public class Coupon extends idEntity {

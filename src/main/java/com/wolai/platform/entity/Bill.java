@@ -118,6 +118,12 @@ public class Bill extends idEntity {
 	@Column(name="account_id")
 	private SysAccount account;
 
+	/**
+	 * 是否已出票
+	 * @return
+	 */
+	private
+	
 	public String getCarNo() {
 		return carNo;
 	}

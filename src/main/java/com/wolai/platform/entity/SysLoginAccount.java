@@ -1,12 +1,7 @@
 package com.wolai.platform.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
-
-import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * 网站登录用户

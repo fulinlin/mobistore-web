@@ -1,5 +1,14 @@
 package com.wolai.platform.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+/**
+ * 企业信息
+ * @author xuxiang
+ */
+@Entity
+@Table(name="wo_enterprise")
 public class Enterprise extends idEntity {
 
 	/**

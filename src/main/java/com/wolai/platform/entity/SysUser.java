@@ -95,6 +95,10 @@ public class SysUser extends idEntity {
     
     private PayType payType=PayType.PERPAID;
 
+    private String authToken;
+    
+    private String lastLoginTile;
+    
 	public UserType getCustomerType() {
 		return customerType;
 	}
@@ -149,5 +153,21 @@ public class SysUser extends idEntity {
 
 	public void setPayType(PayType payType) {
 		this.payType = payType;
+	}
+
+	public String getAuthToken() {
+		return authToken;
+	}
+
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
+	}
+
+	public String getLastLoginTile() {
+		return lastLoginTile;
+	}
+
+	public void setLastLoginTile(String lastLoginTile) {
+		this.lastLoginTile = lastLoginTile;
 	}
 }
