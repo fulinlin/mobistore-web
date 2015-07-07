@@ -51,4 +51,18 @@ public final class Constant {
     public static final String STRING_TRUE="true";
     
     public static final String STRING_FALSE="false";
+    
+    
+  	public static enum RespCode{
+  		SUCCESS(1), FAIL(0), AUTH_FAIL(-1);
+  		
+  		private RespCode(int code){
+  			this.code = code;
+  		}
+  		private int code;
+  		
+  		public int Code(){
+  			return code;
+  		}
+  	}
 }
