@@ -15,15 +15,16 @@ import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.UserService;
+import com.wolai.platform.constant.Constant;
 
-@RequestMapping(value="/signon")
+@RequestMapping(Constant.API_CLIENT + "user/")
 public class UserController {
 	
 	@Autowired
 	UserService userService;
 
 	@AuthPassport(validate=true)
-	@RequestMapping(value="/signon")
+	@RequestMapping(value="signon")
 	@ResponseBody
 	public Map<String,Object> signon(HttpServletRequest request, @RequestBody Map<String, String> vo){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
@@ -44,7 +45,7 @@ public class UserController {
 	}
 	
 	@AuthPassport(validate=true)
-	@RequestMapping(value="/signout")
+	@RequestMapping(value="signout")
 	@ResponseBody
 	public Map<String,Object> signout(HttpServletRequest request, @RequestBody Map<String, String> vo){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
@@ -63,7 +64,7 @@ public class UserController {
 	}
 	
 	@AuthPassport(validate=false)
-	@RequestMapping(value="/register")
+	@RequestMapping(value="register")
 	@ResponseBody
 	public Map<String,Object> register(HttpServletRequest request, @RequestBody Map<String, String> vo){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
@@ -91,7 +92,7 @@ public class UserController {
 	}
 	
 	@AuthPassport(validate=true)
-	@RequestMapping(value="/profile")
+	@RequestMapping(value="profile")
 	@ResponseBody
 	public Map<String,Object> profile(HttpServletRequest request, @RequestBody Map<String, String> vo){
 		Map<String,Object> ret = new HashMap<String, Object>(); 
@@ -112,7 +113,7 @@ public class UserController {
 	}
 	
 	@AuthPassport(validate=true)
-	@RequestMapping(value="/updateProfile")
+	@RequestMapping(value="updateProfile")
 	@ResponseBody
 	public Map<String,Object> updateProfile(HttpServletRequest request, @RequestBody Map<String, String> vo){
 		Map<String,Object> ret = new HashMap<String, Object>(); 

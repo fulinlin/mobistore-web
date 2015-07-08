@@ -11,6 +11,8 @@ package com.wolai.platform.constant;
  */
 
 public final class Constant {
+	public static final String API_CLIENT = "api/mobi/";
+	
     /**
      * 管理员权限编码
      */

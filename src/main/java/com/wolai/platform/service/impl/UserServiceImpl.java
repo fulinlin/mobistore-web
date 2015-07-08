@@ -69,8 +69,6 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	public Map<String, Object> register(String phone, String password) {
 		Map<String, Object> ret = new HashMap<String, Object>(); 
 		
-		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
-		dc.add(Restrictions.eq("mobile", phone));
 		SysUser po = getUserByPhone(phone);
 		if (po != null) {
 			ret.put("success", false);
