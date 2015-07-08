@@ -71,14 +71,14 @@ public class IntegralRecord extends idEntity {
 	@Column(name="relation_id")
 	private String relationId;
 	
-	@Any(metaColumn=@Column(name="type"))
-    @AnyMetaDef(idType="string", metaType="string",
-        metaValues={
-         @MetaValue(targetEntity=ParkingRecord.class, value="parking"),
-         @MetaValue(targetEntity=Coupon.class, value="consum"),
-    })
-    @JoinColumn(name="relation_id",insertable=false,updatable=false)
-	private Object relation;
+//	@Any(metaColumn=@Column(name="type"))
+//    @AnyMetaDef(idType="string", metaType="string",
+//        metaValues={
+//         @MetaValue(targetEntity=ParkingRecord.class, value="parking"),
+//         @MetaValue(targetEntity=Coupon.class, value="consum"),
+//    })
+//    @JoinColumn(name="relation_id",insertable=false,updatable=false)
+//	private Object relation;
 
 	public int getType() {
 		return type;
@@ -104,12 +104,12 @@ public class IntegralRecord extends idEntity {
 		this.relationId = relationId;
 	}
 
-	public Object getRelation() {
-		return relation;
-	}
-
-	public void setRelation(Object relation) {
-		this.relation = relation;
-	}
-	
+//	public Object getRelation() {
+//		return relation;
+//	}
+//
+//	public void setRelation(Object relation) {
+//		this.relation = relation;
+//	}
+//	
 }

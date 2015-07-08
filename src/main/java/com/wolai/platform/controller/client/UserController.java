@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,7 @@ import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.constant.Constant;
 
+@Controller
 @RequestMapping(Constant.API_CLIENT + "user/")
 public class UserController {
 	
@@ -71,9 +73,8 @@ public class UserController {
 		
 		String phone = json.get("phone");
 		String password = json.get("password");
-		String password2 = json.get("password2");
 		
-		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) || !password.equals(password2)) {
+		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password)) {
 			ret.put("code", RespCode.FAIL.Code());
 			ret.put("msg", "phone or password error");
 			return ret;
