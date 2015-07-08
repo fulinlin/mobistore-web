@@ -8,7 +8,6 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
-import com.wolai.platform.service.BaseService;
 import com.wolai.platform.service.CommonService;
 
 @Service

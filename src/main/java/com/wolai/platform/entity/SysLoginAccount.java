@@ -2,6 +2,7 @@ package com.wolai.platform.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 网站登录用户
@@ -44,6 +45,7 @@ public class SysLoginAccount extends idEntity {
 	 */
 	private Boolean isSupplier=Boolean.FALSE;
 	
+	@Transient
 	public boolean isEnable(){
 		return status>0;
 	}
