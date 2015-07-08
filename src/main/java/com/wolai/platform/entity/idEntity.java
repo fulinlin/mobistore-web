@@ -2,11 +2,11 @@ package com.wolai.platform.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
 
-import com.wolai.platform.util.IdGen;
+import org.hibernate.annotations.GenericGenerator;
 
 
 /**
@@ -27,6 +27,9 @@ public class idEntity implements Serializable {
 	/**
 	 * 编号
 	 */
+	@Id
+	@GeneratedValue(generator = "paymentableGenerator")  
+	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	protected String id;
 	
 	/**
@@ -34,12 +37,12 @@ public class idEntity implements Serializable {
 	 */
 	protected Boolean isDelete=Boolean.FALSE;
 	
-	@PrePersist
+/*	@PrePersist
 	public void prePersist(){
 		this.id = IdGen.uuid();
-	}
+	}*/
 
-	@Id
+	
 	public String getId() {
 		return id;
 	}
