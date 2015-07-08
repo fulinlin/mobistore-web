@@ -122,15 +122,13 @@ public class UserController {
 		String phone = json.get("phone");
 		String oldPassword = json.get("oldPassword");
 		String newPassword = json.get("newPassword");
-		String newPassword2 = json.get("newPassword2");
 		
 		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(oldPassword) 
-				|| StringUtils.isEmpty(newPassword) || !newPassword.equals(newPassword2)) {
+				|| StringUtils.isEmpty(newPassword)) {
 			ret.put("code", RespCode.FAIL.Code());
 			ret.put("msg", "phone or password error");
 			return ret;
 		}
-		
 		
 		Map<String,Object> map = userService.updateProfile(phone, oldPassword, newPassword);
 		
