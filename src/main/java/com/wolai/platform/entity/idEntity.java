@@ -29,6 +29,11 @@ public class idEntity implements Serializable {
 	 */
 	protected String id;
 	
+	/**
+	 * 删除标记位
+	 */
+	protected Boolean isDelete=Boolean.FALSE;
+	
 	@PrePersist
 	public void prePersist(){
 		this.id = IdGen.uuid();
@@ -41,5 +46,13 @@ public class idEntity implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Boolean getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(Boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 }
