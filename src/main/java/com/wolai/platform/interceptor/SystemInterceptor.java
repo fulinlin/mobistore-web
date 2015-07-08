@@ -36,7 +36,7 @@ public class SystemInterceptor implements HandlerInterceptor {
     	  if(handler.getClass().isAssignableFrom(HandlerMethod.class)){
     		  AuthPassport authPassport = ((HandlerMethod) handler).getMethodAnnotation(AuthPassport.class);
     		//声明不验证权限
-              if(authPassport.validate() == false){
+              if(authPassport!=null && authPassport.validate() == false){
             	  return true;
               }else{
             	  // TODO 验证

@@ -44,12 +44,6 @@ public class ParkingLot extends idEntity {
 	private String address;
 	
 	/**
-	 * 简介
-	 */
-	@Lob
-	private String info;
-	
-	/**
 	 * 是否为喔来自营停车场
 	 */
 	private Boolean isProprietary=Boolean.TRUE;
@@ -92,14 +86,6 @@ public class ParkingLot extends idEntity {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getInfo() {
-		return info;
-	}
-
-	public void setInfo(String info) {
-		this.info = info;
 	}
 
 	public Boolean getIsProprietary() {

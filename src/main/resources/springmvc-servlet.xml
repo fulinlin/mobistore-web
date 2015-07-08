@@ -30,7 +30,9 @@
 
 	<!-- 定时任务注解配置 -->
 	<task:annotation-driven />
-
+	<mvc:annotation-driven />
+	
+	
 	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
 	<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -167,6 +169,8 @@
 	</aop:config>
 
 
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>  
+	
 	<bean class="com.wolai.platform.util.SpringContextHolder"
 		lazy-init="false" />
 

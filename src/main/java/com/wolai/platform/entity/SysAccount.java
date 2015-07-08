@@ -75,6 +75,7 @@ public class SysAccount extends idEntity{
 	private String cvs2;
 	
 	// TODO 待加
+	
 	/**
 	 * 余额
 	 */

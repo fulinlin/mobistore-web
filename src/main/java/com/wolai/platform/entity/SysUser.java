@@ -2,9 +2,12 @@ package com.wolai.platform.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -25,7 +28,7 @@ public class SysUser extends idEntity {
   		 */
   		INDIVIDUAL("individual"),
   		/**
-  		 * enterpriseAdministrator(企业管理员)
+  		 * enterpriseAdministrator(企业)
   		 */
   		ENTERPRISE("enterprise");
   		
@@ -100,6 +103,16 @@ public class SysUser extends idEntity {
     private String authToken;
     
     private Date lastLoginTime;
+    
+    /**
+     * 主账户
+     */
+    @Column(name="main_account_id")
+    private String mainAccountId;
+    
+    @ManyToOne
+    @JoinColumn(name = "main_account_id", insertable = false, updatable = false)
+    private SysAccount mainAccount;
     
 	public UserType getCustomerType() {
 		return customerType;

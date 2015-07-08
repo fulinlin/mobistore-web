@@ -1,6 +1,9 @@
 package com.wolai.platform.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -45,6 +48,16 @@ public class SysLoginAccount extends idEntity {
 	 */
 	private Boolean isSupplier=Boolean.FALSE;
 	
+	 /** 
+     * 客户id
+     */
+    @Column(name="user_id")
+    private String userId;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private SysUser user;
+    
 	@Transient
 	public boolean isEnable(){
 		return status>0;
@@ -88,5 +101,21 @@ public class SysLoginAccount extends idEntity {
 
 	public void setIsSupplier(Boolean isSupplier) {
 		this.isSupplier = isSupplier;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public SysUser getUser() {
+		return user;
+	}
+
+	public void setUser(SysUser user) {
+		this.user = user;
 	}
 }
