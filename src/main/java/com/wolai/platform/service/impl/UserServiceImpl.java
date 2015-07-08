@@ -101,6 +101,19 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 			return null;
 		}
 	}
+	
+	@Override
+	public SysUser getUserByToken(String token) {
+		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
+		dc.add(Restrictions.eq("authToken", token));
+		List users = findAllByCriteria(dc);
+		if (users.size() > 0) {
+			return (SysUser) users.get(0);
+		} else {
+			return null;
+		}
+	}
+	
 	@Override
 	public SysUser getUserByPhoneAndPassword(String phone, String password) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);

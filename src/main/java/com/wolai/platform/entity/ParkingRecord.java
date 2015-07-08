@@ -72,6 +72,11 @@ public class ParkingRecord extends idEntity {
 	private Date driveOutTime;
 	
 	/**
+	 * 在库状态
+	 */
+	private Integer parkStatus;
+	
+	/**
 	 * 应付金额
 	 */
 	private BigDecimal money;
@@ -201,5 +206,13 @@ public class ParkingRecord extends idEntity {
 
 	public void setUser(SysUser user) {
 		this.user = user;
+	}
+
+	public Integer getParkStatus() {
+		return parkStatus;
+	}
+
+	public void setParkStatus(Integer parkStatus) {
+		this.parkStatus = parkStatus;
 	}
 }

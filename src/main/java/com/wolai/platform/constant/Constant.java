@@ -67,4 +67,17 @@ public final class Constant {
   			return code;
   		}
   	}
+  	
+  	public static enum ParkStatus{
+  		IN(1), PACKED(0), OUT(-1);
+  		
+  		private ParkStatus(int code){
+  			this.code = code;
+  		}
+  		private int code;
+  		
+  		public int Code(){
+  			return code;
+  		}
+  	}
 }
