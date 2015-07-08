@@ -26,12 +26,12 @@ public class UserController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="signon")
 	@ResponseBody
-	public Map<String,Object> signon(HttpServletRequest request, @RequestBody Map<String, String> vo){
+	public Map<String,Object> signon(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
-		String token = vo.get("token");
-		String phone = vo.get("phone");
-		String password = vo.get("password");
+		String token = json.get("token");
+		String phone = json.get("phone");
+		String password = json.get("password");
 
 		String newToken = userService.login(token, phone, password);
 		if (StringUtils.isNotEmpty(newToken)) {
@@ -47,10 +47,10 @@ public class UserController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="signout")
 	@ResponseBody
-	public Map<String,Object> signout(HttpServletRequest request, @RequestBody Map<String, String> vo){
+	public Map<String,Object> signout(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
-		String phone = vo.get("phone");
+		String phone = json.get("phone");
 
 		boolean success = userService.logout(phone);
 		if (success) {
@@ -66,12 +66,12 @@ public class UserController {
 	@AuthPassport(validate=false)
 	@RequestMapping(value="register")
 	@ResponseBody
-	public Map<String,Object> register(HttpServletRequest request, @RequestBody Map<String, String> vo){
+	public Map<String,Object> register(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
-		String phone = vo.get("phone");
-		String password = vo.get("password");
-		String password2 = vo.get("password2");
+		String phone = json.get("phone");
+		String password = json.get("password");
+		String password2 = json.get("password2");
 		
 		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) || !password.equals(password2)) {
 			ret.put("code", RespCode.FAIL.Code());
@@ -94,10 +94,10 @@ public class UserController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="profile")
 	@ResponseBody
-	public Map<String,Object> profile(HttpServletRequest request, @RequestBody Map<String, String> vo){
+	public Map<String,Object> profile(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>(); 
 		
-		String phone = vo.get("phone");
+		String phone = json.get("phone");
 		SysUser user = userService.getUserByPhone(phone);
 		
 		if (user != null) {
@@ -115,13 +115,13 @@ public class UserController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="updateProfile")
 	@ResponseBody
-	public Map<String,Object> updateProfile(HttpServletRequest request, @RequestBody Map<String, String> vo){
+	public Map<String,Object> updateProfile(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>(); 
 		
-		String phone = vo.get("phone");
-		String oldPassword = vo.get("oldPassword");
-		String newPassword = vo.get("newPassword");
-		String newPassword2 = vo.get("newPassword2");
+		String phone = json.get("phone");
+		String oldPassword = json.get("oldPassword");
+		String newPassword = json.get("newPassword");
+		String newPassword2 = json.get("newPassword2");
 		
 		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(oldPassword) 
 				|| StringUtils.isEmpty(newPassword) || !newPassword.equals(newPassword2)) {

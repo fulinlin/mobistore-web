@@ -18,25 +18,22 @@ public class BeanUtilEx extends BeanUtils {
 		ConvertUtils.register(new BigDecimalConverter(), BigDecimal.class);
 	}
 
-	public static void copyProperties(Object target, Object source) throws InvocationTargetException,
-			IllegalAccessException {
-		// 支持对日期copy
-		BeanUtils.copyProperties(target, source);
-
+	public static void copyProperties(Object target, Object source) {
+		try {
+			BeanUtils.copyProperties(target, source);
+		} catch (InvocationTargetException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+	public static void main(String[] args) {
 		D1 d1 = new D1();
 		D2 d2 = new D2();
-		
+
 		d1.setDate(new Date());
-		
+
 		System.out.println(d2.getDate());
-		System.out.println(d1.getDate());
 		BeanUtilEx.copyProperties(d2, d1);
 		System.out.println(d2.getDate());
-		System.out.println(d1.getDate());
-
 	}
-
 }
