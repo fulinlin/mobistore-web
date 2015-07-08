@@ -43,7 +43,7 @@ import com.wolai.platform.util.ReflectionUtils;
  * @version $Id$
  * @since 	1.0
  */
-@Repository("baseDao")
+@Repository
 public class HibernateDao {
 
     /**

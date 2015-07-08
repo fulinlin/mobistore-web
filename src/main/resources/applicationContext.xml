@@ -25,7 +25,6 @@
 	<context:component-scan base-package="com.wolai.platform.service.impl"></context:component-scan>
 	<context:component-scan base-package="com.wolai.platform.dao"></context:component-scan>
 	<context:component-scan base-package="com.wolai.platform.util"></context:component-scan>
-	<context:component-scan base-package="com.wolai.platform.dao.impl"></context:component-scan>
 	<context:component-scan base-package="com.wolai.platform.job"></context:component-scan>
 	<context:component-scan base-package="com.wolai.platform.controller"></context:component-scan>
 
@@ -85,7 +84,12 @@
 			value="20" />
 
 		<!-- 配置监控统计拦截的filters -->
-		<property name="filters" value="stat-filter" />
+		<property name="filters" value="stat,log4j" />
+		<property name="proxyFilters">
+	        <list>
+	            <ref bean="stat-filter" />
+	        </list>
+    </property>
 		<!-- <property name="useGloalDataSourceStat" value="true" /> -->
 	</bean>
 
@@ -120,9 +124,6 @@
 				</prop>
 			</props>
 		</property>
-
-
-
 		<property name="packagesToScan">
 			<list>
 				<value>${hibernate.packagesToScan}</value>

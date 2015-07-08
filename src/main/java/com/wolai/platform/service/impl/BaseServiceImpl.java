@@ -5,20 +5,19 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.wolai.platform.dao.HibernateDao;
 import com.wolai.platform.service.BaseService;
-import com.wolai.platform.util.SpringContextHolder;
 
 /**
- * 
- * 
  * service实现类的基类
  * @author xuxiang
  * @version $Id$
  * @since
  * @see
  */
+@Service
 public class BaseServiceImpl implements BaseService{
 
     /**
@@ -33,9 +32,9 @@ public class BaseServiceImpl implements BaseService{
      * @return 返回dao
      */
     public HibernateDao getDao() {
-        if (dao == null) {
+        /*if (dao == null) {
             dao = SpringContextHolder.getBean("baseDao",HibernateDao.class);
-        }
+        }*/
         return dao;
     }
 

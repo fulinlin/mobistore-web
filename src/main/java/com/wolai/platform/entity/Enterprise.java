@@ -1,6 +1,9 @@
 package com.wolai.platform.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -41,6 +44,16 @@ public class Enterprise extends idEntity {
      */
     private String organizationCode;
 
+    /** 
+     * 客户id
+     */
+    @Column(name="user_id")
+    private String userId;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private SysUser user;
+    
 	public Boolean getIsSupplier() {
 		return isSupplier;
 	}
