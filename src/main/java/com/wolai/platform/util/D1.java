@@ -1,11 +1,12 @@
 package com.wolai.platform.util;
 
 import java.util.Date;
-	 class D1 {
+
+public  class D1 {
 		 public D1() {
-			 
 		 }
-		private Date date = new Date(0);
+		private Date date;
+		
 		public Date getDate() {
 			return date;
 		}
