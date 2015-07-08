@@ -81,6 +81,16 @@ public class ParkingRecord extends idEntity {
 	 */
 	private BigDecimal paidMoney;
 
+	/**
+	 * 所属用户
+	 */
+	@Column(name="user_id")
+	private String userId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+	private SysUser user;
+	
 	public String getCarNo() {
 		return carNo;
 	}
@@ -175,5 +185,21 @@ public class ParkingRecord extends idEntity {
 
 	public void setPaidMoney(BigDecimal paidMoney) {
 		this.paidMoney = paidMoney;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public SysUser getUser() {
+		return user;
+	}
+
+	public void setUser(SysUser user) {
+		this.user = user;
 	}
 }
