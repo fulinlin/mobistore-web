@@ -66,7 +66,7 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> register(String phone, String password) {
+	public Map<String, Object> create(String phone, String password) {
 		Map<String, Object> ret = new HashMap<String, Object>(); 
 		
 		SysUser po = getUserByPhone(phone);

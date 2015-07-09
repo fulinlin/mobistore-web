@@ -80,7 +80,7 @@ public class UserController {
 			return ret;
 		}
 
-		Map map = userService.register(phone, password);
+		Map map = userService.create(phone, password);
 		if ((Boolean) map.get("success")) {
 			ret.put("token", map.get("token"));
 			ret.put("code", RespCode.SUCCESS.Code());
