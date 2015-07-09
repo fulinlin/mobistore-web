@@ -11,6 +11,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
+import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.SysUser.UserType;
@@ -19,7 +20,12 @@ import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.UserService;
 
 @Service
-public class LicensePlateServiceImpl extends CommonServiceImpl implements LicensePlateService {
+public class LicenseServiceImpl extends CommonServiceImpl implements LicensePlateService {
+
+	@Override
+	public List<License> listByUser(String userId) {
+		return null;
+	}
 
 
 

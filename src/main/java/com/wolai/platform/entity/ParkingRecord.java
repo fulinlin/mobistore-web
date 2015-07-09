@@ -34,7 +34,7 @@ public class ParkingRecord extends idEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_no_id", insertable = false, updatable = false)
-	private LicensePlate car;
+	private License car;
 	
 	/**
 	 * 停车场
@@ -112,11 +112,11 @@ public class ParkingRecord extends idEntity {
 		this.carNoId = carNoId;
 	}
 
-	public LicensePlate getCar() {
+	public License getCar() {
 		return car;
 	}
 
-	public void setCar(LicensePlate car) {
+	public void setCar(License car) {
 		this.car = car;
 	}
 

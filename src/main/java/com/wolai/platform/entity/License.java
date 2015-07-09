@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="wo_car_no")
-public class LicensePlate extends idEntity{
+public class License extends idEntity{
 
 	/**
 	 * 

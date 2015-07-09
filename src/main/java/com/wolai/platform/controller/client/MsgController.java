@@ -31,15 +31,15 @@ public class MsgController {
 	@ResponseBody
 	public List<ParkingLotVo> list(HttpServletRequest request, @RequestBody Map<String, String> json){
 		
-		String city = json.get("city");
-
+//		String city = json.get("city");
+//
 		List<ParkingLotVo> vols = new ArrayList<ParkingLotVo>();
-		List<ParkingLot> ls = assetService.listByCity(city);
-		for (ParkingLot parkingLot : ls) {
-			ParkingLotVo vo = new ParkingLotVo();
-			BeanUtilEx.copyProperties(vo, parkingLot);
-			vols.add(vo);
-		}
+//		List<ParkingLot> ls = assetService.listByCity(city);
+//		for (ParkingLot parkingLot : ls) {
+//			ParkingLotVo vo = new ParkingLotVo();
+//			BeanUtilEx.copyProperties(vo, parkingLot);
+//			vols.add(vo);
+//		}
 		
 		return vols;
 	}
@@ -49,11 +49,11 @@ public class MsgController {
 	@ResponseBody
 	public ParkingLotVo detail(HttpServletRequest request, @RequestBody Map<String, String> json){
 		
-		String id = json.get("id");
-		ParkingLot po = (ParkingLot) parkingLotService.get(ParkingLot.class, id);
+//		String id = json.get("id");
+//		ParkingLot po = (ParkingLot) parkingLotService.get(ParkingLot.class, id);
 
 		ParkingLotVo vo = new ParkingLotVo();
-		BeanUtilEx.copyProperties(vo, po);
+//		BeanUtilEx.copyProperties(vo, po);
 		
 		return vo;
 	}

@@ -66,7 +66,7 @@ public class Bill extends idEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "license_plate_id", insertable = false, updatable = false)
-	private LicensePlate licensePlate;
+	private License licensePlate;
 	
 	/**
 	 * 所属停车记录
@@ -221,11 +221,11 @@ public class Bill extends idEntity {
 		this.licensePlateId = licensePlateId;
 	}
 
-	public LicensePlate getLicensePlate() {
+	public License getLicensePlate() {
 		return licensePlate;
 	}
 
-	public void setLicensePlate(LicensePlate licensePlate) {
+	public void setLicensePlate(License licensePlate) {
 		this.licensePlate = licensePlate;
 	}
 
