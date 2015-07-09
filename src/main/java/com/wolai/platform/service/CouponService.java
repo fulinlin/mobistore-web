@@ -6,7 +6,10 @@ import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
 
-public interface AssetService extends CommonService {
+public interface CouponService extends CommonService {
+
+	List<Coupon> listByUser(String userId);
+	
 
 
 }

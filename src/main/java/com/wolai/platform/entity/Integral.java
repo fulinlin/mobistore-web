@@ -28,6 +28,11 @@ public class Integral extends idEntity {
 	 */
 	private BigDecimal balance;
 	
+  	/**
+  	 * 是否已使用
+  	 */
+  	private Boolean isUsed = false;
+	
 	/**
 	 * 所属用户
 	 */
@@ -37,4 +42,36 @@ public class Integral extends idEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private SysUser user;
+
+	public BigDecimal getBalance() {
+		return balance;
+	}
+
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public SysUser getUser() {
+		return user;
+	}
+
+	public void setUser(SysUser user) {
+		this.user = user;
+	}
+
+	public Boolean getIsUsed() {
+		return isUsed;
+	}
+
+	public void setIsUsed(Boolean isUsed) {
+		this.isUsed = isUsed;
+	}
 }

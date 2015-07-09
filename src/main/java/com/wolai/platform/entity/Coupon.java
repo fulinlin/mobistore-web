@@ -97,6 +97,11 @@ public class Coupon extends idEntity {
   	private String origin;
   	
   	/**
+  	 * 是否已使用
+  	 */
+  	private Boolean isUsed = false;
+  	
+  	/**
   	 * 备注
   	 */
   	private String note;
@@ -180,4 +185,13 @@ public class Coupon extends idEntity {
 	public void setCarNo(String carNo) {
 		this.carNo = carNo;
 	}
+
+	public Boolean getIsUsed() {
+		return isUsed;
+	}
+
+	public void setIsUsed(Boolean isUsed) {
+		this.isUsed = isUsed;
+	}
+
 }
