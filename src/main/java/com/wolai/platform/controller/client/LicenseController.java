@@ -83,10 +83,9 @@ public class LicenseController {
 	public Map<String,Object> update(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
-		SysUser user = userService.getUserByToken(token);
-		String itemId = json.get("itemId");
+		String id = json.get("id");
 		
-		License po = (License) licensePlateService.getDao().get(License.class, itemId);
+		License po = (License) licensePlateService.getDao().get(License.class, id);
 		po.setCarNo(json.get("carNo"));
 		po.setFrameNumber(json.get("frameNumber"));
 		po.setBrand(json.get("brand"));

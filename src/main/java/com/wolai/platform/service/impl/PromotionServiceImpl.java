@@ -11,7 +11,9 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
+import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.ParkingLot;
+import com.wolai.platform.entity.Promotion;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.service.ParkingLotService;
@@ -21,5 +23,18 @@ import com.wolai.platform.service.UserService;
 @Service
 public class PromotionServiceImpl extends CommonServiceImpl implements PromotionService {
 
+	@Override
+	public List<Promotion> listByUser(String userId) {
+		Date now = new Date();
+		DetachedCriteria dc = DetachedCriteria.forClass(Promotion.class);
+		
+		dc.add(Restrictions.eq("isDisable", false));
+		dc.add(Restrictions.le("startTime", now));
+		dc.add(Restrictions.ge("endTime", now));
+		
+		List<Promotion> promotions = (List<Promotion>) findAllByCriteria(dc);
+		
+		return promotions;
+	}
 
 }

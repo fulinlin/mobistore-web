@@ -37,6 +37,11 @@ public class idEntity implements Serializable {
 	 */
 	protected Boolean isDelete=Boolean.FALSE;
 	
+	/**
+	 * 禁用标记位
+	 */
+	protected Boolean isDisable=Boolean.FALSE;
+	
 /*	@PrePersist
 	public void prePersist(){
 		this.id = IdGen.uuid();
@@ -57,5 +62,13 @@ public class idEntity implements Serializable {
 
 	public void setIsDelete(Boolean isDelete) {
 		this.isDelete = isDelete;
+	}
+
+	public Boolean getIsDisable() {
+		return isDisable;
+	}
+
+	public void setIsDisable(Boolean isDisable) {
+		this.isDisable = isDisable;
 	}
 }

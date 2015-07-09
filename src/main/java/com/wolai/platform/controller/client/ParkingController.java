@@ -40,11 +40,8 @@ public class ParkingController {
 	public ParkingLotVo packInfo(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
 		
 		SysUser user = userService.getUserByToken(token);
-		
 		String userId = user.getId();
-		ParkingRecord parkingRecord = parkingService.packInfo(userId);
-		
-		ParkingLot po = (ParkingLot) parkingService.get(ParkingLot.class, userId);
+		ParkingRecord po = parkingService.packInfo(userId);
 
 		ParkingLotVo vo = new ParkingLotVo();
 		BeanUtilEx.copyProperties(vo, po);

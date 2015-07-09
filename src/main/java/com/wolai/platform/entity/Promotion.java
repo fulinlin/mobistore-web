@@ -64,7 +64,7 @@ public class Promotion extends idEntity {
 	/**
 	 * 截至时间
 	 */
-	private Date endTile;
+	private Date endTime;
 	
 	/**
 	 * 限制时间
@@ -103,12 +103,12 @@ public class Promotion extends idEntity {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTile() {
-		return endTile;
+	public Date getEndTime() {
+		return endTime;
 	}
 
-	public void setEndTile(Date endTile) {
-		this.endTile = endTile;
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	public PromotionLimitType getLimitType() {

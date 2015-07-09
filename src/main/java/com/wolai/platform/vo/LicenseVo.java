@@ -1,7 +1,7 @@
 package com.wolai.platform.vo;
 
 public class LicenseVo {
-	
+	private String id;
 	private String carNo;
 	private String frameNumber;
 	private String brand;
@@ -30,6 +30,12 @@ public class LicenseVo {
 	}
 	public void setIsPostpaid(Boolean isPostpaid) {
 		this.isPostpaid = isPostpaid;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

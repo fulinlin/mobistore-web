@@ -6,6 +6,8 @@ import java.util.Date;
 import com.wolai.platform.entity.Coupon.CouponType;
 
 public class CouponVo {
+	private String id;
+	
   	private String carNo;
 
 	private CouponType type;
@@ -94,6 +96,14 @@ public class CouponVo {
 
 	public void setIsUsed(Boolean isUsed) {
 		this.isUsed = isUsed;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.wolai.platform.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +23,7 @@ public class SysMessageSend extends idEntity {
 	 */
 	private static final long serialVersionUID = -4619536980704689875L;
 
-	@Column(name="userId")
+	@Column(name="user_id")
 	private String userId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -36,6 +38,11 @@ public class SysMessageSend extends idEntity {
 	private SysMessage message;
 
 	private Boolean isRead=Boolean.FALSE;
+	
+	/**
+	 * 发送时间
+	 */
+	private Date sendTime;
 	
 	public String getUserId() {
 		return userId;
@@ -75,6 +82,14 @@ public class SysMessageSend extends idEntity {
 
 	public void setIsRead(Boolean isRead) {
 		this.isRead = isRead;
+	}
+
+	public Date getSendTime() {
+		return sendTime;
+	}
+
+	public void setSendTime(Date sendTime) {
+		this.sendTime = sendTime;
 	}
 	
 }

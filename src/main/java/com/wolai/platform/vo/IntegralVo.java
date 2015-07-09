@@ -3,7 +3,7 @@ package com.wolai.platform.vo;
 import java.math.BigDecimal;
 
 public class IntegralVo {
-
+	private String id;
 	private BigDecimal balance;
 	
 	private Boolean isUsed;
@@ -22,6 +22,14 @@ public class IntegralVo {
 
 	public void setIsUsed(Boolean isUsed) {
 		this.isUsed = isUsed;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 }

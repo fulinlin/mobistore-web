@@ -81,16 +81,16 @@ public class AssetController {
 	@RequestMapping(value="detail")
 	@ResponseBody
 	public Object detail(HttpServletRequest request, @RequestBody Map<String, String> json){
-		String itemId = json.get("itemId");
-		String itemType = json.get("itemType");
+		String id = json.get("id");
+		String type = json.get("type");
 		
-		if ("coupon".equals(itemType)) {
-			Coupon coupon = (Coupon) couponService.get(Coupon.class, itemId);
+		if ("coupon".equals(type)) {
+			Coupon coupon = (Coupon) couponService.get(Coupon.class, id);
 			CouponVo vo = new CouponVo();
 			BeanUtilEx.copyProperties(vo, coupon);
 			return vo;
-		} else if("integral".equals(itemType)) {
-			Integral integral = (Integral) integralService.get(Coupon.class, itemId);
+		} else if("integral".equals(type)) {
+			Integral integral = (Integral) integralService.get(Coupon.class, id);
 			IntegralVo vo = new IntegralVo();
 			BeanUtilEx.copyProperties(vo, integral);
 			return vo;
