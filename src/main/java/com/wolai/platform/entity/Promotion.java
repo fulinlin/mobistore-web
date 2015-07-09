@@ -3,6 +3,8 @@ package com.wolai.platform.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
@@ -69,6 +71,7 @@ public class Promotion extends idEntity {
 	/**
 	 * 限制时间
 	 */
+	@Enumerated(EnumType.STRING)
 	private PromotionLimitType limitType;
 
 	public String getTitle() {
