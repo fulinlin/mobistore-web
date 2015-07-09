@@ -29,4 +29,10 @@ public class ParkingLotServiceImpl extends CommonServiceImpl implements ParkingL
 		return ls;
 	}
 
+	@Override
+	public void save(Object o) {
+		getDao().save(o);
+	}
+	
+
 }

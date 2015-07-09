@@ -92,7 +92,6 @@
 	            <ref bean="stat-filter" />
 	        </list>
     </property>
-		<!-- <property name="useGloalDataSourceStat" value="true" /> -->
 	</bean>
 
 	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">

@@ -38,7 +38,7 @@ public class SysRole extends idEntity {
      * parent id
      */
     @Column(name = "parent_id")
-    private Long parentId;
+    private String parentId;
     
     /**
      * parent
@@ -78,11 +78,11 @@ public class SysRole extends idEntity {
         this.name = name;
     }
 
-    public Long getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 

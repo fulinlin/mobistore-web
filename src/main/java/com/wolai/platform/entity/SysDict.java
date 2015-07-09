@@ -43,7 +43,7 @@ public class SysDict extends idEntity {
      * 父字典
      */
     @Column(name = "parent_id")
-    private Long parentId;
+    private String parentId;
     
     /**
      * 父字典
@@ -76,11 +76,11 @@ public class SysDict extends idEntity {
         this.value = value;
     }
 
-    public Long getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 

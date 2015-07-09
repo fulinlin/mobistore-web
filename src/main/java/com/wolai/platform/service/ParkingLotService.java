@@ -10,4 +10,5 @@ public interface ParkingLotService extends CommonService {
 	
 	List<ParkingLot> listByCity(String city);
 
+	void save(Object o);
 }
