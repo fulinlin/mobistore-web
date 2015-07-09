@@ -5,6 +5,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -52,7 +55,8 @@ public class Settlement extends idEntity {
 	@Column(name="account_id")
 	private String accountId;
 	
-	@Column(name="account_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", insertable = false, updatable = false)
 	private SysAccount account;
 
 	public Date getCreateTime() {

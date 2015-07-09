@@ -115,7 +115,8 @@ public class Bill extends idEntity {
 	@Column(name="account_id")
 	private String accountId;
 	
-	@Column(name="account_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", insertable = false, updatable = false)
 	private SysAccount account;
 
 	/**

@@ -58,7 +58,7 @@ public class IntegralRecord extends idEntity {
 	 * 积分变动类型
 	 */
 	@Enumerated(EnumType.STRING)
-	private int type;
+	private IntegralChangeType type;
 	
 	/**
 	 * 变动数量
@@ -71,20 +71,20 @@ public class IntegralRecord extends idEntity {
 	@Column(name="relation_id")
 	private String relationId;
 	
-//	@Any(metaColumn=@Column(name="type"))
-//    @AnyMetaDef(idType="string", metaType="string",
-//        metaValues={
-//         @MetaValue(targetEntity=ParkingRecord.class, value="parking"),
-//         @MetaValue(targetEntity=Coupon.class, value="consum"),
-//    })
-//    @JoinColumn(name="relation_id",insertable=false,updatable=false)
-//	private Object relation;
+	@Any(metaColumn=@Column(name="type"))
+    @AnyMetaDef(idType="string", metaType="string",
+        metaValues={
+         @MetaValue(targetEntity=ParkingRecord.class, value="parking"),
+         @MetaValue(targetEntity=Coupon.class, value="consum"),
+    })
+    @JoinColumn(name="relation_id",insertable=false,updatable=false)
+	private Object relation;
 
-	public int getType() {
+	public IntegralChangeType getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(IntegralChangeType type) {
 		this.type = type;
 	}
 
@@ -104,12 +104,12 @@ public class IntegralRecord extends idEntity {
 		this.relationId = relationId;
 	}
 
-//	public Object getRelation() {
-//		return relation;
-//	}
-//
-//	public void setRelation(Object relation) {
-//		this.relation = relation;
-//	}
-//	
+	public Object getRelation() {
+		return relation;
+	}
+
+	public void setRelation(Object relation) {
+		this.relation = relation;
+	}
+	
 }
