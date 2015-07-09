@@ -25,7 +25,7 @@ import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller
-@RequestMapping(Constant.API_CLIENT + "parkingLot/")
+@RequestMapping(Constant.API_CLIENT + "parking/")
 public class ParkingController {
 	
 	@Autowired

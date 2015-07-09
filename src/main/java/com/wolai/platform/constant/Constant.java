@@ -69,7 +69,7 @@ public final class Constant {
   	}
   	
   	public static enum ParkStatus{
-  		IN(1), PACKED(0), OUT(-1);
+  		IN(0), PACKED(1), OUT(10);
   		
   		private ParkStatus(int code){
   			this.code = code;

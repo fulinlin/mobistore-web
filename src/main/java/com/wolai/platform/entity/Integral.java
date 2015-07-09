@@ -28,11 +28,6 @@ public class Integral extends idEntity {
 	 */
 	private BigDecimal balance;
 	
-  	/**
-  	 * 是否已使用
-  	 */
-  	private Boolean isUsed = false;
-	
 	/**
 	 * 所属用户
 	 */
@@ -65,13 +60,5 @@ public class Integral extends idEntity {
 
 	public void setUser(SysUser user) {
 		this.user = user;
-	}
-
-	public Boolean getIsUsed() {
-		return isUsed;
-	}
-
-	public void setIsUsed(Boolean isUsed) {
-		this.isUsed = isUsed;
 	}
 }

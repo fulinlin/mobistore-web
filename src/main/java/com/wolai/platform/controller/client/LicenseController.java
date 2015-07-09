@@ -29,7 +29,7 @@ import com.wolai.platform.vo.LicenseVo;
 import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller
-@RequestMapping(Constant.API_CLIENT + "licensePlate/")
+@RequestMapping(Constant.API_CLIENT + "license/")
 public class LicenseController {
 	
 	@Autowired

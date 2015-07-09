@@ -26,20 +26,17 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	}
 
 	@Override
-	public String login(String token, String phone, String password) {
+	public String login(String phone, String password) {
 		String newToken = null;
-		List<SysUser> users;
+		List<SysUser> users;	
+
+		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
+		dc.add(Restrictions.eq("phone", phone));
+		dc.add(Restrictions.eq("password", password));
+		dc.add(Restrictions.eq("isDelete", false));
+		dc.add(Restrictions.eq("isDisable", false));
+		users = (List<SysUser>) findAllByCriteria(dc);
 		
-		if (StringUtils.isNotEmpty(token)) {
-			DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
-			dc.add(Restrictions.eq("authToken", token));
-			users = (List<SysUser>) findAllByCriteria(dc);
-		} else {
-			DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
-			dc.add(Restrictions.eq("phone", phone));
-			dc.add(Restrictions.eq("password", password));
-			users = (List<SysUser>) findAllByCriteria(dc);
-		}
 		if (users.size() > 0) {
 			SysUser user = users.get(0);
 			newToken = UUID.randomUUID().toString();
@@ -47,6 +44,20 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 			user.setLastLoginTime(new Date());
 			saveOrUpdate(user);
 		} 
+		return newToken;
+	}
+	
+	@Override
+	public String loginWithToken(String token) {
+		String newToken = null;
+		List<SysUser> users;
+		
+		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
+		dc.add(Restrictions.eq("authToken", token));
+		dc.add(Restrictions.eq("isDelete", false));
+		dc.add(Restrictions.eq("isDisable", false));
+		users = (List<SysUser>) findAllByCriteria(dc);
+
 		return newToken;
 	}
 

@@ -6,7 +6,8 @@ import com.wolai.platform.entity.SysUser;
 
 public interface UserService extends CommonService {
 	
-	String login(String token, String email, String password);
+	String login(String email, String password);
+	String loginWithToken(String token);
 
 	SysUser saveOrUpdate(SysUser user);
 
