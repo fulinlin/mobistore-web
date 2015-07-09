@@ -6,20 +6,16 @@ import com.wolai.platform.entity.SysUser;
 
 public interface UserService extends CommonService {
 	
-	String login(String email, String password);
-	String loginWithToken(String token);
-
 	SysUser saveOrUpdate(SysUser user);
 
-	boolean logout(String token);
-
-	Map create(String phone, String password);
+	Map registerPers(String phone, String password);
+	boolean loginWithToken(String token);
+	String loginPers(String phone, String password);
+	boolean logoutPers(String token);
+	Map<String, Object> updateProfilePers(String phone, String password, String newPassword);
 
 	SysUser getUserByPhone(String phone);
 	SysUser getUserByPhoneAndPassword(String phone, String password);
-
-	Map<String, Object> updateProfile(String phone, String oldPassword, String newPassword);
-
 	SysUser getUserByToken(String token);
 
 }

@@ -41,7 +41,7 @@ public class UserController {
 			return ret;
 		}
 
-		Map map = userService.create(phone, password);
+		Map map = userService.registerPers(phone, password);
 		if ((Boolean) map.get("success")) {
 			ret.put("token", map.get("token"));
 			ret.put("code", RespCode.SUCCESS.Code());
@@ -53,7 +53,7 @@ public class UserController {
 		return ret;
 	}
 
-	@AuthPassport(validate=true)
+	@AuthPassport(validate=false)
 	@RequestMapping(value="login")
 	@ResponseBody
 	public Map<String,Object> login(HttpServletRequest request, @RequestBody Map<String, String> json){
@@ -67,7 +67,7 @@ public class UserController {
 			return ret;
 		}
 
-		String newToken = userService.login(phone, password);
+		String newToken = userService.loginPers(phone, password);
 		if (StringUtils.isNotEmpty(newToken)) {
 			ret.put("token", newToken);
 			ret.put("code", RespCode.SUCCESS.Code());
@@ -78,10 +78,10 @@ public class UserController {
 		return ret;
 	}
 	
-	@AuthPassport(validate=true)
-	@RequestMapping(value="login")
+	@AuthPassport(validate=false)
+	@RequestMapping(value="loginWithToken")
 	@ResponseBody
-	public Map<String,Object> loginWithToken(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+	public Map<String,Object> loginWithToken(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
 		if (StringUtils.isEmpty(token)) {
@@ -90,9 +90,8 @@ public class UserController {
 			return ret;
 		}
 
-		String newToken = userService.loginWithToken(token);
-		if (StringUtils.isNotEmpty(newToken)) {
-			ret.put("token", newToken);
+		boolean success = userService.loginWithToken(token);
+		if (success) {
 			ret.put("code", RespCode.SUCCESS.Code());
 		} else {
 			ret.put("code", RespCode.FAIL.Code());
@@ -104,12 +103,10 @@ public class UserController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="logout")
 	@ResponseBody
-	public Map<String,Object> logout(HttpServletRequest request, @RequestBody Map<String, String> json){
+	public Map<String,Object> logout(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
-		
-		String phone = json.get("phone");
 
-		boolean success = userService.logout(phone);
+		boolean success = userService.logoutPers(token);
 		if (success) {
 			ret.put("code", RespCode.SUCCESS.Code());
 		} else {
@@ -123,11 +120,10 @@ public class UserController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="profile")
 	@ResponseBody
-	public Map<String,Object> profile(HttpServletRequest request, @RequestBody Map<String, String> json){
+	public Map<String,Object> profile(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret = new HashMap<String, Object>(); 
 		
-		String phone = json.get("phone");
-		SysUser user = userService.getUserByPhone(phone);
+		SysUser user = userService.getUserByToken(token);
 		
 		if (user != null) {
 			ret.put("code", RespCode.SUCCESS.Code());
@@ -148,17 +144,17 @@ public class UserController {
 		Map<String,Object> ret = new HashMap<String, Object>(); 
 		
 		String phone = json.get("phone");
-		String oldPassword = json.get("oldPassword");
+		String password = json.get("password");
 		String newPassword = json.get("newPassword");
 		
-		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(oldPassword) 
+		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) 
 				|| StringUtils.isEmpty(newPassword)) {
 			ret.put("code", RespCode.FAIL.Code());
 			ret.put("msg", "phone or password error");
 			return ret;
 		}
 		
-		Map<String,Object> map = userService.updateProfile(phone, oldPassword, newPassword);
+		Map<String,Object> map = userService.updateProfilePers(phone, password, newPassword);
 		
 		if ((Boolean) map.get("success")) {
 			ret.put("code", RespCode.SUCCESS.Code());

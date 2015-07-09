@@ -26,12 +26,12 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	}
 
 	@Override
-	public String login(String phone, String password) {
+	public String loginPers(String phone, String password) {
 		String newToken = null;
 		List<SysUser> users;	
 
 		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
-		dc.add(Restrictions.eq("phone", phone));
+		dc.add(Restrictions.eq("mobile", phone));
 		dc.add(Restrictions.eq("password", password));
 		dc.add(Restrictions.eq("isDelete", false));
 		dc.add(Restrictions.eq("isDisable", false));
@@ -48,28 +48,14 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	}
 	
 	@Override
-	public String loginWithToken(String token) {
-		String newToken = null;
-		List<SysUser> users;
+	public boolean loginWithToken(String token) {
 		
 		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
 		dc.add(Restrictions.eq("authToken", token));
 		dc.add(Restrictions.eq("isDelete", false));
 		dc.add(Restrictions.eq("isDisable", false));
-		users = (List<SysUser>) findAllByCriteria(dc);
-
-		return newToken;
-	}
-
-	@Override
-	public boolean logout(String phone) {
-		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
-		dc.add(Restrictions.eq("phone", phone));
 		List users = (List<SysUser>) findAllByCriteria(dc);
 		if (users.size() > 0) {
-			SysUser user = (SysUser) users.get(0);
-			user.setAuthToken(null);
-			saveOrUpdate(user);
 			return true;
 		} else {
 			return false;
@@ -77,7 +63,18 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> create(String phone, String password) {
+	public boolean logoutPers(String token) {
+		SysUser user = getUserByToken(token);
+		if (user != null) {
+			user.setAuthToken(null);
+			saveOrUpdate(user);
+		}
+
+		return true;
+	}
+
+	@Override
+	public Map<String, Object> registerPers(String phone, String password) {
 		Map<String, Object> ret = new HashMap<String, Object>(); 
 		
 		SysUser po = getUserByPhone(phone);
@@ -138,10 +135,10 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> updateProfile(String phone, String oldPhone,String newPassword) {
+	public Map<String, Object> updateProfilePers(String phone, String password,String newPassword) {
 		Map<String, Object> ret = new HashMap<String, Object>(); 
 
-		SysUser po = getUserByPhoneAndPassword(phone, oldPhone);
+		SysUser po = getUserByPhoneAndPassword(phone, password);
 		if (po == null) {
 			ret.put("success", false);
 			ret.put("msg", "user not found");
