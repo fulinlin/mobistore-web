@@ -145,14 +145,13 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 			return ret;
 		}
 		
-		SysUser user = new SysUser();
-		user.setMobile(phone);
-		user.setPassword(newPassword);
-		user.setCustomerType(UserType.INDIVIDUAL);
+		po.setMobile(phone);
+		po.setPassword(newPassword);
+		po.setCustomerType(UserType.INDIVIDUAL);
 		String newToken = UUID.randomUUID().toString();
-		user.setAuthToken(newToken);
-		user.setLastLoginTime(new Date());
-		saveOrUpdate(user);
+		po.setAuthToken(newToken);
+		po.setLastLoginTime(new Date());
+		saveOrUpdate(po);
 		
 		ret.put("token", newToken);
 		ret.put("success", true);
