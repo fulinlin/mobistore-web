@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wolai.platform.annotation.AuthPassport;
+import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Coupon;
@@ -53,28 +54,31 @@ public class AssetController {
 		SysUser uesr = userService.getUserByToken(token);
 		String userId = uesr.getId();
 
-		List<Coupon> couponList = couponService.listByUser(userId);
-		List<Integral> integralList = integralService.listByUser(userId);
+		Page couponPage = couponService.listByUser(userId);
+		Integral integral = integralService.getByUser(userId);
 		
 		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
-		List<IntegralVo> integralVoList = new ArrayList<IntegralVo>();
+		Map<String, Object> ret = new HashMap<String, Object>();
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		for (Coupon po : couponList) {
+		for (Object obj : couponPage.getItems()) {
+			Coupon po = (Coupon) obj;
 			CouponVo vo = new CouponVo();
 			BeanUtilEx.copyProperties(vo, po);
 			couponVoList.add(vo);
 		}
-		for (Integral po : integralList) {
-			IntegralVo vo = new IntegralVo();
-			BeanUtilEx.copyProperties(vo, po);
-			integralVoList.add(vo);
-		}
+
+		IntegralVo integralVo = new IntegralVo();
+		BeanUtilEx.copyProperties(integralVo, integral);
 		
-		map.put("coupons", couponVoList);
-		map.put("integrals", integralVoList);
-		return map;
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		ret.put("code", RespCode.SUCCESS.Code());
+		data.put("coupons", couponVoList);
+		data.put("integral", integralVo);
+		ret.put("data", data);
+		return ret;
 	}
 	
 	@AuthPassport(validate=true)

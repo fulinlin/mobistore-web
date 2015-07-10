@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wolai.platform.annotation.AuthPassport;
+import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.ParkingLot;
@@ -37,10 +38,11 @@ public class ParkingLotController {
 		String city = json.get("city");
 
 		List<ParkingLotVo> vols = new ArrayList<ParkingLotVo>();
-		List<ParkingLot> ls = parkingLotService.listByCity(city);
-		for (ParkingLot parkingLot : ls) {
+		Page page = parkingLotService.listByCity(city);
+		for (Object obj : page.getItems()) {
+			ParkingLot po = (ParkingLot) obj;
 			ParkingLotVo vo = new ParkingLotVo();
-			BeanUtilEx.copyProperties(vo, parkingLot);
+			BeanUtilEx.copyProperties(vo, po);
 			vols.add(vo);
 		}
 		

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wolai.platform.annotation.AuthPassport;
+import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.ParkingLot;
@@ -49,10 +50,11 @@ public class MsgController {
 		
 		SysUser user = userService.getUserByToken(token);
 		String userId = user.getId();
-		List<SysMessageSend> ls = msgService.listByUser(userId);
+		Page page = msgService.listByUser(userId);
 
 		List<MessageVo> vols = new ArrayList<MessageVo>();
-		for (SysMessageSend po : ls) {
+		for (Object obj : page.getItems()) {
+			SysMessageSend po = (SysMessageSend)obj;
 			MessageVo vo = new MessageVo();
 			BeanUtilEx.copyProperties(vo, po.getMessage());
 			vo.setSendTime(po.getSendTime());

@@ -25,11 +25,14 @@ import com.wolai.platform.service.UserService;
 public class IntegralServiceImpl extends CommonServiceImpl implements IntegralService {
 
 	@Override
-	public List<Integral> listByUser(String userId) {
+	public Integral getByUser(String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Integral.class);
 		dc.add(Restrictions.eq("ownerId", userId));
-		List<Integral> coupons = (List<Integral>) findAllByCriteria(dc);
-		
-		return coupons;
+		List<Integral> ls = (List<Integral>) findAllByCriteria(dc);
+		if (ls.size() > 0) {
+			return ls.get(0);
+		} else {
+			return null;
+		}
 	}
 }

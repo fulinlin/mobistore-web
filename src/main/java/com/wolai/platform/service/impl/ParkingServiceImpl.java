@@ -12,6 +12,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
+import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
@@ -26,15 +27,27 @@ import com.wolai.platform.util.TimeUtils;
 public class ParkingServiceImpl extends CommonServiceImpl implements ParkingService {
 
 	@Override
-	public ParkingRecord packInfo(String userId) {
+	public Page packInfo(String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
 		dc.add(Restrictions.eq("userId", userId));
 		dc.add(Restrictions.lt("driveInTime", TimeUtils.getDateBefore(new Date(), 10)));
 		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
 		dc.addOrder(Order.desc("driveInTime"));
+
+		Page ls = findPage(dc, 0, 3);
 		
-		List<ParkingRecord> ls = (List<ParkingRecord>) findAllByCriteria(dc);
+		return ls;
+	}
+
+	@Override
+	public Page packHistory(String userId) {
+		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
+		dc.add(Restrictions.eq("userId", userId));
+		dc.add(Restrictions.eq("parkStatus", ParkingRecord.ParkStatus.OUT));
+		dc.addOrder(Order.desc("driveInTime"));
+
+		Page ls = findPage(dc, 0, 10);
 		
-		return ls.get(0);
+		return ls;
 	}
 }

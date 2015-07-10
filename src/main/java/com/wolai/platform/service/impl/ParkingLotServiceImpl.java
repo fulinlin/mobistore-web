@@ -11,6 +11,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
+import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.SysUser.UserType;
@@ -21,12 +22,12 @@ import com.wolai.platform.service.UserService;
 public class ParkingLotServiceImpl extends CommonServiceImpl implements ParkingLotService {
 
 	@Override
-	public List<ParkingLot> listByCity(String city) {
+	public Page listByCity(String city) {
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingLot.class);
 		dc.add(Restrictions.eq("city", city));
-		List<ParkingLot> ls = (List<ParkingLot>) findAllByCriteria(dc);
+		Page page = findPage(dc, 0, 1000);
 		
-		return ls;
+		return page;
 	}
 
 	@Override

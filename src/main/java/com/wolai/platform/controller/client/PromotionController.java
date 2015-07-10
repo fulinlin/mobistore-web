@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wolai.platform.annotation.AuthPassport;
+import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.ParkingLot;
@@ -47,8 +48,9 @@ public class PromotionController {
 		String userId = user.getId();
 		
 		List<PromotionVo> vols = new ArrayList<PromotionVo>();
-		List<Promotion> ls = promotionService.listByUser(userId);
-		for (Promotion promotion : ls) {
+		Page page = promotionService.listByUser(userId);
+		for (Object obj : page.getItems()) {
+			Promotion promotion = (Promotion)obj;
 			PromotionVo vo = new PromotionVo();
 			BeanUtilEx.copyProperties(vo, promotion);
 			vols.add(vo);
