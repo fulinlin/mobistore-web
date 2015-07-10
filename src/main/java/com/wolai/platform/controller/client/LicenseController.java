@@ -18,16 +18,12 @@ import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
-import com.wolai.platform.entity.FeedBack;
 import com.wolai.platform.entity.License;
-import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.SysUser;
-import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.LicensePlateService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.LicenseVo;
-import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "license/")
@@ -39,14 +35,12 @@ public class LicenseController {
 	@Autowired
 	UserService userService;
 
-	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret =new HashMap<String, Object>();
-		
-		SysUser uesr = userService.getUserByToken(token);
-		String userId = uesr.getId();
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
+		String userId = user.getId();
 
 		List<LicenseVo> vols = new ArrayList<LicenseVo>();
 		Page page = licensePlateService.listByUser(userId);
@@ -61,8 +55,7 @@ public class LicenseController {
 		ret.put("data", vols);
 		return ret;
 	}
-	
-	@AuthPassport(validate=true)
+
 	@RequestMapping(value="create")
 	@ResponseBody
 	public Map<String,Object> create(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){

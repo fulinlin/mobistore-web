@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wolai.platform.annotation.AuthPassport;
+import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.UserService;
-import com.wolai.platform.constant.Constant;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "user/")
@@ -99,8 +99,7 @@ public class UserController {
 		
 		return ret;
 	}
-	
-	@AuthPassport(validate=true)
+
 	@RequestMapping(value="logout")
 	@ResponseBody
 	public Map<String,Object> logout(HttpServletRequest request, @RequestParam String token){
@@ -117,13 +116,11 @@ public class UserController {
 		return ret;
 	}
 	
-	@AuthPassport(validate=true)
 	@RequestMapping(value="profile")
 	@ResponseBody
 	public Map<String,Object> profile(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret = new HashMap<String, Object>(); 
-		
-		SysUser user = userService.getUserByToken(token);
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		
 		if (user != null) {
 			ret.put("code", RespCode.SUCCESS.Code());
@@ -155,7 +152,6 @@ public class UserController {
 		}
 		
 		Map<String,Object> map = userService.updateProfilePers(phone, password, newPassword);
-		
 		if ((Boolean) map.get("success")) {
 			ret.put("code", RespCode.SUCCESS.Code());
 		} else {

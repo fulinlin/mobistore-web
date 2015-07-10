@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
@@ -34,7 +33,6 @@ public class PromotionController {
 	@Autowired
 	PromotionService promotionService;
 
-	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token){
@@ -56,8 +54,7 @@ public class PromotionController {
 		ret.put("data", vols);
 		return ret;
 	}
-	
-	@AuthPassport(validate=true)
+
 	@RequestMapping(value="detail")
 	@ResponseBody
 	public Map<String,Object> detail(HttpServletRequest request, @RequestBody Map<String, String> json){

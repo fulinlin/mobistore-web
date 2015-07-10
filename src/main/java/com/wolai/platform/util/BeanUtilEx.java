@@ -8,7 +8,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.BigDecimalConverter;
 import org.apache.commons.beanutils.converters.DateConverter;
-import org.apache.commons.beanutils.converters.SqlDateConverter;
 
 public class BeanUtilEx extends BeanUtils {
 

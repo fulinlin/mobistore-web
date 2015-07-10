@@ -1,8 +1,6 @@
 package com.wolai.platform.controller.client;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,22 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
-import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.FeedBack;
-import com.wolai.platform.entity.RewardPoints;
-import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.SysUser;
-import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.FeedbackService;
 import com.wolai.platform.service.UserService;
-import com.wolai.platform.util.BeanUtilEx;
-import com.wolai.platform.vo.CouponVo;
-import com.wolai.platform.vo.FeedBackVo;
-import com.wolai.platform.vo.RewardPointsVo;
-import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "feedback/")
@@ -39,14 +27,12 @@ public class FeedbackController {
 	
 	@Autowired
 	FeedbackService feedbackService;
-	
-	@AuthPassport(validate=true)
+
 	@RequestMapping(value="submit")
 	@ResponseBody
 	public Map<String,Object> submit(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
-		
-		SysUser user = userService.getUserByToken(token);
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		
 		String content = json.get("content");
 		FeedBack po = new FeedBack();

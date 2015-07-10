@@ -14,23 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
-import com.wolai.platform.entity.ParkingLot;
-import com.wolai.platform.entity.ParkingRecord;
-import com.wolai.platform.entity.Promotion;
 import com.wolai.platform.entity.SysMessage;
 import com.wolai.platform.entity.SysMessageSend;
 import com.wolai.platform.entity.SysUser;
-import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.MsgService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.MessageVo;
-import com.wolai.platform.vo.ParkingLotVo;
-import com.wolai.platform.vo.PromotionVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "msg/")
@@ -42,13 +35,11 @@ public class MsgController {
 	@Autowired
 	MsgService msgService;
 
-	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret = new HashMap<String, Object>();
-		
-		SysUser user = userService.getUserByToken(token);
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 		Page page = msgService.listByUser(userId);
 
@@ -66,8 +57,7 @@ public class MsgController {
 		ret.put("data", vols);
 		return ret;
 	}
-	
-	@AuthPassport(validate=true)
+
 	@RequestMapping(value="detail")
 	@ResponseBody
 	public Map<String,Object> detail(HttpServletRequest request, @RequestBody Map<String, String> json){

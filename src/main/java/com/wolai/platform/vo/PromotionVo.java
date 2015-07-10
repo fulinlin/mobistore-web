@@ -1,11 +1,6 @@
 package com.wolai.platform.vo;
 
-import java.math.BigDecimal;
 import java.util.Date;
-
-import javax.persistence.Lob;
-
-import com.wolai.platform.entity.Coupon.CouponType;
 
 public class PromotionVo {
 	private String id;

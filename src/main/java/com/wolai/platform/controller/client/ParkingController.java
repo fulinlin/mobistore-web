@@ -13,18 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
-import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
-import com.wolai.platform.vo.CouponVo;
-import com.wolai.platform.vo.RewardPointsVo;
 import com.wolai.platform.vo.ParkingVo;
 
 @Controller
@@ -36,14 +32,12 @@ public class ParkingController {
 	
 	@Autowired
 	ParkingService parkingService;
-	
-	@AuthPassport(validate=true)
+
 	@RequestMapping(value="packInfo")
 	@ResponseBody
 	public Map<String,Object> packInfo(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret = new HashMap<String, Object>();
-		
-		SysUser user = userService.getUserByToken(token);
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 		Page page = parkingService.packInfo(userId);
 		
@@ -60,8 +54,7 @@ public class ParkingController {
 		ret.put("data", parkVoList);
 		return ret;
 	}
-	
-	@AuthPassport(validate=true)
+
 	@RequestMapping(value="packHistory")
 	@ResponseBody
 	public Map<String,Object> packHistory(HttpServletRequest request, @RequestParam String token){

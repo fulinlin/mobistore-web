@@ -29,7 +29,6 @@ public class ParkingLotController {
 	@Autowired
 	ParkingLotService parkingLotService;
 
-	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, @RequestBody Map<String, String> json){

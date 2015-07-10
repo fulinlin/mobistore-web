@@ -1,14 +1,12 @@
 package com.wolai.platform.controller.client;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,20 +19,11 @@ import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Coupon;
-import com.wolai.platform.entity.RewardPoints;
-import com.wolai.platform.entity.License;
-import com.wolai.platform.entity.ParkingLot;
-import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
-import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.CouponService;
-import com.wolai.platform.service.RewardPointsService;
-import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.CouponVo;
-import com.wolai.platform.vo.RewardPointsVo;
-import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "coupon/")
@@ -45,14 +34,12 @@ public class CouponController {
 	@Autowired
 	CouponService couponService;
 	
-	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
 	@ResponseBody
 	public Map<String, Object> list(HttpServletRequest request, @RequestParam String token){
 		Map<String, Object> ret = new HashMap<String, Object>();
-		
-		SysUser uesr = userService.getUserByToken(token);
-		String userId = uesr.getId();
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
+		String userId = user.getId();
 
 		Page couponPage = couponService.listByUser(userId);
 		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
@@ -68,8 +55,7 @@ public class CouponController {
 		ret.put("data", couponVoList);
 		return ret;
 	}
-	
-	@AuthPassport(validate=true)
+
 	@RequestMapping(value="listMoney")
 	@ResponseBody
 	public Map<String, Object> listMoney(HttpServletRequest request, @RequestParam String token){

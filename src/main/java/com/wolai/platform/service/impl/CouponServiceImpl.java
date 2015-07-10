@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Coupon;
-import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.service.CouponService;
 
