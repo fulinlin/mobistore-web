@@ -35,4 +35,9 @@ public class IntegralServiceImpl extends CommonServiceImpl implements IntegralSe
 			return null;
 		}
 	}
+
+	@Override
+	public void exchange(Integral integral, String amount, String exchangePlanId) {
+		
+	}
 }

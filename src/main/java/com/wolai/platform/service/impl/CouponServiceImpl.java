@@ -1,11 +1,18 @@
 package com.wolai.platform.service.impl;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
+import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Coupon;
+import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.service.CouponService;
 
@@ -16,6 +23,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 	public Page listByUser(String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
+		dc.add(Restrictions.eq("isUsed", false));
 		Page page = findPage(dc, 0, 1000);
 		
 		return page;
@@ -26,7 +34,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.eq("type", CouponType.MONEY));
-		
+		dc.add(Restrictions.eq("isUsed", false));
 		Page page = findPage(dc, 0, 1000);
 		
 		return page;
@@ -37,8 +45,36 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.eq("type", CouponType.TIME));
+		dc.add(Restrictions.eq("isUsed", false));
 		Page page = findPage(dc, 0, 1000);
 		
 		return page;
+	}
+
+	@Override
+	public Map<String, Object> use(String couponId, String userId) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		Date now = new Date();
+		
+		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
+		dc.add(Restrictions.eq("id", couponId));
+		dc.add(Restrictions.eq("ownerId", userId));
+		dc.add(Restrictions.le("startDate", now));
+		dc.add(Restrictions.ge("endDate", now));
+		dc.add(Restrictions.eq("isUsed", false));
+		
+		List<Coupon> coupons = (List<Coupon>) findAllByCriteria(dc);
+		if (coupons.size() < 1) {
+			ret.put("code", RespCode.FAIL.Code());
+			ret.put("msg", "coupon not available");
+			return ret;
+		}
+		
+		Coupon coupon = coupons.get(0);
+		coupon.setIsUsed(true);
+		getDao().saveOrUpdate(coupon);
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
 	}
 }

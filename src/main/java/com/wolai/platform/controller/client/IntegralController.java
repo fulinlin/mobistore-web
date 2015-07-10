@@ -63,4 +63,5 @@ public class IntegralController {
 		BeanUtilEx.copyProperties(vo, integral);
 		return vo;
 	}
+	
 }
