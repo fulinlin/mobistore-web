@@ -16,6 +16,6 @@ public interface CouponService extends CommonService {
 
 	Page listTimeByUser(String userId);
 
-	Map<String, Object> use(String id, String userId);
+	Map<String, Object> usePers(String id, String userId);
 	
 }

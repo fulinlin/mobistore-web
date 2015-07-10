@@ -136,7 +136,20 @@ public class CouponController {
 		CouponVo vo = new CouponVo();
 		BeanUtilEx.copyProperties(vo, coupon);
 		return vo;
-
 	}
 
+	@AuthPassport(validate=true)
+	@RequestMapping(value="use")
+	@ResponseBody
+	public Object use(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		SysUser user = userService.getUserByToken(token);
+		String userId = user.getId();
+		String couponId = json.get("id");
+		
+		ret = couponService.usePers(couponId, userId);
+
+		return ret;
+	}
 }

@@ -52,7 +52,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 	}
 
 	@Override
-	public Map<String, Object> use(String couponId, String userId) {
+	public Map<String, Object> usePers(String couponId, String userId) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		Date now = new Date();
 		
@@ -72,7 +72,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		
 		Coupon coupon = coupons.get(0);
 		coupon.setIsUsed(true);
-		getDao().saveOrUpdate(coupon);
+//		getDao().saveOrUpdate(coupon);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
