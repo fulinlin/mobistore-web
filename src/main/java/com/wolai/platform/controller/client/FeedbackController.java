@@ -19,7 +19,7 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.FeedBack;
-import com.wolai.platform.entity.Integral;
+import com.wolai.platform.entity.RewardPoints;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.AssetService;

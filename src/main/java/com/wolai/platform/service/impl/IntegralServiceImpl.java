@@ -12,7 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.entity.Coupon;
-import com.wolai.platform.entity.Integral;
+import com.wolai.platform.entity.RewardPoints;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.SysUser.UserType;
@@ -25,10 +25,10 @@ import com.wolai.platform.service.UserService;
 public class IntegralServiceImpl extends CommonServiceImpl implements IntegralService {
 
 	@Override
-	public Integral getByUser(String userId) {
-		DetachedCriteria dc = DetachedCriteria.forClass(Integral.class);
+	public RewardPoints getByUser(String userId) {
+		DetachedCriteria dc = DetachedCriteria.forClass(RewardPoints.class);
 		dc.add(Restrictions.eq("userId", userId));
-		List<Integral> ls = (List<Integral>) findAllByCriteria(dc);
+		List<RewardPoints> ls = (List<RewardPoints>) findAllByCriteria(dc);
 		if (ls.size() > 0) {
 			return ls.get(0);
 		} else {
@@ -37,7 +37,7 @@ public class IntegralServiceImpl extends CommonServiceImpl implements IntegralSe
 	}
 
 	@Override
-	public void exchange(Integral integral, String amount, String exchangePlanId) {
+	public void exchange(RewardPoints rewardPoints, String amount, String exchangePlanId) {
 		
 	}
 }

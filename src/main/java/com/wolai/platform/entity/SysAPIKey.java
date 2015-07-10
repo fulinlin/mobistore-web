@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * 对外接口授权key
+ *  
  * @author Ethan
  *
  */
@@ -22,7 +22,7 @@ public class SysAPIKey extends idEntity {
 	private static final long serialVersionUID = -4775260431590313982L;
 	
 	/**
-	 * 系统token
+	 * 
 	 */
 	private String token;
 	

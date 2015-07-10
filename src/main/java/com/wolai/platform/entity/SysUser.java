@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -15,7 +16,9 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="sys_user")
+@Table(name="sys_user",indexes={
+		@Index(unique=true,columnList="auth_token")
+})
 public class SysUser extends idEntity {
     private static final long serialVersionUID = 7613949261966119827L;
     
@@ -100,6 +103,7 @@ public class SysUser extends idEntity {
     
     private PayType payType=PayType.PERPAID;
 
+    @Column(name="auth_token")
     private String authToken;
     
     private Date lastLoginTime;

@@ -20,7 +20,7 @@ import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Coupon;
-import com.wolai.platform.entity.Integral;
+import com.wolai.platform.entity.RewardPoints;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
@@ -52,15 +52,15 @@ public class IntegralController {
 		SysUser uesr = userService.getUserByToken(token);
 		String userId = uesr.getId();
 
-		Integral integral = integralService.getByUser(userId);
+		RewardPoints rewardPoints = integralService.getByUser(userId);
 		
-		if (integral == null) {
+		if (rewardPoints == null) {
 			ret.put("code", RespCode.FAIL.Code());
 			ret.put("msg", "not found");
 			return ret;
 		}
 		IntegralVo vo = new IntegralVo();
-		BeanUtilEx.copyProperties(vo, integral);
+		BeanUtilEx.copyProperties(vo, rewardPoints);
 		return vo;
 	}
 	

@@ -1,11 +1,11 @@
 package com.wolai.platform.service;
 
-import com.wolai.platform.entity.Integral;
+import com.wolai.platform.entity.RewardPoints;
 
 public interface IntegralService extends CommonService {
 
-	Integral getByUser(String userId);
+	RewardPoints getByUser(String userId);
 
-	void exchange(Integral integral, String amount, String ruleId);
+	void exchange(RewardPoints rewardPoints, String amount, String ruleId);
 	
 }

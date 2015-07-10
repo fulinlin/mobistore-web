@@ -6,7 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Any;
@@ -20,7 +22,7 @@ import org.hibernate.annotations.MetaValue;
  */
 @Entity
 @Table(name="wo_integral_record")
-public class IntegralRecord extends idEntity {
+public class RewardPointsRecord extends idEntity {
 
 	/**
 	 * 
@@ -66,6 +68,20 @@ public class IntegralRecord extends idEntity {
 	private BigDecimal number;
 	
 	/**
+	 * 关联的积分账户
+	 */
+	@Column(name="reward_points_id")
+	private String rewardPointsId;
+	
+	/**
+	 * 关联的积分账户
+	 */
+	@ManyToOne
+	@JoinColumn(name="reward_points_id",insertable=false,updatable=false)
+	private RewardPoints rewardPoints;
+	
+	
+	/**
 	 * 关联记录
 	 */
 	@Column(name="relation_id")
@@ -80,6 +96,16 @@ public class IntegralRecord extends idEntity {
     @JoinColumn(name="relation_id",insertable=false,updatable=false)
 	private Object relation;
 
+	/**
+	 * 所属用户
+	 */
+	@Column(name="user_id")
+	private String userId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+	private SysUser user;
+	
 	public IntegralChangeType getType() {
 		return type;
 	}
@@ -110,6 +136,38 @@ public class IntegralRecord extends idEntity {
 
 	public void setRelation(Object relation) {
 		this.relation = relation;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public SysUser getUser() {
+		return user;
+	}
+
+	public void setUser(SysUser user) {
+		this.user = user;
+	}
+
+	public String getRewardPointsId() {
+		return rewardPointsId;
+	}
+
+	public void setRewardPointsId(String rewardPointsId) {
+		this.rewardPointsId = rewardPointsId;
+	}
+
+	public RewardPoints getRewardPoints() {
+		return rewardPoints;
+	}
+
+	public void setRewardPoints(RewardPoints rewardPoints) {
+		this.rewardPoints = rewardPoints;
 	}
 	
 }

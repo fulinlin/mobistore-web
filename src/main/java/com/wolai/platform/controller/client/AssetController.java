@@ -20,7 +20,7 @@ import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Coupon;
-import com.wolai.platform.entity.Integral;
+import com.wolai.platform.entity.RewardPoints;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
@@ -57,7 +57,7 @@ public class AssetController {
 		String userId = uesr.getId();
 
 		Page couponPage = couponService.listByUser(userId);
-		Integral integral = integralService.getByUser(userId);
+		RewardPoints rewardPoints = integralService.getByUser(userId);
 		
 		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
 		
@@ -70,7 +70,7 @@ public class AssetController {
 		}
 
 		IntegralVo integralVo = new IntegralVo();
-		BeanUtilEx.copyProperties(integralVo, integral);
+		BeanUtilEx.copyProperties(integralVo, rewardPoints);
 		
 		
 		ret.put("code", RespCode.SUCCESS.Code());

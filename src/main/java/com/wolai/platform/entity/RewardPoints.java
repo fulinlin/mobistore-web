@@ -15,8 +15,8 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="wo_integral")
-public class Integral extends idEntity {
+@Table(name="wo_reward_points")
+public class RewardPoints extends idEntity {
 
 	/**
 	 * 

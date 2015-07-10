@@ -11,8 +11,21 @@ package com.wolai.platform.constant;
  */
 
 public final class Constant {
+	
+	/**
+	 * app访问接口前缀
+	 */
 	public static final String API_CLIENT = "api/mobi/";
 	
+	/**
+	 * app响应控制器包名
+	 */
+	public static final String API_CLIENT_PACKAGE="com.wolai.platform.controller.client";
+	
+	/**
+	 * 
+	 */
+	public static final String API_OUT_PACKAGE="com.wolai.platform.controller.api";
     /**
      * 管理员权限编码
      */
