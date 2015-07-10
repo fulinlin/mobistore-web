@@ -10,5 +10,9 @@ import com.wolai.platform.entity.ParkingRecord;
 public interface CouponService extends CommonService {
 
 	Page listByUser(String userId);
+
+	Page listMoneyByUser(String userId);
+
+	Page listTimeByUser(String userId);
 	
 }

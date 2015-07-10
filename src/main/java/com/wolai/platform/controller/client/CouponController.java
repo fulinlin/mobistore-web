@@ -67,6 +67,54 @@ public class CouponController {
 		ret.put("data", couponVoList);
 		return ret;
 	}
+	
+	@AuthPassport(validate=true)
+	@RequestMapping(value="listMoney")
+	@ResponseBody
+	public Map<String, Object> listMoney(HttpServletRequest request, @RequestParam String token){
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		SysUser uesr = userService.getUserByToken(token);
+		String userId = uesr.getId();
+
+		Page couponPage = couponService.listMoneyByUser(userId);
+		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
+		
+		for (Object obj : couponPage.getItems()) {
+			Coupon po = (Coupon) obj;
+			CouponVo vo = new CouponVo();
+			BeanUtilEx.copyProperties(vo, po);
+			couponVoList.add(vo);
+		}
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", couponVoList);
+		return ret;
+	}
+	
+	@AuthPassport(validate=true)
+	@RequestMapping(value="listTime")
+	@ResponseBody
+	public Map<String, Object> listTime(HttpServletRequest request, @RequestParam String token){
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		SysUser uesr = userService.getUserByToken(token);
+		String userId = uesr.getId();
+
+		Page couponPage = couponService.listTimeByUser(userId);
+		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
+		
+		for (Object obj : couponPage.getItems()) {
+			Coupon po = (Coupon) obj;
+			CouponVo vo = new CouponVo();
+			BeanUtilEx.copyProperties(vo, po);
+			couponVoList.add(vo);
+		}
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", couponVoList);
+		return ret;
+	}
 
 
 	@AuthPassport(validate=true)
