@@ -14,7 +14,7 @@ public class BeanUtilEx extends BeanUtils {
 
 	static {
 		ConvertUtils.register(new DateConverter(null), java.util.Date.class);
-		ConvertUtils.register(new BigDecimalConverter(), BigDecimal.class);
+		ConvertUtils.register(new BigDecimalConverter(null), BigDecimal.class);
 	}
 
 	public static void copyProperties(Object target, Object source) {

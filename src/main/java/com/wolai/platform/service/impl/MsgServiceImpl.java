@@ -1,5 +1,6 @@
 package com.wolai.platform.service.impl;
 
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -16,6 +17,7 @@ public class MsgServiceImpl extends CommonServiceImpl implements MsgService {
 	public Page listByUser(String userId) {
 		
 		DetachedCriteria dc = DetachedCriteria.forClass(SysMessageSend.class);
+		dc.setFetchMode("message", FetchMode.JOIN);
 		dc.add(Restrictions.eq("userId", userId));
 		dc.addOrder(Order.desc("sendTime"));
 		Page page = findPage(dc, 0, 1000);

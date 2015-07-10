@@ -27,7 +27,7 @@ public class IntegralServiceImpl extends CommonServiceImpl implements IntegralSe
 	@Override
 	public Integral getByUser(String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Integral.class);
-		dc.add(Restrictions.eq("ownerId", userId));
+		dc.add(Restrictions.eq("userId", userId));
 		List<Integral> ls = (List<Integral>) findAllByCriteria(dc);
 		if (ls.size() > 0) {
 			return ls.get(0);

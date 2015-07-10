@@ -21,6 +21,7 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.Integral;
+import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
@@ -35,18 +36,14 @@ import com.wolai.platform.vo.IntegralVo;
 import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller
-@RequestMapping(Constant.API_CLIENT + "asset/")
-public class AssetController {
+@RequestMapping(Constant.API_CLIENT + "coupon/")
+public class CouponController {
 	@Autowired
 	UserService userService;
 	
 	@Autowired
-	AssetService assetService;
-	@Autowired
 	CouponService couponService;
-	@Autowired
-	IntegralService integralService;
-
+	
 	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
 	@ResponseBody
@@ -57,10 +54,7 @@ public class AssetController {
 		String userId = uesr.getId();
 
 		Page couponPage = couponService.listByUser(userId);
-		Integral integral = integralService.getByUser(userId);
-		
 		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
-		
 		
 		for (Object obj : couponPage.getItems()) {
 			Coupon po = (Coupon) obj;
@@ -68,18 +62,31 @@ public class AssetController {
 			BeanUtilEx.copyProperties(vo, po);
 			couponVoList.add(vo);
 		}
-
-		IntegralVo integralVo = new IntegralVo();
-		BeanUtilEx.copyProperties(integralVo, integral);
-		
 		
 		ret.put("code", RespCode.SUCCESS.Code());
-		
-		Map<String, Object> data = new HashMap<String, Object>();
-		ret.put("code", RespCode.SUCCESS.Code());
-		data.put("coupons", couponVoList);
-		data.put("integral", integralVo);
-		ret.put("data", data);
+		ret.put("data", couponVoList);
 		return ret;
+	}
+
+
+	@AuthPassport(validate=true)
+	@RequestMapping(value="detail")
+	@ResponseBody
+	public Object detail(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String id = json.get("id");
+		
+		Object obj = couponService.get(Coupon.class, id);
+		if (obj == null) {
+			ret.put("code", RespCode.FAIL.Code());
+			ret.put("msg", "not found");
+			return ret;
+		}
+		Coupon coupon = (Coupon) obj;
+		CouponVo vo = new CouponVo();
+		BeanUtilEx.copyProperties(vo, coupon);
+		return vo;
+
 	}
 }

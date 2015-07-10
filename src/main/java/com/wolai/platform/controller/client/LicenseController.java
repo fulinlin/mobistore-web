@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wolai.platform.annotation.AuthPassport;
+import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.FeedBack;
@@ -41,17 +42,18 @@ public class LicenseController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
 	@ResponseBody
-	public Map<String,Object> list(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret =new HashMap<String, Object>();
 		
 		SysUser uesr = userService.getUserByToken(token);
 		String userId = uesr.getId();
 
 		List<LicenseVo> vols = new ArrayList<LicenseVo>();
-		List<License> ls = licensePlateService.listByUser(userId);
-		for (License licensePlate : ls) {
+		Page page = licensePlateService.listByUser(userId);
+		for (Object obj : page.getItems()) {
+			License po = (License)obj;
 			LicenseVo vo = new LicenseVo();
-			BeanUtilEx.copyProperties(vo, licensePlate);
+			BeanUtilEx.copyProperties(vo, po);
 			vols.add(vo);
 		}
 		
@@ -75,7 +77,7 @@ public class LicenseController {
 		po.setIsPostpaid(Boolean.valueOf(json.get("isPostpaid")));
 		po.setUserId(user.getId());
 		
-		licensePlateService.getDao().saveOrUpdate(po);
+		licensePlateService.create(po);
 
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
@@ -89,13 +91,20 @@ public class LicenseController {
 		
 		String id = json.get("id");
 		
-		License po = (License) licensePlateService.getDao().get(License.class, id);
+		Object obj = licensePlateService.get(License.class, id);
+		if (obj == null) {
+			ret.put("code", RespCode.FAIL.Code());
+			ret.put("msg", "not found");
+			return ret;
+		}
+		
+		License po = (License)obj;
 		po.setCarNo(json.get("carNo"));
 		po.setFrameNumber(json.get("frameNumber"));
 		po.setBrand(json.get("brand"));
 		po.setIsPostpaid(Boolean.valueOf(json.get("isPostpaid")));
 		
-		licensePlateService.getDao().saveOrUpdate(po);
+		licensePlateService.update(po);
 
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;

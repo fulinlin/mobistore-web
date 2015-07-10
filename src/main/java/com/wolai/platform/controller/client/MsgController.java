@@ -45,7 +45,7 @@ public class MsgController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
 	@ResponseBody
-	public Map<String,Object> list(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
 		SysUser user = userService.getUserByToken(token);
@@ -56,7 +56,8 @@ public class MsgController {
 		for (Object obj : page.getItems()) {
 			SysMessageSend po = (SysMessageSend)obj;
 			MessageVo vo = new MessageVo();
-			BeanUtilEx.copyProperties(vo, po.getMessage());
+			SysMessage msg = po.getMessage();
+			BeanUtilEx.copyProperties(vo, msg);
 			vo.setSendTime(po.getSendTime());
 			vols.add(vo);
 		}
