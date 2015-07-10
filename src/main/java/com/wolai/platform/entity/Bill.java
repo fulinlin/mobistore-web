@@ -30,19 +30,19 @@ public class Bill extends idEntity {
   		/**
   		 * alipay(支付宝)
   		 */
-  		ALIPAY("alipay"),
+  		ALIPAY("ALIPAY"),
   		/**
   		 * unionpay(银联)
   		 */
-  		UNIONPAY("unionpay"),
+  		UNIONPAY("UNIONPAY"),
   		/**
   		 *remaint(余额)
   		 */
-  		/*REMAINT("remaint"),*/
+  		/*REMAINT("REMAINT"),*/
   		/**
   		 * weixin(微信)
   		 */
-  		WEIXIN("weixin");
+  		WEIXIN("WEIXIN");
   		
   		
   		

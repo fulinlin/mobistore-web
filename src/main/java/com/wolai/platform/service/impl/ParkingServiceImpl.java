@@ -30,7 +30,7 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
 		dc.add(Restrictions.eq("userId", userId));
 		dc.add(Restrictions.lt("driveInTime", TimeUtils.getDateBefore(new Date(), 10)));
-		dc.add(Restrictions.ne("userId", Constant.ParkStatus.OUT));
+		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
 		dc.addOrder(Order.desc("driveInTime"));
 		
 		List<ParkingRecord> ls = (List<ParkingRecord>) findAllByCriteria(dc);

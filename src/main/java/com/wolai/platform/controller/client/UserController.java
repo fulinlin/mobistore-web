@@ -150,7 +150,7 @@ public class UserController {
 		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) 
 				|| StringUtils.isEmpty(newPassword)) {
 			ret.put("code", RespCode.FAIL.Code());
-			ret.put("msg", "phone or password error");
+			ret.put("msg", "parameters error");
 			return ret;
 		}
 		

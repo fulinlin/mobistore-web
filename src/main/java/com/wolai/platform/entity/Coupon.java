@@ -33,12 +33,12 @@ public class Coupon extends idEntity {
   		/**
   		 * money(抵用券)
   		 */
-  		MONEY("money"),
+  		MONEY("MONEY"),
   		
   		/**
   		 * time(抵时券)
   		 */
-  		TIME("time");
+  		TIME("TIME");
   		
   		private CouponType(String textVal){
   			this.textVal=textVal;

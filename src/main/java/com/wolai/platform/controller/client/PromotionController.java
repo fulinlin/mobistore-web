@@ -1,11 +1,13 @@
 package com.wolai.platform.controller.client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.constant.Constant;
+import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.Promotion;
 import com.wolai.platform.entity.SysUser;
@@ -37,7 +40,9 @@ public class PromotionController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
 	@ResponseBody
-	public List<PromotionVo> list(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token){
+		Map<String,Object> ret =new HashMap<String, Object>(); 
+		
 		SysUser user = userService.getUserByToken(token);
 		String userId = user.getId();
 		
@@ -49,20 +54,31 @@ public class PromotionController {
 			vols.add(vo);
 		}
 		
-		return vols;
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vols);
+		return ret;
 	}
 	
 	@AuthPassport(validate=true)
 	@RequestMapping(value="detail")
 	@ResponseBody
-	public PromotionVo detail(HttpServletRequest request, @RequestBody Map<String, String> json){
+	public Map<String,Object> detail(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
 		String id = json.get("id");
 		Promotion po = (Promotion) promotionService.get(Promotion.class, id);
+		
+		if (po == null) {
+			ret.put("code", RespCode.FAIL.Code());
+			ret.put("msg", "not found");
+			return ret;
+		}
 
 		PromotionVo vo = new PromotionVo();
 		BeanUtilEx.copyProperties(vo, po);
 		
-		return vo;
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vo);
+		return ret;
 	}
 }

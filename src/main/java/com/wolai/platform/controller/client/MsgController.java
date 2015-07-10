@@ -1,6 +1,7 @@
 package com.wolai.platform.controller.client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.constant.Constant;
+import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.Promotion;
@@ -42,7 +44,9 @@ public class MsgController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
 	@ResponseBody
-	public List<MessageVo> list(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+	public Map<String,Object> list(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+		Map<String,Object> ret = new HashMap<String, Object>();
+		
 		SysUser user = userService.getUserByToken(token);
 		String userId = user.getId();
 		List<SysMessageSend> ls = msgService.listByUser(userId);
@@ -55,19 +59,25 @@ public class MsgController {
 			vols.add(vo);
 		}
 		
-		return vols;
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vols);
+		return ret;
 	}
 	
 	@AuthPassport(validate=true)
 	@RequestMapping(value="detail")
 	@ResponseBody
-	public MessageVo detail(HttpServletRequest request, @RequestBody Map<String, String> json){
+	public Map<String,Object> detail(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret = new HashMap<String, Object>();
+		
 		String id = json.get("id");
 		SysMessage po = (SysMessage) msgService.get(SysMessage.class, id);
 
 		MessageVo vo = new MessageVo();
 		BeanUtilEx.copyProperties(vo, po);
 		
-		return vo;
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vo);
+		return ret;
 	}
 }

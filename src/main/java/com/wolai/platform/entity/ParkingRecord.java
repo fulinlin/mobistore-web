@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,6 +26,23 @@ public class ParkingRecord extends idEntity {
 	 * uuid
 	 */
 	private static final long serialVersionUID = 6012441198587216743L;
+	
+  	public static enum ParkStatus{
+  		IN("IN"), PARKED("PARKED"), OUT("PARKED");
+  		
+  		private ParkStatus(String code){
+  			this.code = code;
+  		}
+  		private String code;
+  		
+  		public String Code(){
+  			return code;
+  		}
+  		
+  		public String toString() {
+  			return code;
+  		}
+  	}
 
 	/**
 	 * 车牌号
@@ -74,7 +94,8 @@ public class ParkingRecord extends idEntity {
 	/**
 	 * 在库状态
 	 */
-	private Integer parkStatus;
+	@Enumerated(EnumType.STRING)
+	private ParkStatus parkStatus;
 	
 	/**
 	 * 应付金额
@@ -208,11 +229,11 @@ public class ParkingRecord extends idEntity {
 		this.user = user;
 	}
 
-	public Integer getParkStatus() {
+	public ParkStatus getParkStatus() {
 		return parkStatus;
 	}
 
-	public void setParkStatus(Integer parkStatus) {
+	public void setParkStatus(ParkStatus parkStatus) {
 		this.parkStatus = parkStatus;
 	}
 }

@@ -27,11 +27,11 @@ public class SysAccount extends idEntity{
   		/**
   		 * alipay(支付宝)
   		 */
-  		ALIPAY("alipay"),
+  		ALIPAY("ALIPAY"),
   		/**
   		 * unionpay(银联)
   		 */
-  		UNIONPAY("unionpay"),
+  		UNIONPAY("UNIONPAY"),
   		/**
   		 *remaint(余额)
   		 */
@@ -39,7 +39,7 @@ public class SysAccount extends idEntity{
   		/**
   		 * weixin(微信)
   		 */
-  		WEIXIN("weixin");
+  		WEIXIN("WEIXIN");
   		
   		
   		

@@ -31,17 +31,17 @@ public class IntegralRecord extends idEntity {
   		/**
   		 * 停车获得
   		 */
-  		PARKING("parking"),
+  		PARKING("PARKING"),
   		
   		/**
   		 * 市场活动赠送
   		 */
-  		MARKING("marking"),
+  		MARKING("MARKING"),
   		
   		/**
   		 * 兑换优惠券
   		 */
-  		CONSUM("consum");
+  		CONSUM("CONSUM");
   		
   		
   		private IntegralChangeType(String textVal){

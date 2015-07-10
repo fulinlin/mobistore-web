@@ -41,7 +41,9 @@ public class LicenseController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
 	@ResponseBody
-	public List<LicenseVo> list(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+	public Map<String,Object> list(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+		Map<String,Object> ret =new HashMap<String, Object>();
+		
 		SysUser uesr = userService.getUserByToken(token);
 		String userId = uesr.getId();
 
@@ -53,7 +55,9 @@ public class LicenseController {
 			vols.add(vo);
 		}
 		
-		return vols;
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vols);
+		return ret;
 	}
 	
 	@AuthPassport(validate=true)

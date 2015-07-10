@@ -26,11 +26,11 @@ public class Promotion extends idEntity {
 		/**
   		 * 根据车牌的限制
   		 */
-  		BYCARNO("bycarno"),
+  		BYCARNO("BYCARNO"),
   		/**
   		 * 无限制
   		 */
-  		ALL("all");
+  		ALL("ALL");
   		
   		
 		private PromotionLimitType(String textVal){
