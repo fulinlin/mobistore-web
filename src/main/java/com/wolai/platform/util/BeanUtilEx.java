@@ -13,8 +13,7 @@ import org.apache.commons.beanutils.converters.SqlDateConverter;
 public class BeanUtilEx extends BeanUtils {
 
 	static {
-		ConvertUtils.register(new DateConverter(), java.util.Date.class);
-		ConvertUtils.register(new SqlDateConverter(), java.sql.Date.class);
+		ConvertUtils.register(new DateConverter(null), java.util.Date.class);
 		ConvertUtils.register(new BigDecimalConverter(), BigDecimal.class);
 	}
 

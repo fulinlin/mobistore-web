@@ -30,7 +30,8 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 	public Page packInfo(String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
 		dc.add(Restrictions.eq("userId", userId));
-		dc.add(Restrictions.lt("driveInTime", TimeUtils.getDateBefore(new Date(), 10)));
+		Date dt = TimeUtils.getDateBefore(new Date(), 10);
+		dc.add(Restrictions.gt("driveInTime", dt));
 		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
 		dc.addOrder(Order.desc("driveInTime"));
 
