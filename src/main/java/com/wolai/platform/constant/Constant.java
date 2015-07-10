@@ -52,6 +52,11 @@ public final class Constant {
     public static final String SESSION_LOGINFO = "session_loginfo";
     
     /**
+     * app端用户获取key
+     */
+    public static final String REQUEST_USER = "request_user";
+    
+    /**
      * 排序方向-升序
      */
     public static final String ORDER_BY_ASC = "asc"; 

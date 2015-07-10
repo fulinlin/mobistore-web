@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,14 +18,11 @@ import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
-import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.Promotion;
 import com.wolai.platform.entity.SysUser;
-import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.PromotionService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
-import com.wolai.platform.vo.ParkingLotVo;
 import com.wolai.platform.vo.PromotionVo;
 
 @Controller
@@ -44,7 +40,7 @@ public class PromotionController {
 	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
-		SysUser user = userService.getUserByToken(token);
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 		
 		List<PromotionVo> vols = new ArrayList<PromotionVo>();
