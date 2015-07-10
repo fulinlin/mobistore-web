@@ -2,7 +2,7 @@ package com.wolai.platform.service;
 
 import com.wolai.platform.entity.RewardPoints;
 
-public interface IntegralService extends CommonService {
+public interface RewardPointsService extends CommonService {
 
 	RewardPoints getByUser(String userId);
 

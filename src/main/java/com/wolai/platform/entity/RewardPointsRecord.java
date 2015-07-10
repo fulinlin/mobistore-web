@@ -21,7 +21,7 @@ import org.hibernate.annotations.MetaValue;
  *
  */
 @Entity
-@Table(name="wo_integral_record")
+@Table(name="wo_rewardPoints_record")
 public class RewardPointsRecord extends idEntity {
 
 	/**
@@ -29,7 +29,7 @@ public class RewardPointsRecord extends idEntity {
 	 */
 	private static final long serialVersionUID = 307315644736388795L;
 	
-	public static enum IntegralChangeType{
+	public static enum RewardPointsChangeType{
   		/**
   		 * 停车获得
   		 */
@@ -46,7 +46,7 @@ public class RewardPointsRecord extends idEntity {
   		CONSUM("CONSUM");
   		
   		
-  		private IntegralChangeType(String textVal){
+  		private RewardPointsChangeType(String textVal){
   			this.textVal=textVal;
   		}
   		private String textVal;
@@ -60,7 +60,7 @@ public class RewardPointsRecord extends idEntity {
 	 * 积分变动类型
 	 */
 	@Enumerated(EnumType.STRING)
-	private IntegralChangeType type;
+	private RewardPointsChangeType type;
 	
 	/**
 	 * 变动数量
@@ -106,11 +106,11 @@ public class RewardPointsRecord extends idEntity {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private SysUser user;
 	
-	public IntegralChangeType getType() {
+	public RewardPointsChangeType getType() {
 		return type;
 	}
 
-	public void setType(IntegralChangeType type) {
+	public void setType(RewardPointsChangeType type) {
 		this.type = type;
 	}
 

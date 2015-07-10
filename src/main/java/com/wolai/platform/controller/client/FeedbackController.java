@@ -28,7 +28,7 @@ import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.CouponVo;
 import com.wolai.platform.vo.FeedBackVo;
-import com.wolai.platform.vo.IntegralVo;
+import com.wolai.platform.vo.RewardPointsVo;
 import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller

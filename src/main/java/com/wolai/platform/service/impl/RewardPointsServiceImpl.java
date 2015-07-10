@@ -16,13 +16,13 @@ import com.wolai.platform.entity.RewardPoints;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.SysUser.UserType;
-import com.wolai.platform.service.IntegralService;
+import com.wolai.platform.service.RewardPointsService;
 import com.wolai.platform.service.MsgService;
 import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.UserService;
 
 @Service
-public class IntegralServiceImpl extends CommonServiceImpl implements IntegralService {
+public class RewardPointsServiceImpl extends CommonServiceImpl implements RewardPointsService {
 
 	@Override
 	public RewardPoints getByUser(String userId) {

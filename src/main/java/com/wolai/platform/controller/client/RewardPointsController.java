@@ -26,22 +26,22 @@ import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.CouponService;
-import com.wolai.platform.service.IntegralService;
+import com.wolai.platform.service.RewardPointsService;
 import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.CouponVo;
-import com.wolai.platform.vo.IntegralVo;
+import com.wolai.platform.vo.RewardPointsVo;
 import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller
-@RequestMapping(Constant.API_CLIENT + "integral/")
-public class IntegralController {
+@RequestMapping(Constant.API_CLIENT + "rewardPoints/")
+public class RewardPointsController {
 	@Autowired
 	UserService userService;
 	
 	@Autowired
-	IntegralService integralService;
+	RewardPointsService rewardPointsService;
 	
 	@AuthPassport(validate=true)
 	@RequestMapping(value="view")
@@ -52,14 +52,14 @@ public class IntegralController {
 		SysUser uesr = userService.getUserByToken(token);
 		String userId = uesr.getId();
 
-		RewardPoints rewardPoints = integralService.getByUser(userId);
+		RewardPoints rewardPoints = rewardPointsService.getByUser(userId);
 		
 		if (rewardPoints == null) {
 			ret.put("code", RespCode.FAIL.Code());
 			ret.put("msg", "not found");
 			return ret;
 		}
-		IntegralVo vo = new IntegralVo();
+		RewardPointsVo vo = new RewardPointsVo();
 		BeanUtilEx.copyProperties(vo, rewardPoints);
 		return vo;
 	}

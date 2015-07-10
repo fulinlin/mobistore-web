@@ -2,7 +2,7 @@ package com.wolai.platform.vo;
 
 import java.math.BigDecimal;
 
-public class IntegralVo {
+public class RewardPointsVo {
 	private String id;
 	private BigDecimal balance;
 

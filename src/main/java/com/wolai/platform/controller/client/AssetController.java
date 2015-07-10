@@ -26,12 +26,12 @@ import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.CouponService;
-import com.wolai.platform.service.IntegralService;
+import com.wolai.platform.service.RewardPointsService;
 import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.CouponVo;
-import com.wolai.platform.vo.IntegralVo;
+import com.wolai.platform.vo.RewardPointsVo;
 import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller
@@ -45,7 +45,7 @@ public class AssetController {
 	@Autowired
 	CouponService couponService;
 	@Autowired
-	IntegralService integralService;
+	RewardPointsService rewardPointsService;
 
 	@AuthPassport(validate=true)
 	@RequestMapping(value="list")
@@ -57,7 +57,7 @@ public class AssetController {
 		String userId = uesr.getId();
 
 		Page couponPage = couponService.listByUser(userId);
-		RewardPoints rewardPoints = integralService.getByUser(userId);
+		RewardPoints rewardPoints = rewardPointsService.getByUser(userId);
 		
 		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
 		
@@ -69,8 +69,8 @@ public class AssetController {
 			couponVoList.add(vo);
 		}
 
-		IntegralVo integralVo = new IntegralVo();
-		BeanUtilEx.copyProperties(integralVo, rewardPoints);
+		RewardPointsVo rewardPointsVo = new RewardPointsVo();
+		BeanUtilEx.copyProperties(rewardPointsVo, rewardPoints);
 		
 		
 		ret.put("code", RespCode.SUCCESS.Code());
@@ -78,7 +78,7 @@ public class AssetController {
 		Map<String, Object> data = new HashMap<String, Object>();
 		ret.put("code", RespCode.SUCCESS.Code());
 		data.put("coupons", couponVoList);
-		data.put("integral", integralVo);
+		data.put("rewardPoints", rewardPointsVo);
 		ret.put("data", data);
 		return ret;
 	}

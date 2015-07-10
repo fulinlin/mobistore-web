@@ -28,12 +28,12 @@ import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.CouponService;
-import com.wolai.platform.service.IntegralService;
+import com.wolai.platform.service.RewardPointsService;
 import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.CouponVo;
-import com.wolai.platform.vo.IntegralVo;
+import com.wolai.platform.vo.RewardPointsVo;
 import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller
