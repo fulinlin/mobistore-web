@@ -19,6 +19,7 @@ public class ParkingVo {
 	private String parkStatus;
 	private BigDecimal money;
 	private BigDecimal paidMoney;
+	private Boolean isPaid;
 	
 	private PayType paytype;
 	private CouponType couponType;
@@ -114,6 +115,12 @@ public class ParkingVo {
 	}
 	public void setCouponTime(Long couponTime) {
 		this.couponTime = couponTime;
+	}
+	public Boolean getIsPaid() {
+		return isPaid;
+	}
+	public void setIsPaid(Boolean isPaid) {
+		this.isPaid = isPaid;
 	}
 	
 }

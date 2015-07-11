@@ -105,6 +105,11 @@ public class ParkingRecord extends idEntity {
 	 * 实付金额
 	 */
 	private BigDecimal paidMoney;
+	
+	/**
+	 * 是否已付款
+	 */
+	private Boolean isPaid = false;
 
 	/**
 	 * 所属用户
@@ -234,5 +239,13 @@ public class ParkingRecord extends idEntity {
 
 	public void setParkStatus(ParkStatus parkStatus) {
 		this.parkStatus = parkStatus;
+	}
+
+	public Boolean getIsPaid() {
+		return isPaid;
+	}
+
+	public void setIsPaid(Boolean isPaid) {
+		this.isPaid = isPaid;
 	}
 }

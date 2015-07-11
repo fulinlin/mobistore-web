@@ -95,10 +95,7 @@ public class ParkingController extends BaseController{
 	@ResponseBody
 	public Map<String,Object> packHistoryDetail(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>();
-		
 		String id = json.get("id");
-		
-		SysUser user = userService.getUserByToken(token);
 		
 		ParkingRecord park = (ParkingRecord) parkingService.get(ParkingRecord.class, id);
 		Bill bill = billService.getBillByPacking(park.getId());
