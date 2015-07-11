@@ -2,13 +2,7 @@ package com.wolai.platform.entity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -16,9 +10,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="sys_verification_code",indexes={
-		@Index(unique=true,columnList="auth_token")
-})
+@Table(name="sys_verification_code")
 public class SysVerificationCode extends idEntity {
 	private static final long serialVersionUID = 7949485328819207365L;
   	

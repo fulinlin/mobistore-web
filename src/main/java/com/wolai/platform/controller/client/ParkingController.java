@@ -39,14 +39,14 @@ public class ParkingController extends BaseController{
 	@Autowired
 	BillService billService;
 
-	@RequestMapping(value="packInfo")
+	@RequestMapping(value="parkInfo")
 	@ResponseBody
-	public Map<String,Object> packInfo(HttpServletRequest request, @RequestParam String token){
+	public Map<String,Object> parkInfo(HttpServletRequest request, @RequestParam String token){
 		
 		Map<String,Object> ret = new HashMap<String, Object>();
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
-		Page page = parkingService.packInfo(userId);
+		Page page = parkingService.parkInfo(userId);
 		
 		List<ParkingVo> parkVoList = new ArrayList<ParkingVo>();
 		
@@ -62,9 +62,9 @@ public class ParkingController extends BaseController{
 		return ret;
 	}
 
-	@RequestMapping(value="packHistory")
+	@RequestMapping(value="parkHistory")
 	@ResponseBody
-	public Map<String,Object> packHistory(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+	public Map<String,Object> parkHistory(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
 		if (pagingParamError(json)) {
 			return pagingParamError();
 		}
@@ -75,7 +75,7 @@ public class ParkingController extends BaseController{
 		
 		SysUser user = userService.getUserByToken(token);
 		String userId = user.getId();
-		Page page = parkingService.packHistory(userId, startIndex, pageSize);
+		Page page = parkingService.parkHistory(userId, startIndex, pageSize);
 		
 		List<ParkingVo> parkVoList = new ArrayList<ParkingVo>();
 		
@@ -91,14 +91,14 @@ public class ParkingController extends BaseController{
 		return ret;
 	}
 	
-	@RequestMapping(value="packHistoryDetail")
+	@RequestMapping(value="parkHistoryDetail")
 	@ResponseBody
-	public Map<String,Object> packHistoryDetail(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+	public Map<String,Object> parkHistoryDetail(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		String id = json.get("id");
 		
 		ParkingRecord park = (ParkingRecord) parkingService.get(ParkingRecord.class, id);
-		Bill bill = billService.getBillByPacking(park.getId());
+		Bill bill = billService.getBillByParking(park.getId());
 		
 		ParkingVo vo = new ParkingVo();
 		BeanUtilEx.copyProperties(vo, park);

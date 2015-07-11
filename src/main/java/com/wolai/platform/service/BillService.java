@@ -5,5 +5,5 @@ import com.wolai.platform.entity.Bill;
 
 public interface BillService extends CommonService {
 	
-	Bill getBillByPacking(String parkingId);
+	Bill getBillByParking(String parkingId);
 }

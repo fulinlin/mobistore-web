@@ -16,7 +16,7 @@ import com.wolai.platform.util.TimeUtils;
 public class ParkingServiceImpl extends CommonServiceImpl implements ParkingService {
 
 	@Override
-	public Page packInfo(String userId) {
+	public Page parkInfo(String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
 		dc.add(Restrictions.eq("userId", userId));
 		Date dt = TimeUtils.getDateBefore(new Date(), 10);
@@ -30,7 +30,7 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 	}
 
 	@Override
-	public Page packHistory(String userId, int startIndex, int pageSize) {
+	public Page parkHistory(String userId, int startIndex, int pageSize) {
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
 		dc.add(Restrictions.eq("userId", userId));
 		dc.add(Restrictions.eq("parkStatus", ParkingRecord.ParkStatus.OUT));

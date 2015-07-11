@@ -4,8 +4,8 @@ import com.wolai.platform.bean.Page;
 
 public interface ParkingService extends CommonService {
 	
-	Page packInfo(String id);
+	Page parkInfo(String id);
 
-	Page packHistory(String userId, int startIndex, int pageSize);
+	Page parkHistory(String userId, int startIndex, int pageSize);
 
 }
