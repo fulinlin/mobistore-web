@@ -25,7 +25,7 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	}
 
 	@Override
-	public String loginPers(String phone, String password) {
+	public SysUser loginPers(String phone, String password) {
 		String newToken = null;
 		List<SysUser> users;	
 
@@ -36,28 +36,29 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		dc.add(Restrictions.eq("isDisable", false));
 		users = (List<SysUser>) findAllByCriteria(dc);
 		
+		SysUser user = null;
 		if (users.size() > 0) {
-			SysUser user = users.get(0);
+			user = users.get(0);
 			newToken = UUID.randomUUID().toString();
 			user.setAuthToken(newToken);
 			user.setLastLoginTime(new Date());
 			saveOrUpdate(user);
 		} 
-		return newToken;
+		return user;
 	}
 	
 	@Override
-	public boolean loginWithToken(String token) {
+	public SysUser loginWithToken(String token) {
 		
 		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
 		dc.add(Restrictions.eq("authToken", token));
 		dc.add(Restrictions.eq("isDelete", false));
 		dc.add(Restrictions.eq("isDisable", false));
-		List users = (List<SysUser>) findAllByCriteria(dc);
+		List users = findAllByCriteria(dc);
 		if (users.size() > 0) {
-			return true;
+			return (SysUser)users.get(0);
 		} else {
-			return false;
+			return null;
 		}
 	}
 

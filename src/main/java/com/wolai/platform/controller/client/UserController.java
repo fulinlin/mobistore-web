@@ -18,6 +18,8 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.UserService;
+import com.wolai.platform.util.BeanUtilEx;
+import com.wolai.platform.vo.UserVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "user/")
@@ -67,9 +69,14 @@ public class UserController {
 			return ret;
 		}
 
-		String newToken = userService.loginPers(phone, password);
-		if (StringUtils.isNotEmpty(newToken)) {
-			ret.put("token", newToken);
+		SysUser user = userService.loginPers(phone, password);
+		if (user != null) {
+			ret.put("token", user.getAuthToken());
+			ret.put("code", RespCode.SUCCESS.Code());
+			
+			UserVo vo = new UserVo();
+			BeanUtilEx.copyProperties(vo, user);
+			ret.put("data", vo);
 			ret.put("code", RespCode.SUCCESS.Code());
 		} else {
 			ret.put("code", RespCode.FAIL.Code());
@@ -90,8 +97,11 @@ public class UserController {
 			return ret;
 		}
 
-		boolean success = userService.loginWithToken(token);
-		if (success) {
+		SysUser user = userService.loginWithToken(token);
+		if (user != null) {
+			UserVo vo = new UserVo();
+			BeanUtilEx.copyProperties(vo, user);
+			ret.put("data", vo);
 			ret.put("code", RespCode.SUCCESS.Code());
 		} else {
 			ret.put("code", RespCode.FAIL.Code());
@@ -123,9 +133,11 @@ public class UserController {
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		
 		if (user != null) {
+			UserVo vo = new UserVo();
+			BeanUtilEx.copyProperties(vo, user);
+			
 			ret.put("code", RespCode.SUCCESS.Code());
-			ret.put("phone", user.getMobile());
-			ret.put("name", user.getMobile());
+			ret.put("data", vo);
 		} else {
 			ret.put("code", RespCode.FAIL.Code());
 			ret.put("msg", "not found");
