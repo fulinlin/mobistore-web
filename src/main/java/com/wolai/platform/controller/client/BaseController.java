@@ -20,7 +20,7 @@ public class BaseController {
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 
 		ret.put("code", RespCode.FAIL.Code());
-		ret.put("msg", "paging parameters error");
+		ret.put("msg", "paging parameters error, startIndex or pageSize missing?");
 		return ret;
 	}
 	
