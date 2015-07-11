@@ -3,9 +3,9 @@ package com.wolai.platform.service;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.License;
 
-public interface LicensePlateService extends CommonService {
+public interface LicenseService extends CommonService {
 
-	Page listByUser(String userId);
+	Page listByUser(String userId, int startIndex, int pageSize);
 
 	void create(License po);
 	void update(License po);

@@ -24,7 +24,7 @@ import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "parkingLot/")
-public class ParkingLotController {
+public class ParkingLotController extends BaseController {
 	
 	@Autowired
 	ParkingLotService parkingLotService;
@@ -32,12 +32,18 @@ public class ParkingLotController {
 	@RequestMapping(value="list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, @RequestBody Map<String, String> json){
+		if (pagingParamError(json)) {
+			return pagingParamError();
+		}
+		int startIndex = Integer.valueOf(json.get("startIndex"));
+		int pageSize = Integer.valueOf(json.get("pageSize"));
+		
 		Map<String,Object> ret =new HashMap<String, Object>();
 		
 		String city = json.get("city");
 
 		List<ParkingLotVo> vols = new ArrayList<ParkingLotVo>();
-		Page page = parkingLotService.listByCity(city);
+		Page page = parkingLotService.listByCity(city, startIndex, pageSize);
 		for (Object obj : page.getItems()) {
 			ParkingLot po = (ParkingLot) obj;
 			ParkingLotVo vo = new ParkingLotVo();

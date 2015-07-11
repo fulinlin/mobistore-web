@@ -467,6 +467,18 @@ public class HibernateDao {
     	return  query.list();  
     }
 
+	public long count(DetachedCriteria dc) {
+		
+		Criteria c = dc.getExecutableCriteria(getSession());
+		
+		// 执行Count查询
+		c.setResultTransformer(CriteriaImpl.DISTINCT_ROOT_ENTITY);
+		long total = (Long) c.setProjection(
+				Projections.countDistinct("id")).uniqueResult();
+
+		return total;
+	
+	}
 	
 	public Page findPage(DetachedCriteria dc, int start, int limit) {
 		

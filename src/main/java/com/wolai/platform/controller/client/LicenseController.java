@@ -20,30 +20,36 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.SysUser;
-import com.wolai.platform.service.LicensePlateService;
+import com.wolai.platform.service.LicenseService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.LicenseVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "license/")
-public class LicenseController {
+public class LicenseController extends BaseController {
 	
 	@Autowired
-	LicensePlateService licensePlateService;
+	LicenseService licensePlateService;
 	
 	@Autowired
 	UserService userService;
 
 	@RequestMapping(value="list")
 	@ResponseBody
-	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token){
+	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+		if (pagingParamError(json)) {
+			return pagingParamError();
+		}
+		int startIndex = Integer.valueOf(json.get("startIndex"));
+		int pageSize = Integer.valueOf(json.get("pageSize"));
+		
 		Map<String,Object> ret =new HashMap<String, Object>();
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 
 		List<LicenseVo> vols = new ArrayList<LicenseVo>();
-		Page page = licensePlateService.listByUser(userId);
+		Page page = licensePlateService.listByUser(userId, startIndex, pageSize);
 		for (Object obj : page.getItems()) {
 			License po = (License)obj;
 			LicenseVo vo = new LicenseVo();

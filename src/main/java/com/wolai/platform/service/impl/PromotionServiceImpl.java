@@ -14,7 +14,7 @@ import com.wolai.platform.service.PromotionService;
 public class PromotionServiceImpl extends CommonServiceImpl implements PromotionService {
 
 	@Override
-	public Page listByUser(String userId) {
+	public Page listByUser(String userId, int startIndex, int pageSize) {
 		Date now = new Date();
 		DetachedCriteria dc = DetachedCriteria.forClass(Promotion.class);
 		
@@ -22,7 +22,7 @@ public class PromotionServiceImpl extends CommonServiceImpl implements Promotion
 		dc.add(Restrictions.le("startTime", now));
 		dc.add(Restrictions.ge("endTime", now));
 		
-		Page page = findPage(dc, 0, 1000);
+		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;
 	}

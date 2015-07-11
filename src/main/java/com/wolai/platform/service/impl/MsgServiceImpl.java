@@ -14,13 +14,13 @@ import com.wolai.platform.service.MsgService;
 public class MsgServiceImpl extends CommonServiceImpl implements MsgService {
 
 	@Override
-	public Page listByUser(String userId) {
+	public Page listByUser(String userId, int startIndex, int pageSize) {
 		
 		DetachedCriteria dc = DetachedCriteria.forClass(SysMessageSend.class);
 		dc.setFetchMode("message", FetchMode.JOIN);
 		dc.add(Restrictions.eq("userId", userId));
 		dc.addOrder(Order.desc("sendTime"));
-		Page page = findPage(dc, 0, 1000);
+		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;
 	}

@@ -23,7 +23,7 @@ import com.wolai.platform.vo.UserVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "user/")
-public class UserController {
+public class UserController extends BaseController{
 	
 	@Autowired
 	UserService userService;

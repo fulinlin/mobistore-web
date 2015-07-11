@@ -27,7 +27,7 @@ import com.wolai.platform.vo.MessageVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "msg/")
-public class MsgController {
+public class MsgController extends BaseController {
 	
 	@Autowired
 	UserService userService;
@@ -37,11 +37,17 @@ public class MsgController {
 
 	@RequestMapping(value="list")
 	@ResponseBody
-	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token){
+	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+		if (pagingParamError(json)) {
+			return pagingParamError();
+		}
+		int startIndex = Integer.valueOf(json.get("startIndex"));
+		int pageSize = Integer.valueOf(json.get("pageSize"));
+		
 		Map<String,Object> ret = new HashMap<String, Object>();
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
-		Page page = msgService.listByUser(userId);
+		Page page = msgService.listByUser(userId, startIndex, pageSize);
 
 		List<MessageVo> vols = new ArrayList<MessageVo>();
 		for (Object obj : page.getItems()) {

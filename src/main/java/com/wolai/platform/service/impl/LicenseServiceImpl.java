@@ -7,17 +7,17 @@ import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.License;
-import com.wolai.platform.service.LicensePlateService;
+import com.wolai.platform.service.LicenseService;
 
 @Service
-public class LicenseServiceImpl extends CommonServiceImpl implements LicensePlateService {
+public class LicenseServiceImpl extends CommonServiceImpl implements LicenseService {
 
 	@Override
-	public Page listByUser(String userId) {
+	public Page listByUser(String userId, int startIndex, int pageSize) {
 		DetachedCriteria dc = DetachedCriteria.forClass(License.class);
 		dc.add(Restrictions.eq("userId", userId));
 		dc.addOrder(Order.asc("carNo"));
-		Page page = findPage(dc, 0, 1000);
+		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;
 	}

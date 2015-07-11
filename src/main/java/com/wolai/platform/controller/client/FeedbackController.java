@@ -21,7 +21,7 @@ import com.wolai.platform.service.UserService;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "feedback/")
-public class FeedbackController {
+public class FeedbackController extends BaseController {
 	@Autowired
 	UserService userService;
 	

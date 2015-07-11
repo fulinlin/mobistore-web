@@ -30,13 +30,13 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 	}
 
 	@Override
-	public Page packHistory(String userId) {
+	public Page packHistory(String userId, int startIndex, int pageSize) {
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
 		dc.add(Restrictions.eq("userId", userId));
 		dc.add(Restrictions.eq("parkStatus", ParkingRecord.ParkStatus.OUT));
 		dc.addOrder(Order.desc("driveInTime"));
 
-		Page ls = findPage(dc, 0, 10);
+		Page ls = findPage(dc, startIndex, pageSize);
 		
 		return ls;
 	}

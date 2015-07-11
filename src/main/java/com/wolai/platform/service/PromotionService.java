@@ -4,7 +4,7 @@ import com.wolai.platform.bean.Page;
 
 public interface PromotionService extends CommonService {
 
-	Page listByUser(String userId);
+	Page listByUser(String userId, int startIndex, int pageSize);
 	
 
 

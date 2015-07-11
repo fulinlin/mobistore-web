@@ -6,6 +6,6 @@ public interface ParkingService extends CommonService {
 	
 	Page packInfo(String id);
 
-	Page packHistory(String userId);
+	Page packHistory(String userId, int startIndex, int pageSize);
 
 }

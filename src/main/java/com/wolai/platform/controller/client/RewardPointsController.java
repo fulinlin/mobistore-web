@@ -22,7 +22,7 @@ import com.wolai.platform.vo.RewardPointsVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "rewardPoints/")
-public class RewardPointsController {
+public class RewardPointsController extends BaseController {
 	@Autowired
 	UserService userService;
 	
@@ -31,7 +31,7 @@ public class RewardPointsController {
 	
 	@RequestMapping(value="view")
 	@ResponseBody
-	public Object detail(HttpServletRequest request, @RequestParam String token){
+	public Object view(HttpServletRequest request, @RequestParam String token){
 		Map<String, Object> ret = new HashMap<String, Object>();
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();

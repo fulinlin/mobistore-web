@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +26,7 @@ import com.wolai.platform.vo.ParkingVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "parking/")
-public class ParkingController {
+public class ParkingController extends BaseController{
 	
 	@Autowired
 	UserService userService;
@@ -36,6 +37,7 @@ public class ParkingController {
 	@RequestMapping(value="packInfo")
 	@ResponseBody
 	public Map<String,Object> packInfo(HttpServletRequest request, @RequestParam String token){
+		
 		Map<String,Object> ret = new HashMap<String, Object>();
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
@@ -57,12 +59,18 @@ public class ParkingController {
 
 	@RequestMapping(value="packHistory")
 	@ResponseBody
-	public Map<String,Object> packHistory(HttpServletRequest request, @RequestParam String token){
+	public Map<String,Object> packHistory(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+		if (pagingParamError(json)) {
+			return pagingParamError();
+		}
+		int startIndex = Integer.valueOf(json.get("startIndex"));
+		int pageSize = Integer.valueOf(json.get("pageSize"));
+		
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
 		SysUser user = userService.getUserByToken(token);
 		String userId = user.getId();
-		Page page = parkingService.packHistory(userId);
+		Page page = parkingService.packHistory(userId, startIndex, pageSize);
 		
 		List<ParkingVo> parkVoList = new ArrayList<ParkingVo>();
 		

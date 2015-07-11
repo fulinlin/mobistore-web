@@ -29,7 +29,7 @@ import com.wolai.platform.vo.RewardPointsVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "asset/")
-public class AssetController {
+public class AssetController extends BaseController {
 	@Autowired
 	UserService userService;
 	
@@ -47,18 +47,10 @@ public class AssetController {
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 
-		Page couponPage = couponService.listByUser(userId);
+		long moneyCount = couponService.countMoneyByUser(userId);
+		long timeCount = couponService.countTimeByUser(userId);
+		
 		RewardPoints rewardPoints = rewardPointsService.getByUser(userId);
-		
-		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
-		
-		
-		for (Object obj : couponPage.getItems()) {
-			Coupon po = (Coupon) obj;
-			CouponVo vo = new CouponVo();
-			BeanUtilEx.copyProperties(vo, po);
-			couponVoList.add(vo);
-		}
 
 		RewardPointsVo rewardPointsVo = new RewardPointsVo();
 		BeanUtilEx.copyProperties(rewardPointsVo, rewardPoints);
@@ -68,8 +60,10 @@ public class AssetController {
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		ret.put("code", RespCode.SUCCESS.Code());
-		data.put("coupons", couponVoList);
+		
 		data.put("rewardPoints", rewardPointsVo);
+		data.put("moneyCouponCount", moneyCount);
+		data.put("timeCouponCount", timeCount);
 		ret.put("data", data);
 		return ret;
 	}

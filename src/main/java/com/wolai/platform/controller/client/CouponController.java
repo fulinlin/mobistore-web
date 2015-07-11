@@ -27,7 +27,7 @@ import com.wolai.platform.vo.CouponVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "coupon/")
-public class CouponController {
+public class CouponController extends BaseController {
 	@Autowired
 	UserService userService;
 	
@@ -36,12 +36,18 @@ public class CouponController {
 	
 	@RequestMapping(value="list")
 	@ResponseBody
-	public Map<String, Object> list(HttpServletRequest request, @RequestParam String token){
+	public Map<String, Object> list(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+		if (pagingParamError(json)) {
+			return pagingParamError();
+		}
+		int startIndex = Integer.valueOf(json.get("startIndex"));
+		int pageSize = Integer.valueOf(json.get("pageSize"));
+		
 		Map<String, Object> ret = new HashMap<String, Object>();
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 
-		Page couponPage = couponService.listByUser(userId);
+		Page couponPage = couponService.listByUser(userId, startIndex, pageSize);
 		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
 		
 		for (Object obj : couponPage.getItems()) {
@@ -58,13 +64,19 @@ public class CouponController {
 
 	@RequestMapping(value="listMoney")
 	@ResponseBody
-	public Map<String, Object> listMoney(HttpServletRequest request, @RequestParam String token){
+	public Map<String, Object> listMoney(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+		if (pagingParamError(json)) {
+			return pagingParamError();
+		}
+		int startIndex = Integer.valueOf(json.get("startIndex"));
+		int pageSize = Integer.valueOf(json.get("pageSize"));
+		
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		SysUser uesr = userService.getUserByToken(token);
 		String userId = uesr.getId();
 
-		Page couponPage = couponService.listMoneyByUser(userId);
+		Page couponPage = couponService.listMoneyByUser(userId, startIndex, pageSize);
 		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
 		
 		for (Object obj : couponPage.getItems()) {
@@ -82,13 +94,19 @@ public class CouponController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value="listTime")
 	@ResponseBody
-	public Map<String, Object> listTime(HttpServletRequest request, @RequestParam String token){
+	public Map<String, Object> listTime(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+		if (pagingParamError(json)) {
+			return pagingParamError();
+		}
+		int startIndex = Integer.valueOf(json.get("startIndex"));
+		int pageSize = Integer.valueOf(json.get("pageSize"));
+		
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		SysUser uesr = userService.getUserByToken(token);
 		String userId = uesr.getId();
 
-		Page couponPage = couponService.listTimeByUser(userId);
+		Page couponPage = couponService.listTimeByUser(userId, startIndex, pageSize);
 		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
 		
 		for (Object obj : couponPage.getItems()) {

@@ -26,7 +26,7 @@ import com.wolai.platform.vo.PromotionVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "promotion/")
-public class PromotionController {
+public class PromotionController extends BaseController {
 	@Autowired
 	UserService userService;
 	
@@ -35,14 +35,20 @@ public class PromotionController {
 
 	@RequestMapping(value="list")
 	@ResponseBody
-	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token){
-		Map<String,Object> ret =new HashMap<String, Object>(); 
+	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+		if (pagingParamError(json)) {
+			return pagingParamError();
+		}
+		int startIndex = Integer.valueOf(json.get("startIndex"));
+		int pageSize = Integer.valueOf(json.get("pageSize"));
 		
+		Map<String,Object> ret =new HashMap<String, Object>();
+
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 		
 		List<PromotionVo> vols = new ArrayList<PromotionVo>();
-		Page page = promotionService.listByUser(userId);
+		Page page = promotionService.listByUser(userId, startIndex, pageSize);
 		for (Object obj : page.getItems()) {
 			Promotion promotion = (Promotion)obj;
 			PromotionVo vo = new PromotionVo();

@@ -17,7 +17,7 @@ import com.wolai.platform.vo.ParkingLotVo;
 
 @Controller
 @RequestMapping(Constant.API_CLIENT + "payment/")
-public class PaymentController {
+public class PaymentController extends BaseController {
 	
 	@Autowired
 	AssetService assetService;

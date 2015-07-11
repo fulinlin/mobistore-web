@@ -19,33 +19,33 @@ import com.wolai.platform.service.CouponService;
 public class CouponServiceImpl extends CommonServiceImpl implements CouponService {
 
 	@Override
-	public Page listByUser(String userId) {
+	public Page listByUser(String userId, int startIndex, int pageSize) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.eq("isUsed", false));
-		Page page = findPage(dc, 0, 1000);
+		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;
 	}
 
 	@Override
-	public Page listMoneyByUser(String userId) {
+	public Page listMoneyByUser(String userId, int startIndex, int pageSize) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.eq("type", CouponType.MONEY));
 		dc.add(Restrictions.eq("isUsed", false));
-		Page page = findPage(dc, 0, 1000);
+		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;
 	}
 
 	@Override
-	public Page listTimeByUser(String userId) {
+	public Page listTimeByUser(String userId, int startIndex, int pageSize) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.eq("type", CouponType.TIME));
 		dc.add(Restrictions.eq("isUsed", false));
-		Page page = findPage(dc, 0, 1000);
+		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;
 	}
@@ -75,5 +75,23 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
+	}
+
+	@Override
+	public long countMoneyByUser(String userId) {
+		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
+		dc.add(Restrictions.eq("ownerId", userId));
+		dc.add(Restrictions.eq("type", CouponType.MONEY));
+		dc.add(Restrictions.eq("isUsed", false));
+		return getDao().count(dc);
+	}
+
+	@Override
+	public long countTimeByUser(String userId) {
+		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
+		dc.add(Restrictions.eq("ownerId", userId));
+		dc.add(Restrictions.eq("type", CouponType.TIME));
+		dc.add(Restrictions.eq("isUsed", false));
+		return getDao().count(dc);
 	}
 }

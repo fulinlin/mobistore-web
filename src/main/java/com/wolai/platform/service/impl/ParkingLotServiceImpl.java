@@ -12,10 +12,10 @@ import com.wolai.platform.service.ParkingLotService;
 public class ParkingLotServiceImpl extends CommonServiceImpl implements ParkingLotService {
 
 	@Override
-	public Page listByCity(String city) {
+	public Page listByCity(String city, int startIndex, int pageSize) {
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingLot.class);
 		dc.add(Restrictions.eq("city", city));
-		Page page = findPage(dc, 0, 1000);
+		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;
 	}
