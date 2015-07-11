@@ -10,6 +10,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
+import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.service.UserService;
@@ -63,14 +64,15 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean logoutPers(String token) {
+	public SysUser logoutPers(String token) {
 		SysUser user = getUserByToken(token);
 		if (user != null) {
 			user.setAuthToken(null);
 			saveOrUpdate(user);
+			return user;
+		} else {
+			return null;
 		}
-
-		return true;
 	}
 
 	@Override
@@ -79,8 +81,8 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		
 		SysUser po = getUserByPhone(phone);
 		if (po != null) {
-			ret.put("success", false);
-			ret.put("msg", "already exist");
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "手机已被占用");
 			return ret;
 		}
 		
@@ -94,7 +96,7 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		saveOrUpdate(user);
 		
 		ret.put("token", newToken);
-		ret.put("success", true);
+		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
 	}
 
@@ -140,7 +142,7 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 
 		SysUser po = getUserByPhoneAndPassword(phone, password);
 		if (po == null) {
-			ret.put("success", false);
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "user not found");
 			return ret;
 		}
@@ -149,12 +151,12 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		po.setPassword(newPassword);
 		po.setCustomerType(UserType.INDIVIDUAL);
 		String newToken = UUID.randomUUID().toString();
-		po.setAuthToken(newToken);
+//		po.setAuthToken(newToken);
 		po.setLastLoginTime(new Date());
 		saveOrUpdate(po);
 		
-		ret.put("token", newToken);
-		ret.put("success", true);
+		ret.put("code", RespCode.SUCCESS.Code());
+		
 		return ret;
 	}
     

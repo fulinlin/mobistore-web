@@ -19,7 +19,7 @@ public class BaseController {
 	public Map<String,Object> pagingParamError(){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 
-		ret.put("code", RespCode.FAIL.Code());
+		ret.put("code", RespCode.INTERFACE_FAIL.Code());
 		ret.put("msg", "paging parameters error, startIndex or pageSize missing?");
 		return ret;
 	}
@@ -27,7 +27,7 @@ public class BaseController {
 	public Map<String,Object> parameterError(){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 
-		ret.put("code", RespCode.FAIL.Code());
+		ret.put("code", RespCode.INTERFACE_FAIL.Code());
 		ret.put("msg", "parameter error");
 		return ret;
 	}
@@ -35,7 +35,7 @@ public class BaseController {
 	public Map<String,Object> notFoundError(){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 
-		ret.put("code", RespCode.FAIL.Code());
+		ret.put("code", RespCode.INTERFACE_FAIL.Code());
 		ret.put("msg", "not found");
 		return ret;
 	}

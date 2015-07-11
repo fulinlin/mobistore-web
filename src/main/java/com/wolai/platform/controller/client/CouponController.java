@@ -132,7 +132,7 @@ public class CouponController extends BaseController {
 		
 		Object obj = couponService.get(Coupon.class, id);
 		if (obj == null) {
-			ret.put("code", RespCode.FAIL.Code());
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "not found");
 			return ret;
 		}

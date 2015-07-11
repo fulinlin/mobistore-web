@@ -64,7 +64,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		
 		List<Coupon> coupons = (List<Coupon>) findAllByCriteria(dc);
 		if (coupons.size() < 1) {
-			ret.put("code", RespCode.FAIL.Code());
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "coupon not available");
 			return ret;
 		}

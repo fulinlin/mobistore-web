@@ -39,8 +39,8 @@ public class RewardPointsController extends BaseController {
 		RewardPoints rewardPoints = rewardPointsService.getByUser(userId);
 		
 		if (rewardPoints == null) {
-			ret.put("code", RespCode.FAIL.Code());
-			ret.put("msg", "not found");
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "record not found");
 			return ret;
 		}
 		RewardPointsVo vo = new RewardPointsVo();

@@ -11,7 +11,7 @@ public interface UserService extends CommonService {
 	Map registerPers(String phone, String password);
 	SysUser loginWithToken(String token);
 	SysUser loginPers(String phone, String password);
-	boolean logoutPers(String token);
+	SysUser logoutPers(String token);
 	Map<String, Object> updateProfilePers(String phone, String password, String newPassword);
 
 	SysUser getUserByPhone(String phone);

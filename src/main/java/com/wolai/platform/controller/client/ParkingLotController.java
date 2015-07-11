@@ -65,7 +65,7 @@ public class ParkingLotController extends BaseController {
 		String id = json.get("id");
 		ParkingLot po = (ParkingLot) parkingLotService.get(ParkingLot.class, id);
 		if (po == null) {
-			ret.put("code", RespCode.FAIL.Code());
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "not found");
 			return ret;
 		}

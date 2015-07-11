@@ -18,6 +18,7 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.UserService;
+import com.wolai.platform.service.VerificationService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.UserVo;
 
@@ -28,6 +29,9 @@ public class UserController extends BaseController{
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	VerificationService verificationService;
+	
 	@AuthPassport(validate=false)
 	@RequestMapping(value="register")
 	@ResponseBody
@@ -36,23 +40,22 @@ public class UserController extends BaseController{
 		
 		String phone = json.get("phone");
 		String password = json.get("password");
+		String verificationCode = json.get("verificationCode ");
 		
-		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password)) {
-			ret.put("code", RespCode.FAIL.Code());
+		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) || StringUtils.isEmpty(verificationCode)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
-
-		Map map = userService.registerPers(phone, password);
-		if ((Boolean) map.get("success")) {
-			ret.put("token", map.get("token"));
-			ret.put("code", RespCode.SUCCESS.Code());
-		} else {
-			ret.put("msg", map.get("msg"));
-			ret.put("code", RespCode.FAIL.Code());
-		}
 		
-		return ret;
+		if (verificationService.checkCode(phone, verificationCode) == null) {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "无效的验证码");
+			return ret;
+		}
+
+		Map<String, Object> map = userService.registerPers(phone, password);
+		return map;
 	}
 
 	@AuthPassport(validate=false)
@@ -64,7 +67,7 @@ public class UserController extends BaseController{
 		String phone = json.get("phone");
 		String password = json.get("password");
 		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password)) {
-			ret.put("code", RespCode.FAIL.Code());
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
@@ -79,7 +82,8 @@ public class UserController extends BaseController{
 			ret.put("data", vo);
 			ret.put("code", RespCode.SUCCESS.Code());
 		} else {
-			ret.put("code", RespCode.FAIL.Code());
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "登录失败");
 		}
 		
 		return ret;
@@ -92,7 +96,7 @@ public class UserController extends BaseController{
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
 		if (StringUtils.isEmpty(token)) {
-			ret.put("code", RespCode.FAIL.Code());
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
@@ -104,7 +108,8 @@ public class UserController extends BaseController{
 			ret.put("data", vo);
 			ret.put("code", RespCode.SUCCESS.Code());
 		} else {
-			ret.put("code", RespCode.FAIL.Code());
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "loginWithToken fail");
 		}
 		
 		return ret;
@@ -115,14 +120,13 @@ public class UserController extends BaseController{
 	public Map<String,Object> logout(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 
-		boolean success = userService.logoutPers(token);
-		if (success) {
+		SysUser user = userService.logoutPers(token);
+		if (user != null) {
 			ret.put("code", RespCode.SUCCESS.Code());
 		} else {
-			ret.put("code", RespCode.FAIL.Code());
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "user not found");
 		}
-		
 		return ret;
 	}
 	
@@ -139,7 +143,7 @@ public class UserController extends BaseController{
 			ret.put("code", RespCode.SUCCESS.Code());
 			ret.put("data", vo);
 		} else {
-			ret.put("code", RespCode.FAIL.Code());
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "not found");
 		}
 		
@@ -158,18 +162,12 @@ public class UserController extends BaseController{
 		
 		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) 
 				|| StringUtils.isEmpty(newPassword)) {
-			ret.put("code", RespCode.FAIL.Code());
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
 		
-		Map<String,Object> map = userService.updateProfilePers(phone, password, newPassword);
-		if ((Boolean) map.get("success")) {
-			ret.put("code", RespCode.SUCCESS.Code());
-		} else {
-			ret.put("code", RespCode.FAIL.Code());
-			ret.put("msg", map.get("msg"));
-		}
+		ret = userService.updateProfilePers(phone, password, newPassword);
 		
 		return ret;
 	}
