@@ -4,11 +4,15 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.wolai.platform.entity.Promotion.PromotionLimitType;
 
 /**
  * 用户反馈
@@ -23,7 +27,28 @@ public class FeedBack extends idEntity {
 	 * uuid
 	 */
 	private static final long serialVersionUID = 2897656135113468418L;
+	
+	public static enum FeedbackType{
+  		SUGGESTION("SUGGESTION"), // 建议
+  		COMPLAIN("COMPLAIN"), // 投诉
+  		APPEAL_FOR_LINCENSE("APPEAL_FOR_LINCENSE"); // 车牌申诉
+  		
+		private FeedbackType(String textVal){
+  			this.textVal=textVal;
+  		}
+  		private String textVal;
+  		
+  		public String toString(){
+  			return textVal;
+  		}
+	}
 
+	/**
+	 * 反馈类型
+	 */
+	@Lob
+	private FeedbackType type;
+	
 	/**
 	 * 反馈内容
 	 */
@@ -114,6 +139,16 @@ public class FeedBack extends idEntity {
 
 	public void setIsDeal(Boolean isDeal) {
 		this.isDeal = isDeal;
+	}
+
+	@Enumerated(EnumType.STRING)
+	private FeedbackType limitType;
+	public FeedbackType getType() {
+		return type;
+	}
+
+	public void setType(FeedbackType type) {
+		this.type = type;
 	}
 	
 }

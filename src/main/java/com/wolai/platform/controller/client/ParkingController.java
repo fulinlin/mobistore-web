@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
+import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
@@ -33,6 +35,9 @@ public class ParkingController extends BaseController{
 	
 	@Autowired
 	ParkingService parkingService;
+	
+	@Autowired
+	BillService billService;
 
 	@RequestMapping(value="packInfo")
 	@ResponseBody
@@ -83,6 +88,32 @@ public class ParkingController extends BaseController{
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", parkVoList);
+		return ret;
+	}
+	
+	@RequestMapping(value="packHistoryDetail")
+	@ResponseBody
+	public Map<String,Object> packHistoryDetail(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+		Map<String,Object> ret = new HashMap<String, Object>();
+		
+		String id = json.get("id");
+		
+		SysUser user = userService.getUserByToken(token);
+		
+		ParkingRecord park = (ParkingRecord) parkingService.get(ParkingRecord.class, id);
+		Bill bill = billService.getBillByPacking(park.getId());
+		
+		ParkingVo vo = new ParkingVo();
+		BeanUtilEx.copyProperties(vo, park);
+		if (bill != null) {
+			vo.setPaytype(bill.getPaytype());
+			vo.setCouponType(bill.getCoupon().getType());
+			vo.setCouponMoney(bill.getCoupon().getMoney());
+			vo.setCouponTime(bill.getCoupon().getTime());
+		}
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vo);
 		return ret;
 	}
 	

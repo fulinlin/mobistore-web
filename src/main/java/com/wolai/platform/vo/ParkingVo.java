@@ -3,6 +3,9 @@ package com.wolai.platform.vo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.wolai.platform.entity.Bill.PayType;
+import com.wolai.platform.entity.Coupon.CouponType;
+
 public class ParkingVo {
 
 	private String carNo;
@@ -16,6 +19,11 @@ public class ParkingVo {
 	private String parkStatus;
 	private BigDecimal money;
 	private BigDecimal paidMoney;
+	
+	private PayType paytype;
+	private CouponType couponType;
+	private BigDecimal couponMoney;
+	private Long couponTime;
 	
 	public String getCarNo() {
 		return carNo;
@@ -82,6 +90,30 @@ public class ParkingVo {
 	}
 	public void setPaidMoney(BigDecimal paidMoney) {
 		this.paidMoney = paidMoney;
+	}
+	public PayType getPaytype() {
+		return paytype;
+	}
+	public void setPaytype(PayType paytype) {
+		this.paytype = paytype;
+	}
+	public CouponType getCouponType() {
+		return couponType;
+	}
+	public void setCouponType(CouponType couponType) {
+		this.couponType = couponType;
+	}
+	public BigDecimal getCouponMoney() {
+		return couponMoney;
+	}
+	public void setCouponMoney(BigDecimal couponMoney) {
+		this.couponMoney = couponMoney;
+	}
+	public Long getCouponTime() {
+		return couponTime;
+	}
+	public void setCouponTime(Long couponTime) {
+		this.couponTime = couponTime;
 	}
 	
 }
