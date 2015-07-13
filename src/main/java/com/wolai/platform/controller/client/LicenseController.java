@@ -70,29 +70,33 @@ public class LicenseController extends BaseController {
 		String isPostpaid = json.get("isPostpaid");
 		
 		if (StringUtils.isEmpty(carNo) || StringUtils.isEmpty(frameNumber) 
-				|| StringUtils.isEmpty(brand) || StringUtils.isEmpty(isPostpaid) ) { //  || StringUtils.isEmpty(verificationCode)) {
+				|| StringUtils.isEmpty(brand) || StringUtils.isEmpty(isPostpaid) ) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
 		
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		License lincense = licensePlateService.getLincense(carNo);
-		if (lincense != null) {
+		if (lincense != null && !"TEMP".equals(lincense.getUser().getCustomerType())) {
 			ret.put("code", RespCode.BIZ_FAIL.Code());
 			ret.put("msg", "车牌已注册");
 			return ret;
+		} else if (lincense != null && "TEMP".equals(lincense.getUser().getCustomerType())) { 
+			// 用户已经被导入
+			lincense.setUserId(user.getId());
+			licensePlateService.create(lincense);
+		} else {
+			// 新创建车牌
+			License po = new License();
+			po.setCarNo(json.get("carNo"));
+			po.setFrameNumber(json.get("frameNumber"));
+			po.setBrand(json.get("brand"));
+			po.setIsPostpaid(Boolean.valueOf(json.get("isPostpaid")));
+			po.setUserId(user.getId());
+			
+			licensePlateService.create(po);
 		}
-		
-		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
-		
-		License po = new License();
-		po.setCarNo(json.get("carNo"));
-		po.setFrameNumber(json.get("frameNumber"));
-		po.setBrand(json.get("brand"));
-		po.setIsPostpaid(Boolean.valueOf(json.get("isPostpaid")));
-		po.setUserId(user.getId());
-		
-		licensePlateService.create(po);
 
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;

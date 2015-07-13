@@ -2,6 +2,7 @@ package com.wolai.platform.service.impl;
 
 import java.util.List;
 
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -44,6 +45,7 @@ public class LicenseServiceImpl extends CommonServiceImpl implements LicenseServ
 		dc.add(Restrictions.eq("carNo", carNo));
 		dc.add(Restrictions.eq("isDelete", false));
 		dc.add(Restrictions.eq("isDisable", false));
+		dc.setFetchMode("user", FetchMode.JOIN);
 		List<License> ls = (List<License>) findAllByCriteria(dc);
 		if (ls.size() > 0) {
 			return ls.get(0);

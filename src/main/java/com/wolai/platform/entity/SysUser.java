@@ -27,13 +27,18 @@ public class SysUser extends idEntity {
   	 */
   	public static enum UserType{
   		/**
-  		 * individual(个人)
+  		 * 个人
   		 */
-  		INDIVIDUAL("individual"),
+  		INDIVIDUAL("INDIVIDUAL"),
   		/**
-  		 * enterpriseAdministrator(企业)
+  		 * 企业
   		 */
-  		ENTERPRISE("enterprise");
+  		ENTERPRISE("ENTERPRISE"),
+  		
+  		/**
+  		 * 潜在用户
+  		 */
+  		TEMP("TEMP");
   		
   		private UserType(String textVal){
   			this.textVal=textVal;

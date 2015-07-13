@@ -34,9 +34,9 @@ public class License extends idEntity{
 	 * 品牌
 	 */
 	private String brand;
-
+	
 	/**
-	 * 支付方式
+	 * 是否绑定
 	 */
 	private Boolean isPostpaid=Boolean.FALSE;
 	
