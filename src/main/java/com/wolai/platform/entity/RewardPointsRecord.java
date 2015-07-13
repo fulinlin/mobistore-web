@@ -76,7 +76,7 @@ public class RewardPointsRecord extends idEntity {
 	/**
 	 * 关联的积分账户
 	 */
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="reward_points_id",insertable=false,updatable=false)
 	private RewardPoints rewardPoints;
 	

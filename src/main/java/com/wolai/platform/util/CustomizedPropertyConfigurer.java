@@ -46,5 +46,9 @@ public class CustomizedPropertyConfigurer extends PropertyPlaceholderConfigurer 
     //static method for accessing context properties  
     public static Object getContextProperty(String name) {  
         return CTXPROPERTIESMAP.get(name);  
-    }  
+    }
+    
+    public static String getAdminPath(){
+    	return CTXPROPERTIESMAP.get("adminPath").toString();
+    }
 }

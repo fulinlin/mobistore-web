@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -61,7 +62,7 @@ public class PromotionCoupon extends idEntity {
 	@Column(name="promotion_id")
 	private String promotionId;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "promotion_id", insertable = false, updatable = false)
 	private Promotion promotion;
 

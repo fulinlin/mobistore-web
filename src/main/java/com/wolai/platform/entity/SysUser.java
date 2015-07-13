@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -119,7 +120,7 @@ public class SysUser extends idEntity {
     @Column(name="main_account_id")
     private String mainAccountId;
     
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "main_account_id", insertable = false, updatable = false)
     private SysAccount mainAccount;
     

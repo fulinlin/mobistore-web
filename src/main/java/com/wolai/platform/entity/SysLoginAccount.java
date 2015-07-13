@@ -2,6 +2,7 @@ package com.wolai.platform.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -54,7 +55,7 @@ public class SysLoginAccount extends idEntity {
     @Column(name="user_id")
     private String userId;
     
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private SysUser user;
     

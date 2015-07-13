@@ -2,6 +2,7 @@ package com.wolai.platform.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -48,7 +49,7 @@ public class SysDict extends idEntity {
     /**
      * 父字典
      */
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "parent_id", insertable = false, updatable = false)
     private SysDict parent;
     
