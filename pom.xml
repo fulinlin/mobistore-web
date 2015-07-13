@@ -264,8 +264,44 @@
 	       <version>4.5</version>
 	     </dependency>
 	</dependencies>
+	
+		<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<version>3.0</version>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0-SNAPSHOT</version>
+				<configuration>
+					<url>http://101.200.189.57:9090/manager/text</url>
+					<server>tomcat7</server>
+					<username>admin</username>
+					<password>P2ssw0rd</password>
+					<path>/wolai-web</path>
+					<update>true</update>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-	<build>
+<!-- 	<build>
 		<finalName>epark</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
@@ -346,5 +382,5 @@
 				</executions>
 			</plugin>
 		</plugins>
-	</build>
+	</build> -->
 </project>
