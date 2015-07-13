@@ -19,7 +19,7 @@ public class VerificationServiceImpl extends CommonServiceImpl implements Verifi
 	@Override
 	public SysVerificationCode checkCode(String phone, String code) {
 		Date now = new Date();
-		long time = now.getTime() - (10 * 60 * 1000); // 10分钟前
+		long time = now.getTime() - (5 * 60 * 1000); // 10分钟前
 		
 		DetachedCriteria dc = DetachedCriteria.forClass(SysVerificationCode.class);
 		dc.add(Restrictions.eq("mobile", phone));
