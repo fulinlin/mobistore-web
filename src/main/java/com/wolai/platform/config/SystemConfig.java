@@ -1,5 +1,6 @@
 package com.wolai.platform.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -8,7 +9,15 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 @Configuration
-public class SystemConfig {
-
+public  class SystemConfig {
 	
+	/**
+	 * 管理员登录path
+	 */
+	@Value("${adminPath}")
+	private String adminPath;
+
+	public String getAdminPath() {
+		return adminPath;
+	}
 }

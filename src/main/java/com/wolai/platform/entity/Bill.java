@@ -26,7 +26,7 @@ public class Bill extends idEntity {
 	 */
 	private static final long serialVersionUID = -4478071029703492078L;
 	
-	public static enum PayType{
+	public static  enum PayType{
   		/**
   		 * alipay(支付宝)
   		 */
@@ -44,8 +44,6 @@ public class Bill extends idEntity {
   		 */
   		WEIXIN("WEIXIN");
   		
-  		
-  		
   		private PayType(String textVal){
   			this.textVal=textVal;
   		}
@@ -55,6 +53,22 @@ public class Bill extends idEntity {
   			return textVal;
   		}
   	}
+	
+	/**
+	 * 支付状态
+	 */
+	public static  enum PayStatus{
+		INIT(0),FEATURE(-1),SUCCESSED(1);
+		
+		private PayStatus(Integer textVal){
+  			this.textVal=textVal;
+  		}
+  		private Integer textVal;
+  		
+  		public String toString(){
+  			return textVal.toString();
+  		}
+	}
 	
 	/**
 	 * 车牌号
@@ -83,10 +97,6 @@ public class Bill extends idEntity {
 	 */
 	private BigDecimal Money;
 	
-	/**
-	 * 是否已付款
-	 */
-	private Boolean isPaid;
 	
 	/**
 	 * 优惠券信息
@@ -125,6 +135,12 @@ public class Bill extends idEntity {
 	 */
 	private  Boolean isSendedInvoice;
 	
+	/**
+	 * 支付状态
+	 */
+	private PayStatus payStatus;
+	
+	
 	public String getCarNo() {
 		return carNo;
 	}
@@ -155,14 +171,6 @@ public class Bill extends idEntity {
 
 	public void setMoney(BigDecimal money) {
 		Money = money;
-	}
-
-	public Boolean getIsPaid() {
-		return isPaid;
-	}
-
-	public void setIsPaid(Boolean isPaid) {
-		this.isPaid = isPaid;
 	}
 
 	public String getCouponId() {
@@ -235,6 +243,14 @@ public class Bill extends idEntity {
 
 	public void setIsSendedInvoice(Boolean isSendedInvoice) {
 		this.isSendedInvoice = isSendedInvoice;
+	}
+
+	public PayStatus getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(PayStatus payStatus) {
+		this.payStatus = payStatus;
 	}
 	
 }

@@ -78,7 +78,7 @@ public class SystemInterceptor implements HandlerInterceptor {
 				}
 				Map<String, Object> result = new HashMap<String, Object>();
 				result.put("code", -100);
-				result.put("msg", "not login!");
+				result.put("msg", "not login");
 				WebUtils.renderJson(response, JSON.toJSONString(result));
 				return false;
 			} else if (packageName.startsWith(Constant.API_OUT_PACKAGE)) {

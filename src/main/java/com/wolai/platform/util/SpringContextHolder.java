@@ -1,10 +1,13 @@
 package com.wolai.platform.util;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.io.DefaultResourceLoader;
 
 /**
  * 
@@ -75,4 +78,24 @@ public class SpringContextHolder implements ApplicationContextAware {
             throw new IllegalStateException("applicationContext未注入，请在applicationContext.xml中配置");
         }
     }
+    
+    public static String getRootRealPath(){
+		String rootRealPath ="";
+		try {
+			rootRealPath=getApplicationContext().getResource("").getFile().getAbsolutePath();
+		} catch (IOException e) {
+			LOGGER.warn("获取系统根目录失败");
+		}
+		return rootRealPath;
+	}
+	
+	public static String getResourceRootRealPath(){
+		String rootRealPath ="";
+		try {
+			rootRealPath=new DefaultResourceLoader().getResource("").getFile().getAbsolutePath();
+		} catch (IOException e) {
+			LOGGER.warn("获取资源根目录失败");
+		}
+		return rootRealPath;
+	}
 }
