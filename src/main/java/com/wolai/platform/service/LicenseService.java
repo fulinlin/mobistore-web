@@ -2,6 +2,7 @@ package com.wolai.platform.service;
 
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.License;
+import com.wolai.platform.entity.SysUser;
 
 public interface LicenseService extends CommonService {
 
@@ -9,4 +10,6 @@ public interface LicenseService extends CommonService {
 
 	void create(License po);
 	void update(License po);
+	
+	License getLincense(String carNo);
 }

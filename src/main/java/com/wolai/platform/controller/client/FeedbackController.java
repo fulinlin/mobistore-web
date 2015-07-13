@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +38,13 @@ public class FeedbackController extends BaseController {
 		
 		String content = json.get("content");
 		String type = json.get("type");
+		
+		if (StringUtils.isEmpty(content)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
 		FeedBack po = new FeedBack();
 		if (FeedbackType.COMPLAIN.toString().equals(type)) {
 			po.setType(FeedbackType.COMPLAIN);
@@ -59,6 +67,13 @@ public class FeedbackController extends BaseController {
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		
 		String content = json.get("content");
+		
+		if (StringUtils.isEmpty(content)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
 		FeedBack po = new FeedBack();
 		po.setType(FeedbackType.APPEAL_FOR_LINCENSE);
 		po.setContent(content);

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,18 +39,18 @@ public class LicenseController extends BaseController {
 	@RequestMapping(value="list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
-		if (pagingParamError(json)) {
-			return pagingParamError();
-		}
-		int startIndex = Integer.valueOf(json.get("startIndex"));
-		int pageSize = Integer.valueOf(json.get("pageSize"));
+//		if (pagingParamError(json)) {
+//			return pagingParamError();
+//		}
+//		int startIndex = Integer.valueOf(json.get("startIndex"));
+//		int pageSize = Integer.valueOf(json.get("pageSize"));
 		
 		Map<String,Object> ret =new HashMap<String, Object>();
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 
 		List<LicenseVo> vols = new ArrayList<LicenseVo>();
-		Page page = licensePlateService.listByUser(userId, startIndex, pageSize);
+		Page page = licensePlateService.listByUser(userId, 0, 100);
 		for (Object obj : page.getItems()) {
 			License po = (License)obj;
 			LicenseVo vo = new LicenseVo();
@@ -66,6 +67,25 @@ public class LicenseController extends BaseController {
 	@ResponseBody
 	public Map<String,Object> create(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
+		
+		String carNo = json.get("carNo");
+		String frameNumber = json.get("frameNumber");
+		String brand = json.get("brand");
+		String isPostpaid = json.get("isPostpaid");
+		
+		if (StringUtils.isEmpty(carNo) || StringUtils.isEmpty(frameNumber) 
+				|| StringUtils.isEmpty(brand) || StringUtils.isEmpty(isPostpaid) ) { //  || StringUtils.isEmpty(verificationCode)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		License lincense = licensePlateService.getLincense(carNo);
+		if (lincense != null) {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "车牌已注册");
+			return ret;
+		}
 		
 		SysUser user = userService.getUserByToken(token);
 		

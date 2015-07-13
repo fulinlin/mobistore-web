@@ -1,5 +1,7 @@
 package com.wolai.platform.service.impl;
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.License;
+import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.LicenseService;
 
 @Service
@@ -31,5 +34,17 @@ public class LicenseServiceImpl extends CommonServiceImpl implements LicenseServ
 	@Override
 	public void update(License po) {
 		getDao().saveOrUpdate(po);
+	}
+
+	@Override
+	public License getLincense(String carNo) {
+		DetachedCriteria dc = DetachedCriteria.forClass(License.class);
+		dc.add(Restrictions.eq("carNo", carNo));
+		List<License> ls = (List<License>) findAllByCriteria(dc);
+		if (ls.size() > 0) {
+			return ls.get(0);
+		} else {
+			return null;
+		}
 	}
 }

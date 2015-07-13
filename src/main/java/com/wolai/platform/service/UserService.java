@@ -18,4 +18,6 @@ public interface UserService extends CommonService {
 	SysUser getUserByPhoneAndPassword(String phone, String password);
 	SysUser getUserByToken(String token);
 
+
+
 }

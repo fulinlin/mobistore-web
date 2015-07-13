@@ -107,8 +107,8 @@ public class UserController extends BaseController{
 			ret.put("data", vo);
 			ret.put("code", RespCode.SUCCESS.Code());
 		} else {
-			ret.put("code", RespCode.INTERFACE_FAIL.Code());
-			ret.put("msg", "loginWithToken fail");
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "Token登录失败");
 		}
 		
 		return ret;
@@ -124,7 +124,7 @@ public class UserController extends BaseController{
 			ret.put("code", RespCode.SUCCESS.Code());
 		} else {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
-			ret.put("msg", "user not found");
+			ret.put("msg", "user not found by this token");
 		}
 		return ret;
 	}
