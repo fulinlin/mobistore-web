@@ -1,8 +1,10 @@
 package com.wolai.platform.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,15 @@ public class VerificationServiceImpl extends CommonServiceImpl implements Verifi
 
 	@Override
 	public SysVerificationCode checkCode(String phone, String code) {
+		Date now = new Date();
+		long time = now.getTime() - (10 * 60 * 1000); // 10分钟前
+		
 		DetachedCriteria dc = DetachedCriteria.forClass(SysVerificationCode.class);
 		dc.add(Restrictions.eq("mobile", phone));
-		dc.add(Restrictions.eq("code", code));
+		dc.add(Restrictions.ge("createTime", new Date(time)));
+		dc.addOrder(Order.desc("createTime"));
+		//TODO:
+//		dc.add(Restrictions.eq("code", code));
 
 		List<SysVerificationCode> ls = (List<SysVerificationCode>) findAllByCriteria(dc);
 		if (ls.size() > 0) {

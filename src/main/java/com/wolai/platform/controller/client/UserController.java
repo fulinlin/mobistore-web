@@ -1,5 +1,6 @@
 package com.wolai.platform.controller.client;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,9 +18,11 @@ import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.entity.SysVerificationCode;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.service.VerificationService;
 import com.wolai.platform.util.BeanUtilEx;
+import com.wolai.platform.util.CommonUtils;
 import com.wolai.platform.vo.UserVo;
 
 @Controller
@@ -33,6 +36,28 @@ public class UserController extends BaseController{
 	VerificationService verificationService;
 	
 	@AuthPassport(validate=false)
+	@RequestMapping(value="verify")
+	@ResponseBody
+	public Map<String,Object> verify(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret =new HashMap<String, Object>(); 
+		
+		String phone = json.get("phone");
+		
+		if (StringUtils.isEmpty(phone)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+
+		String vcode = userService.createCode(phone);
+
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("verifyCode", vcode);
+		//TODO: 发送短信
+		return ret;
+	}
+	
+	@AuthPassport(validate=false)
 	@RequestMapping(value="register")
 	@ResponseBody
 	public Map<String,Object> register(HttpServletRequest request, @RequestBody Map<String, String> json){
@@ -42,17 +67,17 @@ public class UserController extends BaseController{
 		String password = json.get("password");
 		String verificationCode = json.get("verificationCode");
 		
-		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) ) { //  || StringUtils.isEmpty(verificationCode)) {
+		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) || StringUtils.isEmpty(verificationCode)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
 		
-//		if (verificationService.checkCode(phone, verificationCode) == null) {
-//			ret.put("code", RespCode.BIZ_FAIL.Code());
-//			ret.put("msg", "无效的验证码");
-//			return ret;
-//		}
+		if (verificationService.checkCode(phone, verificationCode) == null) {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "无效的验证码");
+			return ret;
+		}
 
 		Map<String, Object> map = userService.registerPers(phone, password);
 		return map;

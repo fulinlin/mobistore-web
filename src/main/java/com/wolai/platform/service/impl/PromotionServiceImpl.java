@@ -3,6 +3,7 @@ package com.wolai.platform.service.impl;
 import java.util.Date;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class PromotionServiceImpl extends CommonServiceImpl implements Promotion
 		dc.add(Restrictions.eq("isDisable", false));
 		dc.add(Restrictions.le("startTime", now));
 		dc.add(Restrictions.ge("endTime", now));
-		
+		dc.addOrder(Order.asc("startTime"));
 		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;

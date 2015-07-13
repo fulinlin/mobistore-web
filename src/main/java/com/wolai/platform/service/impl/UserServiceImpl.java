@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.entity.SysVerificationCode;
 import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.service.UserService;
+import com.wolai.platform.util.CommonUtils;
 
 @Service
 public class UserServiceImpl extends CommonServiceImpl implements UserService {
@@ -158,6 +160,17 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		ret.put("code", RespCode.SUCCESS.Code());
 		
 		return ret;
+	}
+
+	@Override
+	public String createCode(String phone) {
+		String code = CommonUtils.RandomNum(4);
+		SysVerificationCode vcode = new SysVerificationCode();
+		vcode.setMobile(phone);
+		vcode.setCode(code);
+		vcode.setCreateTime(new Date());
+		getDao().saveOrUpdate(vcode);
+		return code;
 	}
     
 }

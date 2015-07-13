@@ -24,6 +24,7 @@ import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.LicenseService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
+import com.wolai.platform.util.CommonUtils;
 import com.wolai.platform.vo.LicenseVo;
 
 @Controller
@@ -39,11 +40,6 @@ public class LicenseController extends BaseController {
 	@RequestMapping(value="list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
-//		if (pagingParamError(json)) {
-//			return pagingParamError();
-//		}
-//		int startIndex = Integer.valueOf(json.get("startIndex"));
-//		int pageSize = Integer.valueOf(json.get("pageSize"));
 		
 		Map<String,Object> ret =new HashMap<String, Object>();
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
@@ -87,7 +83,7 @@ public class LicenseController extends BaseController {
 			return ret;
 		}
 		
-		SysUser user = userService.getUserByToken(token);
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		
 		License po = new License();
 		po.setCarNo(json.get("carNo"));
@@ -109,8 +105,36 @@ public class LicenseController extends BaseController {
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
 		String id = json.get("id");
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		
-		Object obj = licensePlateService.get(License.class, id);
+		License po = licensePlateService.getLicense(id, user.getId());
+		if (po == null) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "not found");
+			return ret;
+		}
+		
+		po.setCarNo(json.get("carNo"));
+		po.setFrameNumber(json.get("frameNumber"));
+		po.setBrand(json.get("brand"));
+		po.setIsPostpaid(Boolean.valueOf(json.get("isPostpaid")));
+		
+		licensePlateService.update(po);
+
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
+	
+	@AuthPassport(validate=true)
+	@RequestMapping(value="remove")
+	@ResponseBody
+	public Map<String,Object> remove(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+		Map<String,Object> ret =new HashMap<String, Object>(); 
+		
+		String id = json.get("id");
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
+		
+		Object obj = licensePlateService.getLicense(id, user.getId());
 		if (obj == null) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "not found");
@@ -118,10 +142,7 @@ public class LicenseController extends BaseController {
 		}
 		
 		License po = (License)obj;
-		po.setCarNo(json.get("carNo"));
-		po.setFrameNumber(json.get("frameNumber"));
-		po.setBrand(json.get("brand"));
-		po.setIsPostpaid(Boolean.valueOf(json.get("isPostpaid")));
+		po.setIsDelete(true);
 		
 		licensePlateService.update(po);
 

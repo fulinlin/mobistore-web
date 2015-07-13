@@ -12,4 +12,6 @@ public interface LicenseService extends CommonService {
 	void update(License po);
 	
 	License getLincense(String carNo);
+
+	License getLicense(String id, String string);
 }
