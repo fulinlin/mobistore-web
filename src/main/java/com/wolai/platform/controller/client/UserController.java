@@ -40,19 +40,19 @@ public class UserController extends BaseController{
 		
 		String phone = json.get("phone");
 		String password = json.get("password");
-		String verificationCode = json.get("verificationCode ");
+		String verificationCode = json.get("verificationCode");
 		
-		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) || StringUtils.isEmpty(verificationCode)) {
+		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) ) { //  || StringUtils.isEmpty(verificationCode)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
 		
-		if (verificationService.checkCode(phone, verificationCode) == null) {
-			ret.put("code", RespCode.BIZ_FAIL.Code());
-			ret.put("msg", "无效的验证码");
-			return ret;
-		}
+//		if (verificationService.checkCode(phone, verificationCode) == null) {
+//			ret.put("code", RespCode.BIZ_FAIL.Code());
+//			ret.put("msg", "无效的验证码");
+//			return ret;
+//		}
 
 		Map<String, Object> map = userService.registerPers(phone, password);
 		return map;
@@ -75,7 +75,6 @@ public class UserController extends BaseController{
 		SysUser user = userService.loginPers(phone, password);
 		if (user != null) {
 			ret.put("token", user.getAuthToken());
-			ret.put("code", RespCode.SUCCESS.Code());
 			
 			UserVo vo = new UserVo();
 			BeanUtilEx.copyProperties(vo, user);
