@@ -3,9 +3,13 @@ package com.wolai.platform.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -21,6 +25,31 @@ public class ExchangePlan extends idEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 780639903449593380L;
+	
+	public static enum ExchangeCode{
+		/**
+  		 * 注册送
+  		 */
+  		REGISTER_PRESENT("REGISTER_PRESENT"),
+  		/**
+  		 * 积分兑换
+  		 */
+  		POINTS_EXCHANGE("POINTS_EXCHANGE"),
+  		/**
+  		 * 抢券
+  		 */
+  		SNAPUP_FREE("SNAPUP_FREE");
+  		
+  		
+		private ExchangeCode(String textVal){
+  			this.textVal=textVal;
+  		}
+  		private String textVal;
+  		
+  		public String toString(){
+  			return textVal;
+  		}
+	}
 
 	/**
 	 * 交换类型
@@ -81,6 +110,12 @@ public class ExchangePlan extends idEntity {
 	}
 	
 	/**
+	 * 类型编码
+	 */
+	@Enumerated(EnumType.STRING)
+	private ExchangeCode code;
+	
+	/**
 	 * 兑换类型
 	 */
 	@Enumerated(EnumType.STRING)
@@ -114,9 +149,14 @@ public class ExchangePlan extends idEntity {
 	private Date endTime;
 	
 	/**
-	 * 是否已失效
+	 * 营销活动
 	 */
-	private Boolean disabled=Boolean.FALSE;
+	@Column(name="promotion_id")
+	private String promotionId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "promotion_id", insertable = false, updatable = false)
+	private Promotion promotion;
 
 	public TargetType getTargetType() {
 		return targetType;
@@ -166,12 +206,28 @@ public class ExchangePlan extends idEntity {
 		this.endTime = endTime;
 	}
 
-	public Boolean getDisabled() {
-		return disabled;
+	public String getPromotionId() {
+		return promotionId;
 	}
 
-	public void setDisabled(Boolean disabled) {
-		this.disabled = disabled;
+	public void setPromotionId(String promotionId) {
+		this.promotionId = promotionId;
+	}
+
+	public Promotion getPromotion() {
+		return promotion;
+	}
+
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
+
+	public ExchangeCode getCode() {
+		return code;
+	}
+
+	public void setCode(ExchangeCode code) {
+		this.code = code;
 	}
 	
 }
