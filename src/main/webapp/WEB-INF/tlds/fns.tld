@@ -22,7 +22,7 @@
     <description>获取系统配置</description>
     <name>getConfig</name>
     <function-class>com.wolai.platform.util.CustomizedPropertyConfigurer</function-class>
-    <function-signature>java.lang.Object getContextProperty()</function-signature>
+    <function-signature>java.lang.Object getContextProperty(java.lang.String)</function-signature>
     <example>${fns:getConfig(code)}</example>
   </function>
   

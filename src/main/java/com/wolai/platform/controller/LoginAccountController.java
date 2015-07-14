@@ -15,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolai.platform.annotation.AuthPassport;
+import com.wolai.platform.bean.LoginInfo;
 import com.wolai.platform.config.SystemConfig;
+import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.SysLoginAccount;
 import com.wolai.platform.service.LoginAccountService;
 import com.wolai.platform.servlet.ValidateCodeServlet;
@@ -37,7 +39,10 @@ public class LoginAccountController extends BaseController{
 		}else{
 			SysLoginAccount account=  loginAccountService.authLoginAccount(userName.trim(), password.trim());
 			if(account!=null){
-				return "redirect:${adminPath}/app";
+				LoginInfo loginInfo = new LoginInfo();
+				loginInfo.setUser(account);
+				setLoginInfoSession(request, loginInfo);
+				return "redirect:"+SystemConfig.getAdminPath()+"/index/";
 			}else{
 				error= "用户名或密码不正确！";
 			}
@@ -61,13 +66,17 @@ public class LoginAccountController extends BaseController{
 		
 		return mv;
 	}
+	@RequestMapping("${adminPath}/logout")
+	public String logout(HttpServletRequest request){
+		request.removeAttribute(Constant.SESSION_LOGINFO);
+		return "redirect:"+SystemConfig.getAdminPath()+"/prepareLogin";
+	}
 	
 	@AuthPassport(validate=false)
 	@RequestMapping("${adminPath}")
 	public String welcom(){
 		return "redirect:"+SystemConfig.getAdminPath()+"/prepareLogin";
 	}
-	
 	
 	/**
 	 * 是否是验证码登录
@@ -97,4 +106,5 @@ public class LoginAccountController extends BaseController{
 		}
 		return loginFailNum >= 3;
 	}
+	
 }
