@@ -9,6 +9,7 @@
 		.control-group{border-bottom:0px;}
 	</style>
     <script src="${ctxStatic}/common/backstretch.min.js"></script>
+     <script src="${ctxStatic}/md5/md5.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 		/* 	$.backstretch([
@@ -30,6 +31,10 @@
 					error.appendTo($("#loginError").parent());
 				} 
 			});
+ 		  	
+ 			$("#password").keyup(function(){
+ 		  		$("#hiddenPassword").val(hex_md5(hex_md5($("#password").val())));
+ 		  	});
 		});
 		// 如果在框架中，则跳转刷新上级页面
 		if(self.frameElement && self.frameElement.tagName=="IFRAME"){
@@ -53,8 +58,9 @@
 
     <div class="container">
 		<!--[if lte IE 6]><br/><div class='alert alert-block' style="text-align:left;padding-bottom:10px;"><a class="close" data-dismiss="alert">x</a><h4>温馨提示：</h4><p>你使用的浏览器版本过低。为了获得更好的浏览体验，我们强烈建议您 <a href="http://browsehappy.com" target="_blank">升级</a> 到最新版本的IE浏览器，或者使用较新版本的 Chrome、Firefox、Safari 等。</p></div><![endif]-->
-		<div id="messageBox" class="alert alert-error hide"><button data-dismiss="alert" class="close">×</button>
-			<label id="loginError" class="error"></label>
+		<%String error = (String) request.getAttribute("error");%>
+		<div id="messageBox" class="alert alert-error <%=error==null?"hide":""%>"><button data-dismiss="alert" class="close">×</button>
+			<c:if test="${error!=null}"><label id="loginError" class="error"><%=error==null?"":error%></label></c:if>
 		</div>
         <div id="login-wraper">
             <form id="loginForm"  class="form login-form" action="${ctx}/login" method="post">
@@ -62,12 +68,13 @@
                 <div class="body">
 					<div class="control-group">
 						<div class="controls">
-							<input type="text" id="username" name="username" class="required email" value="${username}" placeholder="登录名">
+							<input type="text" id="username" name="userName" class="required email" value="${userName}" placeholder="登录名">
 						</div>
 					</div>
 					<div class="control-group">
 						<div class="controls">
-							<input type="password" id="password" name="password" class="required" placeholder="密码"/>
+							<input type="password" id="password"  class="required " rangelength="8,16" placeholder="密码"/>
+							<input type="hidden" name="password" id="hiddenPassword"/> 
 						</div>
 					</div>
 					<c:if test="${isValidateCodeLogin}">

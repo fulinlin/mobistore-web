@@ -97,6 +97,16 @@ public class SystemInterceptor implements HandlerInterceptor {
 					}
 				}
 			}	
+		}else{
+			String uriPrefix = request.getContextPath();
+			String requestRri = request.getRequestURI();
+			if(requestRri.endsWith("/")){
+				requestRri = requestRri.substring(0, requestRri.length()-1);
+			}
+			if(requestRri.equals(uriPrefix)){
+				return true;
+			}
+			
 		}
 		return false;
 	}

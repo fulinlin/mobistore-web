@@ -9,6 +9,9 @@
   http://www.springframework.org/schema/mvc
   http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
  
+     <!-- 加载配置属性文件 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/config.properties" />
+	
 	<context:component-scan base-package="com.wolai.platform.controller"></context:component-scan>
 	<mvc:annotation-driven />
 	
@@ -41,7 +44,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/index.jsp" />
+			<mvc:exclude-mapping path="/" />
 			<bean class="com.wolai.platform.interceptor.SystemInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
