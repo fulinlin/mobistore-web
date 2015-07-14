@@ -27,19 +27,19 @@ public class ExchangePlan extends idEntity {
 	 * @author Ethan
 	 *
 	 */
-	public static enum ExchangeType{
+	public static enum TargetType{
 		
 		/**
-  		 * money(抵用券)
+  		 * 代金券
   		 */
-  		TOCOUPON("TOCOUPON"),
+  		TO_COUPON_MONEY("TO_COUPON_MONEY"),
   		
   		/**
-  		 * time(抵时券)
+  		 * 礼品券
   		 */
-  		TOGOODS("TOGOODS");
+  		TO_GOODS("TO_GOODS");
   		
-  		private ExchangeType(String textVal){
+  		private TargetType(String textVal){
   			this.textVal=textVal;
   		}
   		private String textVal;
@@ -54,18 +54,23 @@ public class ExchangePlan extends idEntity {
 	 * @author Ethan
 	 *
 	 */
-	public static enum CurrencyType{
+	public static enum SourceType{
 		/**
-  		 * TNTEGRAL(积分)
+  		 * 积分
   		 */
-  		REWRRDPOINTS("REWRRDPOINTS"),
+  		REWRRD_POINTS("REWRRD_POINTS"),
   		
   		/**
-  		 * TIME(现金)
+  		 * 现金
   		 */
-  		MONEY("MONEY");
+  		MONEY("MONEY"),
   		
-  		private CurrencyType(String textVal){
+  		/**
+  		 * 无条件
+  		 */
+  		NONE("NONE");
+  		
+  		private SourceType(String textVal){
   			this.textVal=textVal;
   		}
   		private String textVal;
@@ -79,14 +84,14 @@ public class ExchangePlan extends idEntity {
 	 * 兑换类型
 	 */
 	@Enumerated(EnumType.STRING)
-	private ExchangeType targetType;
+	private TargetType targetType;
 	
 	
 	/**
 	 * 兑换介质
 	 */
 	@Enumerated(EnumType.STRING)
-	private CurrencyType sourceType;
+	private SourceType sourceType;
 	
 	/**
 	 * 单价
@@ -113,19 +118,19 @@ public class ExchangePlan extends idEntity {
 	 */
 	private Boolean disabled=Boolean.FALSE;
 
-	public ExchangeType getTargetType() {
+	public TargetType getTargetType() {
 		return targetType;
 	}
 
-	public void setTargetType(ExchangeType targetType) {
+	public void setTargetType(TargetType targetType) {
 		this.targetType = targetType;
 	}
 
-	public CurrencyType getSourceType() {
+	public SourceType getSourceType() {
 		return sourceType;
 	}
 
-	public void setSourceType(CurrencyType sourceType) {
+	public void setSourceType(SourceType sourceType) {
 		this.sourceType = sourceType;
 	}
 
