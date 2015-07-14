@@ -82,4 +82,30 @@ public class PromotionController extends BaseController {
 		ret.put("data", vo);
 		return ret;
 	}
+	
+	@RequestMapping(value="exchange")
+	@ResponseBody
+	public Map<String,Object> exchange(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret =new HashMap<String, Object>(); 
+		
+		String id = json.get("id");
+
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+//		ret.put("data", vo);
+		return ret;
+	}
+	
+	@RequestMapping(value="snapup")
+	@ResponseBody
+	public Map<String,Object> snapup(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret =new HashMap<String, Object>(); 
+		
+		String id = json.get("id");
+
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+//		ret.put("data", vo);
+		return ret;
+	}
 }
