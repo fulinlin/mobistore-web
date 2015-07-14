@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<ehcache updateCheck="false" name="hibernateCache">
+    
+    <diskStore path="java.io.tmpdir/wolai/ehcache/hibernate"/>
+    
+   <cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="peerDiscovery=automatic,multicastGroupAddress=230.0.0.1, multicastGroupPort=4446" />
+	<cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory" />
+    
+   <!-- DefaultCache setting. -->
+	<defaultCache maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600" 
+		overflowToDisk="true" maxEntriesLocalDisk="100000" >
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+    </defaultCache>
+    
+    <cache name="com.wolai.platform.entity.SysDict" maxEntriesLocalHeap="200" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
+	</cache>
+    
+    <cache name="com.wolai.platform.entity.SysUser" maxEntriesLocalHeap="200" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
+	</cache>
+	
+    <cache name="com.wolai.platform.entity.License" maxEntriesLocalHeap="200" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
+	</cache>
+	
+    <cache name="com.wolai.platform.entity.SysLoginAccount" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
+	</cache>
+    
+    <cache name="com.wolai.platform.entity.SysRole" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
+	</cache>
+	
+    <cache name="com.wolai.platform.entity.SysRLoginAccountRole" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
+   	 <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
+    </cache>
+    
+    <cache name="com.wolai.platform.entity.ParkingLot" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
+     <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
+    </cache>
+    
+</ehcache>
