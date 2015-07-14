@@ -8,6 +8,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 /**
  * 网站登录用户
  * @author xuxiang
@@ -15,6 +20,8 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name="sys_login_account")
+@DynamicInsert @DynamicUpdate
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SysLoginAccount extends idEntity {
 
 	/**

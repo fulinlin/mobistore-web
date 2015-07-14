@@ -34,7 +34,7 @@
   <!-- Spring ApplicationContext配置文件的路径可使用通配符，多个路径用,号分隔，此参数用于后面的Spring-Context loader -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:springmvc-servlet.xml</param-value>
+        <param-value>classpath:applicationContent.xml</param-value>
     </context-param>
     
    <listener>
@@ -189,8 +189,4 @@
      <session-config>
         <session-timeout>30</session-timeout>    	
     </session-config>
-	<welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
-    
    </web-app>
