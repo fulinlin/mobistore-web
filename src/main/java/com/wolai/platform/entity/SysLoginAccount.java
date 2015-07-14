@@ -126,4 +126,5 @@ public class SysLoginAccount extends idEntity {
 	public void setUser(SysUser user) {
 		this.user = user;
 	}
+
 }

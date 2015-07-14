@@ -42,9 +42,12 @@ public class IdGen {
 		return Encodes.encodeBase62(randomBytes);
 	}
 	
-/*	public static void main(String[] args) {
-		System.out.println(IdGen.uuid());
-		System.out.println(IdGen.uuid().length());
-	}*/
+	public static void main(String[] args) {
+		int i=0;
+		while (i<100){
+			System.out.println(IdGen.uuid());
+			i++;
+		}
+	}
 
 }

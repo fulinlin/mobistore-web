@@ -51,4 +51,8 @@ public class CustomizedPropertyConfigurer extends PropertyPlaceholderConfigurer 
     public static String getAdminPath(){
     	return CTXPROPERTIESMAP.get("adminPath").toString();
     }
+    
+    public static String getConfig(String name){
+    	 return CTXPROPERTIESMAP.get(name).toString();
+    }
 }
