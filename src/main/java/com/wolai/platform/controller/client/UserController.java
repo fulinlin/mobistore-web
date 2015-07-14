@@ -195,4 +195,30 @@ public class UserController extends BaseController{
 		
 		return ret;
 	}
+	
+	@AuthPassport(validate=false)
+	@RequestMapping(value="resetPassword")
+	@ResponseBody
+	public Map<String,Object> resetPassword(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret =new HashMap<String, Object>(); 
+		
+		String phone = json.get("phone");
+		String password = json.get("password");
+		String verificationCode = json.get("verificationCode");
+		
+		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) || StringUtils.isEmpty(verificationCode)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		if (verificationService.checkCode(phone, verificationCode) == null) {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "无效的验证码");
+			return ret;
+		}
+
+		Map<String, Object> map = userService.resetPasswordPers(phone, password);
+		return map;
+	}
 }

@@ -20,6 +20,8 @@ public interface UserService extends CommonService {
 
 	String createCode(String phone);
 
+	Map<String, Object> resetPasswordPers(String phone, String password);
+
 
 
 }

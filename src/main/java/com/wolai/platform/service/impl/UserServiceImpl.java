@@ -172,5 +172,27 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		getDao().saveOrUpdate(vcode);
 		return code;
 	}
+
+	@Override
+	public Map<String, Object> resetPasswordPers(String phone, String password) {
+		Map<String, Object> ret = new HashMap<String, Object>(); 
+		
+		SysUser user = getUserByPhone(phone);
+		if (user == null) {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "用户不存在");
+			return ret;
+		}
+		
+		user.setPassword(password);
+		String newToken = UUID.randomUUID().toString();
+		user.setAuthToken(newToken);
+		user.setLastLoginTime(new Date());
+		saveOrUpdate(user);
+		
+		ret.put("token", newToken);
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
     
 }
