@@ -20,6 +20,7 @@ import com.wolai.platform.config.SystemConfig;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.SysLoginAccount;
 import com.wolai.platform.service.LoginAccountService;
+import com.wolai.platform.service.RoleService;
 import com.wolai.platform.servlet.ValidateCodeServlet;
 import com.wolai.platform.util.CacheUtils;
 
@@ -28,6 +29,9 @@ public class LoginAccountController extends BaseController{
 
 	@Autowired
 	private LoginAccountService  loginAccountService;
+	
+	@Autowired
+	private RoleService roleService;
 	
 	@AuthPassport(validate=false)
 	@RequestMapping(value="${adminPath}/login",method = RequestMethod.POST)
@@ -41,8 +45,10 @@ public class LoginAccountController extends BaseController{
 			if(account!=null){
 				LoginInfo loginInfo = new LoginInfo();
 				loginInfo.setUser(account);
+				loginInfo.setRoles(roleService.getTopRoleByUserId(account.getId()));
+				
 				setLoginInfoSession(request, loginInfo);
-				return "redirect:"+SystemConfig.getAdminPath()+"/index/";
+				return "redirect:"+SystemConfig.getAdminPath();
 			}else{
 				error= "用户名或密码不正确！";
 			}
@@ -74,7 +80,13 @@ public class LoginAccountController extends BaseController{
 	
 	@AuthPassport(validate=false)
 	@RequestMapping("${adminPath}")
-	public String welcom(){
+	public String wellcome(HttpServletRequest request){
+		if(request.getSession(false)!=null){
+			LoginInfo info = getLoginInfoSession(request);
+			if(info!=null){
+					return "admin/index";
+			}
+		}
 		return "redirect:"+SystemConfig.getAdminPath()+"/prepareLogin";
 	}
 	

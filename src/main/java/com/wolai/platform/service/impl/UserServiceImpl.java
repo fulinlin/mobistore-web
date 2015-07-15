@@ -6,14 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
+import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.SysUser;
-import com.wolai.platform.entity.SysVerificationCode;
 import com.wolai.platform.entity.SysUser.UserType;
+import com.wolai.platform.entity.SysVerificationCode;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.CommonUtils;
 
@@ -195,4 +198,31 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		return ret;
 	}
     
+	public Page<SysUser> findAllByPage(SysUser user,int start,int limit) {
+		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		if(user!=null){
+			// 是否查看禁用账户相关设置
+			if(user.getIsDisable()!=null){
+				dc.add(Restrictions.eq("isDisable",user.getIsDisable()));
+			}
+			
+			// 手机号模糊查询
+			if(StringUtils.isNotEmpty(user.getMobile())){
+				dc.add(Restrictions.like("mobile",user.getMobile(),MatchMode.ANYWHERE));
+			}
+		}
+		return getDao().findPage(dc, start, limit);
+	}
+
+	@Override
+	public boolean validateMobile(String mobile,String userId) {
+		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		if(StringUtils.isNotBlank(userId)){
+			dc.add(Restrictions.ne("id", userId));
+		}
+		SysUser user = (SysUser) getDao().getByCriteria(dc);
+		return user==null;
+	}
 }
