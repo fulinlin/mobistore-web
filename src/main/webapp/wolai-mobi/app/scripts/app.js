@@ -27,7 +27,15 @@ angular
         controllerAs: 'main'
       })
       .when('/promotion', {
-        templateUrl: 'views/promotion/promotion.html',
+        templateUrl: 'views/promotion/index.html',
+        controller: 'PromotionCtrl'
+      })
+      .when('/promotion/points', {
+        templateUrl: 'views/promotion/points.html',
+        controller: 'PromotionCtrl'
+      })
+      .when('/promotion/snapup', {
+        templateUrl: 'views/promotion/snapup.html',
         controller: 'PromotionCtrl'
       })
       .otherwise({

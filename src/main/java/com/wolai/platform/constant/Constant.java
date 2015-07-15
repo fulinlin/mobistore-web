@@ -25,19 +25,9 @@ public final class Constant {
 	public static final String API_WEB = "api/web/";
 	
 	/**
-	 * app响应控制器包名
-	 */
-	public static final String API_CLIENT_PACKAGE="com.wolai.platform.controller.client";
-	
-	/**
 	 * 
 	 */
-	public static final String API_OUT_PACKAGE_WEB="com.wolai.platform.controller.api.web";
-	
-	/**
-	 * 
-	 */
-	public static final String API_OUT_PACKAGE_MOBILE="com.wolai.platform.controller.api.mobi";
+	public static final String API_OUT_PACKAGE_CLIENT="com.wolai.platform.controller.api";
 	
     /**
      * 管理员权限编码

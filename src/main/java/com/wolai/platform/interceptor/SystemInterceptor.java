@@ -60,7 +60,7 @@ public class SystemInterceptor implements HandlerInterceptor {
 			// 根据不同package处理不同身份认证逻辑
 			String packageName = ((HandlerMethod) handler).getBeanType().getPackage().getName();
 			// app鉴权管理
-			if (packageName.startsWith(Constant.API_CLIENT_PACKAGE)) {
+			if (packageName.startsWith(Constant.API_OUT_PACKAGE_CLIENT)) {
 				// Token 验证逻辑（用户登录）
 
 				// 安全认证
@@ -81,13 +81,7 @@ public class SystemInterceptor implements HandlerInterceptor {
 				result.put("msg", "not login");
 				WebUtils.renderJson(response, JSON.toJSONString(result));
 				return false;
-			} else if (packageName.startsWith(Constant.API_OUT_PACKAGE_WEB)) {
-				// 对外接口安全验证逻辑
-				return true;
-			}else if(packageName.startsWith(Constant.API_OUT_PACKAGE_MOBILE)){
-				// Angulajs 安全验证
-				return true;
-			}else {
+			} else {
 				HttpSession sesion = request.getSession(false);
 				if (sesion != null) {
 					LoginInfo info = (LoginInfo) sesion.getAttribute(Constant.SESSION_LOGINFO);

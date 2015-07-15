@@ -1,6 +1,9 @@
 package com.wolai.platform.vo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 public class PromotionVo {
 	private String id;
@@ -13,6 +16,8 @@ public class PromotionVo {
 	private Date startTime;
 
 	private Date endTime;
+	
+	private List<ExchangePlanVo> exchangePlanList = new ArrayList<ExchangePlanVo>();
 
 	public String getTitle() {
 		return title;
@@ -60,6 +65,14 @@ public class PromotionVo {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public List<ExchangePlanVo> getExchangePlanList() {
+		return exchangePlanList;
+	}
+
+	public void setExchangePlanList(List<ExchangePlanVo> exchangePlanList) {
+		this.exchangePlanList = exchangePlanList;
 	}
 
 }
