@@ -19,6 +19,7 @@ import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Coupon;
+import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.CouponService;
 import com.wolai.platform.service.UserService;
@@ -48,17 +49,25 @@ public class CouponController extends BaseController {
 		String userId = user.getId();
 
 		Page couponPage = couponService.listByUser(userId, startIndex, pageSize);
-		List<CouponVo> couponVoList = new ArrayList<CouponVo>();
+		List<CouponVo> couponMoneyVoList = new ArrayList<CouponVo>();
+		List<CouponVo> couponTimeVoList = new ArrayList<CouponVo>();
 		
 		for (Object obj : couponPage.getItems()) {
 			Coupon po = (Coupon) obj;
 			CouponVo vo = new CouponVo();
 			BeanUtilEx.copyProperties(vo, po);
-			couponVoList.add(vo);
+			if (CouponType.MONEY.toString().equals(po.getType())) {
+				couponMoneyVoList.add(vo);
+			} else if(CouponType.TIME.toString().equals(po.getType())) {
+				couponTimeVoList.add(vo);
+			}
 		}
 		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("money", couponMoneyVoList);
+		data.put("time", couponTimeVoList);
 		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("data", couponVoList);
+		ret.put("data", data);
 		return ret;
 	}
 
