@@ -56,9 +56,9 @@ public class CouponController extends BaseController {
 			Coupon po = (Coupon) obj;
 			CouponVo vo = new CouponVo();
 			BeanUtilEx.copyProperties(vo, po);
-			if (CouponType.MONEY.toString().equals(po.getType())) {
+			if (CouponType.MONEY.toString().equals(po.getType().toString())) {
 				couponMoneyVoList.add(vo);
-			} else if(CouponType.TIME.toString().equals(po.getType())) {
+			} else if(CouponType.TIME.toString().equals(po.getType().toString())) {
 				couponTimeVoList.add(vo);
 			}
 		}
