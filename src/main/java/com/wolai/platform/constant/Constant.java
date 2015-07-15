@@ -25,7 +25,13 @@ public final class Constant {
 	/**
 	 * 
 	 */
-	public static final String API_OUT_PACKAGE="com.wolai.platform.controller.api";
+	public static final String API_OUT_PACKAGE_WEB="com.wolai.platform.controller.api.web";
+	
+	/**
+	 * 
+	 */
+	public static final String API_OUT_PACKAGE_MOBILE="com.wolai.platform.controller.api.mobi";
+	
     /**
      * 管理员权限编码
      */
