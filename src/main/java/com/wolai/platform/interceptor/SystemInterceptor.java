@@ -83,10 +83,10 @@ public class SystemInterceptor implements HandlerInterceptor {
 				return false;
 			} else if (packageName.startsWith(Constant.API_OUT_PACKAGE_WEB)) {
 				// 对外接口安全验证逻辑
-				// TODO
+				return true;
 			}else if(packageName.startsWith(Constant.API_OUT_PACKAGE_MOBILE)){
 				// Angulajs 安全验证
-				//TODO
+				return true;
 			}else {
 				HttpSession sesion = request.getSession(false);
 				if (sesion != null) {

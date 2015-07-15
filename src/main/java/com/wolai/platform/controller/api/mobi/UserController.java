@@ -1,4 +1,4 @@
-package com.wolai.platform.controller.client;
+package com.wolai.platform.controller.api.mobi;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
+import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.SysVerificationCode;
 import com.wolai.platform.service.UserService;
@@ -26,7 +27,7 @@ import com.wolai.platform.util.CommonUtils;
 import com.wolai.platform.vo.UserVo;
 
 @Controller
-@RequestMapping(Constant.API_CLIENT + "user/")
+@RequestMapping(Constant.API_MOBI + "user/")
 public class UserController extends BaseController{
 	
 	@Autowired

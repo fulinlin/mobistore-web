@@ -1,4 +1,4 @@
-package com.wolai.platform.controller.client;
+package com.wolai.platform.controller.api.mobi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
+import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.RewardPoints;
 import com.wolai.platform.entity.SysUser;
@@ -28,7 +29,7 @@ import com.wolai.platform.vo.CouponVo;
 import com.wolai.platform.vo.RewardPointsVo;
 
 @Controller
-@RequestMapping(Constant.API_CLIENT + "asset/")
+@RequestMapping(Constant.API_MOBI + "asset/")
 public class AssetController extends BaseController {
 	@Autowired
 	UserService userService;

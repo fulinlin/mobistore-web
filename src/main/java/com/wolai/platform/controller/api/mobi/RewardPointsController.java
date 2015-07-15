@@ -1,4 +1,4 @@
-package com.wolai.platform.controller.client;
+package com.wolai.platform.controller.api.mobi;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
+import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.RewardPoints;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.RewardPointsService;
@@ -21,7 +22,7 @@ import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.RewardPointsVo;
 
 @Controller
-@RequestMapping(Constant.API_CLIENT + "rewardPoints/")
+@RequestMapping(Constant.API_MOBI + "rewardPoints/")
 public class RewardPointsController extends BaseController {
 	@Autowired
 	UserService userService;

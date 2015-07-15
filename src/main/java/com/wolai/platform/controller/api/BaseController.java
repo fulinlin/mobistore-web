@@ -1,4 +1,4 @@
-package com.wolai.platform.controller.client;
+package com.wolai.platform.controller.api;
 
 
 import java.util.HashMap;

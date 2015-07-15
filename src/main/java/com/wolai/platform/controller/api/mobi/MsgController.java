@@ -1,4 +1,4 @@
-package com.wolai.platform.controller.client;
+package com.wolai.platform.controller.api.mobi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
+import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.SysMessage;
 import com.wolai.platform.entity.SysMessageSend;
 import com.wolai.platform.entity.SysUser;
@@ -26,7 +27,7 @@ import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.MessageVo;
 
 @Controller
-@RequestMapping(Constant.API_CLIENT + "msg/")
+@RequestMapping(Constant.API_MOBI + "msg/")
 public class MsgController extends BaseController {
 	
 	@Autowired

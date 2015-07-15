@@ -1,4 +1,4 @@
-package com.wolai.platform.controller.client;
+package com.wolai.platform.controller.api.mobi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +19,7 @@ import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
+import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.LicenseService;
@@ -28,7 +29,7 @@ import com.wolai.platform.util.CommonUtils;
 import com.wolai.platform.vo.LicenseVo;
 
 @Controller
-@RequestMapping(Constant.API_CLIENT + "license/")
+@RequestMapping(Constant.API_MOBI + "license/")
 public class LicenseController extends BaseController {
 	
 	@Autowired

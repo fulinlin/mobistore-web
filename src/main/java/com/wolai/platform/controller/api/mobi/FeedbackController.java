@@ -1,4 +1,4 @@
-package com.wolai.platform.controller.client;
+package com.wolai.platform.controller.api.mobi;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
+import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.FeedBack;
 import com.wolai.platform.entity.FeedBack.FeedbackType;
 import com.wolai.platform.entity.SysUser;
@@ -22,7 +23,7 @@ import com.wolai.platform.service.FeedbackService;
 import com.wolai.platform.service.UserService;
 
 @Controller
-@RequestMapping(Constant.API_CLIENT + "feedback/")
+@RequestMapping(Constant.API_MOBI + "feedback/")
 public class FeedbackController extends BaseController {
 	@Autowired
 	UserService userService;

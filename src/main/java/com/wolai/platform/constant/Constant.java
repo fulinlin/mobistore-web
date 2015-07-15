@@ -11,11 +11,18 @@ package com.wolai.platform.constant;
  */
 
 public final class Constant {
+	// webClient 访问地址
+	public static String WEB_CLIENT_URL = "http://localhost:9000";
 	
 	/**
-	 * app访问接口前缀
+	 * appClient访问接口前缀
 	 */
-	public static final String API_CLIENT = "api/mobi/";
+	public static final String API_MOBI = "api/mobi/";
+	
+	/**
+	 * webClint访问接口前缀
+	 */
+	public static final String API_WEB = "api/web/";
 	
 	/**
 	 * app响应控制器包名

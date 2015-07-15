@@ -1,4 +1,4 @@
-package com.wolai.platform.controller.client;
+package com.wolai.platform.controller.api.mobi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
+import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.entity.SysUser;
@@ -27,7 +28,7 @@ import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.CouponVo;
 
 @Controller
-@RequestMapping(Constant.API_CLIENT + "coupon/")
+@RequestMapping(Constant.API_MOBI + "coupon/")
 public class CouponController extends BaseController {
 	@Autowired
 	UserService userService;

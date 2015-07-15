@@ -3,9 +3,12 @@ package com.wolai.platform.util;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.wolai.platform.constant.Constant;
 
 /**
  * 
@@ -206,13 +209,13 @@ public class WebUtils {
     }
     
     
-  /*  public static HttpServletResponse AddCorsSupport(ServletResponse response) {
+    public static HttpServletResponse AddCorsSupport(ServletResponse response) {
     	HttpServletResponse res = (HttpServletResponse) response;
     	
-    	res.addHeader("Access-Control-Allow-Origin", Constant.CLIENT_URL);
+    	res.addHeader("Access-Control-Allow-Origin", Constant.WEB_CLIENT_URL);
     	res.addHeader("Access-Control-Allow-Credentials", "true");
         
     	res.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         return res;
-    }*/
+    }
 }
