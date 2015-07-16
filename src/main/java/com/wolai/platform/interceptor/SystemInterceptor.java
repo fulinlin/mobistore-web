@@ -87,12 +87,14 @@ public class SystemInterceptor implements HandlerInterceptor {
 					LoginInfo info = (LoginInfo) sesion.getAttribute(Constant.SESSION_LOGINFO);
 					if (info != null) {
 						return true;
-					} else {
-						String basePath = request.getScheme() + "://" + request.getServerName() + ":"+ request.getServerPort() + request.getContextPath();
-						String redirection = basePath + Constant.LOGIN_URL;
-						response.sendRedirect(redirection);
 					}
 				}
+				
+				 else {
+						String basePath = request.getScheme() + "://" + request.getServerName() + ":"+ request.getServerPort() + request.getContextPath();
+						String redirection = basePath;
+						response.sendRedirect(redirection);
+					}
 			}	
 		}else{
 			String uriPrefix = request.getContextPath();

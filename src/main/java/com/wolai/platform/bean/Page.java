@@ -36,6 +36,7 @@ public class Page<T> {
         this.total = total;
         this.items = items;
         this.limit = limit;
+        this.pageNo=getCurrentPage();
     }
 
     /**
@@ -57,6 +58,8 @@ public class Page<T> {
      * 分页记录
      */
     private List<T> items;
+    
+    private int pageNo;
     
     /**
      * 计算总页数.
@@ -162,4 +165,103 @@ public class Page<T> {
         this.items = items;
     }
 
+    
+    public String toString(){
+    	StringBuffer pageHtml = new StringBuffer();
+    	// 最多显示几个页码
+    	int length = 8;
+    	// 前后显示页面长度
+    	int slider =1;
+    	
+    	int first = 1;
+    	
+    	
+    	// 处理函数名
+    	String funcName="page";
+    	if (!this.hasPrePage()) {// 如果是首页
+    		pageHtml.append("<li class=\"disabled\"><a href=\"javascript:\">&#171; 上一页</a></li>\n");
+		} else {
+			pageHtml.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+getPrePage()+","+limit+");\">&#171; 上一页</a></li>\n");
+		}
+    	
+    	int pageNo = getCurrentPage();
+    	
+    	int begin = pageNo - (length / 2);
+    	
+    	int last = getLastPage();
+    	
+    	
+		if (begin < first) {
+			begin = first;
+		}
+
+		int end = begin + length - 1;
+
+		if (end >= last) {
+			end = last;
+			begin = end - length + 1;
+			if (begin < first) {
+				begin = first;
+			}
+		}
+    	
+		if (begin > first) {
+			int i = 0;
+			for (i = first; i < first + slider && i < begin; i++) {
+				pageHtml.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+i+","+limit+");\">"
+						+ (i + 1 - first) + "</a></li>\n");
+			}
+			if (i < begin) {
+				pageHtml.append("<li class=\"disabled\"><a href=\"javascript:\">...</a></li>\n");
+			}
+		}
+
+		for (int i = begin; i <= end; i++) {
+			if (i == pageNo) {
+				pageHtml.append("<li class=\"active\"><a href=\"javascript:\">" + (i + 1 - first)
+						+ "</a></li>\n");
+			} else {
+				pageHtml.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+i+","+limit+");\">"
+						+ (i + 1 - first) + "</a></li>\n");
+			}
+		}
+
+		if (last - end > slider) {
+			pageHtml.append("<li class=\"disabled\"><a href=\"javascript:\">...</a></li>\n");
+			end = last - slider;
+		}
+
+		for (int i = end + 1; i <= last; i++) {
+			pageHtml.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+i+","+limit+");\">"
+					+ (i + 1 - first) + "</a></li>\n");
+		}
+
+		if (pageNo == last) {
+			pageHtml.append("<li class=\"disabled\"><a href=\"javascript:\">下一页 &#187;</a></li>\n");
+		} else {
+			pageHtml.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+getNextPage()+","+limit+");\">"
+					+ "下一页 &#187;</a></li>\n");
+		}
+
+		pageHtml.append("<li class=\"disabled controls\"><a href=\"javascript:\">当前 ");
+		pageHtml.append("<input type=\"text\" value=\""+pageNo+"\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
+		pageHtml.append(funcName+"(this.value,"+limit+");\" onclick=\"this.select();\"/> / ");
+		pageHtml.append("<input type=\"text\" value=\""+limit+"\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
+		pageHtml.append(funcName+"("+pageNo+",this.value);\" onclick=\"this.select();\"/> 条，");
+		pageHtml.append("共 " + getTotal() + " 条</a><li>\n");
+
+		pageHtml.insert(0,"<ul>\n").append("</ul>\n");
+		
+		pageHtml.append("<div style=\"clear:both;\"></div>");
+    	
+    	return pageHtml.toString();
+    }
+
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
 }

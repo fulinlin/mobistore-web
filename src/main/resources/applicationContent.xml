@@ -162,5 +162,8 @@
 		<property name="configLocation" value="classpath:${ehcache.configFile}" />
 	</bean>
 	
+	<!--Bean Validator 定义 -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	
 </beans>
 
