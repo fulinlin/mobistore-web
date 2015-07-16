@@ -18,9 +18,11 @@ import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Promotion;
 import com.wolai.platform.entity.ExchangePlan;
+import com.wolai.platform.entity.RewardPoints;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.PromotionService;
 import com.wolai.platform.service.ExchangePlanService;
+import com.wolai.platform.service.RewardPointsService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.PromotionVo;
@@ -37,6 +39,9 @@ public class PromotionAction extends BaseController {
 
 	@Autowired
 	ExchangePlanService exchangePlanService;
+	
+	@Autowired
+	RewardPointsService rewardPointsService;
 
 	@RequestMapping(value = "detail")
 	@ResponseBody
@@ -70,6 +75,9 @@ public class PromotionAction extends BaseController {
 			vols.add(vo);
 		}
 		promotionVo.setExchangePlanList(vols);
+		
+		RewardPoints rewardPoints = rewardPointsService.getByUser(user.getId());
+		date.put("rewardPoints", rewardPoints.getBalance());
 
 		ret.put("code", RespCode.SUCCESS.Code());
 
