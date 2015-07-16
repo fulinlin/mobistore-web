@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.wolai.platform.bean.Page;
+import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.entity.IdEntity;
 
 public interface CommonService extends BaseService {
 	
@@ -83,4 +86,18 @@ public interface CommonService extends BaseService {
     Object getObjectByCriteria(DetachedCriteria dc);
     
     List<Map> findMapByHQL(String hqlString, Object... values);
+    
+    /**
+     * 删除数据
+     * @param entity
+     */
+    void delete(Object entity);
+    
+    /**
+     * 保存实体
+     * @author donghuashi
+     * @param user
+     * @return
+     */
+    IdEntity  saveOrUpdate(IdEntity entity);
 }

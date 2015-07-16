@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @ Table(name="wo_exchange_plan")
-public class ExchangePlan extends idEntity {
+public class ExchangePlan extends IdEntity {
 
 	/**
 	 * 

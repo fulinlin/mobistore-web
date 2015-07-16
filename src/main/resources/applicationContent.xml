@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:task="http://www.springframework.org/schema/task"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="  
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
@@ -24,16 +21,20 @@
 	<context:component-scan base-package="com.wolai.platform.dao"></context:component-scan>
 	<context:component-scan base-package="com.wolai.platform.util"></context:component-scan>
 	<context:component-scan base-package="com.wolai.platform.job"></context:component-scan>
+	<context:component-scan base-package="com.wolai.platform.sys">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+
 
 	<!-- 定时任务注解配置 -->
 	<task:annotation-driven />
-	
+
 
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 
 	<!-- 数据库连接池配置 -->
-	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
-		init-method="init" destroy-method="close">
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<!-- 基本属性 url、user、password -->
 		<property name="url" value="${datasource.jdbc.url}" />
 		<property name="username" value="${datasource.jdbc.username}" />
@@ -61,16 +62,15 @@
 
 		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
 		<property name="poolPreparedStatements" value="true" />
-		<property name="maxPoolPreparedStatementPerConnectionSize"
-			value="20" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
 
 		<!-- 配置监控统计拦截的filters -->
 		<property name="filters" value="stat,log4j" />
 		<property name="proxyFilters">
-	        <list>
-	            <ref bean="stat-filter" />
-	        </list>
-    </property>
+			<list>
+				<ref bean="stat-filter" />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
@@ -100,7 +100,7 @@
 				<prop key="hibernate.cache.use_second_level_cache">true</prop>
 				<prop key="net.sf.ehcache.configurationResourceName">${hibernate.ehcache.configFile}</prop>
 				<!-- <prop key="hibernate.cache.provider_configuration_file_resource_path">classpath:${hibernate.ehcache.configFile}</prop> -->
-                <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
+				<prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
 				<prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
 				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext
 				</prop>
@@ -117,8 +117,7 @@
 	<bean id="namingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy" />
 
 	<!-- 事务管理器，此处为Hibernate的事务管理器 -->
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<!-- 事务 -->
@@ -137,7 +136,7 @@
 			<tx:method name="clean*" propagation="REQUIRED" />
 			<tx:method name="change*" propagation="REQUIRED" />
 			<tx:method name="*Pers" propagation="REQUIRED" />
-			
+
 			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
 			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
 			<tx:method name="load*" propagation="REQUIRED" read-only="true" />
@@ -146,24 +145,23 @@
 	</tx:advice>
 
 	<aop:config proxy-target-class="true">
-		<aop:advisor advice-ref="txAdvice"
-			pointcut="execution(* com.wolai.platform.service..*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.wolai.platform.service..*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.wolai.platform.sys.service..*.*(..))" />
 	</aop:config>
 
-	<bean class="com.wolai.platform.util.SpringContextHolder"
-		lazy-init="false" />
+	<bean class="com.wolai.platform.util.SpringContextHolder" lazy-init="false" />
 
 	<bean id="configBean" class="com.wolai.platform.util.CustomizedPropertyConfigurer">
 		<property name="location" value="classpath:config.properties" />
 	</bean>
-	
+
 	<!-- 缓存配置 -->
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:${ehcache.configFile}" />
 	</bean>
-	
+
 	<!--Bean Validator 定义 -->
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
-	
+
 </beans>
 

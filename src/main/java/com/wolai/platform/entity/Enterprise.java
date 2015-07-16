@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="wo_enterprise")
-public class Enterprise extends idEntity {
+public class Enterprise extends IdEntity {
 
 	/**
 	 * 

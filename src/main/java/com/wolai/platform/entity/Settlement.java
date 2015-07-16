@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="wo_settlement")
-public class Settlement extends idEntity {
+public class Settlement extends IdEntity {
 
 	/**
 	 * 

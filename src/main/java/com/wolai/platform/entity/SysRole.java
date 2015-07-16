@@ -24,7 +24,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name = "sys_role")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SysRole extends idEntity {
+public class SysRole extends IdEntity {
 
     /**
      * 

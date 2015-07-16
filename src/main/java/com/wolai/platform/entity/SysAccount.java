@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sys_account")
-public class SysAccount extends idEntity{
+public class SysAccount extends IdEntity{
 	private static final long serialVersionUID = 1659327323804354816L;
 	
 	/**

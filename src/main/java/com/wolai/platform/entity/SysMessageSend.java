@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sys_message_send")
-public class SysMessageSend extends idEntity {
+public class SysMessageSend extends IdEntity {
 
 	/**
 	 * uuid

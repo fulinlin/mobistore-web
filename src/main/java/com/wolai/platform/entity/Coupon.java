@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="wo_coupon")
-public class Coupon extends idEntity {
+public class Coupon extends IdEntity {
 
 	/**
 	 * 

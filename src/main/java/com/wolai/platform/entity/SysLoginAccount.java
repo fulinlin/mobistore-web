@@ -22,7 +22,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name="sys_login_account")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SysLoginAccount extends idEntity {
+public class SysLoginAccount extends IdEntity {
 
 	/**
 	 * 

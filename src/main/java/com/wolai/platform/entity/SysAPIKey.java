@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sys_api_key")
-public class SysAPIKey extends idEntity {
+public class SysAPIKey extends IdEntity {
 
 	/**
 	 * uuid

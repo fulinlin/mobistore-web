@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="wo_bill")
-public class Bill extends idEntity {
+public class Bill extends IdEntity {
 
 	/**
 	 * 

@@ -19,7 +19,7 @@ import com.wolai.platform.entity.Coupon.CouponType;
  */
 @Entity
 @Table(name="wo_promotion_coupon")
-public class PromotionCoupon extends idEntity {
+public class PromotionCoupon extends IdEntity {
 
 	/**
 	 * UUID

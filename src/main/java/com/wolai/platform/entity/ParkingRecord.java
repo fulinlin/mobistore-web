@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="wo_parking_record")
-public class ParkingRecord extends idEntity {
+public class ParkingRecord extends IdEntity {
 
 	/**
 	 * uuid

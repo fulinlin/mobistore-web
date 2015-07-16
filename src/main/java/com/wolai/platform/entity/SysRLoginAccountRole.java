@@ -28,7 +28,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name = "sys_r_login_account_role")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SysRLoginAccountRole extends idEntity {
+public class SysRLoginAccountRole extends IdEntity {
 
     /**
      * 

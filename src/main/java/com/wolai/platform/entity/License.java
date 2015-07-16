@@ -20,7 +20,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name="wo_car_no")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class License extends idEntity{
+public class License extends IdEntity{
 
 	/**
 	 * 

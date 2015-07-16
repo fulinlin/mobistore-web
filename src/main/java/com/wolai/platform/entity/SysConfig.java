@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sys_config")
-public class SysConfig extends idEntity {
+public class SysConfig extends IdEntity {
 
 	/**
 	 * 

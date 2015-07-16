@@ -15,7 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="wo_promotion")
-public class Promotion extends idEntity {
+public class Promotion extends IdEntity {
 
 	/**
 	 * 
