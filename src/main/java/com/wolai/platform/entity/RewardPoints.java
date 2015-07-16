@@ -26,7 +26,7 @@ public class RewardPoints extends IdEntity {
 	/**
 	 * 积分总额
 	 */
-	private BigDecimal balance;
+	private Integer balance;
 	
 	/**
 	 * 所属用户
@@ -38,11 +38,11 @@ public class RewardPoints extends IdEntity {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private SysUser user;
 
-	public BigDecimal getBalance() {
+	public Integer getBalance() {
 		return balance;
 	}
 
-	public void setBalance(BigDecimal balance) {
+	public void setBalance(Integer balance) {
 		this.balance = balance;
 	}
 

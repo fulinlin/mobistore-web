@@ -74,7 +74,7 @@ public class Coupon extends IdEntity {
   	/**
   	 * 优惠金额
   	 */
-  	private BigDecimal money;
+  	private Integer money;
   	
   	/**
   	 * 抵用时长
@@ -130,11 +130,11 @@ public class Coupon extends IdEntity {
 		this.type = type;
 	}
 
-	public BigDecimal getMoney() {
+	public Integer getMoney() {
 		return money;
 	}
 
-	public void setMoney(BigDecimal money) {
+	public void setMoney(Integer money) {
 		this.money = money;
 	}
 

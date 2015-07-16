@@ -40,10 +40,28 @@ angular.module('wolaiMobiApp')
 		}
 	}	
 	$scope.select = function() {
-		var price = $scope.coupon.price;
+		var price = $scope.exchangePlan.price;
 		$scope.max = Math.floor($rootScope.rewardPoints / price);
 	}
-	$scope.coupon = $rootScope.promotion.exchangePlanList[0];
+	$scope.submit = function() {
+		$http({
+			method:'POST',
+			url: Constant.ApiUrl + 'promotion/pointsExchange',
+			params:{
+				'token': token
+			},
+			data:  {
+				exchangePlanId: $scope.exchangePlan.id,
+				number: $scope.number
+			}
+		}).success(function(json) {
+		  console.log(json);
+	      $rootScope.promotion = json.data.promotion;
+	      $rootScope.rewardPoints = json.data.rewardPoints;
+	    });
+	}
+	
+	$scope.exchangePlan = $rootScope.promotion.exchangePlanList[0];
 	$scope.number = 1;
 	$scope.select();
 }]);
@@ -52,7 +70,7 @@ angular.module('wolaiMobiApp')
 	.controller('SnaupCtrl', ['$rootScope', '$scope', '$http', 'Constant', 'UrlUtil', 
 	            function ($rootScope, $scope, $http, Constant, UrlUtil) {
 	
-	$scope.coupon = {};
+	$scope.exchangePlan = {};
 	$scope.select = function() {
 		console.log($scope.promotion.id);
 	}

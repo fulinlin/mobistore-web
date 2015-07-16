@@ -1,5 +1,6 @@
 package com.wolai.platform.controller.api.mobi;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -106,7 +107,7 @@ public class ParkingController extends BaseController{
 		if (bill != null) {
 			vo.setPaytype(bill.getPaytype());
 			vo.setCouponType(bill.getCoupon().getType());
-			vo.setCouponMoney(bill.getCoupon().getMoney());
+			vo.setCouponMoney(new BigDecimal(bill.getCoupon().getMoney()));
 			vo.setCouponTime(bill.getCoupon().getTime());
 		} else {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());

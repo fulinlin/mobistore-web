@@ -1,12 +1,21 @@
 <div class="points center">
 	<div class="row">
 		<div class="left">
+			积分余额: 
+		</div>
+		<div class="right">
+			{{rewardPoints}}
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="row">
+		<div class="left">
 			请选择面值: 
 		</div>
 		<div class="right">
 			<select 
 			    ng-change="select()"
-			    ng-model="coupon"
+			    ng-model="exchangePlan"
 			    ng-options="value as value.faceValue for value in promotion.exchangePlanList">
 			</select>
 		</div>
@@ -18,6 +27,14 @@
 		</div>
 		<div class="right">
 			<input ng-change="change()" ng-model="number"></input> (最大数量为{{max}})
+		</div>
+	</div>
+		<div class="row">
+		<div class="left">
+			 
+		</div>
+		<div class="right">
+			<button ng-click="submit" name="submit" type="submit" value="兑换">
 		</div>
 	</div>
 </div>

@@ -100,7 +100,7 @@ public class ExchangePlan extends IdEntity {
 	/**
 	 * 单价
 	 */
-	private BigDecimal price;
+	private Integer price;
 	
 	/**
 	 * 总数量
@@ -148,11 +148,11 @@ public class ExchangePlan extends IdEntity {
 		this.sourceType = sourceType;
 	}
 
-	public BigDecimal getPrice() {
+	public Integer getPrice() {
 		return price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
 
