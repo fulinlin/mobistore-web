@@ -91,6 +91,30 @@ public class PromotionAction extends BaseController {
 		return ret;
 	}
 	
+	@RequestMapping(value = "exchangePlan")
+	@ResponseBody
+	public Map<String, Object> exchangePlan(HttpServletRequest request,
+			@RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+
+		String exchangePlanId = json.get("exchangePlanId");
+		ExchangePlan exchangePlan = (ExchangePlan) exchangePlanService.get(ExchangePlan.class,
+				exchangePlanId);
+		if (exchangePlan == null) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "not found");
+			return ret;
+		}
+
+		ExchangePlanVo vo = new ExchangePlanVo();
+		BeanUtilEx.copyProperties(vo, exchangePlan);
+
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vo);
+
+		return ret;
+	}
+	
 	@RequestMapping(value = "pointsExchange")
 	@ResponseBody
 	public Map<String, Object> pointsExchange(HttpServletRequest request,
@@ -99,19 +123,25 @@ public class PromotionAction extends BaseController {
 		
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		
-		if (StringUtils.isEmpty(json.get("exchangePlanId")) || StringUtils.isEmpty(json.get("number")) ) {
+		if (StringUtils.isEmpty(json.get("exchangePlanId")) || StringUtils.isEmpty(json.get("exNumber")) ) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
 		
 		String exchangePlanId = json.get("exchangePlanId");
-		int number = Integer.valueOf(json.get("number"));
+		int number = Integer.valueOf(json.get("exNumber"));
 
 		ExchangePlan exchangePlan = (ExchangePlan) promotionService.get(ExchangePlan.class, exchangePlanId);
 		if (exchangePlan == null) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "exchangePlan not found");
+			return ret;
+		}
+		
+		if (exchangePlan.getNumber() < number) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "remain not enough");
 			return ret;
 		}
 		
@@ -124,18 +154,73 @@ public class PromotionAction extends BaseController {
 
 		for (int i = 0; i < number; i++) {
 			Coupon coupon = new Coupon();
+			coupon.setOwnerId(user.getId());
 			coupon.setStartDate(exchangePlan.getStartTime());
 			coupon.setEndDate(exchangePlan.getEndTime());
 			coupon.setType(CouponType.MONEY); // 兑换的一定是抵时券
 			coupon.setMoney(exchangePlan.getFaceValue());
 			coupon.setOrigin("积分兑换");
+			coupon.setNote("测试数据");
 			couponService.saveOrUpdate(coupon);
 		}
+		
+		exchangePlan.setNumber(exchangePlan.getNumber() - number);
+		exchangePlanService.saveOrUpdate(exchangePlan);
 		
 		rewardPoints.setBalance(rewardPoints.getBalance() - exchangePlan.getPrice() * number);
 		rewardPointsService.saveOrUpdate(rewardPoints);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("balance", rewardPoints.getBalance());
+		ret.put("remain", exchangePlan.getNumber());
+
+		return ret;
+	}
+	
+	@RequestMapping(value = "snapup")
+	@ResponseBody
+	public Map<String, Object> snapup(HttpServletRequest request,
+			@RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
+		
+		if (StringUtils.isEmpty(json.get("exchangePlanId"))) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		String exchangePlanId = json.get("exchangePlanId");
+
+		ExchangePlan exchangePlan = (ExchangePlan) promotionService.get(ExchangePlan.class, exchangePlanId);
+		if (exchangePlan == null) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "exchangePlan not found");
+			return ret;
+		}
+		
+		if (exchangePlan.getNumber() < 1) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "remain not enough");
+			return ret;
+		}
+
+		Coupon coupon = new Coupon();
+		coupon.setOwnerId(user.getId());
+		coupon.setStartDate(exchangePlan.getStartTime());
+		coupon.setEndDate(exchangePlan.getEndTime());
+		coupon.setType(CouponType.MONEY); // 兑换的一定是抵时券
+		coupon.setMoney(exchangePlan.getFaceValue());
+		coupon.setOrigin("限时抢购");
+		coupon.setNote("测试数据");
+		couponService.saveOrUpdate(coupon);
+		
+		exchangePlan.setNumber(exchangePlan.getNumber() - 1);
+		exchangePlanService.saveOrUpdate(exchangePlan);
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("remain", exchangePlan.getNumber());
 
 		return ret;
 	}

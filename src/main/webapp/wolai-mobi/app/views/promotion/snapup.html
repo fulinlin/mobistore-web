@@ -1,3 +1,28 @@
-<div style="text-align: center;width:100%;">
-	<img style="max-height:800px;" ng-src="{{promotion.picPath}}">
+<div class="points center">
+	<div class="row">
+		<div class="left">
+			&nbsp;
+		</div>
+		<div class="right">
+			{{promotion.exchangePlanList[0].faceValue}}元停车券快来抢！
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="row">
+		<div class="left">
+			 剩余数量: 
+		</div>
+		<div class="right">
+			{{remain}}
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="row center">
+		<div class="left">
+			&nbsp;
+		</div>
+		<div class="right">
+			<button ng-click="submit()" type="button">马上抢</button>
+		</div>
+	</div>
 </div>

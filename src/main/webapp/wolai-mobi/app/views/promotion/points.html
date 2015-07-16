@@ -23,18 +23,28 @@
 	<div class="clear"></div>
 	<div class="row">
 		<div class="left">
+			 剩余数量: 
+		</div>
+		<div class="right">
+			{{remain}}
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="row">
+		<div class="left">
 			请填写数量: 
 		</div>
 		<div class="right">
-			<input ng-change="change()" ng-model="number"></input> (最大数量为{{max}})
+			<input ng-change="change()" ng-model="exNumber"></input> (最大数量为{{max}})
 		</div>
 	</div>
-		<div class="row">
+	<div class="clear"></div>
+	<div class="row">
 		<div class="left">
-			 
+			 &nbsp;
 		</div>
 		<div class="right">
-			<button ng-click="submit" name="submit" type="submit" value="兑换">
+			<button ng-click="submit()"  type="button">兑换</button>
 		</div>
 	</div>
 </div>
