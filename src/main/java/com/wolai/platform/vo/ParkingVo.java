@@ -25,6 +25,14 @@ public class ParkingVo {
 	private CouponType couponType;
 	private BigDecimal couponMoney;
 	private Long couponTime;
+	String id;
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 	public String getCarNo() {
 		return carNo;

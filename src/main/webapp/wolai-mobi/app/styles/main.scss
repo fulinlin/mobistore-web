@@ -1,2 +1,42 @@
 // bower:scss
 // endbower
+
+.clear {
+	clear: both;
+}
+
+.center {
+	.text-align:center;
+	width:100%;
+}
+
+.promotion {
+	 text-align: center;
+	 width:100%;
+	 
+	 img {
+	 	max-height:800px;
+	 }
+}
+
+.points {
+	.row {
+		margin: 10px;
+		.left {
+			float: left;
+			width: 100px;
+		}
+		.right {
+			float: left;
+			select {
+				width: 150px;
+				font-size: 18px;
+			}
+			input {
+				width: 150px;
+				font-size: 15px;
+			}
+		}
+	}
+	
+}

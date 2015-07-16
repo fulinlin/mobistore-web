@@ -32,11 +32,11 @@ angular
       })
       .when('/promotion/points', {
         templateUrl: 'views/promotion/points.html',
-        controller: 'PromotionCtrl'
+        controller: 'PointsExchangeCtrl'
       })
       .when('/promotion/snapup', {
         templateUrl: 'views/promotion/snapup.html',
-        controller: 'PromotionCtrl'
+        controller: 'SnapupCtrl'
       })
       .otherwise({
         redirectTo: '/'

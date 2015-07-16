@@ -15,6 +15,14 @@ public class ExchangePlanVo {
 	private Integer number;
 	private Date startTime;
 	private Date endTime;
+	String id;
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 	public TargetType getTargetType() {
 		return targetType;

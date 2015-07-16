@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public class RewardPointsVo {
 	private String id;
 	private BigDecimal balance;
+	
 
 	public BigDecimal getBalance() {
 		return balance;

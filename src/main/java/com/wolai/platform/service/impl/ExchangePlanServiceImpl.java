@@ -24,7 +24,7 @@ public class ExchangePlanServiceImpl extends CommonServiceImpl implements Exchan
 		dc.add(Restrictions.eq("isDisable", false));
 		dc.add(Restrictions.le("startTime", now));
 		dc.add(Restrictions.ge("endTime", now));
-		dc.addOrder(Order.asc("startTime"));
+		dc.addOrder(Order.asc("faceValue"));
 		
 		List ls = findAllByCriteria(dc);
 		return ls;

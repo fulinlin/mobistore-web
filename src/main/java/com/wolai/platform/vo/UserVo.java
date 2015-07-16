@@ -1,9 +1,17 @@
 package com.wolai.platform.vo;
 
 public class UserVo {
+	
 	String mobile;
 	String name;
+	String id;
 	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
