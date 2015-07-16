@@ -21,6 +21,31 @@ public class Promotion extends idEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = -4036551881557803261L;
+	
+	public static enum ExchangeCode{
+		/**
+  		 * 注册送
+  		 */
+  		REGISTER_PRESENT("REGISTER_PRESENT"),
+  		/**
+  		 * 积分兑换
+  		 */
+  		POINTS_EXCHANGE("POINTS_EXCHANGE"),
+  		/**
+  		 * 抢券
+  		 */
+  		SNAPUP_FREE("SNAPUP_FREE");
+  		
+  		
+		private ExchangeCode(String textVal){
+  			this.textVal=textVal;
+  		}
+  		private String textVal;
+  		
+  		public String toString(){
+  			return textVal;
+  		}
+	}
 
 	public static enum PromotionLimitType{
 		/**
@@ -42,6 +67,13 @@ public class Promotion extends idEntity {
   			return textVal;
   		}
 	}
+	
+	/**
+	 * 类型编码
+	 */
+	@Enumerated(EnumType.STRING)
+	private ExchangeCode code;
+	
 	/**
 	 * 标题
 	 */
@@ -120,5 +152,13 @@ public class Promotion extends idEntity {
 
 	public void setLimitType(PromotionLimitType limitType) {
 		this.limitType = limitType;
+	}
+	
+	public ExchangeCode getCode() {
+		return code;
+	}
+
+	public void setCode(ExchangeCode code) {
+		this.code = code;
 	}
 }

@@ -25,31 +25,6 @@ public class ExchangePlan extends idEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 780639903449593380L;
-	
-	public static enum ExchangeCode{
-		/**
-  		 * 注册送
-  		 */
-  		REGISTER_PRESENT("REGISTER_PRESENT"),
-  		/**
-  		 * 积分兑换
-  		 */
-  		POINTS_EXCHANGE("POINTS_EXCHANGE"),
-  		/**
-  		 * 抢券
-  		 */
-  		SNAPUP_FREE("SNAPUP_FREE");
-  		
-  		
-		private ExchangeCode(String textVal){
-  			this.textVal=textVal;
-  		}
-  		private String textVal;
-  		
-  		public String toString(){
-  			return textVal;
-  		}
-	}
 
 	/**
 	 * 交换类型
@@ -110,12 +85,6 @@ public class ExchangePlan extends idEntity {
 	}
 	
 	/**
-	 * 类型编码
-	 */
-	@Enumerated(EnumType.STRING)
-	private ExchangeCode code;
-	
-	/**
 	 * 兑换类型
 	 */
 	@Enumerated(EnumType.STRING)
@@ -137,6 +106,11 @@ public class ExchangePlan extends idEntity {
 	 * 总数量
 	 */
 	private Integer number;
+	
+	/**
+	 * 面值，如时长或抵金
+	 */
+	private Integer faceValue;
 	
 	/**
 	 * 活动有效期：开始时间
@@ -222,12 +196,12 @@ public class ExchangePlan extends idEntity {
 		this.promotion = promotion;
 	}
 
-	public ExchangeCode getCode() {
-		return code;
+	public Integer getFaceValue() {
+		return faceValue;
 	}
 
-	public void setCode(ExchangeCode code) {
-		this.code = code;
+	public void setFaceValue(Integer faceValue) {
+		this.faceValue = faceValue;
 	}
 	
 }

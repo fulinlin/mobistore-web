@@ -2,24 +2,20 @@ package com.wolai.platform.vo;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import com.wolai.platform.entity.ExchangePlan.SourceType;
 import com.wolai.platform.entity.ExchangePlan.TargetType;
 
 public class ExchangePlanVo {
-	private String code;
+
 	private TargetType targetType;
 	private SourceType sourceType;
 	private BigDecimal price;
+	private Integer faceValue;
 	private Integer number;
 	private Date startTime;
 	private Date endTime;
 	
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
 	public TargetType getTargetType() {
 		return targetType;
 	}
@@ -55,5 +51,11 @@ public class ExchangePlanVo {
 	}
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+	}
+	public Integer getFaceValue() {
+		return faceValue;
+	}
+	public void setFaceValue(Integer faceValue) {
+		this.faceValue = faceValue;
 	}
 }

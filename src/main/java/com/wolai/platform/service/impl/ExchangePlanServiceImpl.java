@@ -19,6 +19,7 @@ public class ExchangePlanServiceImpl extends CommonServiceImpl implements Exchan
 		Date now = new Date();
 		DetachedCriteria dc = DetachedCriteria.forClass(ExchangePlan.class);
 		
+		dc.add(Restrictions.eq("promotionId", promotionId));
 		dc.add(Restrictions.eq("isDelete", false));
 		dc.add(Restrictions.eq("isDisable", false));
 		dc.add(Restrictions.le("startTime", now));

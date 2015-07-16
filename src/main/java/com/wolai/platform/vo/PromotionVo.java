@@ -8,17 +8,21 @@ import java.util.List;
 public class PromotionVo {
 	private String id;
 	private String title;
-
 	private String picPath;
-
 	private String detail;
-
 	private Date startTime;
-
 	private Date endTime;
+	private String code;
 	
 	private List<ExchangePlanVo> exchangePlanList = new ArrayList<ExchangePlanVo>();
 
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
