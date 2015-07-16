@@ -36,6 +36,7 @@
 						<li><a href="${ctx}/user/list" target="mainFrame" ><i class="icon-user"></i>&nbsp;用户管理</a></li>
 						<li><a href="${ctx}/sys/enterprise" target="mainFrame" ><i class="icon-home"></i>&nbsp;企业管理</a></li>
 						<li><a href="${ctx}/promotion" target="mainFrame" ><i class="icon-home"></i>&nbsp;优惠活动管理</a></li>
+						<li><a href="${ctx}/license" target="mainFrame" ><i class="icon-home"></i>&nbsp;车牌管理</a></li>
 					</ul>
 				</div>
 		    </div>
