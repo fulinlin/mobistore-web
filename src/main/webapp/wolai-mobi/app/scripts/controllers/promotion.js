@@ -6,19 +6,19 @@
  * @description # PromotionCtrl Controller of the wolaiMobiApp
  */
 angular.module('wolaiMobiApp')
-  .controller('PromotionCtrl', ['$scope', '$http', 'Constant', function ($scope, $http, Constant) {
-	var token = '9ddcb922-d235-4179-ad29-3b98dfe7cb8a';
-	var id = '0AC9BA91-19B3-303E-B5B5-E578E1FAFAFA';
+  .controller('PromotionCtrl', ['$scope', '$http', 'Constant', 'UrlUtil', function ($scope, $http, Constant, UrlUtil) {
+	// http://localhost:9000/#/promotion?token=0658673a-c421-4980-bbd4-35374aefb094&promotionId=0AC9BA91-19B3-303E-B5B5-E578E1FAFAFA
+	var token = UrlUtil.getParam('token');
+	var promotionId = UrlUtil.getParam('promotionId');;
 	$http({
 		method:'POST',
 		url: Constant.ApiUrl + 'promotion/detail',
 		params:{
-			'token': token,
-			'id': id
+			'token': token
 		},
-		data:  {id:id}
+		data:  {id:promotionId}
 	}).success(function(json) {
-	  console.log(json.data);
+	  console.log(json);
       $scope.promotion = json.data;
     });
 	
