@@ -19,7 +19,7 @@ public class ExchangeHistoryServiceImpl extends CommonServiceImpl implements Exc
 
 	@Override
 	public ExchangeHistory getHistoryPers(String userId, String exchangePlanId) {
-		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
+		DetachedCriteria dc = DetachedCriteria.forClass(ExchangeHistory.class);
 		dc.add(Restrictions.eq("userId", userId));
 		dc.add(Restrictions.eq("exchangePlanId", exchangePlanId));
 		dc.add(Restrictions.eq("isDelete", false));
