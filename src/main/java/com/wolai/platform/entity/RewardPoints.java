@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="wo_reward_points")
-public class RewardPoints extends idEntity {
+public class RewardPoints extends IdEntity {
 
 	/**
 	 * 

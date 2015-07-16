@@ -27,7 +27,7 @@ import org.hibernate.annotations.DynamicUpdate;
 })
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SysUser extends idEntity {
+public class SysUser extends IdEntity {
     private static final long serialVersionUID = 7613949261966119827L;
     
   	/**

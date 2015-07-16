@@ -25,7 +25,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name = "sys_dict")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SysDict extends idEntity {
+public class SysDict extends IdEntity {
 
     /**
      * 

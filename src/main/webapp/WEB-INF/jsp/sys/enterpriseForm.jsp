@@ -6,22 +6,7 @@
 <meta name="decorator" content="default" />
 <script type="text/javascript">
 	$(document).ready(function() {
-		//$("#name").focus();
-		$("#inputForm").validate({
-			submitHandler : function(form) {
-				loading('正在提交，请稍等...');
-				form.submit();
-			},
-			errorContainer : "#messageBox",
-			errorPlacement : function(error, element) {
-				$("#messageBox").text("输入有误，请先更正。");
-				if (element.is(":checkbox") || element.is(":radio") || element.parent().is(".input-append")) {
-					error.appendTo(element.parent().parent());
-				} else {
-					error.insertAfter(element);
-				}
-			}
-		});
+		$("#inputForm").validate();
 	});
 </script>
 </head>
@@ -61,7 +46,7 @@
 		<div class="control-group">
 			<label class="control-label">是否管理员：</label>
 			<div class="controls">
-				<form:checkbox path="isSupplier" htmlEscape="false" maxlength="1"/>
+				<form:checkbox path="isSupplier" htmlEscape="false" maxlength="1" />
 			</div>
 		</div>
 		<div class="form-actions">

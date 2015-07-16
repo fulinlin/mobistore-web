@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.entity.IdEntity;
 
 public interface CommonService extends BaseService {
 	
@@ -98,5 +99,5 @@ public interface CommonService extends BaseService {
      * @param user
      * @return
      */
-    Object  saveOrUpdate(Object entity);
+    IdEntity  saveOrUpdate(IdEntity entity);
 }

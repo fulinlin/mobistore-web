@@ -24,7 +24,7 @@ import org.hibernate.annotations.NotFoundAction;
 @Table(name = "sys_menu")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)*/
-public class SysMenu extends idEntity{
+public class SysMenu extends IdEntity{
 
 	/**
 	 * 

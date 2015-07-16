@@ -21,7 +21,7 @@ import com.wolai.platform.entity.Promotion.PromotionLimitType;
  */
 @Entity
 @Table(name="wo_feed_back")
-public class FeedBack extends idEntity {
+public class FeedBack extends IdEntity {
 
 	/**
 	 * uuid

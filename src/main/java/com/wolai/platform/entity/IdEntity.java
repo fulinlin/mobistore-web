@@ -20,7 +20,7 @@ import com.wolai.platform.util.IdGen;
  * @since 	1.0
  */
 @MappedSuperclass
-public class idEntity implements Serializable {
+public class IdEntity implements Serializable {
 
 	/**
 	 * 
@@ -45,10 +45,10 @@ public class idEntity implements Serializable {
 	 */
 	protected Boolean isDisable=Boolean.FALSE;
 	
-	@PrePersist
-	public void prePersist(){
-		this.id = IdGen.uuid();
-	}
+//	@PrePersist
+//	public void prePersist(){
+//		this.id = IdGen.uuid();
+//	}
 
 	
 	public String getId() {

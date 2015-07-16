@@ -5,13 +5,10 @@
 	<title>企业管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			
-		});
 		function page(n,s){
 			$("#pageNo").val(n);
 			$("#pageSize").val(s);
-			$("#searchForm").submit();
+			$("#searchForm").attr("action","${ctx}/sys/enterprise").submit();
         	return false;
         }
 	</script>
@@ -21,7 +18,7 @@
 		<li class="active"><a href="${ctx}/sys/enterprise/">企业列表</a></li>
 		<li><a href="${ctx}/sys/enterprise/form">企业添加</a></li>
 	</ul>
-	<form:form id="searchForm" modelAttribute="enterprise" action="${ctx}/sys/enterprise/" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="enterprise" action="${ctx}/sys/enterprise" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
         <input id="pageSize" name="pageSize" type="hidden" value="${page.limit}"/>
 		<div>
@@ -29,7 +26,7 @@
             &nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" onclick="return page();"/>
         </div>
 	</form:form>
-	<sys:message content="${message}"/>
+	<tags:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>

@@ -22,7 +22,7 @@ import org.hibernate.annotations.MetaValue;
  */
 @Entity
 @Table(name="wo_rewardPoints_record")
-public class RewardPointsRecord extends idEntity {
+public class RewardPointsRecord extends IdEntity {
 
 	/**
 	 * 

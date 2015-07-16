@@ -11,7 +11,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sys_verification_code")
-public class SysVerificationCode extends idEntity {
+public class SysVerificationCode extends IdEntity {
 	private static final long serialVersionUID = 7949485328819207365L;
   	
     /**

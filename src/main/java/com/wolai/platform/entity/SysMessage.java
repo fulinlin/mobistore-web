@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sys_message")
-public class SysMessage extends idEntity {
+public class SysMessage extends IdEntity {
 
 	/**
 	 * 

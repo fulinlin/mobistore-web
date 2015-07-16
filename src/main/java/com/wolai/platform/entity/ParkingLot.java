@@ -17,7 +17,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name="wo_parking_lot")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class ParkingLot extends idEntity {
+public class ParkingLot extends IdEntity {
 
 	/**
 	 * 

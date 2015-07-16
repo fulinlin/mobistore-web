@@ -3,12 +3,12 @@ package com.wolai.platform.util;
 import java.util.Random;
 
 import com.wolai.platform.entity.License;
-import com.wolai.platform.entity.idEntity;
+import com.wolai.platform.entity.IdEntity;
 
 public class CommonUtils {
 
     public static boolean IsAvailable(Object obj)  {
-    	idEntity entity = (License)obj;
+    	IdEntity entity = (License)obj;
         return !entity.getIsDelete() && !entity.getIsDisable();
     }
     

@@ -75,7 +75,7 @@ public class EnterpriseController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(Enterprise enterprise, RedirectAttributes redirectAttributes) {
 		enterpriseService.delete(enterprise);
-		addMessage(redirectAttributes, "删除字典成功");
+		addMessage(redirectAttributes, "删除企业成功");
 		return "redirect:"+SystemConfig.getAdminPath()+"/sys/enterprise/?repage";
 	}
 
