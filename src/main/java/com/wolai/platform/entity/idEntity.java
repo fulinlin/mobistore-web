@@ -5,8 +5,11 @@ import java.io.Serializable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.wolai.platform.util.IdGen;
 
 
 /**
@@ -42,10 +45,10 @@ public class idEntity implements Serializable {
 	 */
 	protected Boolean isDisable=Boolean.FALSE;
 	
-/*	@PrePersist
+	@PrePersist
 	public void prePersist(){
 		this.id = IdGen.uuid();
-	}*/
+	}
 
 	
 	public String getId() {

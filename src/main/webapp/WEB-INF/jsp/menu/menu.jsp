@@ -34,6 +34,7 @@
 				<div class="accordion-inner">
 					<ul class="nav nav-list">
 						<li><a href="${ctx}/user/list" target="mainFrame" ><i class="icon-user"></i>&nbsp;用户管理</a></li>
+						<li><a href="${ctx}/sys/enterprise" target="mainFrame" ><i class="icon-home"></i>&nbsp;企业管理</a></li>
 					</ul>
 				</div>
 		    </div>

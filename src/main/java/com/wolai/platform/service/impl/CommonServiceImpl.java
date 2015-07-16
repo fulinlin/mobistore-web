@@ -73,5 +73,15 @@ public class CommonServiceImpl extends BaseServiceImpl implements CommonService 
 	public List<Map> findMapByHQL(String hqlString, Object... values) {
 		return getDao().findMapByHQL(hqlString, values);
 	}
-    
+
+    @Override
+    public void delete(Object entity) {
+        getDao().delete(entity);
+    }
+
+    @Override
+    public Object saveOrUpdate(Object entity) {
+        getDao().saveOrUpdate(entity);
+        return  entity;
+    }
 }
