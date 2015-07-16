@@ -88,10 +88,10 @@ public interface CommonService extends BaseService {
     List<Map> findMapByHQL(String hqlString, Object... values);
     
     /**
-     * 删除数据
+     * 逻辑删除数据
      * @param entity
      */
-    void delete(Object entity);
+    void delete(IdEntity entity);
     
     /**
      * 保存实体

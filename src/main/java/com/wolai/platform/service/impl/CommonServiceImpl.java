@@ -77,8 +77,9 @@ public class CommonServiceImpl extends BaseServiceImpl implements CommonService 
 	}
 
     @Override
-    public void delete(Object entity) {
-        getDao().delete(entity);
+    public void delete(IdEntity entity) {
+        entity.setIsDelete(Boolean.TRUE);
+        getDao().saveOrUpdate(entity);
     }
 
     @Override
