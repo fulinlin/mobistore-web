@@ -123,6 +123,11 @@ public class ExchangePlan extends IdEntity {
 	private Date endTime;
 	
 	/**
+	 * 限制次数
+	 */
+	private Integer timesLimit;
+	
+	/**
 	 * 营销活动
 	 */
 	@Column(name="promotion_id")
@@ -202,6 +207,14 @@ public class ExchangePlan extends IdEntity {
 
 	public void setFaceValue(Integer faceValue) {
 		this.faceValue = faceValue;
+	}
+
+	public Integer getTimesLimit() {
+		return timesLimit;
+	}
+
+	public void setTimesLimit(Integer timesLimit) {
+		this.timesLimit = timesLimit;
 	}
 	
 }

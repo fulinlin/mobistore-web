@@ -64,7 +64,9 @@ angular.module('wolaiMobiApp')
 				exchangePlanId: $scope.exchangePlan.id
 			}
 		}).success(function(json) {
-			$scope.remain = json.data.number;
+			if (json.data.number) {
+				$scope.remain = json.data.number;
+			}
 	    });
 	}
 	$scope.submit = function() {
@@ -79,9 +81,12 @@ angular.module('wolaiMobiApp')
 				exNumber: $scope.exNumber
 			}
 		}).success(function(json) {
-			console.log(json);
-			$scope.rewardPoints = json.balance;
-			$scope.remain = json.remain;
+			if (json.balance) {
+				$scope.rewardPoints = json.balance;
+			}
+			if (json.remain) {
+				$scope.remain = json.remain;
+			}
 	    });
 	}
 	
@@ -104,7 +109,10 @@ angular.module('wolaiMobiApp')
 					exchangePlanId: $scope.exchangePlan.id
 				}
 			}).success(function(json) {
-				$scope.remain = json.remain;
+				console.log(json);
+				if (json.remain) {
+					$scope.remain = json.remain;
+				}
 		    });
 		}
 		

@@ -19,11 +19,13 @@ import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.Coupon.CouponType;
+import com.wolai.platform.entity.ExchangeHistory;
 import com.wolai.platform.entity.Promotion;
 import com.wolai.platform.entity.ExchangePlan;
 import com.wolai.platform.entity.RewardPoints;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.CouponService;
+import com.wolai.platform.service.ExchangeHistoryService;
 import com.wolai.platform.service.PromotionService;
 import com.wolai.platform.service.ExchangePlanService;
 import com.wolai.platform.service.RewardPointsService;
@@ -49,6 +51,9 @@ public class PromotionAction extends BaseController {
 	
 	@Autowired
 	CouponService couponService;
+	
+	@Autowired
+	ExchangeHistoryService exchangeHistoryService;
 
 	@RequestMapping(value = "detail")
 	@ResponseBody
@@ -205,6 +210,13 @@ public class PromotionAction extends BaseController {
 			ret.put("msg", "remain not enough");
 			return ret;
 		}
+		
+		ExchangeHistory exchangePlanHistory = exchangeHistoryService.getHistoryPers(user.getId(), exchangePlanId);
+		if (exchangePlanHistory.getTimes() >= exchangePlan.getTimesLimit()) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "only " + exchangePlan.getTimesLimit() + " times allow");
+			return ret;
+		}
 
 		Coupon coupon = new Coupon();
 		coupon.setOwnerId(user.getId());
@@ -218,6 +230,9 @@ public class PromotionAction extends BaseController {
 		
 		exchangePlan.setNumber(exchangePlan.getNumber() - 1);
 		exchangePlanService.saveOrUpdate(exchangePlan);
+		
+		exchangePlanHistory.setTimes(exchangePlanHistory.getTimes() + 1);
+		exchangeHistoryService.saveOrUpdate(exchangePlanHistory);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("remain", exchangePlan.getNumber());
