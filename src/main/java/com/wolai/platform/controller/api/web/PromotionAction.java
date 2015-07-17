@@ -214,6 +214,7 @@ public class PromotionAction extends BaseController {
 		ExchangeHistory exchangePlanHistory = exchangeHistoryService.getHistoryPers(user.getId(), exchangePlanId);
 		if (exchangePlanHistory.getTimes() >= exchangePlan.getTimesLimit()) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("timeLimit", exchangePlan.getTimesLimit());
 			ret.put("msg", "only " + exchangePlan.getTimesLimit() + " times allow");
 			return ret;
 		}
