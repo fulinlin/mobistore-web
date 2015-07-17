@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * @author sevenshi
  */
 @Entity
-@Table(name="wo_sponsor_license")
+@Table(name="wo_license_category")
 public class LicenseCategory extends IdEntity {
 
 	private static final long serialVersionUID = -2422799884916485425L;
