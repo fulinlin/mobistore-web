@@ -5,11 +5,8 @@ import java.io.Serializable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
 
 import org.hibernate.annotations.GenericGenerator;
-
-import com.wolai.platform.util.IdGen;
 
 
 /**
