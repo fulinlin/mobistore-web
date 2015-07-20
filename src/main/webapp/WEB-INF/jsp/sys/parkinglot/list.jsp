@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/jsp/include/taglib.jsp"%>
 <html>
 <head>
-	<title>车牌管理</title>
+	<title>停车场管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -18,19 +18,17 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/license/">车牌列表</a></li>
-		<li><a href="${ctx}/license/form">车牌添加</a></li>
+		<li class="active"><a href="${ctx}/parkinglot/">停车场列表</a></li>
+		<li><a href="${ctx}/parkinglot/edit">停车场添加</a></li>
 	</ul>
-	<form:form id="searchForm" modelAttribute="license" action="${ctx}/license/" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="parkingLot" action="${ctx}/parkinglot/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.limit}"/>
 		<div>
-			<label>品牌：</label>
-				<form:input path="brand" htmlEscape="false" maxlength="255" class="input-medium"/>
-			<label>车牌号：</label>
-				<form:input path="carNo" htmlEscape="false" maxlength="255" class="input-medium"/>
-			<label>车架号：</label>
-				<form:input path="frameNumber" htmlEscape="false" maxlength="255" class="input-medium"/>
+			<label>城市：</label>
+				<form:input path="city" htmlEscape="false" maxlength="255" class="input-medium"/>
+			<label>名称：</label>
+				<form:input path="name" htmlEscape="false" maxlength="255" class="input-medium"/>
 			<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 		</div>
 	</form:form>
@@ -38,27 +36,27 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>品牌</th>
-				<th>车牌号</th>
-				<th>车架号</th>
+				<th>城市</th>
+				<th>名称</th>
+				<th>地址</th>
 				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.items}" var="license">
+		<c:forEach items="${page.items}" var="parkingLot">
 			<tr>
-				<td><a href="${ctx}/license/form?id=${license.id}">
-					${license.brand}
+				<td><a href="${ctx}/parkingLot/form?id=${parkingLot.id}">
+					${parkingLot.city}
 				</a></td>
 				<td>
-					${license.carNo}
+					${parkingLot.name}
 				</td>
 				<td>
-					${license.frameNumber}
+					${parkingLot.address}
 				</td>
 				<td>
-    				<a href="${ctx}/license/form?id=${license.id}">修改</a>
-					<a href="${ctx}/license/delete?id=${license.id}" onclick="return confirmx('确认要删除该车牌吗？', this.href)">删除</a>
+    				<a href="${ctx}/parkinglot/edit?id=${parkingLot.id}">修改</a>
+					<a href="${ctx}/parkinglot/delete?id=${parkingLot.id}" onclick="return confirmx('确认要删除该停车场吗？', this.href)">删除</a>
 				</td>
 			</tr>
 		</c:forEach>

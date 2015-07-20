@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/jsp/include/taglib.jsp"%>
 <html>
 <head>
-	<title>车牌管理</title>
+	<title>停车场管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,30 +27,50 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/license/">车牌列表</a></li>
-		<li class="active"><a href="${ctx}/license/form?id=${license.id}">车牌${not empty license.id?'修改':'添加'}</a></li>
+		<li><a href="${ctx}/parkinglot/">停车场列表</a></li>
+		<li class="active"><a href="${ctx}/parkinglot/edit?id=${license.id}">停车场${not empty license.id?'修改':'添加'}</a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="license" action="${ctx}/license/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="parkingLot" action="${ctx}/parkinglot/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">品牌：</label>
+			<label class="control-label">名称：</label>
 			<div class="controls">
-				<form:input path="brand" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:input path="name" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">车牌号：</label>
+			<label class="control-label">城市：</label>
 			<div class="controls">
-				<form:input path="carNo" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:input path="city" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">车架号：</label>
+			<label class="control-label">地址：</label>
 			<div class="controls">
-				<form:input path="frameNumber" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:input path="address" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
 			</div>
 		</div>
+		<div class="control-group">
+			<label class="control-label">经度：</label>
+			<div class="controls">
+				<form:input path="longitude" htmlEscape="false" maxlength="255" class="input-xlarge required digits"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">纬度：</label>
+			<div class="controls">
+				<form:input path="latitude" htmlEscape="false" maxlength="255" class="input-xlarge required digits"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">简介:</label>
+			<div class="controls">
+				<form:textarea id="content" htmlEscape="true" path="summary" rows="4" class="input-xxlarge required"/>
+				<tags:ckeditor replace="content" uploadPath="/upload/parkinglot" />
+			</div>
+		</div>
+		
 		<div class="form-actions">
 			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
