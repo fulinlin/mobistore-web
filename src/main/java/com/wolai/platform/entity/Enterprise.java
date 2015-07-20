@@ -94,6 +94,22 @@ public class Enterprise extends IdEntity {
 	public void setOrganizationCode(String organizationCode) {
 		this.organizationCode = organizationCode;
 	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public SysUser getUser() {
+		return user;
+	}
+
+	public void setUser(SysUser user) {
+		this.user = user;
+	}
     
     
 }

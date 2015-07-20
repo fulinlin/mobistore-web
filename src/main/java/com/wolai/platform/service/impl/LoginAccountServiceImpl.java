@@ -1,5 +1,6 @@
 package com.wolai.platform.service.impl;
 
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ public class LoginAccountServiceImpl extends CommonServiceImpl implements LoginA
 	@Override
 	public SysLoginAccount authLoginAccount(String email, String password) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SysLoginAccount.class);
+		dc.setFetchMode("user", FetchMode.JOIN);
 		dc.add(Restrictions.eq("email", email));
 		dc.add(Restrictions.eq("password", password));
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));

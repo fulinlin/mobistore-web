@@ -7,27 +7,22 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @author xuxiang
  *
  */
 @Entity
-@Table(name="sys_user",indexes={
-		@Index(unique=true,columnList="auth_token")
-})
-@DynamicInsert @DynamicUpdate
+@Table(name="sys_user")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SysUser extends IdEntity {
+	
     private static final long serialVersionUID = 7613949261966119827L;
     
   	/**
@@ -114,6 +109,7 @@ public class SysUser extends IdEntity {
     @Enumerated(EnumType.STRING)
     private UserType customerType=UserType.INDIVIDUAL;
     
+    @Enumerated(EnumType.STRING)
     private PayType payType=PayType.PERPAID;
 
     @Column(name="auth_token")

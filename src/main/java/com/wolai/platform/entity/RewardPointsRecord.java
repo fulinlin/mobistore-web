@@ -87,14 +87,14 @@ public class RewardPointsRecord extends IdEntity {
 	@Column(name="relation_id")
 	private String relationId;
 	
-	@Any(metaColumn=@Column(name="type"))
+/*	@Any(metaColumn=@Column(name="type"),fetch=FetchType.LAZY)
     @AnyMetaDef(idType="string", metaType="string",
         metaValues={
          @MetaValue(targetEntity=ParkingRecord.class, value="parking"),
-         @MetaValue(targetEntity=Coupon.class, value="consum"),
+         @MetaValue(targetEntity=Coupon.class, value="consum")
     })
     @JoinColumn(name="relation_id",insertable=false,updatable=false)
-	private Object relation;
+	private Object relation;*/
 
 	/**
 	 * 所属用户
@@ -130,14 +130,6 @@ public class RewardPointsRecord extends IdEntity {
 		this.relationId = relationId;
 	}
 
-	public Object getRelation() {
-		return relation;
-	}
-
-	public void setRelation(Object relation) {
-		this.relation = relation;
-	}
-
 	public String getUserId() {
 		return userId;
 	}
@@ -169,5 +161,13 @@ public class RewardPointsRecord extends IdEntity {
 	public void setRewardPoints(RewardPoints rewardPoints) {
 		this.rewardPoints = rewardPoints;
 	}
+
+/*	public Object getRelation() {
+		return relation;
+	}
+
+	public void setRelation(Object relation) {
+		this.relation = relation;
+	}*/
 	
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,8 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.SysLoginAccount;
 import com.wolai.platform.service.LoginAccountService;
 import com.wolai.platform.service.RoleService;
+import com.wolai.platform.service.UserService;
+import com.wolai.platform.service.impl.TestService;
 import com.wolai.platform.servlet.ValidateCodeServlet;
 import com.wolai.platform.util.CacheUtils;
 
@@ -33,6 +36,12 @@ public class LoginAccountController extends BaseController{
 	@Autowired
 	private RoleService roleService;
 	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private TestService testservice;
+	
 	@AuthPassport(validate=false)
 	@RequestMapping(value="${adminPath}/login",method = RequestMethod.POST)
 	public String login( HttpServletRequest request,String userName,String password,@RequestParam(required=false) String validateCode,RedirectAttributes attr ){
@@ -44,7 +53,9 @@ public class LoginAccountController extends BaseController{
 			SysLoginAccount account=  loginAccountService.authLoginAccount(userName.trim(), password.trim());
 			if(account!=null){
 				LoginInfo loginInfo = new LoginInfo();
-				loginInfo.setUser(account);
+				loginInfo.setLoginAccount(account);
+				loginInfo.setUser(account.getUser());
+				loginInfo.setEnterprice(userService.getEnterpriceInfo(account.getUserId()));
 				loginInfo.setRoles(roleService.getTopRoleByUserId(account.getId()));
 				
 				setLoginInfoSession(request, loginInfo);
@@ -89,6 +100,24 @@ public class LoginAccountController extends BaseController{
 		}
 		return "redirect:"+SystemConfig.getAdminPath()+"/prepareLogin";
 	}
+	
+	@AuthPassport(validate=false)
+	@RequestMapping("${adminPath}/test")
+	public String test(HttpServletRequest request){
+		testservice.saveTestData();
+		return "redirect:"+SystemConfig.getAdminPath()+"/prepareLogin";
+	}
+	
+	@RequestMapping("${adminPath/user/info}")
+	public String info(HttpServletRequest request,Model model){
+		LoginInfo info  = getLoginInfoSession(request);
+		
+		//Enterprise enterprise =
+		
+		model.addAttribute("user", info.getLoginAccount());
+		return "loginAccount/info";
+	}
+	
 	
 	/**
 	 * 是否是验证码登录

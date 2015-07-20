@@ -12,8 +12,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.wolai.platform.entity.Promotion.PromotionLimitType;
-
 /**
  * 用户反馈
  * @author xuxiang
@@ -46,7 +44,7 @@ public class FeedBack extends IdEntity {
 	/**
 	 * 反馈类型
 	 */
-	@Lob
+	@Enumerated(EnumType.STRING)
 	private FeedbackType type;
 	
 	/**

@@ -22,13 +22,18 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
 		  dc.add(Restrictions.eq("loginAccountId", user.getId()));
 	      List<SysRLoginAccountRole> userRoles = getDao().findAllByCriteria(dc);
 	        List<SysRole> topUserRoles = new ArrayList<SysRole>();
-	        
+	        if(userRoles.size()==1){
+	        	topUserRoles.add(userRoles.get(0).getRole());
+	        	return topUserRoles;
+	        }
 	        for (SysRLoginAccountRole userRole :userRoles) {
 	            SysRole role = (SysRole) getDao().get(SysRole.class, userRole.getRoleId());
 	            String[] prefixs = role.getRolePrefix().replaceAll("\\{", "").replaceAll("\\}", ",").split(",");
-	            role = (SysRole) getDao().get(SysRole.class,prefixs[0]);
-	            if (!topUserRoles.contains(role)) {
-	                topUserRoles.add(role);
+	            if(prefixs.length>0){
+		            role = (SysRole) getDao().get(SysRole.class,prefixs[0]);
+		            if (!topUserRoles.contains(role)) {
+		                topUserRoles.add(role);
+		            }
 	            }
 	        }
 	        return topUserRoles;

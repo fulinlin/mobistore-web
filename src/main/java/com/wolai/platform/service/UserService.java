@@ -3,6 +3,7 @@ package com.wolai.platform.service;
 import java.util.Map;
 
 import com.wolai.platform.bean.Page;
+import com.wolai.platform.entity.Enterprise;
 import com.wolai.platform.entity.SysUser;
 
 public interface UserService extends CommonService {
@@ -26,4 +27,6 @@ public interface UserService extends CommonService {
 	Page<SysUser> findAllByPage(SysUser user,int start,int limit);
 
 	boolean validateMobile(String mobile,String userId);
+	
+	Enterprise getEnterpriceInfo(String userId);
 }

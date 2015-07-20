@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -42,17 +43,19 @@ public class IdEntity implements Serializable {
 	 */
 	protected Boolean isDisable=Boolean.FALSE;
 	
-//	@PrePersist
-//	public void prePersist(){
-//		this.id = IdGen.uuid();
-//	}
 
 	
 	public String getId() {
+		if(StringUtils.isBlank(id)){
+			return null;
+		}
 		return id;
 	}
 
 	public void setId(String id) {
+		if(StringUtils.isBlank(id)){
+			return;
+		}
 		this.id = id;
 	}
 

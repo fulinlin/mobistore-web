@@ -138,6 +138,7 @@ public class Bill extends IdEntity {
 	/**
 	 * 支付状态
 	 */
+	@Enumerated(EnumType.STRING)
 	private PayStatus payStatus;
 	
 	

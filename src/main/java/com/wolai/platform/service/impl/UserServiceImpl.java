@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant.RespCode;
+import com.wolai.platform.entity.Enterprise;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.entity.SysVerificationCode;
@@ -219,10 +220,22 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	public boolean validateMobile(String mobile,String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		dc.add(Restrictions.eq("mobile", mobile));
 		if(StringUtils.isNotBlank(userId)){
 			dc.add(Restrictions.ne("id", userId));
 		}
 		SysUser user = (SysUser) getDao().getByCriteria(dc);
-		return user==null;
+		return user!=null;
+	}
+
+	@Override
+	public Enterprise getEnterpriceInfo(String userId) {
+		if(StringUtils.isNotBlank(userId)){
+			DetachedCriteria dc = DetachedCriteria.forClass(Enterprise.class);
+			dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+			dc.add(Restrictions.eq("userId", userId));
+			return (Enterprise) getDao().getByCriteria(dc);
+		}
+		return null;
 	}
 }

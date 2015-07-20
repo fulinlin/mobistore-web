@@ -94,7 +94,7 @@
                                                                                              错误信息如下：
                             </h3>
                             <div>
-                                ${exceptionMessage }
+                                ${error }
                             </div>
                             <div class="space"></div>
                         </div>

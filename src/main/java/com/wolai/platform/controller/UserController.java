@@ -65,7 +65,7 @@ public class UserController extends BaseController {
 			addMessage(model, "保存用户'" + user.getMobile() + "'失败，手机已存在");
 			return edit(user, model);
 		}
-		
+		userService.saveOrUpdate(user);
 		addMessage(redirectAttributes, "保存用户'" + user.getMobile() + "'成功");
 		return "redirect:" + SystemConfig.getAdminPath() + "/user/?repage";
 	}
@@ -79,5 +79,4 @@ public class UserController extends BaseController {
 		}
 		return "";
 	}
-	
 }
