@@ -21,12 +21,14 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.License;
+import com.wolai.platform.entity.SysMessage;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.LicenseService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.util.CommonUtils;
 import com.wolai.platform.vo.LicenseVo;
+import com.wolai.platform.vo.MessageVo;
 
 @Controller
 @RequestMapping(Constant.API_MOBI + "license/")
@@ -57,6 +59,22 @@ public class LicenseController extends BaseController {
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", vols);
+		return ret;
+	}
+	
+	@RequestMapping(value="detail")
+	@ResponseBody
+	public Map<String,Object> detail(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret = new HashMap<String, Object>();
+		
+		String id = json.get("id");
+		License po = (License) licensePlateService.get(License.class, id);
+
+		LicenseVo vo = new LicenseVo();
+		BeanUtilEx.copyProperties(vo, po);
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vo);
 		return ret;
 	}
 
