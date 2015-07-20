@@ -27,7 +27,10 @@
 		<div>
 			<label>车牌：</label>
 				<form:input path="carNo" htmlEscape="false" maxlength="255" class="input-medium"/>
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+				
+				 <label class="control-label">分类：</label>
+                <form:select path="licenseCategoryId" items="${licenseCategories}"  itemLabel="name" itemValue="id" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 		</div>
 	</form:form>
 	<tags:message content="${message}"/>
@@ -35,6 +38,7 @@
 		<thead>
 			<tr>
 				<th>车牌</th>
+				<th>分类</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -44,6 +48,7 @@
 				<td><a href="${ctx}/sponsorLicense/form?id=${sponsorLicense.id}">
 					${sponsorLicense.carNo}
 				</a></td>
+				<td>${sponsorLicense.licenseCategory.name}</td>
 				<td>
     				<a href="${ctx}/sponsorLicense/form?id=${sponsorLicense.id}">修改</a>
 					<a href="${ctx}/sponsorLicense/delete?id=${sponsorLicense.id}" onclick="return confirmx('确认要删除该赞助车牌吗？', this.href)">删除</a>
