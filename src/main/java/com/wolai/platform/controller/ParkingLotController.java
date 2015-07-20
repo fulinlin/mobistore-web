@@ -16,7 +16,7 @@ import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.ParkingLotService;
 
-@Controller("parkingLotController")
+@Controller("webparkingLotController")
 @RequestMapping("${adminPath}/parkinglot")
 public class ParkingLotController extends BaseController {
 
