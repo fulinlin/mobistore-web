@@ -20,6 +20,7 @@ import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
+import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysMessage;
 import com.wolai.platform.entity.SysMessageSend;
 import com.wolai.platform.entity.SysUser;
@@ -84,7 +85,20 @@ public class MsgController extends BaseController {
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
 		String id = json.get("id");
-		SysMessage po = (SysMessage) msgService.get(SysMessage.class, id);
+		if (StringUtils.isEmpty(id)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		Object obj = msgService.get(SysMessage.class, id);
+		if (obj == null) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "not found");
+			return ret;
+		}
+		
+		SysMessage po = (SysMessage) obj;
 
 		MessageVo vo = new MessageVo();
 		BeanUtilEx.copyProperties(vo, po);

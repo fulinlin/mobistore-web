@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.ParkingLot;
+import com.wolai.platform.entity.Promotion;
 import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.ParkingLotVo;
@@ -64,12 +66,20 @@ public class ParkingLotController extends BaseController {
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
 		String id = json.get("id");
-		ParkingLot po = (ParkingLot) parkingLotService.get(ParkingLot.class, id);
-		if (po == null) {
+		if (StringUtils.isEmpty(id)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		Object obj = parkingLotService.get(ParkingLot.class, id);
+		if (obj == null) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "not found");
 			return ret;
 		}
+		
+		ParkingLot po = (ParkingLot) obj;
 
 		ParkingLotVo vo = new ParkingLotVo();
 		BeanUtilEx.copyProperties(vo, po);

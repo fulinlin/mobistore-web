@@ -68,7 +68,20 @@ public class LicenseController extends BaseController {
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
 		String id = json.get("id");
-		License po = (License) licensePlateService.get(License.class, id);
+		if (StringUtils.isEmpty(id)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		Object obj = licensePlateService.get(License.class, id);
+		if (obj == null) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "not found");
+			return ret;
+		}
+		
+		License po = (License) obj;
 
 		LicenseVo vo = new LicenseVo();
 		BeanUtilEx.copyProperties(vo, po);

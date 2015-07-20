@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
+import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.Promotion;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.PromotionService;
@@ -67,14 +69,22 @@ public class PromotionController extends BaseController {
 	public Map<String,Object> detail(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
-		String id = json.get("id");
-		Promotion po = (Promotion) promotionService.get(Promotion.class, id);
 		
-		if (po == null) {
+		String id = json.get("id");
+		if (StringUtils.isEmpty(id)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		Object obj = promotionService.get(Promotion.class, id);
+		if (obj == null) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "not found");
 			return ret;
 		}
+		
+		Promotion po = (Promotion) obj;
 
 		PromotionVo vo = new PromotionVo();
 		BeanUtilEx.copyProperties(vo, po);

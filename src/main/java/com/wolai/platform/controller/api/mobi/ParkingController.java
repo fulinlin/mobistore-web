@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Bill;
+import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.BillService;
@@ -97,9 +99,22 @@ public class ParkingController extends BaseController{
 	@ResponseBody
 	public Map<String,Object> parkHistoryDetail(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>();
-		String id = json.get("id");
 		
-		ParkingRecord park = (ParkingRecord) parkingService.get(ParkingRecord.class, id);
+		String id = json.get("id");
+		if (StringUtils.isEmpty(id)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		Object obj = parkingService.get(ParkingRecord.class, id);
+		if (obj == null) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "not found");
+			return ret;
+		}
+		
+		ParkingRecord park = (ParkingRecord) obj;
 		Bill bill = billService.getBillByParking(park.getId());
 		
 		ParkingVo vo = new ParkingVo();
