@@ -22,7 +22,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/user/list">用户列表</a></li>
-		<li class="active"><a href="${ctx}/user/edit?id=${user.id}">用户<${not empty user.id?'修改':'添加'}</a></li>
+		<li class="active"><a href="${ctx}/user/edit?id=${user.id}">用户${not empty user.id?'修改':'添加'}</a></li>
 	</ul><br/>
 	
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/user/save" method="post" class="form-horizontal">
@@ -61,7 +61,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="phone">电话:</label>
+			<label class="control-label" for="tel">电话:</label>
 			<div class="controls">
 				<form:input path="tel" htmlEscape="false" maxlength="100"/>
 			</div>

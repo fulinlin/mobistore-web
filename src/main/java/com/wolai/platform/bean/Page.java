@@ -82,6 +82,9 @@ public class Page<T> {
      * @return boolea
      */
     public boolean hasNextPage() {
+    	if(total<1){
+    		return false;
+    	}
         return getTotalPages() > start / limit + 1;
     }
 

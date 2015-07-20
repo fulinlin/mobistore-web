@@ -149,7 +149,7 @@
     </init-param>
     <init-param>
       <param-name>configuration</param-name>
-      <param-value>com.thinkgem.jeesite.common.web.CKFinderConfig</param-value>
+      <param-value>com.wolai.platform.servlet.CKFinderConfig</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>

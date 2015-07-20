@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wolai.platform.entity.Enterprise;
 import com.wolai.platform.entity.SysLoginAccount;
 import com.wolai.platform.entity.SysRole;
+import com.wolai.platform.entity.SysUser;
 
 /**
  * 
@@ -20,9 +22,13 @@ import com.wolai.platform.entity.SysRole;
 public class LoginInfo implements Serializable {
 
     /**
-     * 用户
+     * 登陆账户
      */
-    private SysLoginAccount user;
+    private SysLoginAccount loginAccount;
+    
+    private SysUser user;
+    
+    private Enterprise enterprice;
     
     /**
      * 角色相关信息
@@ -34,24 +40,24 @@ public class LoginInfo implements Serializable {
 
     }
 
-    public LoginInfo(SysLoginAccount user) {
+    public LoginInfo(SysLoginAccount loginAccount) {
         super();
-        this.user = user;
+        this.loginAccount = loginAccount;
     }
 
-    public LoginInfo(SysLoginAccount user, List<SysRole> roles) {
+    public LoginInfo(SysLoginAccount loginAccount, List<SysRole> roles) {
         super();
-        this.user = user;
+        this.loginAccount = loginAccount;
         this.roles = roles;
     }
 
 
-    public SysLoginAccount getUser() {
-        return user;
+    public SysLoginAccount getLoginAccount() {
+        return loginAccount;
     }
 
-    public void setUser(SysLoginAccount user) {
-        this.user = user;
+    public void setLoginAccount(SysLoginAccount loginAccount) {
+        this.loginAccount = loginAccount;
     }
 
 
@@ -64,6 +70,22 @@ public class LoginInfo implements Serializable {
     }
 
     public String toString(){
-    	return getUser().getEmail();
+    	return getLoginAccount().getEmail();
     }
+
+	public SysUser getUser() {
+		return user;
+	}
+
+	public void setUser(SysUser user) {
+		this.user = user;
+	}
+
+	public Enterprise getEnterprice() {
+		return enterprice;
+	}
+
+	public void setEnterprice(Enterprise enterprice) {
+		this.enterprice = enterprice;
+	}
 }

@@ -37,7 +37,7 @@ public class SponsorLicense extends IdEntity {
     private  License license;
     
     /** 
-     * 客户id
+     * 企业id
      */
     @Column(name="login_account_id")
     private String loginAccountId;
@@ -54,7 +54,7 @@ public class SponsorLicense extends IdEntity {
     
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "license_category_id", insertable = false, updatable = false)
-    private SysLoginAccount licenseCategory;
+    private LicenseCategory licenseCategory;
 
     public String getCarNo() {
         return carNo;
@@ -104,11 +104,11 @@ public class SponsorLicense extends IdEntity {
         this.licenseCategoryId = licenseCategoryId;
     }
 
-    public SysLoginAccount getLicenseCategory() {
+    public LicenseCategory getLicenseCategory() {
         return licenseCategory;
     }
 
-    public void setLicenseCategory(SysLoginAccount licenseCategory) {
+    public void setLicenseCategory(LicenseCategory licenseCategory) {
         this.licenseCategory = licenseCategory;
     }
 }

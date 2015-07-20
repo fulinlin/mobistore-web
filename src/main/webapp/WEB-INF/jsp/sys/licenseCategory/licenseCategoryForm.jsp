@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/jsp/include/taglib.jsp"%>
 <html>
 <head>
-	<title>赞助车牌管理</title>
+	<title>车牌分类管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,27 +27,18 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/sponsorLicense/">赞助车牌列表</a></li>
-		<li class="active"><a href="${ctx}/sponsorLicense/form?id=${sponsorLicense.id}">赞助车牌${not empty sponsorLicense.id?'修改':'添加'}</a></li>
+		<li><a href="${ctx}/licenseCategory/">车牌分类列表</a></li>
+		<li class="active"><a href="${ctx}/licenseCategory/form?id=${licenseCategory.id}">车牌分类${not empty licenseCategory.id?'修改':'添加'}</a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="sponsorLicense" action="${ctx}/sponsorLicense/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="licenseCategory" action="${ctx}/licenseCategory/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">车牌：</label>
+			<label class="control-label">名称：</label>
 			<div class="controls">
-				<form:input path="carNo" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:input path="name" htmlEscape="false" maxlength="255" class="input-xlarge "/>
 			</div>
 		</div>
-		
-		<div class="control-group">
-            <label class="control-label">分类：</label>
-            <div class="controls">
-                <form:select path="licenseCategoryId" items="${licenseCategories}"  itemLabel="name" itemValue="id" htmlEscape="false" maxlength="255" class="input-xlarge "/>
-            <a href="${ctx}/licenseCategory/form"  >添加车牌分类 </a>
-            </div>
-        </div>
-		
 		<div class="form-actions">
 			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

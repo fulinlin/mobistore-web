@@ -47,7 +47,7 @@ public class SysLoginAccount extends IdEntity {
 	/**
 	 * 状态
 	 */
-	private Integer status=SysLoginAccount.STATUS_NORMAL;
+	private Integer status=SysLoginAccount.STATUS_NOT_ACTIVE;
 	
 	private String activeCode; // 激活码
 	

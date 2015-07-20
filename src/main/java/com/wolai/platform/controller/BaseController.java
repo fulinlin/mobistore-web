@@ -103,7 +103,7 @@ public class BaseController {
 			//添加自己的异常处理逻辑，如日志记录
 	    	request.setAttribute("error", e.getMessage());
 		}
-    	
+    	e.printStackTrace();
         return "error";
     }  
     
