@@ -26,7 +26,7 @@ public class ParkingLotController extends BaseController {
 	@ModelAttribute
 	public ParkingLot get(@RequestParam(required=false) String id) {
 		if (StringUtils.isNotBlank(id)){
-			return (ParkingLot) parkingLotService.get(SysUser.class,id);
+			return (ParkingLot) parkingLotService.get(ParkingLot.class,id);
 		}else{
 			return new ParkingLot();
 		}
