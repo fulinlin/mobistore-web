@@ -42,7 +42,7 @@ public class LicenseController extends BaseController {
 
 	@RequestMapping(value="list")
 	@ResponseBody
-	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token){
 		
 		Map<String,Object> ret =new HashMap<String, Object>();
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
