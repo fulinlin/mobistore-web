@@ -58,15 +58,15 @@ public class SysUser extends IdEntity {
   		/**
   		 * perpaid(手动付费)
   		 */
-  		PERPAID("perpaid"),
+  		PERPAID("PERPAID"),
   		/**
   		 * perpaid(确认后付费)
   		 */
-  		NOTICEPAID("noticeperpaid"),
+  		NOTICEPAID("NOTICEPAID"),
   		/**
   		 * postpaid(后付费)
   		 */
-  		POSTPAID("postpaid");
+  		POSTPAID("POSTPAID");
   		
   		private PayType(String textVal){
   			this.textVal=textVal;
