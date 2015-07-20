@@ -1,12 +1,14 @@
 package com.wolai.platform.controller.api.mobi;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,10 +47,21 @@ public class MsgController extends BaseController {
 		int startIndex = Integer.valueOf(json.get("startIndex"));
 		int pageSize = Integer.valueOf(json.get("pageSize"));
 		
+		
 		Map<String,Object> ret = new HashMap<String, Object>();
+		
+		if (StringUtils.isEmpty(json.get("before")) || StringUtils.isEmpty(json.get("after"))) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "miss parameters 'after' or 'before'");
+			return ret;
+		}
+		
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
-		Page page = msgService.listByUser(userId, startIndex, pageSize);
+		Date before = new Date(Long.valueOf(json.get("before")));
+		Date after = new Date(Long.valueOf(json.get("after")));
+
+		Page page = msgService.listByUser(userId, after, before, startIndex, pageSize);
 
 		List<MessageVo> vols = new ArrayList<MessageVo>();
 		for (Object obj : page.getItems()) {
