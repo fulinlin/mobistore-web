@@ -50,19 +50,13 @@ public class ParkingController extends BaseController{
 		Map<String,Object> ret = new HashMap<String, Object>();
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
-		Page page = parkingService.parkInfo(userId);
-		
-		List<ParkingVo> parkVoList = new ArrayList<ParkingVo>();
-		
-		for (Object obj : page.getItems()) {
-			ParkingRecord po = (ParkingRecord) obj;
-			ParkingVo vo = new ParkingVo();
-			BeanUtilEx.copyProperties(vo, po);
-			parkVoList.add(vo);
-		}
+		ParkingRecord po = parkingService.parkInfo(userId);
+
+		ParkingVo vo = new ParkingVo();
+		BeanUtilEx.copyProperties(vo, po);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("data", parkVoList);
+		ret.put("data", vo);
 		return ret;
 	}
 

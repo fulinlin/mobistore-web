@@ -1,6 +1,7 @@
 package com.wolai.platform.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -16,7 +17,7 @@ import com.wolai.platform.util.TimeUtils;
 public class ParkingServiceImpl extends CommonServiceImpl implements ParkingService {
 
 	@Override
-	public Page parkInfo(String userId) {
+	public ParkingRecord parkInfo(String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
 		dc.add(Restrictions.eq("userId", userId));
 		Date dt = TimeUtils.getDateBefore(new Date(), 10);
@@ -24,9 +25,12 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
 		dc.addOrder(Order.desc("driveInTime"));
 
-		Page ls = findPage(dc, 0, 3);
-		
-		return ls;
+		List ls = findAllByCriteria(dc);
+		if (ls.size() > 0) {
+			return (ParkingRecord)ls.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
