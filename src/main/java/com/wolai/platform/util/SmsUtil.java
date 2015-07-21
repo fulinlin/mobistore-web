@@ -1,4 +1,4 @@
-package sms;
+package com.wolai.platform.util;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -21,10 +21,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.wolai.platform.util.BeanUtilEx;
-import com.wolai.platform.util.D1;
-import com.wolai.platform.util.D2;
 
 import push.android.AndroidBroadcast;
 import push.android.AndroidCustomizedcast;

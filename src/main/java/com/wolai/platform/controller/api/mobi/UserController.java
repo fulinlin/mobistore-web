@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import sms.SmsUtil;
-
 import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
@@ -26,6 +24,7 @@ import com.wolai.platform.service.UserService;
 import com.wolai.platform.service.VerificationService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.util.CommonUtils;
+import com.wolai.platform.util.SmsUtil;
 import com.wolai.platform.vo.UserVo;
 
 @Controller
