@@ -391,7 +391,7 @@
 
 	<build>
 		<finalName>epark</finalName>
-		<sourceDirectory>src/main/java</sourceDirectory>
+		<sourceDirectory>src/main/java,src/vendor</sourceDirectory>
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 		<resources>
 			<resource>
