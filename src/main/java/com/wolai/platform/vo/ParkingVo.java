@@ -25,6 +25,8 @@ public class ParkingVo {
 	private CouponType couponType;
 	private BigDecimal couponMoney;
 	private Long couponTime;
+	private ParkingLotVo parkingLotVo;
+	
 	String id;
 	
 	public String getId() {
@@ -129,6 +131,12 @@ public class ParkingVo {
 	}
 	public void setIsPaid(Boolean isPaid) {
 		this.isPaid = isPaid;
+	}
+	public ParkingLotVo getParkingLotVo() {
+		return parkingLotVo;
+	}
+	public void setParkingLotVo(ParkingLotVo parkingLotVo) {
+		this.parkingLotVo = parkingLotVo;
 	}
 	
 }

@@ -25,9 +25,11 @@ import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.BillService;
+import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
+import com.wolai.platform.vo.ParkingLotVo;
 import com.wolai.platform.vo.ParkingVo;
 
 @Controller
@@ -41,13 +43,16 @@ public class ParkingController extends BaseController{
 	ParkingService parkingService;
 	
 	@Autowired
+	ParkingLotService parkingLotService;
+	
+	@Autowired
 	BillService billService;
 
 	@RequestMapping(value="parkInfo")
 	@ResponseBody
 	public Map<String,Object> parkInfo(HttpServletRequest request, @RequestParam String token){
-		
 		Map<String,Object> ret = new HashMap<String, Object>();
+		
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 		ParkingRecord po = parkingService.parkInfo(userId);
@@ -55,12 +60,17 @@ public class ParkingController extends BaseController{
 		ParkingVo vo = new ParkingVo();
 		if (po != null) {
 			BeanUtilEx.copyProperties(vo, po);
+			
+			ParkingLot parkingLotPo = (ParkingLot) parkingLotService.get(ParkingLot.class, po.getParkingLotId());
+			ParkingLotVo parkingLotVo = new ParkingLotVo();
+			BeanUtilEx.copyProperties(parkingLotVo, parkingLotPo);
+			vo.setParkingLotVo(parkingLotVo);
 			ret.put("data", vo);
 		} else {
 			ret.put("data", null);
 		}
-		ret.put("code", RespCode.SUCCESS.Code());
 		
+		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
 	}
 
