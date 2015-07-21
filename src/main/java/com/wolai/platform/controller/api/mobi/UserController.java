@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import sms.SmsUtil;
+
 import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
@@ -29,6 +31,8 @@ import com.wolai.platform.vo.UserVo;
 @Controller
 @RequestMapping(Constant.API_MOBI + "user/")
 public class UserController extends BaseController{
+	
+	public static String MSG = "【喔来智能停车系统】您正在注册我们的应用，验证码是%CODE%，请在10分钟内提交改验证码，切勿将该验证码泄露于他人。";
 	
 	@Autowired
 	UserService userService;
@@ -54,7 +58,11 @@ public class UserController extends BaseController{
 
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("verifyCode", vcode);
-		//TODO: 发送短信
+		
+		// 发送短信
+		String msg = MSG.replaceAll("%CODE%", vcode);
+		SmsUtil.send(phone, msg);
+		
 		return ret;
 	}
 	

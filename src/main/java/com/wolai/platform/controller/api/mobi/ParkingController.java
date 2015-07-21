@@ -53,10 +53,14 @@ public class ParkingController extends BaseController{
 		ParkingRecord po = parkingService.parkInfo(userId);
 
 		ParkingVo vo = new ParkingVo();
-		BeanUtilEx.copyProperties(vo, po);
-		
+		if (po != null) {
+			BeanUtilEx.copyProperties(vo, po);
+			ret.put("data", vo);
+		} else {
+			ret.put("data", null);
+		}
 		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("data", vo);
+		
 		return ret;
 	}
 
