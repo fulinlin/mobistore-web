@@ -110,6 +110,11 @@ public class ParkingRecord extends IdEntity {
 	 * 是否已付款
 	 */
 	private Boolean isPaid = false;
+	
+	/**
+	 * 支付完成时间
+	 */
+	private Date tradeSuccessTime;
 
 	/**
 	 * 所属用户
@@ -247,5 +252,13 @@ public class ParkingRecord extends IdEntity {
 
 	public void setIsPaid(Boolean isPaid) {
 		this.isPaid = isPaid;
+	}
+
+	public Date getTradeSuccessTime() {
+		return tradeSuccessTime;
+	}
+
+	public void setTradeSuccessTime(Date tradeSuccessTime) {
+		this.tradeSuccessTime = tradeSuccessTime;
 	}
 }

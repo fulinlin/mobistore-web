@@ -29,6 +29,7 @@ import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.util.FileUtils;
+import com.wolai.platform.vo.BillVo;
 import com.wolai.platform.vo.ParkingLotVo;
 import com.wolai.platform.vo.ParkingVo;
 
@@ -75,9 +76,11 @@ public class PaymentController extends BaseController {
 		
 		ParkingRecord park = (ParkingRecord) obj;
 		Bill bill = paymentService.createBillIfNeededPers(park, couponId);
+		BillVo billVo = new BillVo();
+		BeanUtilEx.copyProperties(billVo, bill);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("data", bill);
+		ret.put("data", billVo);
 		return ret;
 	}
 	

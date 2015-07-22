@@ -1,6 +1,7 @@
 package com.wolai.platform.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -68,6 +69,10 @@ public class Bill extends IdEntity {
   		}
   		private Integer textVal;
   		
+  		public Integer value(){
+  			return textVal;
+  		}
+  		
   		public String toString(){
   			return textVal.toString();
   		}
@@ -133,6 +138,21 @@ public class Bill extends IdEntity {
 	private String tradeStatus;
 	
 	/**
+	 * 创建时间
+	 */
+	private Date createTime;
+	
+	/**
+	 * 支付请求时间
+	 */
+	private Date tradeSendTime;
+	
+	/**
+	 * 支付完成时间
+	 */
+	private Date tradeSuccessTime;
+	
+	/**
 	 * 付款账号
 	 */
 	@Column(name="account_id")
@@ -151,7 +171,7 @@ public class Bill extends IdEntity {
 	/**
 	 * 支付状态
 	 */
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private PayStatus payStatus = PayStatus.INIT;
 	
 	
@@ -281,6 +301,30 @@ public class Bill extends IdEntity {
 
 	public void setTradeStatus(String tradeStatus) {
 		this.tradeStatus = tradeStatus;
+	}
+
+	public Date getTradeSendTime() {
+		return tradeSendTime;
+	}
+
+	public void setTradeSendTime(Date tradeSendTime) {
+		this.tradeSendTime = tradeSendTime;
+	}
+
+	public Date getTradeSuccessTime() {
+		return tradeSuccessTime;
+	}
+
+	public void setTradeSuccessTime(Date tradeSuccessTime) {
+		this.tradeSuccessTime = tradeSuccessTime;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 	
 }

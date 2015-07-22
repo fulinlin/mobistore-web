@@ -1,6 +1,7 @@
 package com.wolai.platform.service.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,8 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 			bill = new Bill();
 			bill.setCarNo(parking.getCarNo());
 			bill.setParkingRecordId(parkingId);
-			bill.setLicensePlateId(parking.getParkingLotId());
+			bill.setLicensePlateId(parking.getCarNoId());
+			bill.setCreateTime(new Date());
 		}
 		
 		if (StringUtils.isNotEmpty(couponId)) {
@@ -55,6 +57,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		bill.setTradeNo(trade_no);;
 		bill.setPaytype(PayType.valueOf(PayType.class, payType));
 		bill.setPayStatus(Bill.PayStatus.SEND);
+		bill.setTradeSendTime(new Date());
 		saveOrUpdate(bill);
 	}
 
@@ -63,6 +66,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		
 		bill.setTradeStatus(trade_status);
 		bill.setPayStatus(PayStatus.SUCCESSED);
+		bill.setTradeSuccessTime(new Date());
 		saveOrUpdate(bill);
 	}
 }
