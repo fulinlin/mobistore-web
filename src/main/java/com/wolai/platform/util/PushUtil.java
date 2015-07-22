@@ -9,8 +9,8 @@ public class PushUtil {
 	public static String APP_KEY_ANDROID = "55aceaf3e0f55abb11003b4f";
 	public static String APP_SECRET_ANDROID = "8ky9r6gf8rwa3vvys6wofzitsmputjiy";
 
-	public static String APP_KEY_IOS = "";
-	public static String APP_SECRET_IOS = "";
+	public static String APP_KEY_IOS = "55aceb2667e58e3b46000e08";
+	public static String APP_SECRET_IOS = "jjkcc9trpjhkxjkhhuqbdkea5ottkx58";
 
 	private String appkey = null;
 	private String appMasterSecret = null;
