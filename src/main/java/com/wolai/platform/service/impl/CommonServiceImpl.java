@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
@@ -75,7 +76,7 @@ public class CommonServiceImpl extends BaseServiceImpl implements CommonService 
 	public List<Map> findMapByHQL(String hqlString, Object... values) {
 		return getDao().findMapByHQL(hqlString, values);
 	}
-
+	
     @Override
     public void delete(IdEntity entity) {
         entity.setIsDelete(Boolean.TRUE);
@@ -90,4 +91,6 @@ public class CommonServiceImpl extends BaseServiceImpl implements CommonService 
         getDao().saveOrUpdate(entity);
         return  entity;
     }
+    
+    
 }

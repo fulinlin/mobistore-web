@@ -44,6 +44,11 @@ public class Enterprise extends IdEntity {
      * 组织机构证号
      */
     private String organizationCode;
+    
+    /**
+     * 余额
+     */
+    private long balance;
 
     /** 
      * 客户id
@@ -94,8 +99,16 @@ public class Enterprise extends IdEntity {
 	public void setOrganizationCode(String organizationCode) {
 		this.organizationCode = organizationCode;
 	}
+	
+	public long getBalance() {
+        return balance;
+    }
 
-	public String getUserId() {
+    public void setBalance(long balance) {
+        this.balance = balance;
+    }
+
+    public String getUserId() {
 		return userId;
 	}
 

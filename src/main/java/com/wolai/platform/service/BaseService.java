@@ -10,6 +10,8 @@ public interface BaseService {
 	public HibernateDao getDao();
 
     public boolean checkCodeUnique(Class<?> clazz, String codeName, String codeValue, String id);
+    
+    boolean checkCodeUnique(Class<?> clazz, String[] codeNames, String id , Object... codeValues);
 
     public Object getById(Class clazz, Serializable id);
 
