@@ -61,7 +61,7 @@ public class ParkingController extends BaseController{
 		if (po != null) {
 			BeanUtilEx.copyProperties(vo, po);
 			
-			ParkingLot parkingLotPo = (ParkingLot) parkingLotService.get(ParkingLot.class, po.getParkingLotId());
+			ParkingLot parkingLotPo = po.getParkingLot();
 			ParkingLotVo parkingLotVo = new ParkingLotVo();
 			BeanUtilEx.copyProperties(parkingLotVo, parkingLotPo);
 			vo.setParkingLotVo(parkingLotVo);
@@ -95,6 +95,12 @@ public class ParkingController extends BaseController{
 			ParkingRecord po = (ParkingRecord) obj;
 			ParkingVo vo = new ParkingVo();
 			BeanUtilEx.copyProperties(vo, po);
+			
+			ParkingLot parkingLotPo = po.getParkingLot();
+			ParkingLotVo parkingLotVo = new ParkingLotVo();
+			BeanUtilEx.copyProperties(parkingLotVo, parkingLotPo);
+			vo.setParkingLotVo(parkingLotVo);
+			
 			parkVoList.add(vo);
 		}
 		

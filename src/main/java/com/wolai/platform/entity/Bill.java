@@ -31,18 +31,21 @@ public class Bill extends IdEntity {
   		 * alipay(支付宝)
   		 */
   		ALIPAY("ALIPAY"),
+  		
   		/**
   		 * unionpay(银联)
   		 */
   		UNIONPAY("UNIONPAY"),
-  		/**
-  		 *remaint(余额)
-  		 */
-  		/*REMAINT("REMAINT"),*/
+
   		/**
   		 * weixin(微信)
   		 */
   		WEIXIN("WEIXIN");
+  		
+  		/**
+  		 *remaint(余额)
+  		 */
+  		/*REMAINT("REMAINT"),*/
   		
   		private PayType(String textVal){
   			this.textVal=textVal;
@@ -58,7 +61,7 @@ public class Bill extends IdEntity {
 	 * 支付状态
 	 */
 	public static  enum PayStatus{
-		INIT(0),FEATURE(-1),SUCCESSED(1);
+		INIT(0),SEND(10),SUCCESSED(100),FEATURE(-1);
 		
 		private PayStatus(Integer textVal){
   			this.textVal=textVal;
@@ -69,11 +72,6 @@ public class Bill extends IdEntity {
   			return textVal.toString();
   		}
 	}
-	
-	/**
-	 * 车牌号
-	 */
-	private String carNo;
 	
 	@Column(name="license_plate_id")
 	private String licensePlateId;
@@ -92,11 +90,6 @@ public class Bill extends IdEntity {
     @JoinColumn(name = "parking_record_id", insertable = false, updatable = false)
 	private ParkingRecord parkingRecord;
 	
-	/**
-	 * 应付金额
-	 */
-	private BigDecimal Money;
-	
 	
 	/**
 	 * 优惠券信息
@@ -109,15 +102,35 @@ public class Bill extends IdEntity {
 	private Coupon coupon;
 	
 	/**
+	 * 车牌号
+	 */
+	private String carNo;
+	
+	/**
+	 * 应付金额, 扣除代金券
+	 */
+	private BigDecimal Money;
+	
+	/**
+	 * 实际支付成功金额
+	 */
+	private BigDecimal realMoney;
+	
+	/**
 	 * 付款方式：alipay(支付宝),unionpay(银联),weixin(微信),remaint(余额)
 	 */
 	@Enumerated(EnumType.STRING)
 	private PayType paytype;
 	
 	/**
-	 * 交易号
+	 * 支付宝交易号
 	 */
 	private String tradeNo;
+	
+	/**
+	 * 支付宝交易状态
+	 */
+	private String tradeStatus;
 	
 	/**
 	 * 付款账号
@@ -133,13 +146,13 @@ public class Bill extends IdEntity {
 	 * 是否已出票
 	 * @return
 	 */
-	private  Boolean isSendedInvoice;
+	private  Boolean isSendedInvoice = false;
 	
 	/**
 	 * 支付状态
 	 */
 	@Enumerated(EnumType.STRING)
-	private PayStatus payStatus;
+	private PayStatus payStatus = PayStatus.INIT;
 	
 	
 	public String getCarNo() {
@@ -252,6 +265,22 @@ public class Bill extends IdEntity {
 
 	public void setPayStatus(PayStatus payStatus) {
 		this.payStatus = payStatus;
+	}
+
+	public BigDecimal getRealMoney() {
+		return realMoney;
+	}
+
+	public void setRealMoney(BigDecimal realMoney) {
+		this.realMoney = realMoney;
+	}
+
+	public String getTradeStatus() {
+		return tradeStatus;
+	}
+
+	public void setTradeStatus(String tradeStatus) {
+		this.tradeStatus = tradeStatus;
 	}
 	
 }

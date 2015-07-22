@@ -3,6 +3,7 @@ package com.wolai.platform.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -24,6 +25,7 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 		dc.add(Restrictions.gt("driveInTime", dt));
 		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
 		dc.addOrder(Order.desc("driveInTime"));
+		dc.setFetchMode("parkingLot", FetchMode.JOIN);
 
 		List ls = findAllByCriteria(dc);
 		if (ls.size() > 0) {
@@ -39,7 +41,8 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 		dc.add(Restrictions.eq("userId", userId));
 		dc.add(Restrictions.eq("parkStatus", ParkingRecord.ParkStatus.OUT));
 		dc.addOrder(Order.desc("driveInTime"));
-
+		dc.setFetchMode("parkingLot", FetchMode.JOIN);
+		
 		Page ls = findPage(dc, startIndex, pageSize);
 		
 		return ls;
