@@ -23,11 +23,6 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	public Bill createBillIfNeededPers(ParkingRecord parking, String couponId) {
 		String parkingId = parking.getId();
 		
-		// TODO: 调用新利泊计费接口，更新parking费用数据
-		parking.setMoney(new BigDecimal(10));
-		parking.setPaidMoney(new BigDecimal(8));
-		saveOrUpdate(parking);
-		
 		Bill bill = billService.getBillByParking(parkingId);
 		
 		if (bill == null) {
@@ -37,11 +32,21 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 			bill.setLicensePlateId(parking.getParkingLotId());
 		}
 		
-		bill.setMoney(parking.getPaidMoney());
 		if (StringUtils.isNotEmpty(couponId)) {
 			bill.setCouponId(couponId);
 		}
+		
+		// TODO: 调用新利泊计费接口，更新费用数据
+		BigDecimal money = new BigDecimal(10);
+		BigDecimal paidMoney = new BigDecimal(8);
+		
+		parking.setMoney(money);
+		parking.setPaidMoney(paidMoney);
+		saveOrUpdate(parking);
+		
+		bill.setMoney(paidMoney);
 		saveOrUpdate(bill);
+		
 		return bill;
 	}
 
