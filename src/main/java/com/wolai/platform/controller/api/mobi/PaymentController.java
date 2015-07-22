@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
@@ -89,11 +90,11 @@ public class PaymentController extends BaseController {
 	public Map<String,Object> pay(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
-		String out_trade_no = json.get("out_trade_no"); // 订单交易号
+		String out_trade_no = json.get("billId"); // 订单交易号
+		String trade_no = json.get("tradeNo"); // 支付宝交易号
 		String payType = json.get("payType");
-		String tradeNo = json.get("tradeNo"); // 支付宝交易号
 		
-		if (StringUtils.isEmpty(out_trade_no) || StringUtils.isEmpty(payType) || StringUtils.isEmpty(tradeNo)) {
+		if (StringUtils.isEmpty(out_trade_no) || StringUtils.isEmpty(payType) || StringUtils.isEmpty(trade_no)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
@@ -107,43 +108,49 @@ public class PaymentController extends BaseController {
 		}
 		
 		Bill bill = (Bill) obj;
-		paymentService.payPers(bill, payType, tradeNo);
+		paymentService.payPers(bill, payType, trade_no);
 		
+		BillVo billVo = new BillVo();
+		BeanUtilEx.copyProperties(billVo, bill);
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", billVo);
 		return ret;
 	}
 	
+	@AuthPassport(validate=false)
 	@RequestMapping(value="alipayCallback")
 	@ResponseBody
 	public String alipayCallback(HttpServletRequest request){
+		Map<String, String[]> params = request.getParameterMap(); 
 		
-		Object out_trade_no = request.getAttribute("out_trade_no"); // 订单交易号
-		Object trade_no = request.getAttribute("trade_no"); // 支付宝交易号
-		Object trade_status = request.getAttribute("trade_status"); // 支付宝交易状态
+		String[] out_trade_no = params.get("out_trade_no"); // 订单交易号
+		String[] trade_no = params.get("trade_no"); // 支付宝交易号
+		String[] trade_status = params.get("trade_status"); // 支付宝交易状态
 		
-		if (out_trade_no == null || trade_no == null || trade_status == null) {
+		if (out_trade_no.length == 0 || trade_no.length == 0 || trade_status.length == 0) {
 			log.error("支付宝异步接口参数错误");
 			return "error";
 		}
 		
-		if (!"TRADE_FINISHED".equals(out_trade_no) || !"TRADE_FINISHED".equals(out_trade_no)) {
-			log.error("收到支付宝异步接口'" + out_trade_no + "'类型的请求，不处理！");
+		if (!"TRADE_SUCCESS".equals(trade_status[0]) && !"TRADE_FINISHED".equals(trade_status[0])) {
+			log.error("收到支付宝异步接口'" + trade_status[0] + "'类型的请求，不处理！");
 			return "success";
 		}
 		
-		Object obj = billService.get(Bill.class, out_trade_no.toString());
+		Object obj = billService.get(Bill.class, out_trade_no[0]);
 		if (obj == null) {
 			log.error("未找到out_trade_no对应的Bill对象");
 			return "error";
 		}
 		
 		Bill bill = (Bill) obj;
-		if (trade_no.equals(bill.getTradeNo())) {
+		if (trade_no[0].equals(bill.getTradeNo())) {
 			log.error("trade_no参数跟Bill对象的TradeNo不匹配");
 			return "error";
 		}
 		
-		paymentService.successPers(bill, trade_no.toString(), trade_status.toString());
-		log.info("支付宝交易返回：" + trade_no.toString() + "-" + trade_status.toString());
+		paymentService.successPers(bill, trade_no[0], trade_status[0]);
+		log.info("支付宝交易返回：" + trade_no[0] + "-" + trade_status[0]);
 		
 		return "success";
 	}
