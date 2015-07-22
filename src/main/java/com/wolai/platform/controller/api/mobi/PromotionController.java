@@ -46,21 +46,32 @@ public class PromotionController extends BaseController {
 		int pageSize = Integer.valueOf(json.get("pageSize"));
 		
 		Map<String,Object> ret =new HashMap<String, Object>();
+		Map<String,Object> data =new HashMap<String, Object>();
 
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 		
 		List<PromotionVo> vols = new ArrayList<PromotionVo>();
+		List<PromotionVo> recommendedVols = new ArrayList<PromotionVo>();
+		
 		Page page = promotionService.listByUser(userId, startIndex, pageSize);
 		for (Object obj : page.getItems()) {
 			Promotion promotion = (Promotion)obj;
 			PromotionVo vo = new PromotionVo();
 			BeanUtilEx.copyProperties(vo, promotion);
-			vols.add(vo);
+			
+			if (promotion.getRecommended()) {
+				recommendedVols.add(vo);
+			} else {
+				vols.add(vo);
+			}
+			
 		}
 		
+		data.put("promotions", vols);
+		data.put("recommendedPromotions", recommendedVols);
 		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("data", vols);
+		ret.put("data", data);
 		return ret;
 	}
 

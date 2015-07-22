@@ -9,6 +9,7 @@ public class PromotionVo {
 	private String id;
 	private String title;
 	private String picPath;
+	private String picIcon;
 	private String detail;
 	private Date startTime;
 	private Date endTime;
@@ -77,6 +78,12 @@ public class PromotionVo {
 
 	public void setExchangePlanList(List<ExchangePlanVo> exchangePlanList) {
 		this.exchangePlanList = exchangePlanList;
+	}
+	public String getPicIcon() {
+		return picIcon;
+	}
+	public void setPicIcon(String picIcon) {
+		this.picIcon = picIcon;
 	}
 
 }

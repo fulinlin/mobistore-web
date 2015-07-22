@@ -80,6 +80,11 @@ public class Promotion extends IdEntity {
 	private String title;
 	
 	/**
+	 * 图标
+	 */
+	private String picIcon;
+	
+	/**
 	 * 主图片
 	 */
 	private String picPath;
@@ -99,6 +104,11 @@ public class Promotion extends IdEntity {
 	 * 截至时间
 	 */
 	private Date endTime;
+	
+	/**
+	 * 是否推荐
+	 */
+	private Boolean recommended;
 	
 	/**
 	 * 限制时间
@@ -160,5 +170,21 @@ public class Promotion extends IdEntity {
 
 	public void setCode(ExchangeCode code) {
 		this.code = code;
+	}
+
+	public Boolean getRecommended() {
+		return recommended;
+	}
+
+	public void setRecommended(Boolean recommended) {
+		this.recommended = recommended;
+	}
+
+	public String getPicIcon() {
+		return picIcon;
+	}
+
+	public void setPicIcon(String picIcon) {
+		this.picIcon = picIcon;
 	}
 }
