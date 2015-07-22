@@ -44,6 +44,13 @@
 			</div>
 		</div>
 		<div class="control-group">
+            <label class="control-label">余额：</label>
+            <div class="controls">
+                <form:input path="balance" htmlEscape="false" maxlength="255" class="input-xlarge " />分钟
+            </div>
+        </div>
+		
+		<div class="control-group">
 			<label class="control-label">是否管理员：</label>
 			<div class="controls">
 				<form:checkbox path="isSupplier" htmlEscape="false" maxlength="1" />

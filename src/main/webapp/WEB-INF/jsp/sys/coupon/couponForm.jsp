@@ -22,6 +22,42 @@
 				}
 			}
 		});
+		
+		function repoFormatResult (repo) {
+		    var markup = '<div class="clearfix">' ;
+		    markup += '<div>' + repo.carNo + '</div>';
+		    markup += '</div>';
+		    return markup;
+		  }
+
+		  function repoFormatSelection (repo) {
+		    return repo.carNo;
+		  }
+		$(".js-data-ajax").select2({
+		    placeholder: "查询车牌",
+		    minimumInputLength: 1,
+		    multiple: true,
+		    ajax: {
+		    	  url: "${ctx}/sponsorLicense/licenses",
+		        dataType: 'json',
+		        quietMillis: 250,
+		        data: function (term, page) { // page is the one-based page number tracked by Select2
+		            return {
+		                q: term, //search term
+		                page: page // page number
+		            };
+		        },
+		        results: function (data, page) {
+		            var more = (page * 30) < data.total_count; // whether or not there are more results available
+		            // notice we return the value of more so Select2 knows if more results can be loaded
+		            return { results: data.data, more: more };
+		        }
+		    },
+		    formatResult: repoFormatResult, // omitted for brevity, see the source of this page
+		    formatSelection: repoFormatSelection, // omitted for brevity, see the source of this page
+		    dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+		    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+		});
 	});
 </script>
 </head>
@@ -37,9 +73,16 @@
 		<div class="control-group">
 			<label class="control-label">绑定车牌号：</label>
 			<div class="controls">
-				<form:input path="carNo" htmlEscape="false" maxlength="255" class="input-xlarge " />
+				<form:input path="carNos" htmlEscape="false" maxlength="255" class="js-data-ajax input-xlarge " />
 			</div>
 		</div>
+		<div class="control-group">
+			<label class="control-label">分类：</label>
+			<div class="controls">
+				<form:select multiple="true" path="licenseCategories" items="${licenseCategories}" itemLabel="name" itemValue="id" htmlEscape="false" maxlength="255" class="input-xlarge " />
+			</div>
+		</div>
+
 		<div class="control-group">
 			<label class="control-label">优惠金额：</label>
 			<div class="controls">
