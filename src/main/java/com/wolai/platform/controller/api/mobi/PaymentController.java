@@ -74,7 +74,7 @@ public class PaymentController extends BaseController {
 		}
 		
 		ParkingRecord park = (ParkingRecord) obj;
-		Bill bill = paymentService.createBillIfNeeded(park, couponId);
+		Bill bill = paymentService.createBillIfNeededPers(park, couponId);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", bill);
@@ -104,7 +104,7 @@ public class PaymentController extends BaseController {
 		}
 		
 		Bill bill = (Bill) obj;
-		paymentService.pay(bill, payType, tradeNo);
+		paymentService.payPers(bill, payType, tradeNo);
 		
 		return ret;
 	}
@@ -139,7 +139,7 @@ public class PaymentController extends BaseController {
 			return "error";
 		}
 		
-		paymentService.success(bill, trade_no.toString(), trade_status.toString());
+		paymentService.successPers(bill, trade_no.toString(), trade_status.toString());
 		log.info("支付宝交易返回：" + trade_no.toString() + "-" + trade_status.toString());
 		
 		return "success";

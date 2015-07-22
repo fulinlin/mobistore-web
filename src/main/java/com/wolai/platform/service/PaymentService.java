@@ -6,10 +6,10 @@ import com.wolai.platform.entity.ParkingRecord;
 
 public interface PaymentService extends CommonService {
 
-	Bill createBillIfNeeded(ParkingRecord parking, String couponId);
+	Bill createBillIfNeededPers(ParkingRecord parking, String couponId);
 
-	void pay(Bill bill, String payType, String tradeNo);
+	void payPers(Bill bill, String payType, String tradeNo);
 
-	void success(Bill bill, String trade_no, String trade_status);
+	void successPers(Bill bill, String trade_no, String trade_status);
 	
 }

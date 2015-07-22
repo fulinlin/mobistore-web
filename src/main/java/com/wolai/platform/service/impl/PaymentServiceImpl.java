@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.entity.Bill;
+import com.wolai.platform.entity.Bill.PayStatus;
 import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.service.BillService;
@@ -19,7 +20,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	BillService billService;
 	
 	@Override
-	public Bill createBillIfNeeded(ParkingRecord parking, String couponId) {
+	public Bill createBillIfNeededPers(ParkingRecord parking, String couponId) {
 		String parkingId = parking.getId();
 		
 		// TODO: 调用新利泊计费接口，更新parking费用数据
@@ -40,21 +41,23 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		if (StringUtils.isNotEmpty(couponId)) {
 			bill.setCouponId(couponId);
 		}
-		
+		saveOrUpdate(bill);
 		return bill;
 	}
 
 	@Override
-	public void pay(Bill bill, String payType, String trade_no) {
+	public void payPers(Bill bill, String payType, String trade_no) {
 		bill.setTradeNo(trade_no);;
 		bill.setPaytype(PayType.valueOf(PayType.class, payType));
 		bill.setPayStatus(Bill.PayStatus.SEND);
+		saveOrUpdate(bill);
 	}
 
 	@Override
-	public void success(Bill bill, String trade_no, String trade_status) {
+	public void successPers(Bill bill, String trade_no, String trade_status) {
 		
 		bill.setTradeStatus(trade_status);
-		
+		bill.setPayStatus(PayStatus.SUCCESSED);
+		saveOrUpdate(bill);
 	}
 }
