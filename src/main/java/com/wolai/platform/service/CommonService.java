@@ -98,4 +98,6 @@ public interface CommonService extends BaseService {
      * @return
      */
     IdEntity  saveOrUpdate(IdEntity entity);
+    
+    void saveOrUpdateAll(List<?> list);
 }

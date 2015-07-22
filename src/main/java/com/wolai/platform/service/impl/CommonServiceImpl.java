@@ -92,5 +92,8 @@ public class CommonServiceImpl extends BaseServiceImpl implements CommonService 
         return  entity;
     }
     
-    
+    @Override
+    public void saveOrUpdateAll(List<?> list) {
+        getDao().saveOrUpdateAll(list);
+    }
 }
