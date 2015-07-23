@@ -53,8 +53,8 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	}
 
 	@Override
-	public void payPers(Bill bill, String payType, String trade_no) {
-		bill.setTradeNo(trade_no);;
+	public void payPers(Bill bill, String payType, String alipayTradeNo) {
+		bill.setTradeNo(alipayTradeNo);;
 		bill.setPaytype(PayType.valueOf(PayType.class, payType));
 		bill.setPayStatus(Bill.PayStatus.SEND);
 		bill.setTradeSendTime(new Date());

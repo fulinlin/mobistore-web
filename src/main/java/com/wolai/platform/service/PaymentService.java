@@ -8,8 +8,8 @@ public interface PaymentService extends CommonService {
 
 	Bill createBillIfNeededPers(ParkingRecord parking, String couponId);
 
-	void payPers(Bill bill, String payType, String tradeNo);
+	void payPers(Bill bill, String payType, String alipayTradeNo);
 
-	void successPers(Bill bill, String trade_no, String trade_status);
+	void successPers(Bill bill, String alipayTradeNo, String alipayTradeStatus);
 	
 }

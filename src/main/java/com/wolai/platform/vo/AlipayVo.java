@@ -22,16 +22,11 @@ public class AlipayVo {
 	private String productionDesrcription;
 	private String notifyUrl;
 	
-	private String tradeNo;
+	private String wolaiTradeNo;
 	private BigDecimal amount;	
 	private PayType paytype;
 	
-	public String getTradeNo() {
-		return tradeNo;
-	}
-	public void setTradeNo(String tradeNo) {
-		this.tradeNo = tradeNo;
-	}
+
 	public String getPartnerId() {
 		return partnerId;
 	}
@@ -80,5 +75,11 @@ public class AlipayVo {
 	public void setPaytype(PayType paytype) {
 		this.paytype = paytype;
 	}
-	
+	public String getWolaiTradeNo() {
+		return wolaiTradeNo;
+	}
+	public void setWolaiTradeNo(String wolaiTradeNo) {
+		this.wolaiTradeNo = wolaiTradeNo;
+	}
+
 }

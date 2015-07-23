@@ -79,7 +79,7 @@ public class PaymentController extends BaseController {
 		ParkingRecord park = (ParkingRecord) obj;
 		Bill bill = paymentService.createBillIfNeededPers(park, couponId);
 		AlipayVo alipayVo = new AlipayVo();
-		alipayVo.setTradeNo(bill.getId());
+		alipayVo.setWolaiTradeNo(bill.getId());
 		alipayVo.setAmount(bill.getMoney());
 		
 		ret.put("code", RespCode.SUCCESS.Code());
@@ -92,25 +92,25 @@ public class PaymentController extends BaseController {
 	public Map<String,Object> pay(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
-		String out_trade_no = json.get("billId"); // 订单交易号
-		String trade_no = json.get("tradeNo"); // 支付宝交易号
+		String wolaiTradeNo = json.get("wolaiTradeNo"); // 订单交易号
+		String alipayTradeNo = json.get("alipayTradeNo"); // 支付宝交易号
 		String payType = json.get("payType");
 		
-		if (StringUtils.isEmpty(out_trade_no) || StringUtils.isEmpty(payType) || StringUtils.isEmpty(trade_no)) {
+		if (StringUtils.isEmpty(wolaiTradeNo) || StringUtils.isEmpty(alipayTradeNo) || StringUtils.isEmpty(payType)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
 		
-		Object obj = billService.get(Bill.class, out_trade_no);
+		Object obj = billService.get(Bill.class, wolaiTradeNo);
 		if (obj == null) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
-			ret.put("msg", "not found");
+			ret.put("msg", "bill not found by using wolaiTradeNo " + wolaiTradeNo);
 			return ret;
 		}
 		
 		Bill bill = (Bill) obj;
-		paymentService.payPers(bill, payType, trade_no);
+		paymentService.payPers(bill, payType, alipayTradeNo);
 		
 		BillVo billVo = new BillVo();
 		BeanUtilEx.copyProperties(billVo, bill);
@@ -125,34 +125,34 @@ public class PaymentController extends BaseController {
 	public String alipayCallback(HttpServletRequest request){
 		Map<String, String[]> params = request.getParameterMap(); 
 		
-		String[] out_trade_no = params.get("out_trade_no"); // 订单交易号
-		String[] trade_no = params.get("trade_no"); // 支付宝交易号
-		String[] trade_status = params.get("trade_status"); // 支付宝交易状态
+		String[] wolaiTradeNo = params.get("out_trade_no"); // 订单交易号
+		String[] alipayTradeNo = params.get("trade_no"); // 支付宝交易号
+		String[] alipayTradeStatus = params.get("trade_status"); // 支付宝交易状态
 		
-		if (out_trade_no.length == 0 || trade_no.length == 0 || trade_status.length == 0) {
+		if (wolaiTradeNo.length == 0 || alipayTradeNo.length == 0 || alipayTradeStatus.length == 0) {
 			log.error("支付宝异步接口参数错误");
 			return "error";
 		}
 		
-		if (!"TRADE_SUCCESS".equals(trade_status[0]) && !"TRADE_FINISHED".equals(trade_status[0])) {
-			log.error("收到支付宝异步接口'" + trade_status[0] + "'类型的请求，不处理！");
+		if (!"TRADE_SUCCESS".equals(alipayTradeStatus[0]) && !"TRADE_FINISHED".equals(alipayTradeStatus[0])) {
+			log.error("收到支付宝异步接口'" + alipayTradeStatus[0] + "'类型的请求，不处理！");
 			return "success";
 		}
 		
-		Object obj = billService.get(Bill.class, out_trade_no[0]);
+		Object obj = billService.get(Bill.class, wolaiTradeNo[0]);
 		if (obj == null) {
 			log.error("未找到out_trade_no对应的Bill对象");
 			return "error";
 		}
 		
 		Bill bill = (Bill) obj;
-		if (trade_no[0].equals(bill.getTradeNo())) {
+		if (alipayTradeNo[0].equals(bill.getTradeNo())) {
 			log.error("trade_no参数跟Bill对象的TradeNo不匹配");
 			return "error";
 		}
 		
-		paymentService.successPers(bill, trade_no[0], trade_status[0]);
-		log.info("支付宝交易返回：" + trade_no[0] + "-" + trade_status[0]);
+		paymentService.successPers(bill, alipayTradeNo[0], alipayTradeStatus[0]);
+		log.info("支付宝交易返回：" + alipayTradeNo[0] + "-" + alipayTradeStatus[0]);
 		
 		return "success";
 	}
