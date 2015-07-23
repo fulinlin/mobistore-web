@@ -32,8 +32,6 @@
 			<label>是否使用：</label>
 			<form:checkbox path="isUsed" htmlEscape="false" maxlength="1" class="input-medium" />
 			<br> <br> 
-			<label>优惠券类型：</label>
-			<form:input path="type" htmlEscape="false" maxlength="255" class="input-medium" />
 			<label>开始时间：</label> <input name="startDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 				value="<fmt:formatDate value="${coupon.startDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});" /> <label>结束时间：</label> <input
 				name="endDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate" value="<fmt:formatDate value="${coupon.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
@@ -45,28 +43,24 @@
 		<thead>
 			<tr>
 				<th>绑定车牌号</th>
-				<th>结束时间</th>
 				<th>是否使用</th>
-				<th>优惠金额</th>
 				<th>来源</th>
 				<th>开始时间</th>
+				<th>结束时间</th>
 				<th>抵用时长</th>
 				<th>优惠券类型</th>
-				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${page.items}" var="coupon">
 				<tr>
-					<td><a href="${ctx}/coupon/form?id=${coupon.id}"> ${coupon.carNo} </a></td>
-					<td><fmt:formatDate value="${coupon.endDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-					<td>${coupon.isUsed}</td>
-					<td>${coupon.money}</td>
+					<td>${coupon.carNo}</td>
+					<td>${coupon.isUsed =='true'?'是':'否'}</td>
 					<td>${coupon.origin}</td>
 					<td><fmt:formatDate value="${coupon.startDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+					<td><fmt:formatDate value="${coupon.endDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 					<td>${coupon.time}</td>
-					<td>${coupon.type}</td>
-					<td><a href="${ctx}/coupon/form?id=${coupon.id}">修改</a> <a href="${ctx}/coupon/delete?id=${coupon.id}" onclick="return confirmx('确认要删除该优惠券吗？', this.href)">删除</a></td>
+					<td>${coupon.type == 'TIME'?'抵时券':'抵用券'  }</td>
 				</tr>
 			</c:forEach>
 		</tbody>

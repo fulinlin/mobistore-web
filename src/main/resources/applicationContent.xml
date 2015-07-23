@@ -136,6 +136,7 @@
 			<tx:method name="clean*" propagation="REQUIRED" />
 			<tx:method name="change*" propagation="REQUIRED" />
 			<tx:method name="*Pers" propagation="REQUIRED" />
+			<tx:method name="deduct*" propagation="REQUIRED" />
 
 			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
 			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
@@ -146,7 +147,6 @@
 
 	<aop:config proxy-target-class="true">
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.wolai.platform.service..*.*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.wolai.platform.sys.service..*.*(..))" />
 	</aop:config>
 
 	<bean class="com.wolai.platform.util.SpringContextHolder" lazy-init="false" />

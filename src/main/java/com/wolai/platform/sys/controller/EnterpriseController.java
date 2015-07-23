@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.wolai.platform.config.SystemConfig;
 import com.wolai.platform.controller.BaseController;
 import com.wolai.platform.entity.Enterprise;
-import com.wolai.platform.sys.service.EnterpriseService;
+import com.wolai.platform.service.EnterpriseService;
 
 /**
  * 字典Controller

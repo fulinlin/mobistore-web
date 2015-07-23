@@ -119,6 +119,16 @@ public class Coupon extends IdEntity {
     @JoinColumn(name = "license_id", insertable = false, updatable = false)
     private License license;
 
+    /** 
+     * 企业id
+     */
+    @Column(name="login_account_id")
+    private String loginAccountId;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "login_account_id", insertable = false, updatable = false)
+    private SysLoginAccount loginAccount;
+    
     public String getOwnerId() {
         return ownerId;
     }
@@ -246,5 +256,21 @@ public class Coupon extends IdEntity {
     @Transient
     public void setLicenseCategories(String[] licenseCategories) {
         this.licenseCategories = licenseCategories;
+    }
+
+    public String getLoginAccountId() {
+        return loginAccountId;
+    }
+
+    public void setLoginAccountId(String loginAccountId) {
+        this.loginAccountId = loginAccountId;
+    }
+
+    public SysLoginAccount getLoginAccount() {
+        return loginAccount;
+    }
+
+    public void setLoginAccount(SysLoginAccount loginAccount) {
+        this.loginAccount = loginAccount;
     }
 }

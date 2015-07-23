@@ -13,10 +13,15 @@ import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.Coupon.CouponType;
+import com.wolai.platform.entity.DeductHistory;
+import com.wolai.platform.entity.Enterprise;
 import com.wolai.platform.service.CouponService;
 
 @Service
 public class CouponServiceImpl extends CommonServiceImpl implements CouponService {
+    
+    
+    
 
 	@Override
 	public Page listByUser(String userId, int startIndex, int pageSize) {
@@ -93,5 +98,26 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		dc.add(Restrictions.eq("type", CouponType.TIME));
 		dc.add(Restrictions.eq("isUsed", false));
 		return getDao().count(dc);
+	}
+	
+	@Override
+	public String deductTime(Enterprise enterprise, List<Coupon> list ,long time){
+	    int count = list.size();
+	    long total = count  * time;
+	    if(enterprise.getBalance() < total ){
+	        return "余额不足";
+	    }
+	    enterprise.setBalance(enterprise.getBalance() - total);
+	    
+	    //保存扣费历史
+	    DeductHistory history = new DeductHistory();
+	    history.setDeductDate(new Date());
+	    history.setEnterpriseId(enterprise.getId());
+	    history.setTotal(total);
+	    
+	    saveOrUpdate(history);
+	    saveOrUpdate(enterprise);
+	    saveOrUpdateAll(list);
+	    return "添加优惠券成功!扣除 " + total + " 分钟" ;
 	}
 }
