@@ -73,6 +73,8 @@ public class CouponController extends BaseController {
         DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
         dc.add(Restrictions.eq("isUsed", coupon.getIsUsed()));
+        LoginInfo loginInfo = getLoginInfoSession(request);
+        dc.add(Restrictions.eq("loginAccountId", loginInfo.getLoginAccount().getId()));
         if( StringUtils.isNotBlank(coupon.getCarNo())){
             dc.add(Restrictions.like("carNo", coupon.getCarNo() , MatchMode.ANYWHERE).ignoreCase());
         }
@@ -115,6 +117,7 @@ public class CouponController extends BaseController {
             List<SponsorLicense> licenses = sponsorLicenseService.getSponsorLicensesByCategory(coupon.getLicenseCategories());
             set.addAll(licenses);
         }
+        LoginInfo loginInfo = getLoginInfoSession(request);
         for (SponsorLicense sponsorLicense : set) {
             Coupon po = new Coupon();
             po.setCarNo(sponsorLicense.getCarNo());
@@ -124,9 +127,9 @@ public class CouponController extends BaseController {
             po.setNote(coupon.getNote());
             po.setStartDate(coupon.getStartDate());
             po.setEndDate(coupon.getEndDate());
+            po.setLoginAccountId(loginInfo.getLoginAccount().getId());
             saveList.add(po);
         }
-        LoginInfo loginInfo = getLoginInfoSession(request);
         Enterprise enterprise = enterpriseService.getEnterprise(loginInfo.getUser().getId());
         long time = coupon.getTime();
         String message =  couponService.deductTime(enterprise, saveList, time);
