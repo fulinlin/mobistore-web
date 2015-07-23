@@ -106,6 +106,7 @@ public class ParkingController extends BaseController{
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", parkVoList);
+		ret.put("totalPages", page.getTotalPages());
 		return ret;
 	}
 	

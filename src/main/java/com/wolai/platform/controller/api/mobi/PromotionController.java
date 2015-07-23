@@ -54,22 +54,28 @@ public class PromotionController extends BaseController {
 		List<PromotionVo> vols = new ArrayList<PromotionVo>();
 		List<PromotionVo> recommendedVols = new ArrayList<PromotionVo>();
 		
-		Page page = promotionService.listByUser(userId, startIndex, pageSize);
+		Page page = promotionService.list(startIndex, pageSize);
+		for (Object obj : page.getItems()) {
+			Promotion promotion = (Promotion)obj;
+			PromotionVo vo = new PromotionVo();
+			BeanUtilEx.copyProperties(vo, promotion);
+			vols.add(vo);
+		}
+		
+		List ls = promotionService.listRecommended();
 		for (Object obj : page.getItems()) {
 			Promotion promotion = (Promotion)obj;
 			PromotionVo vo = new PromotionVo();
 			BeanUtilEx.copyProperties(vo, promotion);
 			
-			if (promotion.getRecommended()) {
-				recommendedVols.add(vo);
-			} else {
-				vols.add(vo);
-			}
-			
+			recommendedVols.add(vo);
 		}
 		
 		data.put("promotions", vols);
+		data.put("promotionsTotalPages", page.getTotalPages());
 		data.put("recommendedPromotions", recommendedVols);
+		data.put("recommendedPromotionsTotalPages", 1);
+		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", data);
 		return ret;

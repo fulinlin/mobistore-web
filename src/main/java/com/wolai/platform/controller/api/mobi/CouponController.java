@@ -50,24 +50,31 @@ public class CouponController extends BaseController {
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 
-		Page couponPage = couponService.listByUser(userId, startIndex, pageSize);
+		Page couponMoneyPage = couponService.listMoneyByUser(userId, startIndex, pageSize);
+		Page couponTimePage = couponService.listTimeByUser(userId, startIndex, pageSize);
+		
 		List<CouponVo> couponMoneyVoList = new ArrayList<CouponVo>();
 		List<CouponVo> couponTimeVoList = new ArrayList<CouponVo>();
 		
-		for (Object obj : couponPage.getItems()) {
+		for (Object obj : couponMoneyPage.getItems()) {
 			Coupon po = (Coupon) obj;
 			CouponVo vo = new CouponVo();
 			BeanUtilEx.copyProperties(vo, po);
-			if (CouponType.MONEY.equals(po.getType())) {
-				couponMoneyVoList.add(vo);
-			} else if(CouponType.TIME.equals(po.getType())) {
-				couponTimeVoList.add(vo);
-			}
+			couponMoneyVoList.add(vo);
+		}
+		for (Object obj : couponTimePage.getItems()) {
+			Coupon po = (Coupon) obj;
+			CouponVo vo = new CouponVo();
+			BeanUtilEx.copyProperties(vo, po);
+			couponTimeVoList.add(vo);
 		}
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("money", couponMoneyVoList);
 		data.put("time", couponTimeVoList);
+		data.put("moneyTotalPages", couponMoneyPage.getTotalPages());
+		data.put("timeTotalPages", couponTimePage.getTotalPages());
+		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", data);
 		return ret;
@@ -99,6 +106,7 @@ public class CouponController extends BaseController {
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", couponVoList);
+		ret.put("totalPages", couponPage.getTotalPages());
 		return ret;
 	}
 	
@@ -129,6 +137,7 @@ public class CouponController extends BaseController {
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", couponVoList);
+		ret.put("totalPages", couponPage.getTotalPages());
 		return ret;
 	}
 
@@ -158,18 +167,18 @@ public class CouponController extends BaseController {
 		return vo;
 	}
 
-	@AuthPassport(validate=true)
-	@RequestMapping(value="use")
-	@ResponseBody
-	public Object use(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
-		Map<String, Object> ret = new HashMap<String, Object>();
-		
-		SysUser user = userService.getUserByToken(token);
-		String userId = user.getId();
-		String couponId = json.get("id");
-		
-		ret = couponService.usePers(couponId, userId);
-
-		return ret;
-	}
+//	@AuthPassport(validate=true)
+//	@RequestMapping(value="use")
+//	@ResponseBody
+//	public Object use(HttpServletRequest request, @RequestBody Map<String, String> json, @RequestParam String token){
+//		Map<String, Object> ret = new HashMap<String, Object>();
+//		
+//		SysUser user = userService.getUserByToken(token);
+//		String userId = user.getId();
+//		String couponId = json.get("id");
+//		
+//		ret = couponService.usePers(couponId, userId);
+//
+//		return ret;
+//	}
 }

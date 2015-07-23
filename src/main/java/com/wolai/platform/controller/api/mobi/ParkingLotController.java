@@ -56,6 +56,7 @@ public class ParkingLotController extends BaseController {
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", vols);
+		ret.put("totalPages", page.getTotalPages());
 		return ret;
 	}
 	
