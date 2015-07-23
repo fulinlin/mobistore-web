@@ -32,8 +32,6 @@
 			<label>是否使用：</label>
 			<form:checkbox path="isUsed" htmlEscape="false" maxlength="1" class="input-medium" />
 			<br> <br> 
-			<label>优惠券类型：</label>
-			<form:input path="type" htmlEscape="false" maxlength="255" class="input-medium" />
 			<label>开始时间：</label> <input name="startDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 				value="<fmt:formatDate value="${coupon.startDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});" /> <label>结束时间：</label> <input
 				name="endDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate" value="<fmt:formatDate value="${coupon.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"

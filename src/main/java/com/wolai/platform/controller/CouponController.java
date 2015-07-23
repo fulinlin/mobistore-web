@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,6 +72,19 @@ public class CouponController extends BaseController {
     public String list(Coupon coupon, HttpServletRequest request, HttpServletResponse response, Model model) {
         DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+        dc.add(Restrictions.eq("isUsed", coupon.getIsUsed()));
+        if( StringUtils.isNotBlank(coupon.getCarNo())){
+            dc.add(Restrictions.like("carNo", coupon.getCarNo() , MatchMode.ANYWHERE).ignoreCase());
+        }
+        if( StringUtils.isNotBlank(coupon.getOrigin())){
+            dc.add(Restrictions.like("origin", coupon.getOrigin() , MatchMode.ANYWHERE).ignoreCase());
+        }
+        if( coupon.getStartDate() != null){
+            dc.add(Restrictions.gt("startDate", coupon.getStartDate()));
+        }
+        if( coupon.getEndDate() != null){
+            dc.add(Restrictions.lt("startDate", coupon.getEndDate()));
+        }
         page = couponService.findPage(dc, start, limit);
         model.addAttribute("page", page);
         model.addAttribute("coupon", coupon);
