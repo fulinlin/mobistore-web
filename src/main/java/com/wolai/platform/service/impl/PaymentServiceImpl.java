@@ -39,8 +39,8 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		}
 		
 		// TODO: 调用新利泊计费接口，更新费用数据
-		BigDecimal money = new BigDecimal(10);
-		BigDecimal paidMoney = new BigDecimal(8);
+		BigDecimal money = new BigDecimal(0.02);
+		BigDecimal paidMoney = new BigDecimal(0.01);
 		
 		parking.setMoney(money);
 		parking.setPaidMoney(paidMoney);
