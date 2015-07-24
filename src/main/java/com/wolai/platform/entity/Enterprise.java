@@ -6,6 +6,10 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 企业信息
@@ -28,11 +32,13 @@ public class Enterprise extends IdEntity {
     /**
      * 企业名称
      */
+    @NotBlank(message="还未填写企业名称")
     private String name;
     
     /**
      * 企业地址
      */
+    @Length(min=0, max=255)
     private String  address;
     
     /**
@@ -53,6 +59,7 @@ public class Enterprise extends IdEntity {
     /** 
      * 客户id
      */
+    @NotNull(message="客户所属id不能为空！")
     @Column(name="user_id")
     private String userId;
     

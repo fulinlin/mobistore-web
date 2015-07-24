@@ -35,7 +35,8 @@
 	           </ul>
 	           <ul class="nav pull-right">
 			  	 <li class="dropdown">
-				    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="个人信息">您好, ${sessionScope.session_loginfo.loginAccount.email}</a>
+				    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="个人信息">您好, ${sessionScope.session_loginfo.loginAccount.email} <b class="caret"></b></a>
+				     
 				    <ul class="dropdown-menu">
 				      <li><a href="${ctx}/user/info" target="mainFrame"><i class="icon-user"></i>&nbsp; 个人信息</a></li>
 				      <li><a href="${ctx}/user/modifyPwd" target="mainFrame"><i class="icon-lock"></i>&nbsp;  修改密码</a></li>

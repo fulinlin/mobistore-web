@@ -1,25 +1,34 @@
 package com.wolai.platform.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.bean.LoginInfo;
+import com.wolai.platform.bean.Page;
 import com.wolai.platform.config.SystemConfig;
 import com.wolai.platform.constant.Constant;
+import com.wolai.platform.entity.Enterprise;
 import com.wolai.platform.entity.SysLoginAccount;
+import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.LoginAccountService;
 import com.wolai.platform.service.RoleService;
 import com.wolai.platform.service.UserService;
@@ -41,6 +50,28 @@ public class LoginAccountController extends BaseController{
 	
 	@Autowired
 	private TestService testservice;
+	
+	
+	@ModelAttribute
+	public SysLoginAccount get(@RequestParam(required=false) String id,String userId) {
+		if (StringUtils.isNotBlank(id)){
+			return (SysLoginAccount) loginAccountService.get(SysUser.class,id);
+		}else  if(StringUtils.isNotBlank(userId)){
+			SysLoginAccount condition = new SysLoginAccount();
+			condition.setUserId(userId);
+			Enterprise en = userService.getEnterpriceInfo(userId);
+			if(en!=null){
+				condition.setEnterpriseId(en.getId());
+				Page<SysLoginAccount> pages = loginAccountService.findAllByPage(condition, 0, Integer.MAX_VALUE);
+				if(pages.getTotal()>0){
+					return pages.getItems().get(0);
+				}else{
+					return condition;
+				}
+			}
+		}
+		return null;
+	}
 	
 	@AuthPassport(validate=false)
 	@RequestMapping(value="${adminPath}/login",method = RequestMethod.POST)
@@ -108,26 +139,78 @@ public class LoginAccountController extends BaseController{
 		return "redirect:"+SystemConfig.getAdminPath()+"/prepareLogin";
 	}
 	
-	@RequestMapping("${adminPath/user/info}")
-	public String info(HttpServletRequest request,Model model){
-		LoginInfo info  = getLoginInfoSession(request);
+	
+	@RequestMapping("${adminPath}/sys/loginaccount/form")
+	public String edit(SysLoginAccount loginAccount, Model model,RedirectAttributes redirectAttributes){
+		if(loginAccount==null){
+			addMessage(redirectAttributes, "用户不存在！");
+			return "redirect:" + SystemConfig.getAdminPath() + "/user/?repage";
+		}
 		
-		//Enterprise enterprise =
+		if(loginAccount!=null && StringUtils.isNotEmpty(loginAccount.getId())){
+			loginAccount = (SysLoginAccount) loginAccountService.get(SysLoginAccount.class, loginAccount.getId());
+		}
+		model.addAttribute("loginAccount", loginAccount);
+		return "sys/loginaccount/loginaccountForm";
+	}
+	
+	@RequestMapping({"${adminPath}/sys/loginaccount/list", "${adminPath}/sys/loginaccount"})
+	public String list(HttpServletRequest request,SysLoginAccount loginAccount,Model model){
+		page = loginAccountService.findAllByPage(loginAccount, start, limit);
+		model.addAttribute("page", page);
+		return "sys/loginaccount/loginaccountList";
+	}
+	
+	@RequestMapping("${adminPath}/sys/loginaccount/save")
+	public String save(SysLoginAccount loginAccount, String oldLoginName, String newPassword, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
+		// 如果新密码为空，则不更换密码
+		if (StringUtils.isNotBlank(newPassword)) {
+			loginAccount.setPassword(DigestUtils.md5Hex(DigestUtils.md5Hex(newPassword)));
+		}
+		// 参数校验
+		if (!beanValidator(model, loginAccount)) {
+			return edit(loginAccount, model,redirectAttributes);
+		}
 		
-		model.addAttribute("user", info.getLoginAccount());
-		return "loginAccount/info";
+		// email唯一校验
+		if (!"true".equals(checkEmail(loginAccount.getId(),loginAccount.getEmail()))) {
+			addMessage(model, "保存登陆账户'" +loginAccount.getEmail() + "'失败，邮箱已存在");
+			return edit(loginAccount, model,redirectAttributes);
+		}
+		userService.saveOrUpdate(loginAccount);
+		addMessage(redirectAttributes, "保存用户'" + loginAccount.getEmail()+ "'登陆账号成功");
+		return "redirect:" + SystemConfig.getAdminPath() + "/user/?repage";
 	}
 	
 	
+	
+	@ResponseBody
+	@RequestMapping("${adminPath}/sys/loginaccount/checkEmail")
+	public String checkEmail(String lId,String email){
+		if(StringUtils.isBlank(email)){
+			return "false";
+		}
+		DetachedCriteria dc = DetachedCriteria.forClass(SysLoginAccount.class);
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		dc.add(Restrictions.eq("email", email));
+		if(StringUtils.isNotBlank(lId)){
+			dc.add(Restrictions.ne("id", lId));
+		}
+		List<SysUser> users =loginAccountService.findAllByCriteria(dc);
+		if(users==null || users.size()==0){
+			return "true";
+		}
+		return "false";
+	}
+	
 	/**
-	 * 是否是验证码登录
+	 * 是否是验证码登录(暂时不用)
 	 * @param useruame 用户名
 	 * @param isFail 计数加1
 	 * @param clean 计数清零
 	 * @return
 	 */	
-	@SuppressWarnings("unchecked")
-	public static boolean isValidateCodeLogin(String useruame,boolean isFail, boolean clean){
+	private static boolean isValidateCodeLogin(String useruame,boolean isFail, boolean clean){
 		Map<String, Integer> loginFailMap = (Map<String, Integer>)CacheUtils.get("loginFailMap");
 		if (loginFailMap==null){
 			loginFailMap =new HashMap<String, Integer>();
@@ -147,5 +230,8 @@ public class LoginAccountController extends BaseController{
 		}
 		return loginFailNum >= 3;
 	}
+	
+	
+	
 	
 }

@@ -36,6 +36,11 @@ public class ParkingLot extends IdEntity {
 	private String summary;
 	
 	/**
+	 * 收费信息
+	 */
+	private String chargeInfo;
+	
+	/**
 	 * 经度
 	 */
 	private String longitude;
@@ -114,5 +119,13 @@ public class ParkingLot extends IdEntity {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public String getChargeInfo() {
+		return chargeInfo;
+	}
+
+	public void setChargeInfo(String chargeInfo) {
+		this.chargeInfo = chargeInfo;
 	}
 }

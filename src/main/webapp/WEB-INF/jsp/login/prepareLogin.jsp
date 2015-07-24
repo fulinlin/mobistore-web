@@ -63,24 +63,28 @@
 			<c:if test="${error!=null}"><label id="loginError" class="error"><%=error==null?"":error%></label></c:if>
 		</div>
         <div id="login-wraper">
-            <form id="loginForm"  class="form login-form" action="${ctx}/login" method="post">
-                <fieldset><legend><span style="color:#08c;">系统登陆</span></legend></fieldset>
+            <form id="loginForm"  class="form-horizontal login-form" action="${ctx}/login" method="post">
+                <fieldset><legend><span style="color:#08c;">喔来智能停车系统</span></legend></fieldset>
                 <div class="body">
 					<div class="control-group">
+					 	<label class="control-label" for="username">邮&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
 						<div class="controls">
-							<input type="text" id="username" name="userName" class="required email" value="${userName}" placeholder="登录名">
+							<input type="text" id="username" name="userName" class="required email" value="${userName}">
 						</div>
 					</div>
 					<div class="control-group">
+						<label class="control-label" for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
 						<div class="controls">
-							<input type="password" id="password"  class="required " rangelength="8,16" placeholder="密码"/>
+							<input type="password" id="password"  class="required " rangelength="8,16"/>
 							<input type="hidden" name="password" id="hiddenPassword"/> 
 						</div>
 					</div>
 					<c:if test="${isValidateCodeLogin}">
-						<div class="validateCode">
-							<label for="validateCode">验证码：</label>
-							<tags:validateCode name="validateCode" inputCssStyle="margin-bottom:0;"/>
+						<div class="control-group validateCode">
+							<label class="control-label" for="validateCode">验证码：</label>
+							<div class="controls">
+								<tags:validateCode name="validateCode" inputCssStyle="margin-bottom:0;"/>
+							</div>
 						</div>
 					</c:if>
                 </div>

@@ -1,19 +1,26 @@
 package com.wolai.platform.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolai.platform.config.SystemConfig;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.service.UserService;
 
 @Controller("webUserController")
@@ -46,6 +53,9 @@ public class UserController extends BaseController {
 			user = (SysUser) userService.get(SysUser.class, user.getId());
 		}
 		model.addAttribute("user", user);
+		List<UserType> usertypes = Arrays.asList(UserType.values());
+		model.addAttribute("usertype",usertypes );
+		
 		return "user/userForm";
 	}
 	
@@ -78,5 +88,51 @@ public class UserController extends BaseController {
 			return "user/viewUser";
 		}
 		return "";
+	}
+	
+	@RequestMapping("disable")
+	public String disable(SysUser user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
+		if(user!=null){
+			user.setIsDisable(true);
+			userService.saveOrUpdate(user);
+			addMessage(redirectAttributes, "用户'" + user.getMobile() + "'已禁用！");
+		}else{
+			addMessage(redirectAttributes, "用户不存在！");
+		}
+		
+		return "redirect:" + SystemConfig.getAdminPath() + "/user/?repage";
+	}
+	
+	@RequestMapping("enable")
+	public String enable(SysUser user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
+		if(user!=null){
+			user.setIsDisable(false);
+			userService.saveOrUpdate(user);
+			addMessage(redirectAttributes, "用户'" + user.getMobile() + "'已启用！");
+		}else{
+			addMessage(redirectAttributes, "用户不存在！");
+		}
+		
+		return "redirect:" + SystemConfig.getAdminPath() + "/user/?repage";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("checkMobile")
+	public String checkMobile(String userId,String mobile){
+		if(StringUtils.isBlank(mobile)){
+			return "false";
+		}
+		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		dc.add(Restrictions.eq("mobile", mobile));
+		if(StringUtils.isNotBlank(userId)){
+			dc.add(Restrictions.ne("id", userId));
+		}
+		List<SysUser> users =userService.findAllByCriteria(dc);
+		if(users==null || users.size()==0){
+			return "true";
+		}
+		return "false";
 	}
 }

@@ -28,27 +28,44 @@ public class SysUser extends IdEntity {
   	/**
   	 *	客户类型枚举(UserType)
   	 */
-  	public static enum UserType{
+	public static enum UserType{
   		/**
   		 * 个人
   		 */
-  		INDIVIDUAL("INDIVIDUAL"),
+  		INDIVIDUAL("INDIVIDUAL","个人"),
   		/**
   		 * 企业
   		 */
-  		ENTERPRISE("ENTERPRISE"),
+  		ENTERPRISE("ENTERPRISE","企业"),
   		
   		/**
   		 * 潜在用户
   		 */
-  		TEMP("TEMP");
+  		TEMP("TEMP","临时用户");
   		
-  		private UserType(String textVal){
+  		private UserType(String textVal,String textLable){
   			this.textVal=textVal;
+  			this.textLable=textLable;
   		}
   		private String textVal;
+  		private String textLable;
   		
-  		public String toString(){
+  		public String getTextVal(){
+  			return this.textVal;
+  		}
+  		
+  		public void setTextVal(String textVal){
+  			this.textVal = textVal;
+  		}
+		public String getTextLable() {
+			return textLable;
+		}
+
+		public void setTextLable(String textLable) {
+			this.textLable = textLable;
+		}
+
+		public String toString(){
   			return textVal;
   		}
   	}

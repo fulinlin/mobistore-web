@@ -6,13 +6,32 @@
 <meta name="decorator" content="default" />
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#inputForm").validate();
+		$("#inputForm").validate({
+			rules: {
+				name: {remote: "${ctx}/sys/enterprise/checkName?eId=${enterprise.id}"}
+			},
+			messages: {
+				name: {remote: "企业名称已存在"}
+			},
+			submitHandler: function(form){
+				loading('正在提交，请稍等...');
+				form.submit();
+			},
+			errorContainer: "#messageBox",
+			errorPlacement: function(error, element) {
+				$("#messageBox").text("输入有误，请先更正。");
+				if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
+					error.appendTo(element.parent().parent());
+				} else {
+					error.insertAfter(element);
+				}
+			}
+		});
 	});
 </script>
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/sys/enterprise/">企业列表</a></li>
 		<li class="active"><a href="${ctx}/sys/enterprise/form?id=${enterprise.id}">企业${not empty enterprise.id?'修改':'添加'}</a></li>
 	</ul>
 	<br />
@@ -22,7 +41,7 @@
 		<div class="control-group">
 			<label class="control-label">名字：</label>
 			<div class="controls">
-				<form:input path="name" htmlEscape="false" maxlength="255" class="input-xlarge " />
+				<form:input path="name" htmlEscape="false" maxlength="255" class="input-xlarge required" />
 			</div>
 		</div>
 		<div class="control-group">
@@ -46,12 +65,12 @@
 		<div class="control-group">
             <label class="control-label">余额：</label>
             <div class="controls">
-                <form:input path="balance" htmlEscape="false" maxlength="255" class="input-xlarge " />分钟
+                <form:input path="balance" htmlEscape="false" maxlength="255" class="input-xlarge digits" /><span class="help-inline">分钟</span>
             </div>
         </div>
 		
 		<div class="control-group">
-			<label class="control-label">是否管理员：</label>
+			<label class="control-label">是否为供应商：</label>
 			<div class="controls">
 				<form:checkbox path="isSupplier" htmlEscape="false" maxlength="1" />
 			</div>

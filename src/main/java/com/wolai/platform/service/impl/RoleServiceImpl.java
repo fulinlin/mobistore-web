@@ -3,6 +3,7 @@ package com.wolai.platform.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
 	public List<SysRole> getTopRoleByUserId(String userId) {
 		  SysLoginAccount user = (SysLoginAccount) getDao().get(SysLoginAccount.class, userId);
 		  DetachedCriteria dc = DetachedCriteria.forClass(SysRLoginAccountRole.class);
+		  dc.setFetchMode("role", FetchMode.JOIN);
 		  dc.add(Restrictions.eq("loginAccountId", user.getId()));
 	      List<SysRLoginAccountRole> userRoles = getDao().findAllByCriteria(dc);
 	        List<SysRole> topUserRoles = new ArrayList<SysRole>();

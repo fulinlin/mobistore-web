@@ -51,16 +51,24 @@
 				<form:input path="address" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
 			</div>
 		</div>
+		
+		<div class="control-group">
+			<label class="control-label">收费信息：</label>
+			<div class="controls">
+				<form:input path="chargeInfo" htmlEscape="false" maxlength="255" class="input-xlarge"/>
+			</div>
+		</div>
+		
 		<div class="control-group">
 			<label class="control-label">经度：</label>
 			<div class="controls">
-				<form:input path="longitude" htmlEscape="false" maxlength="255" class="input-xlarge required digits"/>
+				<form:input path="longitude" htmlEscape="false" maxlength="255" class="input-xlarge required number"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">纬度：</label>
 			<div class="controls">
-				<form:input path="latitude" htmlEscape="false" maxlength="255" class="input-xlarge required digits"/>
+				<form:input path="latitude" htmlEscape="false" maxlength="255" class="input-xlarge required number"/>
 			</div>
 		</div>
 		<div class="control-group">

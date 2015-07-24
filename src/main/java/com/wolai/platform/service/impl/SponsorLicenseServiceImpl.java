@@ -2,6 +2,7 @@ package com.wolai.platform.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,13 @@ public class SponsorLicenseServiceImpl extends CommonServiceImpl implements Spon
         dc.add(Restrictions.in("licenseCategoryId", ids));
         return (List<SponsorLicense>) findAllByCriteria(dc);
     }
+
+	@Override
+	public void saveOrUpdate(SponsorLicense license) {
+		if(StringUtils.isBlank(license.getId())){
+			
+		}
+		
+	}
 
 }

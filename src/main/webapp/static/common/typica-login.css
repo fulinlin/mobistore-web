@@ -8,7 +8,6 @@ html {
 
 /* line 13, ../sass/typica-login.scss */
 body {
-  background: url(../images/bg1.png) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -106,7 +105,7 @@ body {
   padding: 25px;
   width: 420px;
   height: 300px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(215,210, 208, 0.2);
   text-align: center;
 }
 
@@ -264,9 +263,17 @@ footer.white {
 /* line 24, D:/DropBox/bootstrap/typica-login/sass/includes/_fonts.scss */
 .login-form label {
   font-family: 'Lato', Helvetica, sans-serif;
-  font-size: 20px;
+ /* font-size: 20px;*/
   color: #333333;
   font-weight: 300;
+}
+
+.login-form .controls{
+	margin-left: 0px;
+}
+
+.login-form .control-label{
+	width:100px;
 }
 
 /* register form */

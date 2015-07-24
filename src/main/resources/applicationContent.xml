@@ -21,9 +21,6 @@
 	<context:component-scan base-package="com.wolai.platform.dao"></context:component-scan>
 	<context:component-scan base-package="com.wolai.platform.util"></context:component-scan>
 	<context:component-scan base-package="com.wolai.platform.job"></context:component-scan>
-	<context:component-scan base-package="com.wolai.platform.sys">
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
 
 
 
