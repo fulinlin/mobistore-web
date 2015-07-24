@@ -26,8 +26,17 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 
 	@Override
 	public SysUser saveOrUpdate(SysUser user) {
+		Enterprise enterprise =null;
+		if(StringUtils.isBlank(user.getId())&&UserType.ENTERPRISE.equals(user.getCustomerType())){
+			enterprise=new Enterprise();
+		}
 		getDao().saveOrUpdate(user);
 		
+		if(enterprise!=null){
+			enterprise.setUserId(user.getId());
+			enterprise.setName(user.getName());
+			getDao().save(enterprise);
+		}
 		return user;
 	}
 

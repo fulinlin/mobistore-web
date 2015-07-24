@@ -12,6 +12,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 网站登录用户
@@ -31,12 +33,12 @@ public class SysLoginAccount extends IdEntity {
 
 	public static final Integer STATUS_NORMAL=1;
 	public static final Integer STATUS_NOT_ACTIVE=-1;
-	public static final Integer STATUS_DISABLE=-2;
-	public static final Integer STATUS_DELETE=-3;
 	
 	/**
 	 * 邮箱
 	 */
+	@Email(message="邮箱格式不正确")
+	@NotBlank(message="邮箱不能为空")
 	private String email;
 	
 	/**
@@ -49,22 +51,34 @@ public class SysLoginAccount extends IdEntity {
 	 */
 	private Integer status=SysLoginAccount.STATUS_NOT_ACTIVE;
 	
-	private String activeCode; // 激活码
+	/**
+	 * 激活码
+	 */
+	private String activeCode;
 	
 	/**
 	 * 是否为供应商
 	 */
-	private Boolean isSupplier=Boolean.FALSE;
+	private Boolean isAdmin=Boolean.FALSE;
 	
 	 /** 
      * 客户id
      */
     @Column(name="user_id")
+    @NotBlank(message="用户信息不能为空")
     private String userId;
     
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private SysUser user;
+    
+    @NotBlank(message="企业信息不能为空")
+    @Column(name="enterprise_id")
+    private String enterpriseId;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "enterprise_id", insertable = false, updatable = false)
+    private Enterprise enterprise;
     
 	@Transient
 	public boolean isEnable(){
@@ -103,14 +117,6 @@ public class SysLoginAccount extends IdEntity {
 		this.activeCode = activeCode;
 	}
 
-	public Boolean getIsSupplier() {
-		return isSupplier;
-	}
-
-	public void setIsSupplier(Boolean isSupplier) {
-		this.isSupplier = isSupplier;
-	}
-
 	public String getUserId() {
 		return userId;
 	}
@@ -125,6 +131,30 @@ public class SysLoginAccount extends IdEntity {
 
 	public void setUser(SysUser user) {
 		this.user = user;
+	}
+
+	public String getEnterpriseId() {
+		return enterpriseId;
+	}
+
+	public void setEnterpriseId(String enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 }

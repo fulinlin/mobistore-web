@@ -8,6 +8,6 @@
 	var ${replace}Ckeditor = CKEDITOR.replace("${replace}");
 	${replace}Ckeditor.config.height = "${height}";//<c:if test="${not empty uploadPath}">
 	${replace}Ckeditor.config.ckfinderPath="${ctxStatic}/ckfinder";
-	var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-	${replace}Ckeditor.config.ckfinderUploadPath="${uploadPath}/"+year+"/"+month+"/";//</c:if>
+	var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1),day=date.getDay();
+	${replace}Ckeditor.config.ckfinderUploadPath="${uploadPath}/"+year+month+day+"/";//</c:if>
 </script>

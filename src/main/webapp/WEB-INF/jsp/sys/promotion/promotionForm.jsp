@@ -22,13 +22,14 @@
 		<div class="control-group">
 			<label class="control-label">标题：</label>
 			<div class="controls">
-				<form:input path="title" htmlEscape="false" maxlength="255" class="input-xlarge " />
+				<form:input path="title" htmlEscape="false" maxlength="255" class="input-xlarge required" />
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">描述：</label>
 			<div class="controls">
-				<form:input path="detail" htmlEscape="false" class="input-xlarge " />
+			<form:textarea id="detail" htmlEscape="true" path="detail" rows="4" class="input-xxlarge required"/>
+				<tags:ckeditor replace="detail" uploadPath="/upload/promotion" />
 			</div>
 		</div>
 		<div class="control-group">

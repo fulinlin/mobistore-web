@@ -14,4 +14,6 @@ public interface SponsorLicenseService extends CommonService {
 
     List<SponsorLicense> getSponsorLicensesByIds(String[] ids);
     List<SponsorLicense> getSponsorLicensesByCategory(String[] ids);
+    
+    void saveOrUpdate(SponsorLicense license);
 }

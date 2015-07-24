@@ -1,6 +1,3 @@
-/**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- */
 package com.wolai.platform.controller;
 
 import java.util.ArrayList;
@@ -124,7 +121,7 @@ public class SponsorLicenseController extends BaseController {
             license.setUserId(user.getId());
             licenseService.saveOrUpdate(license);
         }
-
+        sponsorLicense.setLicenseId(license.getId());
         sponsorLicenseService.saveOrUpdate(sponsorLicense);
         addMessage(redirectAttributes, "保存赞助车牌成功");
         return "redirect:" + SystemConfig.getAdminPath() + "/sponsorLicense/?repage";
