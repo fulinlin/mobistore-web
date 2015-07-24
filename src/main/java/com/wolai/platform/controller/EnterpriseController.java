@@ -71,14 +71,14 @@ public class EnterpriseController extends BaseController {
 		}
 		enterpriseService.saveOrUpdate(enterprise);
 		addMessage(redirectAttributes, "保存企业成功");
-		return "redirect:"+SystemConfig.getAdminPath()+"/sys/enterprise/?repage";
+		return "redirect:"+SystemConfig.getAdminPath()+"/sys/user/?repage";
 	}
 	
 	@RequestMapping(value = "delete")
 	public String delete(Enterprise enterprise, RedirectAttributes redirectAttributes) {
 		enterpriseService.delete(enterprise);
 		addMessage(redirectAttributes, "删除企业成功");
-		return "redirect:"+SystemConfig.getAdminPath()+"/sys/enterprise/?repage";
+		return "redirect:"+SystemConfig.getAdminPath()+"/sys/user/?repage";
 	}
 
 	@ResponseBody

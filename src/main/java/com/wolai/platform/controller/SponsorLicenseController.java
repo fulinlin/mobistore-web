@@ -28,11 +28,10 @@ import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.LicenseCategory;
 import com.wolai.platform.entity.SponsorLicense;
 import com.wolai.platform.entity.SysUser;
-import com.wolai.platform.entity.SysUser.PayType;
-import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.service.LicenseCategoryService;
 import com.wolai.platform.service.LicenseService;
 import com.wolai.platform.service.SponsorLicenseService;
+import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.SponsorLicenseVo;
 
@@ -53,6 +52,9 @@ public class SponsorLicenseController extends BaseController {
 
     @Autowired
     private LicenseService licenseService;
+    
+    @Autowired
+    private UserService userService;
 
     @ModelAttribute
     public SponsorLicense get(@RequestParam(required = false) String id) {
@@ -106,22 +108,8 @@ public class SponsorLicenseController extends BaseController {
 
         LoginInfo loginInfo = getLoginInfoSession(request);
         sponsorLicense.setLoginAccountId(loginInfo.getLoginAccount().getId());
-
         License license = licenseService.getLincense(sponsorLicense.getCarNo());
-        if (license == null) {
-            //创建TEMP用户 默认是PERPAID
-            SysUser user = new SysUser();
-            user.setCustomerType(UserType.TEMP);
-            user.setPayType(PayType.PERPAID);
-            licenseService.saveOrUpdate(user);
-
-            //创建车牌
-            license = new License();
-            license.setCarNo(sponsorLicense.getCarNo());
-            license.setUserId(user.getId());
-            licenseService.saveOrUpdate(license);
-        }
-        sponsorLicense.setLicenseId(license.getId());
+        sponsorLicense.setLicenseId(license==null?null:license.getId());
         sponsorLicenseService.saveOrUpdate(sponsorLicense);
         addMessage(redirectAttributes, "保存赞助车牌成功");
         return "redirect:" + SystemConfig.getAdminPath() + "/sponsorLicense/?repage";

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolai.platform.config.SystemConfig;
 import com.wolai.platform.entity.License;
+import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.service.LicenseService;
 
 /**
@@ -45,6 +47,8 @@ public class LicenseController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(License license, HttpServletRequest request, HttpServletResponse response, Model model) {
 	    DetachedCriteria dc = DetachedCriteria.forClass(License.class);
+	    dc.createAlias("user", "user", JoinType.LEFT_OUTER_JOIN);
+	    dc.add(Restrictions.ne("user.customerType",UserType.TEMP));
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
         page = licenseService.findPage(dc, start, limit);
 		model.addAttribute("page", page);

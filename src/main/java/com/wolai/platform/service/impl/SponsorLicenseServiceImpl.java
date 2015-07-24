@@ -2,13 +2,16 @@ package com.wolai.platform.service.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.SponsorLicense;
+import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.SponsorLicenseService;
+import com.wolai.platform.service.UserService;
 
 /**
  * 赞助车牌Service
@@ -18,6 +21,8 @@ import com.wolai.platform.service.SponsorLicenseService;
 @Service
 public class SponsorLicenseServiceImpl extends CommonServiceImpl implements SponsorLicenseService {
     
+	@Autowired
+	private UserService userService;
     
     @SuppressWarnings("unchecked")
     public List<SponsorLicense> getSponsorLicensesByIds(String[] ids){
@@ -36,11 +41,18 @@ public class SponsorLicenseServiceImpl extends CommonServiceImpl implements Spon
     }
 
 	@Override
-	public void saveOrUpdate(SponsorLicense license) {
-		if(StringUtils.isBlank(license.getId())){
-			
-		}
-		
+	public void saveOrUpdate(SponsorLicense sponsorLicense) {
+		 
+	        if (sponsorLicense.getLicenseId() == null) {
+	        	SysUser user = userService.getTempUserPers();
+	            //创建车牌
+	        	License license = new License();
+	            license.setCarNo(sponsorLicense.getCarNo());
+	            license.setUserId(user.getId());
+	            getDao().saveOrUpdate(license);
+	            sponsorLicense.setLicenseId(license.getId());
+	        }
+	       getDao().saveOrUpdate(sponsorLicense);
 	}
 
 }

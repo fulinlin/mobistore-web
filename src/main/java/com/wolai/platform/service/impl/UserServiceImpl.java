@@ -16,6 +16,7 @@ import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Enterprise;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.entity.SysUser.PayType;
 import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.entity.SysVerificationCode;
 import com.wolai.platform.service.UserService;
@@ -246,5 +247,21 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 			return (Enterprise) getDao().getByCriteria(dc);
 		}
 		return null;
+	}
+
+	@Override
+	public SysUser getTempUserPers() {
+		DetachedCriteria dc = DetachedCriteria.forClass(SysUser.class);
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		dc.add(Restrictions.eq("customerType", UserType.TEMP));
+		SysUser user = (SysUser) getDao().getByCriteria(dc);
+		if(user==null){
+			user = new SysUser();
+			user.setCustomerType(UserType.TEMP);
+			user.setPayType(PayType.PERPAID);
+			user.setName("系统占位用户");
+			getDao().save(user);
+		}
+		return user;
 	}
 }

@@ -32,6 +32,7 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="license" action="${ctx}/license/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+		<form:hidden path="userId"/>
 		<tags:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">品牌：</label>

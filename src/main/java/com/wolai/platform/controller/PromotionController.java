@@ -3,6 +3,8 @@
  */
 package com.wolai.platform.controller;
 
+import java.util.Arrays;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolai.platform.config.SystemConfig;
 import com.wolai.platform.entity.Promotion;
+import com.wolai.platform.entity.Promotion.ExchangeCode;
+import com.wolai.platform.entity.Promotion.PromotionLimitType;
 import com.wolai.platform.service.PromotionService;
 
 /**
@@ -58,6 +62,8 @@ public class PromotionController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Promotion promotion, Model model) {
 		model.addAttribute("promotion", promotion);
+		model.addAttribute("exchangeCode",Arrays.asList(ExchangeCode.values()));
+		model.addAttribute("eromotionLimitType",Arrays.asList(PromotionLimitType.values()));
 		return "sys/promotion/promotionForm";
 	}
 

@@ -38,6 +38,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th>所属用户</th>
 				<th>品牌</th>
 				<th>车牌号</th>
 				<th>车架号</th>
@@ -47,6 +48,7 @@
 		<tbody>
 		<c:forEach items="${page.items}" var="license">
 			<tr>
+				<td>${license.user.mobile}</td>
 				<td><a href="${ctx}/license/form?id=${license.id}">
 					${license.brand}
 				</a></td>

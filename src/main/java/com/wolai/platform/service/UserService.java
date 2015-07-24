@@ -29,4 +29,6 @@ public interface UserService extends CommonService {
 	boolean validateMobile(String mobile,String userId);
 	
 	Enterprise getEnterpriceInfo(String userId);
+	
+	SysUser getTempUserPers();
 }

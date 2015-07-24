@@ -47,9 +47,17 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">限制时间：</label>
+			<label class="control-label">限制：</label>
 			<div class="controls">
-				<form:input path="limitType" htmlEscape="false" maxlength="255" class="input-xlarge " />
+					<form:radiobuttons  path="limitType"  items="${eromotionLimitType}" itemLabel="textLable" itemValue="textVal" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">限制：</label>
+			<div class="controls">
+					<form:select path="code" cssClass="required">
+						<form:options items="${exchangeCode}" itemLabel="textLable" itemValue="textVal"/>
+				</form:select>
 			</div>
 		</div>
 		<div class="control-group">

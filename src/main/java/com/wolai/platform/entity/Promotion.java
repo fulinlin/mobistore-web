@@ -26,23 +26,40 @@ public class Promotion extends IdEntity {
 		/**
   		 * 注册送
   		 */
-  		REGISTER_PRESENT("REGISTER_PRESENT"),
+  		REGISTER_PRESENT("REGISTER_PRESENT","注册送"),
   		/**
   		 * 积分兑换
   		 */
-  		POINTS_EXCHANGE("POINTS_EXCHANGE"),
+  		POINTS_EXCHANGE("POINTS_EXCHANGE","积分兑换"),
   		/**
   		 * 抢券
   		 */
-  		SNAPUP_FREE("SNAPUP_FREE");
+  		SNAPUP_FREE("SNAPUP_FREE","抢券");
   		
   		
-		private ExchangeCode(String textVal){
+  		private ExchangeCode(String textVal,String textLable){
   			this.textVal=textVal;
+  			this.textLable=textLable;
   		}
   		private String textVal;
+  		private String textLable;
   		
-  		public String toString(){
+  		public String getTextVal(){
+  			return this.textVal;
+  		}
+  		
+  		public void setTextVal(String textVal){
+  			this.textVal = textVal;
+  		}
+		public String getTextLable() {
+			return textLable;
+		}
+
+		public void setTextLable(String textLable) {
+			this.textLable = textLable;
+		}
+
+		public String toString(){
   			return textVal;
   		}
 	}
@@ -51,19 +68,36 @@ public class Promotion extends IdEntity {
 		/**
   		 * 根据车牌的限制
   		 */
-  		BYCARNO("BYCARNO"),
+  		BYCARNO("BYCARNO","车牌限制"),
   		/**
   		 * 无限制
   		 */
-  		ALL("ALL");
+  		ALL("ALL","无限制");
   		
   		
-		private PromotionLimitType(String textVal){
+  		private PromotionLimitType(String textVal,String textLable){
   			this.textVal=textVal;
+  			this.textLable=textLable;
   		}
   		private String textVal;
+  		private String textLable;
   		
-  		public String toString(){
+  		public String getTextVal(){
+  			return this.textVal;
+  		}
+  		
+  		public void setTextVal(String textVal){
+  			this.textVal = textVal;
+  		}
+		public String getTextLable() {
+			return textLable;
+		}
+
+		public void setTextLable(String textLable) {
+			this.textLable = textLable;
+		}
+
+		public String toString(){
   			return textVal;
   		}
 	}
@@ -114,7 +148,7 @@ public class Promotion extends IdEntity {
 	 * 限制时间
 	 */
 	@Enumerated(EnumType.STRING)
-	private PromotionLimitType limitType;
+	private PromotionLimitType limitType=PromotionLimitType.ALL;
 
 	public String getTitle() {
 		return title;

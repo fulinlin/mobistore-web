@@ -34,34 +34,42 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>结束时间</th>
-				<th>限制时间</th>
-				<th>图片地址</th>
-				<th>开始时间</th>
 				<th>标题</th>
+				<th>类型</th>
+				<th>限制</th>
+				<th>开始时间</th>
+				<th>结束时间</th>
+				<th>图片地址</th>
 				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.items}" var="promotion">
 			<tr>
-				<td><a href="${ctx}/promotion/form?id=${promotion.id}">
-					<fmt:formatDate value="${promotion.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</a></td>
 				<td>
-					${promotion.limitType}
+					<a href="${ctx}/promotion/form?id=${promotion.id}">
+					${promotion.title}
+					</a>
 				</td>
 				<td>
-					${promotion.picPath}
+					${promotion.limitType}
 				</td>
 				<td>
 					<fmt:formatDate value="${promotion.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${promotion.title}
+					<fmt:formatDate value="${promotion.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+				
+				<td>
+					${promotion.picPath}
 				</td>
 				<td>
     				<a href="${ctx}/promotion/form?id=${promotion.id}">修改</a>
+    				<a href="${ctx}/sys/exchangepan/form?pid=${promotion.id}">兑换信息维护</a>
+    				<c:if test='${promotion.limitType!="ALL"}'>
+    					<a href="#">活动限制维护</a>
+    				</c:if>
 					<a href="${ctx}/promotion/delete?id=${promotion.id}" onclick="return confirmx('确认要删除该优惠活动吗？', this.href)">删除</a>
 				</td>
 			</tr>

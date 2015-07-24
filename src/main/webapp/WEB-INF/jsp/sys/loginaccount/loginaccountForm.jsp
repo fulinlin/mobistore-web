@@ -40,7 +40,15 @@
 			<label class="control-label" for="oldLoginName">email:</label>
 			<div class="controls">
 				<input id="oldLoginName" name="oldLoginName" type="hidden" value="${loginAccount.email}">
-				<form:input path="email" id="loginName" htmlEscape="false" maxlength="50" class="required email"/>
+				<c:choose>
+					<c:when test="${empty loginAccount.id}">
+						<form:input path="email" id="loginName" htmlEscape="false" maxlength="50" class="required email"/>
+					</c:when>
+					<c:otherwise>
+						${loginAccount.email}
+					</c:otherwise>
+				</c:choose>
+				
 			</div>
 		</div>
 		<div class="control-group">
