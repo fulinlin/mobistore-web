@@ -39,6 +39,7 @@
 							<li><a href="${ctx}/sys/enterprise" target="mainFrame" ><i class="icon-home"></i>&nbsp;企业管理</a></li>
 							<li><a href="${ctx}/promotion" target="mainFrame" ><i class="icon-home"></i>&nbsp;优惠活动管理</a></li>
 							<li><a href="${ctx}/license" target="mainFrame" ><i class="icon-home"></i>&nbsp;车牌管理</a></li>
+							<li><a href="${ctx}/sysMessage" target="mainFrame" ><i class="icon-home"></i>&nbsp;推送消息管理</a></li>
 						</c:if>
 						<c:if test="${admin==null}">
 							<li><a href="${ctx}/coupon" target="mainFrame" ><i class="icon-home"></i>&nbsp;优惠券管理</a></li>
