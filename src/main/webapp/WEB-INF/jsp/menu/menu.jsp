@@ -41,6 +41,7 @@
 							<li><a href="${ctx}/license" target="mainFrame" ><i class="icon-star"></i>&nbsp;车牌管理</a></li>
 							<li><a href="${ctx}/sysMessage" target="mainFrame" ><i class="icon-home"></i>&nbsp;推送消息管理</a></li>
 							<li><a href="${ctx}/area" target="mainFrame" ><i class="icon-home"></i>&nbsp;区域管理</a></li>
+							<li><a href="${ctx}/zone" target="mainFrame" ><i class="icon-home"></i>&nbsp;商圈管理</a></li>
 						</c:if>
 						<c:if test="${admin==null}">
 							<li><a href="${ctx}/coupon" target="mainFrame" ><i class="icon-barcode"></i>&nbsp;优惠券管理</a></li>
