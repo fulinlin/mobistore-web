@@ -154,4 +154,21 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return remoteAddr != null ? remoteAddr : request.getRemoteAddr();
 	}
 	
+    /**
+     * 转换为JS获取对象值，生成三目运算返回结果
+     * @param objectString 对象串
+     *   例如：row.user.id
+     *   返回：!row?'':!row.user?'':!row.user.id?'':row.user.id
+     */
+    public static String jsGetVal(String objectString){
+        StringBuilder result = new StringBuilder();
+        StringBuilder val = new StringBuilder();
+        String[] vals = split(objectString, ".");
+        for (int i=0; i<vals.length; i++){
+            val.append("." + vals[i]);
+            result.append("!"+(val.substring(1))+"?'':");
+        }
+        result.append(val.substring(1));
+        return result.toString();
+    }
 }
