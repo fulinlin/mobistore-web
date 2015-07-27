@@ -34,17 +34,17 @@
 				<div class="accordion-inner">
 					<ul class="nav nav-list">
 						<c:if test="${admin}">
-							<li><a href="${ctx}/user/list" target="mainFrame" ><i class="icon-user"></i>&nbsp;用户管理</a></li>
-							<li><a href="${ctx}/parkinglot" target="mainFrame" ><i class="icon-home"></i>&nbsp;停车场管理</a></li>
-							<li><a href="${ctx}/sys/enterprise" target="mainFrame" ><i class="icon-home"></i>&nbsp;企业管理</a></li>
-							<li><a href="${ctx}/promotion" target="mainFrame" ><i class="icon-home"></i>&nbsp;优惠活动管理</a></li>
-							<li><a href="${ctx}/license" target="mainFrame" ><i class="icon-home"></i>&nbsp;车牌管理</a></li>
+							<li><a href="${ctx}/user/list" target="mainFrame" ><i class="icon-user"></i>&nbsp;个人客户管理</a></li>
+							<li><a href="${ctx}/sys/enterprise" target="mainFrame" ><i class="icon-briefcase"></i>&nbsp;企业客户管理</a></li>
+							<li><a href="${ctx}/parkinglot" target="mainFrame" ><i class="icon-road"></i>&nbsp;停车场管理</a></li>
+							<li><a href="${ctx}/promotion" target="mainFrame" ><i class="icon-barcode"></i>&nbsp;优惠活动管理</a></li>
+							<li><a href="${ctx}/license" target="mainFrame" ><i class="icon-star"></i>&nbsp;车牌管理</a></li>
 							<li><a href="${ctx}/sysMessage" target="mainFrame" ><i class="icon-home"></i>&nbsp;推送消息管理</a></li>
 						</c:if>
 						<c:if test="${admin==null}">
-							<li><a href="${ctx}/coupon" target="mainFrame" ><i class="icon-home"></i>&nbsp;优惠券管理</a></li>
-							<li><a href="${ctx}/sponsorLicense" target="mainFrame" ><i class="icon-home"></i>&nbsp;赞助车牌管理</a></li>
-							<li><a href="${ctx}/licenseCategory" target="mainFrame" ><i class="icon-home"></i>&nbsp;车牌分类管理</a></li>
+							<li><a href="${ctx}/coupon" target="mainFrame" ><i class="icon-barcode"></i>&nbsp;优惠券管理</a></li>
+							<li><a href="${ctx}/sponsorLicense" target="mainFrame" ><i class="icon-star"></i>&nbsp;赞助车牌管理</a></li>
+							<li><a href="${ctx}/licenseCategory" target="mainFrame" ><i class="icon-tags"></i>&nbsp;车牌分类管理</a></li>
 						</c:if>
 					</ul>
 				</div>

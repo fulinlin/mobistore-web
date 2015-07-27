@@ -41,6 +41,9 @@ public class UserController extends BaseController {
 	
 	@RequestMapping({"list", ""})
 	public String list(HttpServletRequest request,SysUser user,Model model){
+		
+		user.setCustomerType(UserType.INDIVIDUAL);
+		
 		page = userService.findAllByPage(user, start, limit);
 		model.addAttribute("page", page);
 		model.addAttribute("user", user);

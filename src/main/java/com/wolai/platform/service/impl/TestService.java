@@ -25,7 +25,6 @@ public class TestService extends BaseServiceImpl {
 		
 		Enterprise enterprise = new Enterprise();
 		enterprise.setUserId(user.getId());
-		enterprise.setIsSupplier(true);
 		enterprise.setName("喔来科技");
 		enterprise.setAddress("........");
 		getDao().save(enterprise);

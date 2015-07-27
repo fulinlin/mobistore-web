@@ -222,6 +222,10 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 			if(StringUtils.isNotEmpty(user.getMobile())){
 				dc.add(Restrictions.like("mobile",user.getMobile(),MatchMode.ANYWHERE));
 			}
+			
+			if(user.getCustomerType()!=null){
+				dc.add(Restrictions.eq("customerType",user.getCustomerType()));
+			}
 		}
 		return getDao().findPage(dc, start, limit);
 	}

@@ -6,4 +6,5 @@ public interface EnterpriseService extends CommonService {
 
     Enterprise getEnterprise(String userId);
     
+    void saveOrUpdate(Enterprise enterprise);
 }

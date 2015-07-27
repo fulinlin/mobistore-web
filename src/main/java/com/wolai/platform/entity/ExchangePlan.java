@@ -1,5 +1,6 @@
 package com.wolai.platform.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -61,24 +62,42 @@ public class ExchangePlan extends IdEntity {
 		/**
   		 * 积分
   		 */
-  		REWRRD_POINTS("REWRRD_POINTS"),
+  		REWRRD_POINTS("REWRRD_POINTS","积分"),
   		
   		/**
   		 * 现金
   		 */
-  		MONEY("MONEY"),
+  		MONEY("MONEY","现金"),
   		
   		/**
   		 * 无条件
   		 */
-  		NONE("NONE");
+  		NONE("NONE","无条件");
   		
-  		private SourceType(String textVal){
+  		private SourceType(String textVal,String textLable){
   			this.textVal=textVal;
+  			this.textLable=textLable;
   		}
-  		private String textVal;
   		
-  		public String toString(){
+  		private String textVal;
+  		private String textLable;
+  		
+  		public String getTextVal(){
+  			return this.textVal;
+  		}
+  		
+  		public void setTextVal(String textVal){
+  			this.textVal = textVal;
+  		}
+		public String getTextLable() {
+			return textLable;
+		}
+
+		public void setTextLable(String textLable) {
+			this.textLable = textLable;
+		}
+
+		public String toString(){
   			return textVal;
   		}
 	}
@@ -125,6 +144,11 @@ public class ExchangePlan extends IdEntity {
 	 * 限制次数
 	 */
 	private Integer timesLimit;
+	
+	/**
+	 * 获奖概率
+	 */
+	private BigDecimal probability;
 	
 	/**
 	 * 营销活动
@@ -214,6 +238,14 @@ public class ExchangePlan extends IdEntity {
 
 	public void setTimesLimit(Integer timesLimit) {
 		this.timesLimit = timesLimit;
+	}
+
+	public BigDecimal getProbability() {
+		return probability;
+	}
+
+	public void setProbability(BigDecimal probability) {
+		this.probability = probability;
 	}
 	
 }

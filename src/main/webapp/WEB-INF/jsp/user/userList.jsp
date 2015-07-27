@@ -33,6 +33,7 @@
 		<div>
 			<label>手机号：</label><form:input path="mobile" htmlEscape="false" maxlength="50" class="input-small"/>
 			<label>名称：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-small"/>
+			<label>显示禁用：</label><form:checkbox path="isDisable"/>
 			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" onclick="return page();"/>
 		</div>
 	</form:form>
@@ -50,10 +51,6 @@
 				<td><c:if test="${user.isDisable}">禁用</c:if><c:if test="${user.isDisable==false}">启用</c:if></td>
 				<td>
     				 <a href="${ctx}/user/edit?id=${user.id}">修改</a>
-    				 <c:if test='${user.customerType == "ENTERPRISE" }'>
-    				 	<a href="${ctx}/sys/enterprise/form?userId=${user.id}">企业信息维护</a>
-    				 	<a href="${ctx}/sys/loginaccount/form?userId=${user.id}">登陆账号维护</a>
-    				 </c:if>
 					<%--<a href="${ctx}/user/delete?id=${user.id}" onclick="return confirmx('确认要删除该用户吗？', this.href)">删除</a> --%>
 					<%-- <a href="${ctx}/user/resetPwd?id=${user.id}" onclick="return confirmx('确认要重置该用户密码吗？', this.href)">重置密码</a> --%>
 					<c:if test="${user.isDisable==false}"><a href="${ctx}/user/disable?id=${user.id}" onclick="return confirmx('确认要禁用该用户吗？', this.href)">禁用</a></c:if>
