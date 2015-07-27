@@ -33,9 +33,14 @@ public class Promotion extends IdEntity {
   		 */
   		POINTS_EXCHANGE("POINTS_EXCHANGE","积分兑换"),
   		/**
-  		 * 抢券
+  		 * 领券
   		 */
-  		SNAPUP_FREE("SNAPUP_FREE","抢券");
+  		SNAPUP_FREE("SNAPUP_FREE","领券"),
+  		
+  		/**
+  		 * 抽奖luck draw
+  		 */
+  		LUCK_DRAW("LUCK_DRAW","抽奖");
   		
   		
   		private ExchangeCode(String textVal,String textLable){

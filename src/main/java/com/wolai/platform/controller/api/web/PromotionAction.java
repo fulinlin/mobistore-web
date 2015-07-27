@@ -229,7 +229,7 @@ public class PromotionAction extends BaseController {
 		coupon.setEndDate(exchangePlan.getEndTime());
 		coupon.setType(CouponType.MONEY); // 兑换的一定是抵时券
 		coupon.setMoney(exchangePlan.getFaceValue());
-		coupon.setOrigin("限时抢购");
+		coupon.setOrigin("限时领取");
 		coupon.setNote("测试数据");
 		couponService.saveOrUpdate(coupon);
 		
