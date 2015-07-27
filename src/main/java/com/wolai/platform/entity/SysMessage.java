@@ -34,6 +34,13 @@ public class SysMessage extends IdEntity {
 	 */
 	private Date createTime;
 	
+	/**
+     * 是否已发送
+     */
+	
+	private boolean published = false;
+	
+	
 	public String getTitle() {
 		return title;
 	}
@@ -57,4 +64,12 @@ public class SysMessage extends IdEntity {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
+    public boolean getPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
 }
