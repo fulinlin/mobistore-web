@@ -9,42 +9,47 @@ angular.module('wolaiMobiApp')
   .controller('PromotionCtrl', ['$rootScope', '$scope', '$location', '$http', 'Constant', 'UrlUtil', 
                        function ($rootScope, $scope, $location, $http, Constant, UrlUtil) {
 	// http://localhost:9000/#/promotion?token=0658673a-c421-4980-bbd4-35374aefb094&promotionId=0AC9BA91-19B3-303E-B5B5-E578E1FAFAFA
-	$rootScope.token = UrlUtil.getParam('token');
-	var promotionId = UrlUtil.getParam('promotionId');;
-	$http({
-		method:'POST',
-		url: Constant.ApiUrl + 'promotion/detail',
-		params:{
-			'token': $rootScope.token
-		},
-		data:  {id:promotionId}
-	}).success(function(json) {
-		console.log(json.data);
-      $rootScope.promotion = json.data.promotion;
-      $rootScope.rewardPoints = json.data.rewardPoints;
-      
-		if ($rootScope.promotion.code === "POINTS_EXCHANGE") {
-			$location.path("/promotion/points");
-		} else if ($rootScope.promotion.code === "SNAPUP_FREE") {
-			$location.path("/promotion/snapup");
-		}
-    });
+
   }]);
 
 angular.module('wolaiMobiApp')
 	.controller('PointsExchangeCtrl', ['$rootScope', '$scope', '$http', 'Constant', 'UrlUtil', 
 	           function ($rootScope, $scope, $http, Constant, UrlUtil) {
 	$scope.complete = false;
-
-	$scope.exchangePlan = $rootScope.promotion.exchangePlanList[0];
-	$scope.faceValue = $scope.exchangePlan.faceValue;
-	$scope.remain = $scope.exchangePlan.qty;
-	$scope.price = $scope.exchangePlan.price;
-	$scope.exNumber = '';
 	
-	$scope.max = Math.floor($rootScope.rewardPoints / $scope.price);
-	if ($scope.max > $scope.remain) {
-		$scope.max = $scope.remain;
+	if (!$rootScope.promotion) {
+		$rootScope.token = UrlUtil.getParam('token');
+		var promotionId = UrlUtil.getParam('promotionId');;
+		$http({
+			method:'POST',
+			url: Constant.ApiUrl + 'promotion/detail',
+			params:{
+				'token': $rootScope.token
+			},
+			data:  {id:promotionId}
+		}).success(function(json) {
+			console.log(json.data);
+		    $rootScope.promotion = json.data.promotion;
+		    $rootScope.rewardPoints = json.data.rewardPoints;
+		      
+		    $scope.initData();
+	    });
+	} else {
+		$scope.initData();
+	}
+	
+	$scope.initData = function() {
+		$scope.exchangePlan = $rootScope.promotion.exchangePlanList[0];
+		$scope.faceValue = $scope.exchangePlan.faceValue;
+		console.log($scope.exchangePlan);
+		$scope.remain = $scope.exchangePlan.qty;
+		$scope.price = $scope.exchangePlan.price;
+		$scope.exNumber = '';
+		
+		$scope.max = Math.floor($rootScope.rewardPoints / $scope.price);
+		if ($scope.max > $scope.remain) {
+			$scope.max = $scope.remain;
+		}
 	}
 		
 	$scope.change = function() {
@@ -87,8 +92,32 @@ angular.module('wolaiMobiApp')
 	            function ($rootScope, $scope, $http, Constant, UrlUtil) {
 		$scope.complete = false;
 		
-		$scope.exchangePlan = $rootScope.promotion.exchangePlanList[0];
-		$scope.faceValue = $scope.exchangePlan.faceValue;
+		if (!$rootScope.promotion) {
+			$rootScope.token = UrlUtil.getParam('token');
+			var promotionId = UrlUtil.getParam('promotionId');;
+			$http({
+				method:'POST',
+				url: Constant.ApiUrl + 'promotion/detail',
+				params:{
+					'token': $rootScope.token
+				},
+				data:  {id:promotionId}
+			}).success(function(json) {
+				console.log(json.data);
+			    $rootScope.promotion = json.data.promotion;
+			    $rootScope.rewardPoints = json.data.rewardPoints;
+			      
+			    $scope.initData();
+		    });
+		} else {
+			$scope.initData();
+		}
+		
+		$scope.initData = function() {
+			$scope.exchangePlan = $rootScope.promotion.exchangePlanList[0];
+			$scope.faceValue = $scope.exchangePlan.faceValue;
+			$scope.remain = $scope.exchangePlan.qty;
+		}
 
 		$scope.submit = function() {
 			$http({
@@ -112,6 +141,4 @@ angular.module('wolaiMobiApp')
 				$scope.complete = true;
 		    });
 		}
-		
-		$scope.remain = $scope.exchangePlan.qty;
 }]);
