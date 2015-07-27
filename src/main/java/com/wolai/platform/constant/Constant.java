@@ -14,7 +14,8 @@ import java.math.BigDecimal;
 
 public final class Constant {
 	// webClient 访问地址
-	public static String WEB_CLIENT_URL = "http://localhost:9000";
+	public static String WEB_CLIENT_URL_LOCAL = "http://localhost:9000";
+	public static String WEB_CLIENT_URL_TEST = "http://10.0.1.107:9000";
 	
 	/**
 	 * appClient访问接口前缀

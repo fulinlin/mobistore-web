@@ -123,6 +123,11 @@ public class ExchangePlan extends IdEntity {
 	/**
 	 * 总数量
 	 */
+	private Integer qty;
+	
+	/**
+	 * 兑换数量
+	 */
 	private Integer number;
 	
 	/**
@@ -184,13 +189,6 @@ public class ExchangePlan extends IdEntity {
 		this.price = price;
 	}
 
-	public Integer getNumber() {
-		return number;
-	}
-
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
 
 	public Date getStartTime() {
 		return startTime;
@@ -246,6 +244,22 @@ public class ExchangePlan extends IdEntity {
 
 	public void setProbability(BigDecimal probability) {
 		this.probability = probability;
+	}
+
+	public Integer getQty() {
+		return qty;
+	}
+
+	public void setQty(Integer qty) {
+		this.qty = qty;
+	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 	
 }

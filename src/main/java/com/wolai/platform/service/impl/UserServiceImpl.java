@@ -10,20 +10,37 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant.RespCode;
+import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.Enterprise;
+import com.wolai.platform.entity.ExchangePlan;
+import com.wolai.platform.entity.Promotion;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.entity.SysUser.PayType;
 import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.entity.SysVerificationCode;
+import com.wolai.platform.service.CouponService;
+import com.wolai.platform.service.ExchangePlanService;
+import com.wolai.platform.service.PromotionService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.CommonUtils;
 
 @Service
 public class UserServiceImpl extends CommonServiceImpl implements UserService {
+	
+	@Autowired
+	PromotionService promotionService;
+	
+	@Autowired
+	ExchangePlanService exchangePlanService;
+	
+	@Autowired
+	CouponService couponService;
 
 	@Override
 	public SysUser saveOrUpdate(SysUser user) {
@@ -110,6 +127,9 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		user.setAuthToken(newToken);
 		user.setLastLoginTime(new Date());
 		saveOrUpdate(user);
+		
+		// 按促销，送代金券
+		promotionService.registerPresent(user.getId());
 		
 		ret.put("token", newToken);
 		ret.put("code", RespCode.SUCCESS.Code());

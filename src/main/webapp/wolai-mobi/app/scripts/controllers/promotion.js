@@ -35,10 +35,10 @@ angular.module('wolaiMobiApp')
 	.controller('PointsExchangeCtrl', ['$rootScope', '$scope', '$http', 'Constant', 'UrlUtil', 
 	           function ($rootScope, $scope, $http, Constant, UrlUtil) {
 	$scope.complete = false;
-		
+
 	$scope.exchangePlan = $rootScope.promotion.exchangePlanList[0];
 	$scope.faceValue = $scope.exchangePlan.faceValue;
-	$scope.remain = $scope.exchangePlan.number;
+	$scope.remain = $scope.exchangePlan.qty;
 	$scope.price = $scope.exchangePlan.price;
 	$scope.exNumber = '';
 	
@@ -113,5 +113,5 @@ angular.module('wolaiMobiApp')
 		    });
 		}
 		
-		$scope.remain = $scope.exchangePlan.number;
+		$scope.remain = $scope.exchangePlan.qty;
 }]);
