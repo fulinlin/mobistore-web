@@ -38,6 +38,7 @@ angular.module('wolaiMobiApp')
 
 	$scope.exchangePlan = $rootScope.promotion.exchangePlanList[0];
 	$scope.faceValue = $scope.exchangePlan.faceValue;
+	console.log($scope.exchangePlan);
 	$scope.remain = $scope.exchangePlan.qty;
 	$scope.price = $scope.exchangePlan.price;
 	$scope.exNumber = '';
