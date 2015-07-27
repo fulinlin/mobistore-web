@@ -10,7 +10,7 @@ import com.wolai.platform.entity.SysRole;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.SysUser.UserType;
 
-@Service
+@Service("testService")
 public class TestService extends BaseServiceImpl {
 
 	public void saveTestData(){
@@ -34,6 +34,7 @@ public class TestService extends BaseServiceImpl {
 		loginAccount.setPassword("550e1bafe077ff0b0b67f4e32f29d751");
 		loginAccount.setUserId(user.getId());
 		loginAccount.setStatus(SysLoginAccount.STATUS_NORMAL);
+		loginAccount.setEnterpriseId(enterprise.getId());
 		getDao().save(loginAccount);
 		
 		SysRLoginAccountRole accountRole = new SysRLoginAccountRole();
