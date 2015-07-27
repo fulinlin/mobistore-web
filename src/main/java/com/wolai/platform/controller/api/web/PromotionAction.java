@@ -1,5 +1,6 @@
 package com.wolai.platform.controller.api.web;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -144,7 +145,7 @@ public class PromotionAction extends BaseController {
 			return ret;
 		}
 		
-		if (exchangePlan.getNumber() < number) {
+		if (exchangePlan.getQty() < number) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "remain not enough");
 			return ret;
@@ -169,7 +170,7 @@ public class PromotionAction extends BaseController {
 			couponService.saveOrUpdate(coupon);
 		}
 		
-		exchangePlan.setNumber(exchangePlan.getNumber() - number);
+		exchangePlan.setQty(exchangePlan.getQty() - number);
 		exchangePlanService.saveOrUpdate(exchangePlan);
 		
 		rewardPoints.setBalance(rewardPoints.getBalance() - exchangePlan.getPrice() * number);
@@ -177,7 +178,7 @@ public class PromotionAction extends BaseController {
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("balance", rewardPoints.getBalance());
-		ret.put("remain", exchangePlan.getNumber());
+		ret.put("remain", exchangePlan.getQty());
 
 		return ret;
 	}
@@ -199,13 +200,14 @@ public class PromotionAction extends BaseController {
 		String exchangePlanId = json.get("exchangePlanId");
 
 		ExchangePlan exchangePlan = (ExchangePlan) promotionService.get(ExchangePlan.class, exchangePlanId);
+		
 		if (exchangePlan == null) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "exchangePlan not found");
 			return ret;
 		}
 		
-		if (exchangePlan.getNumber() < 1) {
+		if (exchangePlan.getQty() < 1) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "remain not enough");
 			return ret;
@@ -218,6 +220,8 @@ public class PromotionAction extends BaseController {
 			ret.put("msg", "only " + exchangePlan.getTimesLimit() + " times allow");
 			return ret;
 		}
+		
+//		BigDecimal probability = exchangePlan.getProbability();
 
 		Coupon coupon = new Coupon();
 		coupon.setOwnerId(user.getId());
@@ -229,14 +233,14 @@ public class PromotionAction extends BaseController {
 		coupon.setNote("测试数据");
 		couponService.saveOrUpdate(coupon);
 		
-		exchangePlan.setNumber(exchangePlan.getNumber() - 1);
+		exchangePlan.setQty(exchangePlan.getQty() - 1);
 		exchangePlanService.saveOrUpdate(exchangePlan);
 		
 		exchangePlanHistory.setTimes(exchangePlanHistory.getTimes() + 1);
 		exchangeHistoryService.saveOrUpdate(exchangePlanHistory);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("remain", exchangePlan.getNumber());
+		ret.put("remain", exchangePlan.getQty());
 
 		return ret;
 	}

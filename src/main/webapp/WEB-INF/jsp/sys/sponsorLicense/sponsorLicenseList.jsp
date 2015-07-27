@@ -27,11 +27,10 @@
 		<div>
 			<label>车牌：</label>
 				<form:input path="carNo" htmlEscape="false" maxlength="255" class="input-medium"/>
-				
 				 <label class="control-label">分类：</label>
                 <form:select path="licenseCategoryId"  htmlEscape="false" maxlength="255" class="input-xlarge ">
-                <form:option value="">请选择</form:option>
-                <form:options items="${licenseCategories}"   itemLabel="name" itemValue="id"></form:options>
+	                <form:option value="">请选择</form:option>
+	                <form:options items="${licenseCategories}"   itemLabel="name" itemValue="id"></form:options>
                 </form:select>
 			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 		</div>

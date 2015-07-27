@@ -1,5 +1,6 @@
 package com.wolai.platform.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -155,6 +156,11 @@ public class Promotion extends IdEntity {
 	@Enumerated(EnumType.STRING)
 	private PromotionLimitType limitType=PromotionLimitType.ALL;
 
+	/**
+	 * 获奖概率
+	 */
+	private BigDecimal probability;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -225,6 +231,14 @@ public class Promotion extends IdEntity {
 
 	public void setPicIcon(String picIcon) {
 		this.picIcon = picIcon;
+	}
+
+	public BigDecimal getProbability() {
+		return probability;
+	}
+
+	public void setProbability(BigDecimal probability) {
+		this.probability = probability;
 	}
 
 	public String getUrl() {

@@ -24,11 +24,6 @@ public class Enterprise extends IdEntity {
 	 */
 	private static final long serialVersionUID = -2422799884916485425L;
 
-	/**
-     * 是否为供应商
-     */
-    private Boolean isSupplier=Boolean.FALSE;
-    
     /**
      * 企业名称
      */
@@ -66,14 +61,6 @@ public class Enterprise extends IdEntity {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private SysUser user;
-    
-	public Boolean getIsSupplier() {
-		return isSupplier;
-	}
-
-	public void setIsSupplier(Boolean isSupplier) {
-		this.isSupplier = isSupplier;
-	}
 
 	public String getName() {
 		return name;

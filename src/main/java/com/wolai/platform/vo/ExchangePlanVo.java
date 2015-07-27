@@ -12,6 +12,7 @@ public class ExchangePlanVo {
 	private SourceType sourceType;
 	private BigDecimal price;
 	private Integer faceValue;
+	private Integer qty;
 	private Integer number;
 	private Date startTime;
 	private Date endTime;
@@ -65,5 +66,11 @@ public class ExchangePlanVo {
 	}
 	public void setFaceValue(Integer faceValue) {
 		this.faceValue = faceValue;
+	}
+	public Integer getQty() {
+		return qty;
+	}
+	public void setQty(Integer qty) {
+		this.qty = qty;
 	}
 }

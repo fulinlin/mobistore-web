@@ -8,7 +8,8 @@
 	$(document).ready(function() {
 		$("#inputForm").validate({
 			rules: {
-				name: {remote: "${ctx}/sys/enterprise/checkName?eId=${enterprise.id}"}
+				name: {remote: "${ctx}/sys/enterprise/checkName?eId=${enterprise.id}"},
+				user.email: {remote: "sys/loginaccount/checkEmail"}
 			},
 			messages: {
 				name: {remote: "企业名称已存在"}
@@ -44,6 +45,27 @@
 				<form:input path="name" htmlEscape="false" maxlength="255" class="input-xlarge required" />
 			</div>
 		</div>
+		<c:if test="${empty enterprise.id }">
+			<div class="control-group">
+				<label class="control-label">邮箱：</label>
+				<div class="controls">
+					<form:input path="user.email" htmlEscape="false" maxlength="255" class="input-xlarge required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="newPassword">密码:</label>
+				<div class="controls">
+					<input id="newPassword" name="newPassword" type="password" value="" maxlength="50" minlength="6" class="${empty enterprise.user.id?'required':''}"/>
+					<c:if test="${not empty enterprise.user.id}"><span class="help-inline">若不修改密码，请留空。</span></c:if>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="confirmNewPassword">确认密码:</label>
+				<div class="controls">
+					<input id="confirmNewPassword" name="confirmNewPassword" type="password" value="" maxlength="50" minlength="6" equalTo="#newPassword"/>
+				</div>
+			</div>
+		</c:if>
 		<div class="control-group">
 			<label class="control-label">地址：</label>
 			<div class="controls">
@@ -53,7 +75,7 @@
 		<div class="control-group">
 			<label class="control-label">机构代码：</label>
 			<div class="controls">
-				<form:input path="organizationCode" htmlEscape="false" maxlength="255" class="input-xlarge " />
+				<form:input path="organizationCode" htmlEscape="false" maxlength="255" class="input-xlarge" />
 			</div>
 		</div>
 		<div class="control-group">
@@ -68,13 +90,6 @@
                 <form:input path="balance" htmlEscape="false" maxlength="255" class="input-xlarge digits" /><span class="help-inline">分钟</span>
             </div>
         </div>
-		
-		<div class="control-group">
-			<label class="control-label">是否为供应商：</label>
-			<div class="controls">
-				<form:checkbox path="isSupplier" htmlEscape="false" maxlength="1" />
-			</div>
-		</div>
 		<div class="form-actions">
 			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存" />&nbsp; <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)" />
 		</div>

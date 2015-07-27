@@ -18,13 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolai.platform.config.SystemConfig;
-import com.wolai.platform.controller.BaseController;
 import com.wolai.platform.entity.Enterprise;
+import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.EnterpriseService;
 
 /**
- * 字典Controller
- * @author sevenshi
+ * 企业Controller
  * @version 2015-07-15
  */
 @Controller("webEnterpriseController")
@@ -35,19 +34,15 @@ public class EnterpriseController extends BaseController {
 	private EnterpriseService enterpriseService;
 	
 	@ModelAttribute
-	public Enterprise get(@RequestParam(required=false) String id,String userId) {
-		Enterprise entity = null;
+	public Enterprise get(@RequestParam(required=false) String id) {
 		if (StringUtils.isNotBlank(id)){
-			entity = (Enterprise) enterpriseService.get(Enterprise.class,id);
-		}else if(StringUtils.isNotBlank(userId)){
-			entity = enterpriseService.getEnterprise(userId);
+			return  (Enterprise) enterpriseService.get(Enterprise.class,id);
 		}
-		if (entity == null){
-			entity = new Enterprise();
-			entity.setUserId(userId);
-		}
+		Enterprise entity = new Enterprise();
+		entity.setUser(new SysUser());
 		return entity;
 	}
+	
 	@RequestMapping(value = {"list", ""})
 	public String list(Enterprise enterprise, HttpServletRequest request, HttpServletResponse response, Model model) {
 	    DetachedCriteria dc = DetachedCriteria.forClass(Enterprise.class);

@@ -31,18 +31,29 @@
 		<thead>
 			<tr>
 				<th>名称</th>
+				<th>邮箱</th>
+				<th>状态</th>
 				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.items}" var="enterprise">
 			<tr>
-				<td><a href="${ctx}/sys/enterprise/form?id=${enterprise.id}">
+				<td>
+				<a href="${ctx}/sys/enterprise/form?id=${enterprise.id}">
 					${enterprise.name}
-				</a></td>
+				</a>
+				</td>
+				<td>
+					${enterprise.user.email}
+				</td>
+				<td>
+					<c:if test="${enterprise.user.isDisable}">禁用</c:if><c:if test="${enterprise.user.isDisable==false}">启用</c:if>
+				</td>
 				<td>
     				<a href="${ctx}/sys/enterprise/form?id=${enterprise.id}">修改</a>
-					<a href="${ctx}/sys/enterprise/delete?id=${enterprise.id}" onclick="return confirmx('确认要删除该字典吗？', this.href)">删除</a>
+    				<a href="${ctx}/sys/loginaccount/form?userId=${user.id}">登陆账号维护</a>
+					<a href="${ctx}/sys/enterprise/delete?id=${enterprise.id}" onclick="return confirmx('确认要删除该企业吗？', this.href)">删除</a>
 				</td>
 			</tr>
 		</c:forEach>
