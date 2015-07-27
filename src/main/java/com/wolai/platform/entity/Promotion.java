@@ -145,6 +145,11 @@ public class Promotion extends IdEntity {
 	private Boolean recommended;
 	
 	/**
+	 * Web URL
+	 */
+	private String url;
+	
+	/**
 	 * 限制时间
 	 */
 	@Enumerated(EnumType.STRING)
@@ -220,5 +225,13 @@ public class Promotion extends IdEntity {
 
 	public void setPicIcon(String picIcon) {
 		this.picIcon = picIcon;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

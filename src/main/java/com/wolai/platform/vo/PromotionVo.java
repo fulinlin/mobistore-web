@@ -14,6 +14,7 @@ public class PromotionVo {
 	private Date startTime;
 	private Date endTime;
 	private String code;
+	private String url;
 	
 	private List<ExchangePlanVo> exchangePlanList = new ArrayList<ExchangePlanVo>();
 
@@ -84,6 +85,12 @@ public class PromotionVo {
 	}
 	public void setPicIcon(String picIcon) {
 		this.picIcon = picIcon;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }
