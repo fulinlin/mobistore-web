@@ -25,6 +25,7 @@ import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.BillService;
+import com.wolai.platform.service.CouponService;
 import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.service.UserService;
@@ -44,6 +45,9 @@ public class ParkingController extends BaseController{
 	
 	@Autowired
 	ParkingLotService parkingLotService;
+	
+	@Autowired
+	CouponService couponService;
 	
 	@Autowired
 	BillService billService;
@@ -70,7 +74,10 @@ public class ParkingController extends BaseController{
 			ret.put("data", null);
 		}
 		
+		long couponCount = couponService.countAllByUser(userId);
+		
 		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("couponCount", couponCount);
 		return ret;
 	}
 

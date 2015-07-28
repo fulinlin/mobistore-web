@@ -36,49 +36,6 @@ public class CouponController extends BaseController {
 	
 	@Autowired
 	CouponService couponService;
-	
-	@RequestMapping(value="list")
-	@ResponseBody
-	public Map<String, Object> list(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
-		if (pagingParamError(json)) {
-			return pagingParamError();
-		}
-		int startIndex = Integer.valueOf(json.get("startIndex"));
-		int pageSize = Integer.valueOf(json.get("pageSize"));
-		
-		Map<String, Object> ret = new HashMap<String, Object>();
-		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
-		String userId = user.getId();
-
-		Page couponMoneyPage = couponService.listMoneyByUser(userId, startIndex, pageSize);
-		Page couponTimePage = couponService.listTimeByUser(userId, startIndex, pageSize);
-		
-		List<CouponVo> couponMoneyVoList = new ArrayList<CouponVo>();
-		List<CouponVo> couponTimeVoList = new ArrayList<CouponVo>();
-		
-		for (Object obj : couponMoneyPage.getItems()) {
-			Coupon po = (Coupon) obj;
-			CouponVo vo = new CouponVo();
-			BeanUtilEx.copyProperties(vo, po);
-			couponMoneyVoList.add(vo);
-		}
-		for (Object obj : couponTimePage.getItems()) {
-			Coupon po = (Coupon) obj;
-			CouponVo vo = new CouponVo();
-			BeanUtilEx.copyProperties(vo, po);
-			couponTimeVoList.add(vo);
-		}
-		
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("money", couponMoneyVoList);
-		data.put("time", couponTimeVoList);
-		data.put("moneyTotalPages", couponMoneyPage.getTotalPages());
-		data.put("timeTotalPages", couponTimePage.getTotalPages());
-		
-		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("data", data);
-		return ret;
-	}
 
 	@RequestMapping(value="listMoney")
 	@ResponseBody

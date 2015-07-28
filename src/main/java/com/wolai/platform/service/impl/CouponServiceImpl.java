@@ -81,22 +81,42 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
 	}
+	
+	@Override
+	public long countAllByUser(String userId) {
+		Date now = new Date();
+		
+		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
+		dc.add(Restrictions.eq("ownerId", userId));
+		dc.add(Restrictions.eq("isUsed", false));
+		dc.add(Restrictions.le("startDate", now));
+		dc.add(Restrictions.ge("endDate", now));
+		return getDao().count(dc);
+	}
 
 	@Override
 	public long countMoneyByUser(String userId) {
+		Date now = new Date();
+		
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.eq("type", CouponType.MONEY));
 		dc.add(Restrictions.eq("isUsed", false));
+		dc.add(Restrictions.le("startDate", now));
+		dc.add(Restrictions.ge("endDate", now));
 		return getDao().count(dc);
 	}
 
 	@Override
 	public long countTimeByUser(String userId) {
+		Date now = new Date();
+		
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.eq("type", CouponType.TIME));
 		dc.add(Restrictions.eq("isUsed", false));
+		dc.add(Restrictions.le("startDate", now));
+		dc.add(Restrictions.ge("endDate", now));
 		return getDao().count(dc);
 	}
 	

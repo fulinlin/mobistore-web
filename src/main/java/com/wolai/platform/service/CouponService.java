@@ -17,9 +17,10 @@ public interface CouponService extends CommonService {
 
     Map<String, Object> usePers(String id, String userId);
 
+    long countAllByUser(String userId);
     long countMoneyByUser(String userId);
-
     long countTimeByUser(String userId);
 
     String deductTime(Enterprise enterprise, List<Coupon> list ,long Time);
+
 }
