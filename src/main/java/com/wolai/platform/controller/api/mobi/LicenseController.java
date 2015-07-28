@@ -21,6 +21,7 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.License;
+import com.wolai.platform.entity.License.LICENSE_COLOR;
 import com.wolai.platform.entity.SysMessage;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.LicenseService;
@@ -101,9 +102,11 @@ public class LicenseController extends BaseController {
 		String frameNumber = json.get("frameNumber");
 		String brand = json.get("brand");
 		String isPostpaid = json.get("isPostpaid");
+		String color = json.get("color");
 		
 		if (StringUtils.isEmpty(carNo) || StringUtils.isEmpty(frameNumber) 
-				|| StringUtils.isEmpty(brand) || StringUtils.isEmpty(isPostpaid) ) {
+				|| StringUtils.isEmpty(brand) || StringUtils.isEmpty(isPostpaid)  || StringUtils.isEmpty(color)
+				|| LICENSE_COLOR.value(color) == null) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
@@ -122,10 +125,12 @@ public class LicenseController extends BaseController {
 		} else {
 			// 新创建车牌
 			License po = new License();
-			po.setCarNo(json.get("carNo"));
-			po.setFrameNumber(json.get("frameNumber"));
-			po.setBrand(json.get("brand"));
-			po.setIsPostpaid(Boolean.valueOf(json.get("isPostpaid")));
+			po.setCarNo(carNo);
+			po.setFrameNumber(frameNumber);
+			po.setBrand(brand);
+			po.setColor(LICENSE_COLOR.value(color));
+			
+			po.setIsPostpaid(Boolean.valueOf(isPostpaid));
 			po.setUserId(user.getId());
 			
 			licensePlateService.create(po);
@@ -142,6 +147,19 @@ public class LicenseController extends BaseController {
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
 		String id = json.get("id");
+		String color = json.get("color");
+		String carNo = json.get("carNo");
+		String frameNumber = json.get("frameNumber");
+		String brand = json.get("brand");
+		String isPostpaid = json.get("isPostpaid");
+		
+		if (StringUtils.isEmpty(id) || 
+				(color != null && LICENSE_COLOR.value(color) == null) ) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		
 		License po = licensePlateService.getLicense(id, user.getId());
@@ -151,10 +169,21 @@ public class LicenseController extends BaseController {
 			return ret;
 		}
 		
-		po.setCarNo(json.get("carNo"));
-		po.setFrameNumber(json.get("frameNumber"));
-		po.setBrand(json.get("brand"));
-		po.setIsPostpaid(Boolean.valueOf(json.get("isPostpaid")));
+		if (!StringUtils.isEmpty(carNo)) {
+			po.setCarNo(carNo);
+		}
+		if (!StringUtils.isEmpty(frameNumber)) {
+			po.setFrameNumber(frameNumber);
+		}
+		if (!StringUtils.isEmpty(brand)) {
+			po.setBrand(brand);
+		}
+		if (!StringUtils.isEmpty(isPostpaid)) {
+			po.setIsPostpaid(Boolean.valueOf(isPostpaid));
+		}
+		if (!StringUtils.isEmpty(color)) {
+			po.setColor(LICENSE_COLOR.value(color));
+		}
 		
 		licensePlateService.update(po);
 

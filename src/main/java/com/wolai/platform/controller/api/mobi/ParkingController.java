@@ -139,10 +139,6 @@ public class ParkingController extends BaseController{
 			vo.setCouponType(bill.getCoupon().getType());
 			vo.setCouponMoney(new BigDecimal(bill.getCoupon().getMoney()));
 			vo.setCouponTime(bill.getCoupon().getTime());
-		} else {
-			ret.put("code", RespCode.INTERFACE_FAIL.Code());
-			ret.put("msg", "not found");
-			return ret;
 		}
 		
 		ret.put("code", RespCode.SUCCESS.Code());

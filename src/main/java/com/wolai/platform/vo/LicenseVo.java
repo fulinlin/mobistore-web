@@ -6,6 +6,7 @@ public class LicenseVo {
 	private String frameNumber;
 	private String brand;
 	private Boolean isPostpaid;
+	private String color;
 	
 	public String getCarNo() {
 		return carNo;
@@ -36,6 +37,12 @@ public class LicenseVo {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 }

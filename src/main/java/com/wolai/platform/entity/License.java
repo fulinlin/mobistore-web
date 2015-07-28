@@ -2,6 +2,8 @@ package com.wolai.platform.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,6 +28,40 @@ public class License extends IdEntity{
 	 * 
 	 */
 	private static final long serialVersionUID = 5128744877634675218L;
+	
+  	public static enum LICENSE_COLOR{
+  		RED("RED"), YELLOW("YELLOW"), BLUE("BLUE"), BLACK("BLACK"), WHITE("WHITE");
+  		
+  		private LICENSE_COLOR(String code){
+  			this.code = code;
+  		}
+  		private String code;
+  		
+  		public String Code(){
+  			return code;
+  		}
+  		
+  		public String toString() {
+  			return code;
+  		}
+  		
+  		 public static LICENSE_COLOR value(String value) {
+  	        switch (value) {
+  	        case "RED":
+  	        	return RED;
+  	        case "YELLOW":
+  	            return YELLOW;
+  	        case "BLUE":
+  	        	return BLUE;
+  	        case "BLACK":
+  	            return BLACK;
+  	        case "WHITE":
+  	        	return WHITE;
+  	        default:
+  	            return null;
+  	        }
+  	    }
+  	}
 
 	/**
 	 * 车牌号
@@ -41,6 +77,12 @@ public class License extends IdEntity{
 	 * 品牌
 	 */
 	private String brand;
+	
+	/**
+	 * 颜色
+	 */
+	@Enumerated(EnumType.STRING)
+	private LICENSE_COLOR color;
 	
 	/**
 	 * 是否绑定
@@ -104,5 +146,12 @@ public class License extends IdEntity{
 
 	public void setUser(SysUser user) {
 		this.user = user;
+	}
+
+	public LICENSE_COLOR getColor() {
+		return color;
+	}
+	public void setColor(LICENSE_COLOR color) {
+		this.color = color;
 	}
 }
