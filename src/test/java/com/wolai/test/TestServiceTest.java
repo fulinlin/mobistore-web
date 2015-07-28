@@ -18,6 +18,6 @@ public class TestServiceTest {
     
     @Test
     public void saveTestData() {
-        testService.saveTestData();
+//        testService.saveTestData();
      }
 }
