@@ -86,39 +86,7 @@ public class PaymentController extends BaseController {
 		ret.put("data", alipayVo);
 		return ret;
 	}
-	
-	@RequestMapping(value="pay")
-	@ResponseBody
-	public Map<String,Object> pay(HttpServletRequest request, @RequestBody Map<String, String> json){
-		Map<String,Object> ret = new HashMap<String, Object>();
-		
-		String wolaiTradeNo = json.get("wolaiTradeNo"); // 订单交易号
-		String alipayTradeNo = json.get("alipayTradeNo"); // 支付宝交易号
-		String payType = json.get("payType");
-		
-		if (StringUtils.isEmpty(wolaiTradeNo) || StringUtils.isEmpty(alipayTradeNo) || StringUtils.isEmpty(payType)) {
-			ret.put("code", RespCode.INTERFACE_FAIL.Code());
-			ret.put("msg", "parameters error");
-			return ret;
-		}
-		
-		Object obj = billService.get(Bill.class, wolaiTradeNo);
-		if (obj == null) {
-			ret.put("code", RespCode.INTERFACE_FAIL.Code());
-			ret.put("msg", "bill not found by using wolaiTradeNo " + wolaiTradeNo);
-			return ret;
-		}
-		
-		Bill bill = (Bill) obj;
-		paymentService.payPers(bill, payType, alipayTradeNo);
-		
-		BillVo billVo = new BillVo();
-		BeanUtilEx.copyProperties(billVo, bill);
-		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("data", billVo);
-		return ret;
-	}
-	
+
 	@AuthPassport(validate=false)
 	@RequestMapping(value="alipayCallback")
 	@ResponseBody
