@@ -3,6 +3,8 @@ package com.wolai.platform.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 /**
@@ -18,6 +20,35 @@ public class SysMessage extends IdEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 5462783088930984388L;
+	
+	/**
+  	 *	消息类型
+  	 */
+  	public static enum MsgType{
+  		/**
+  		 * 通知
+  		 */
+  		NOTICE("NOTICE"),
+  		/**
+  		 * 消息
+  		 */
+  		MSG("MSG");
+  		
+  		private MsgType(String textVal){
+  			this.textVal=textVal;
+  		}
+  		private String textVal;
+  		
+  		public String toString(){
+  			return textVal;
+  		}
+  	}
+  	
+	/**
+	 * 消息类型
+	 */
+  	@Enumerated(EnumType.STRING)
+	private MsgType type;
 
 	/**
 	 * 标题
@@ -72,4 +103,12 @@ public class SysMessage extends IdEntity {
     public void setPublished(boolean published) {
         this.published = published;
     }
+
+	public MsgType getType() {
+		return type;
+	}
+
+	public void setType(MsgType type) {
+		this.type = type;
+	}
 }

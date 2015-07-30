@@ -2,11 +2,14 @@ package com.wolai.platform.vo;
 
 import java.util.Date;
 
+import com.wolai.platform.entity.SysMessage.MsgType;
+
 public class MessageVo {
 	private String id;
 	private String title;
 	private String content;
 	private Date sendTime;
+	private String type;
 	
 	public String getTitle() {
 		return title;
@@ -32,6 +35,12 @@ public class MessageVo {
 	}
 	public void setSendTime(Date sendTime) {
 		this.sendTime = sendTime;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }
