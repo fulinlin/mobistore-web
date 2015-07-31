@@ -27,7 +27,7 @@ public class ParkingRecord extends IdEntity {
 	private static final long serialVersionUID = 6012441198587216743L;
 	
   	public static enum ParkStatus{
-  		IN("IN"), PARKED("PARKED"), OUT("PARKED");
+  		IN("IN"), PARKED("PARKED"), OUT("OUT");
   		
   		private ParkStatus(String code){
   			this.code = code;
@@ -94,7 +94,7 @@ public class ParkingRecord extends IdEntity {
 	 * 在库状态
 	 */
 	@Enumerated(EnumType.STRING)
-	private ParkStatus parkStatus;
+	private ParkStatus parkStatus = ParkingRecord.ParkStatus.OUT;
 	
 	/**
 	 * 应付金额
