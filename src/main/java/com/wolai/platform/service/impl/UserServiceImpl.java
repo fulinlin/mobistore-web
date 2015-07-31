@@ -19,6 +19,7 @@ import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.Enterprise;
 import com.wolai.platform.entity.ExchangePlan;
 import com.wolai.platform.entity.Promotion;
+import com.wolai.platform.entity.RewardPoints;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.entity.SysUser.PayType;
@@ -127,6 +128,11 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		user.setAuthToken(newToken);
 		user.setLastLoginTime(new Date());
 		saveOrUpdate(user);
+		
+		RewardPoints rewardPoints = new RewardPoints();
+		rewardPoints.setBalance(0);
+		rewardPoints.setUserId(user.getId());
+		promotionService.saveOrUpdate(rewardPoints);
 		
 		// 按促销，送代金券
 		promotionService.registerPresent(user.getId());
