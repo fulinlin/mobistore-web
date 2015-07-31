@@ -52,13 +52,6 @@ public class UserController extends BaseController{
 			ret.put("msg", "parameters error");
 			return ret;
 		}
-		
-		SysUser po = userService.getUserByPhone(phone);
-		if (po != null) {
-			ret.put("code", RespCode.BIZ_FAIL.Code());
-			ret.put("msg", "手机已被占用");
-			return ret;
-		}
 
 		String vcode = userService.createCode(phone);
 
