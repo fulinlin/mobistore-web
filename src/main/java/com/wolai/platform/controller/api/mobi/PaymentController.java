@@ -62,6 +62,7 @@ public class PaymentController extends BaseController {
 		
 		String parkingId = json.get("parkingId");
 		String couponId = json.get("couponId");
+		String clientType = json.get("clientType");
 		
 		if (StringUtils.isEmpty(parkingId)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
@@ -81,6 +82,10 @@ public class PaymentController extends BaseController {
 		AlipayVo alipayVo = new AlipayVo();
 		alipayVo.setWolaiTradeNo(bill.getId());
 		alipayVo.setAmount(bill.getMoney());
+		
+		if (clientType != null && "ios".equals(clientType.toLowerCase())) {
+			alipayVo.setPartnerPrivKey(Constant.alipay_partnerPrivKey_pkcs8);
+		}
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", alipayVo);
