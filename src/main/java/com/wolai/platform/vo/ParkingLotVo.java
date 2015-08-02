@@ -8,6 +8,9 @@ public class ParkingLotVo {
 	private String latitude;
 	private String address;
 	private String info;
+	private String chargeInfo;
+	private String city;
+	private Boolean isProprietary;
 	
 	public String getName() {
 		return name;
@@ -50,6 +53,24 @@ public class ParkingLotVo {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getChargeInfo() {
+		return chargeInfo;
+	}
+	public void setChargeInfo(String chargeInfo) {
+		this.chargeInfo = chargeInfo;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public Boolean getIsProprietary() {
+		return isProprietary;
+	}
+	public void setIsProprietary(Boolean isProprietary) {
+		this.isProprietary = isProprietary;
 	}
 	
 	
