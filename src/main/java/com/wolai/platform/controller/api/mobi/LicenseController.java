@@ -104,7 +104,7 @@ public class LicenseController extends BaseController {
 		String isPostpaid = json.get("isPostpaid");
 		String color = json.get("color");
 		
-		if (StringUtils.isEmpty(carNo) || StringUtils.isEmpty(frameNumber) 
+		if (StringUtils.isEmpty(carNo) 
 				|| StringUtils.isEmpty(brand) || StringUtils.isEmpty(isPostpaid)  || StringUtils.isEmpty(color)
 				|| LICENSE_COLOR.value(color) == null) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
