@@ -62,7 +62,7 @@ public class Bill extends IdEntity {
 	 * 支付状态
 	 */
 	public static  enum PayStatus{
-		INIT(1),SUCCESSED(10),FEATURE(-1);
+		INIT(0),SUCCESSED(1),FEATURE(-1);
 		
 		private PayStatus(Integer textVal){
   			this.textVal=textVal;

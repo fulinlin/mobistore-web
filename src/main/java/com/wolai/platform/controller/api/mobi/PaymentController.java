@@ -102,7 +102,8 @@ public class PaymentController extends BaseController {
 		String[] alipayTradeNo = params.get("trade_no"); // 支付宝交易号
 		String[] alipayTradeStatus = params.get("trade_status"); // 支付宝交易状态
 		
-		if (wolaiTradeNo.length == 0 || alipayTradeNo.length == 0 || alipayTradeStatus.length == 0) {
+		if (wolaiTradeNo ==null || alipayTradeNo ==null || alipayTradeStatus ==null || 
+				wolaiTradeNo.length == 0 || alipayTradeNo.length == 0 || alipayTradeStatus.length == 0) {
 			log.error("支付宝异步接口参数错误");
 			return "error";
 		}
