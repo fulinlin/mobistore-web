@@ -59,5 +59,9 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		bill.setPayStatus(PayStatus.SUCCESSED);
 		bill.setTradeSuccessTime(new Date());
 		saveOrUpdate(bill);
+		
+		ParkingRecord park = (ParkingRecord) billService.get(ParkingRecord.class, bill.getParkingRecordId());
+		park.setIsPaid(true);
+		saveOrUpdate(park);
 	}
 }
