@@ -25,13 +25,16 @@ public class BeanUtilEx extends BeanUtils {
 	}
 
 	public static void main(String[] args) {
-		D1 d1 = new D1();
-		D2 d2 = new D2();
-
-		d1.setDate(new Date());
-
-		System.out.println(d2.getDate());
-		BeanUtilEx.copyProperties(d2, d1);
-		System.out.println(d2.getDate());
+//		D1 d1 = new D1();
+//		D2 d2 = new D2();
+//
+//		d1.setDate(new Date());
+//
+//		System.out.println(d2.getDate());
+//		BeanUtilEx.copyProperties(d2, d1);
+//		System.out.println(d2.getDate());
+		
+		String regex = ".*[A-Za-z0-9]{5}$";
+		System.out.println("dsad0烧烤&sSSSdf".toUpperCase());
 	}
 }

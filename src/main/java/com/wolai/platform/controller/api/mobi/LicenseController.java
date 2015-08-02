@@ -112,6 +112,13 @@ public class LicenseController extends BaseController {
 			return ret;
 		}
 		
+		String regex = ".*[A-Za-z0-9]{5}$";
+		if (carNo.matches(regex)) {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "车牌后五位只能是字母或数字");
+			return ret;
+		}
+		
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		License lincense = licensePlateService.getLincense(carNo);
 		if (lincense != null && !"TEMP".equals(lincense.getUser().getCustomerType())) {
@@ -125,7 +132,7 @@ public class LicenseController extends BaseController {
 		} else {
 			// 新创建车牌
 			License po = new License();
-			po.setCarNo(carNo);
+			po.setCarNo(carNo.toUpperCase());
 			po.setFrameNumber(frameNumber);
 			po.setBrand(brand);
 			po.setColor(LICENSE_COLOR.value(color));
