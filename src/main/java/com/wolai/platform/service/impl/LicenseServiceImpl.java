@@ -57,6 +57,7 @@ public class LicenseServiceImpl extends CommonServiceImpl implements LicenseServ
 	@Override
 	public License getLicense(String id, String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(License.class);
+		dc.add(Restrictions.eq("id", id));
 		dc.add(Restrictions.eq("userId", userId));
 		dc.add(Restrictions.eq("isDelete", false));
 		dc.add(Restrictions.eq("isDisable", false));
