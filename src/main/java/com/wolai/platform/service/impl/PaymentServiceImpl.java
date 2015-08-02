@@ -53,8 +53,8 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	}
 
 	@Override
-	public void successPers(Bill bill, String trade_no, String trade_status) {
-		
+	public void successPers(Bill bill, String trade_no, String trade_status, Bill.PayType payType) {
+		bill.setPaytype(payType);
 		bill.setTradeStatus(trade_status);
 		bill.setPayStatus(PayStatus.SUCCESSED);
 		bill.setTradeSuccessTime(new Date());

@@ -124,7 +124,7 @@ public class PaymentController extends BaseController {
 			return "error";
 		}
 		
-		paymentService.successPers(bill, alipayTradeNo[0], alipayTradeStatus[0]);
+		paymentService.successPers(bill, alipayTradeNo[0], alipayTradeStatus[0], Bill.PayType.ALIPAY);
 		log.info("支付宝交易返回：" + alipayTradeNo[0] + "-" + alipayTradeStatus[0]);
 		
 		return "success";
