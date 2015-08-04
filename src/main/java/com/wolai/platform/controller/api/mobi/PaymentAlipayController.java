@@ -37,7 +37,7 @@ import com.wolai.platform.vo.ParkingVo;
 
 @Controller
 @RequestMapping(Constant.API_MOBI + "payment/")
-public class PaymentController extends BaseController {
+public class PaymentAlipayController extends BaseController {
 	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
 	
 	@Autowired
@@ -90,45 +90,6 @@ public class PaymentController extends BaseController {
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", alipayVo);
 		return ret;
-	}
-	
-	@AuthPassport(validate=false)
-	@RequestMapping(value="confirmPostPay")
-	@ResponseBody
-	public Map<String,Object> confirmPostPay(HttpServletRequest request, @RequestBody Map<String, String> json){
-		Map<String,Object> ret = new HashMap<String, Object>();
-		
-		String parkingId = json.get("parkingId");
-		String couponId = json.get("couponId");
-		String clientType = json.get("clientType");
-		
-		if (StringUtils.isEmpty(parkingId)) {
-			ret.put("code", RespCode.INTERFACE_FAIL.Code());
-			ret.put("msg", "parameters error");
-			return ret;
-		}
-		
-		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("data", "");
-		return ret;
-	}
-	
-	@AuthPassport(validate=false)
-	@RequestMapping(value="unionpayCallback")
-	@ResponseBody
-	public String unionpayCallback(HttpServletRequest request){
-		Map<String, String[]> params = request.getParameterMap(); 
-		
-		return "";
-	}
-	
-	@AuthPassport(validate=false)
-	@RequestMapping(value="wechatCallback")
-	@ResponseBody
-	public String wechatCallback(HttpServletRequest request){
-		Map<String, String[]> params = request.getParameterMap(); 
-		
-		return "";
 	}
 
 	@AuthPassport(validate=false)
