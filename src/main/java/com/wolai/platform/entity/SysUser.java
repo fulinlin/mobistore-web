@@ -79,7 +79,7 @@ public class SysUser extends IdEntity {
   		/**
   		 * perpaid(确认后付费)
   		 */
-  		NOTICEPAID("NOTICEPAID"),
+  		CONFIRM_POSTPAID("CONFIRM_POSTPAID"),
   		/**
   		 * postpaid(后付费)
   		 */

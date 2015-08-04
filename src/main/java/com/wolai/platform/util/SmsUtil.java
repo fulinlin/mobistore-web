@@ -53,33 +53,33 @@ public class SmsUtil {
         params.add(new BasicNameValuePair("mobile", mobile));
         params.add(new BasicNameValuePair("type", "pt"));
         
-//        UrlEncodedFormEntity uefEntity;  
-//        try {  
-//            uefEntity = new UrlEncodedFormEntity(params, "UTF-8");  
-//            httppost.setEntity(uefEntity);  
-//            log.info("executing request " + httppost.getURI());  
-//            CloseableHttpResponse response = httpclient.execute(httppost);  
-//            try {  
-//                HttpEntity entity = response.getEntity();  
-//                if (entity != null) {   
-//                	log.info("Response content: " + EntityUtils.toString(entity, "UTF-8"));
-//                }  
-//            } finally {  
-//                response.close();  
-//            }  
-//        } catch (ClientProtocolException e) {  
-//            e.printStackTrace();  
-//        } catch (UnsupportedEncodingException e1) {  
-//            e1.printStackTrace();  
-//        } catch (IOException e) {  
-//            e.printStackTrace();  
-//        } finally {  
-//            try {  
-//                httpclient.close();  
-//            } catch (IOException e) {  
-//                e.printStackTrace();  
-//            }  
-//        }  
+        UrlEncodedFormEntity uefEntity;  
+        try {  
+            uefEntity = new UrlEncodedFormEntity(params, "UTF-8");  
+            httppost.setEntity(uefEntity);  
+            log.info("executing request " + httppost.getURI());  
+            CloseableHttpResponse response = httpclient.execute(httppost);  
+            try {  
+                HttpEntity entity = response.getEntity();  
+                if (entity != null) {   
+                	log.info("Response content: " + EntityUtils.toString(entity, "UTF-8"));
+                }  
+            } finally {  
+                response.close();  
+            }  
+        } catch (ClientProtocolException e) {  
+            e.printStackTrace();  
+        } catch (UnsupportedEncodingException e1) {  
+            e1.printStackTrace();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        } finally {  
+            try {  
+                httpclient.close();  
+            } catch (IOException e) {  
+                e.printStackTrace();  
+            }  
+        }  
     }  
 
 	public static void main(String[] args) {
