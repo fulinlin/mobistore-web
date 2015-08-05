@@ -122,7 +122,7 @@ public class LicenseController extends BaseController {
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		License lincense = licensePlateService.getLincense(carNo);
 		if (lincense != null && !"TEMP".equals(lincense.getUser().getCustomerType())) {
-			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("code", RespCode.BIZ_FAIL_2.Code());
 			ret.put("msg", "车牌已注册");
 			return ret;
 		} else if (lincense != null && "TEMP".equals(lincense.getUser().getCustomerType())) { 

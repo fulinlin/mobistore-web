@@ -98,7 +98,7 @@ public final class Constant {
     
     
   	public static enum RespCode{
-  		SUCCESS(1), BIZ_FAIL(-1), INTERFACE_FAIL(-10), NOT_LOGIN(-100);
+  		SUCCESS(1), BIZ_FAIL(-1), BIZ_FAIL_2(-2), INTERFACE_FAIL(-10), NOT_LOGIN(-100);
   		
   		private RespCode(int code){
   			this.code = code;

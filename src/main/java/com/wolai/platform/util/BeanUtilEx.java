@@ -35,6 +35,6 @@ public class BeanUtilEx extends BeanUtils {
 //		System.out.println(d2.getDate());
 		
 		String regex = ".*[A-Za-z0-9]{5}$";
-		System.out.println("粤SD0000".matches(regex));
+		System.out.println("粤SD0&00".matches(regex));
 	}
 }
