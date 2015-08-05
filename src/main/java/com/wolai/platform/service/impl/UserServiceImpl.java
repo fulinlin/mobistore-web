@@ -75,7 +75,7 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		if (users.size() > 0) {
 			user = users.get(0);
 			newToken = UUID.randomUUID().toString();
-//			user.setAuthToken(newToken); //TODO: 
+			user.setAuthToken(newToken); //TODO: 
 			user.setLastLoginTime(new Date());
 			saveOrUpdate(user);
 		} 

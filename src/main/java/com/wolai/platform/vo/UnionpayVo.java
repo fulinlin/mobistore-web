@@ -23,6 +23,7 @@ public class UnionpayVo {
 	private String notifyUrl;
 	
 	private String wolaiTradeNo;
+	private String payTradeNo;
 	private BigDecimal amount;	
 	private PayType paytype;
 	
@@ -80,6 +81,12 @@ public class UnionpayVo {
 	}
 	public void setWolaiTradeNo(String wolaiTradeNo) {
 		this.wolaiTradeNo = wolaiTradeNo;
+	}
+	public String getPayTradeNo() {
+		return payTradeNo;
+	}
+	public void setPayTradeNo(String payTradeNo) {
+		this.payTradeNo = payTradeNo;
 	}
 
 }
