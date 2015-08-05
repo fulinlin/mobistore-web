@@ -12,7 +12,7 @@ import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.PaymentService;
-import com.wolai.platform.util.StringUtils;
+import com.wolai.platform.util.StringUtil;
 
 @Service
 public class PaymentServiceImpl extends CommonServiceImpl implements PaymentService {
@@ -34,7 +34,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 			bill.setCreateTime(new Date());
 		}
 		
-		if (StringUtils.isNotEmpty(couponId)) {
+		if (StringUtil.isNotEmpty(couponId)) {
 			bill.setCouponId(couponId);
 		}
 		

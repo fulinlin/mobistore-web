@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.IdEntity;
 import com.wolai.platform.service.CommonService;
-import com.wolai.platform.util.StringUtils;
+import com.wolai.platform.util.StringUtil;
 
 @Service
 public class CommonServiceImpl extends BaseServiceImpl implements CommonService {
@@ -85,7 +85,7 @@ public class CommonServiceImpl extends BaseServiceImpl implements CommonService 
 
     @Override
     public IdEntity saveOrUpdate(IdEntity entity) {
-        if(StringUtils.isBlank(entity.getId())){
+        if(StringUtil.isBlank(entity.getId())){
             entity.setId(null);
         }
         getDao().saveOrUpdate(entity);

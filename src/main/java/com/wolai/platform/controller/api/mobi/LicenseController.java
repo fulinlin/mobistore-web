@@ -113,7 +113,7 @@ public class LicenseController extends BaseController {
 		}
 		
 		String regex = ".*[A-Za-z0-9]{5}$";
-		if (carNo.matches(regex)) {
+		if (!carNo.matches(regex)) {
 			ret.put("code", RespCode.BIZ_FAIL.Code());
 			ret.put("msg", "车牌后五位只能是字母或数字");
 			return ret;

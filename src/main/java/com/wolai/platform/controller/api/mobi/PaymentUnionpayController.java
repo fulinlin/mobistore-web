@@ -115,7 +115,7 @@ public class PaymentUnionpayController extends BaseController {
 	
 	// 银联代扣回调
 	@AuthPassport(validate=false)
-	@RequestMapping(value="unionpayDelegateCallback")
+	@RequestMapping(value="delegateCallback")
 	@ResponseBody
 	public String unionpayDelegateCallback(HttpServletRequest request){
 		Map<String, String[]> params = request.getParameterMap(); 
@@ -125,7 +125,7 @@ public class PaymentUnionpayController extends BaseController {
 	
 	// 银联消费回调
 	@AuthPassport(validate=false)
-	@RequestMapping(value="unionpayConsumeCallback")
+	@RequestMapping(value="consumeCallback")
 	@ResponseBody
 	public String unionpayConsumeCallback(HttpServletRequest request){
 		Map<String, String[]> params = request.getParameterMap(); 

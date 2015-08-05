@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.Bill.PayType;
 
-public class AlipayVo {
-	public AlipayVo() {
+public class UnionpayVo {
+	public UnionpayVo() {
 		this.productionName = Constant.payment_productionName;
 		this.productionDesrcription = Constant.payment_productionDesrcription;
 		this.partnerId = Constant.alipay_partnerId;
@@ -23,7 +23,8 @@ public class AlipayVo {
 	private String notifyUrl;
 	
 	private String wolaiTradeNo;
-	private BigDecimal amount;
+	private BigDecimal amount;	
+	private PayType paytype;
 	
 
 	public String getPartnerId() {
@@ -67,6 +68,12 @@ public class AlipayVo {
 	}
 	public void setNotifyUrl(String notifyUrl) {
 		this.notifyUrl = notifyUrl;
+	}
+	public PayType getPaytype() {
+		return paytype;
+	}
+	public void setPaytype(PayType paytype) {
+		this.paytype = paytype;
 	}
 	public String getWolaiTradeNo() {
 		return wolaiTradeNo;

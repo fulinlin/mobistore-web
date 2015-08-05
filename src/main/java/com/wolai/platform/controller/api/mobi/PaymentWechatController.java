@@ -1,8 +1,6 @@
 package com.wolai.platform.controller.api.mobi;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,18 +20,14 @@ import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.ParkingRecord;
-import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.service.UserService;
-import com.wolai.platform.util.BeanUtilEx;
+import com.wolai.platform.service.WechatPayRequest;
 import com.wolai.platform.util.FileUtils;
-import com.wolai.platform.vo.AlipayVo;
-import com.wolai.platform.vo.BillVo;
-import com.wolai.platform.vo.ParkingLotVo;
-import com.wolai.platform.vo.ParkingVo;
+import com.wolai.platform.vo.WechatPayVo;
 
 @Controller
 @RequestMapping(Constant.API_MOBI + "payment/wechat/")
@@ -54,6 +48,9 @@ public class PaymentWechatController extends BaseController {
 	
 	@Autowired
 	BillService billService;
+	
+	@Autowired
+	WechatPayRequest wechatPayRequest;
 
 	@RequestMapping(value="prepare")
 	@ResponseBody
@@ -62,7 +59,6 @@ public class PaymentWechatController extends BaseController {
 		
 		String parkingId = json.get("parkingId");
 		String couponId = json.get("couponId");
-		String clientType = json.get("clientType");
 		
 		if (StringUtils.isEmpty(parkingId)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
@@ -79,26 +75,52 @@ public class PaymentWechatController extends BaseController {
 		
 		ParkingRecord park = (ParkingRecord) obj;
 		Bill bill = paymentService.createBillIfNeededPers(park, couponId);
-		AlipayVo alipayVo = new AlipayVo();
-		alipayVo.setWolaiTradeNo(bill.getId());
-		alipayVo.setAmount(bill.getMoney());
 		
-		if (clientType != null && "ios".equals(clientType.toLowerCase())) {
-			alipayVo.setPartnerPrivKey(Constant.alipay_partnerPrivKey_pkcs8);
+		WechatPayVo payRequest = new WechatPayVo();
+
+		String out_trade_no = bill.getId();
+		payRequest.setOut_trade_no(out_trade_no);
+		
+		String total_fee = bill.getMoney().toBigInteger().toString();
+		payRequest.setTotal_fee(Integer.valueOf(total_fee));
+		
+		String spbill_create_ip = json.get("spbill_create_ip");
+		payRequest.setSpbill_create_ip(spbill_create_ip);
+		
+		String sign = wechatPayRequest.getSign(wechatPayRequest.toMap(payRequest));
+		payRequest.setSign(sign);
+		
+		String result;
+		try {
+			result = wechatPayRequest.sendPost(Constant.wechat_pay_request_url, payRequest);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
+//		downloadBillResData = (DownloadBillResData) wechatPayRequest.getObjectFromXML(result, DownloadBillResData.class);
+
+		
 		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("data", alipayVo);
+//		ret.put("data", payVo);
 		return ret;
 	}
 	
 	@AuthPassport(validate=false)
-	@RequestMapping(value="wechatCallback")
+	@RequestMapping(value="callback")
 	@ResponseBody
 	public String wechatCallback(HttpServletRequest request){
 		Map<String, String[]> params = request.getParameterMap(); 
 		
+		String[] return_code = params.get("return_code");
+		String[] return_msg = params.get("return_msg");
+		String[] result_code = params.get("result_code");
+		String[] err_code = params.get("err_code"); 
+		String[] err_code_des = params.get("err_code_des"); 
+		String[] out_trade_no = params.get("out_trade_no"); 
+		String[] total_fee = params.get("total_fee");
+		
+//		return_code
 		return "";
 	}
-
+    
 }
