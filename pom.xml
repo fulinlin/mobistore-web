@@ -64,14 +64,14 @@
 			<url>https://raw.github.com/thinkgem/repository/master</url>
 		</repository>
 
-	    <repository>
-	        <snapshots>
-	            <enabled>true</enabled>
-	        </snapshots>
-	        <id>thirdparty</id>
-	        <name>thirdparty</name>
-	　　　　 <url>http://101.200.189.57:8081/nexus/content/repositories/thirdparty</url>
-	    </repository>
+		<repository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>thirdparty</id>
+			<name>thirdparty</name>
+			<url>http://101.200.189.57:8081/nexus/content/repositories/thirdparty</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -222,13 +222,6 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>1.0.9</version>
-		</dependency>
-
-		<!-- java mail -->
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4.4</version>
 		</dependency>
 
 		<!-- log4j -->
@@ -414,15 +407,6 @@
 			<version>2.3.20</version>
 		</dependency>
 		
-        <!-- junit start -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<type>jar</type>
-			<scope>test</scope>
-		</dependency>
-		
 		<dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
@@ -493,28 +477,6 @@
 										<include name="**/*.jar" />
 									</fileset>
 								</delete>
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-						<id>copy-third-party</id>
-						<phase>package</phase>
-						<configuration>
-							<tasks>
-								<copy todir="${basedir}/src/main/webapp/WEB-INF/lib">
-								    <fileset dir="${basedir}/libs">
-								    	<include name="**/*.jar" />
-									</fileset>
-								</copy>
 							</tasks>
 						</configuration>
 						<goals>
