@@ -22,6 +22,7 @@ import com.wolai.platform.config.SystemConfig;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.service.UserService;
+import com.wolai.platform.util.IdGen;
 
 @Controller("webUserController")
 @RequestMapping("${adminPath}/user")
@@ -35,7 +36,9 @@ public class UserController extends BaseController {
 		if (StringUtils.isNotBlank(id)){
 			return (SysUser) userService.get(SysUser.class,id);
 		}else{
-			return new SysUser();
+			SysUser use = new SysUser();
+			use.setAuthToken(IdGen.uuid());
+			return use;
 		}
 	}
 	

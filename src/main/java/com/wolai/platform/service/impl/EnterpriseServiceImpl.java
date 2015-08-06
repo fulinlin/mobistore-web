@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.entity.Enterprise;
@@ -12,10 +13,15 @@ import com.wolai.platform.entity.SysLoginAccount;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.service.EnterpriseService;
+import com.wolai.platform.service.LoginAccountService;
+import com.wolai.platform.util.IdGen;
 
 @Service
 public class EnterpriseServiceImpl extends CommonServiceImpl implements EnterpriseService {
 
+	@Autowired
+	private LoginAccountService loginaccountService;
+	
     @Override
     @SuppressWarnings("unchecked")
     public Enterprise getEnterprise(String userId) {
@@ -35,13 +41,13 @@ public class EnterpriseServiceImpl extends CommonServiceImpl implements Enterpri
 			SysUser user = enterprise.getUser();
 			user.setCustomerType(UserType.ENTERPRISE);
 			getDao().save(user);
-			
 			enterprise.setUserId(user.getId());
 			
 			account=new SysLoginAccount();
 			account.setUserId(user.getId());
 			account.setEmail(user.getEmail());
-			
+			account.setActiveCode(IdGen.uuid());
+			loginaccountService.saveOrUpdate(account);
 		}
 		enterprise.setUser(null);
 		getDao().saveOrUpdate(enterprise);

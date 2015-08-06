@@ -2,11 +2,31 @@ package com.wolai.platform.controller.api;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.alibaba.fastjson.JSON;
 import com.wolai.platform.constant.Constant.RespCode;
+import com.wolai.platform.util.WebUtils;
+import com.wolai.platform.validator.BeanValidators;
 
 public class BaseController {
+	
+	
+	/**
+	 * 验证Bean实例对象
+	 */
+	@Autowired
+	protected Validator validator;
 	
 	public boolean pagingParamError(Map<String, String> json){
 		if (json.get("startIndex") == null || json.get("pageSize") == null) {
@@ -16,6 +36,22 @@ public class BaseController {
 		return false;
 	}
 
+    /**
+     * 
+     * 异常处理
+     * @author xuxiang
+     * @param request 请求
+     * @param e 异常
+     * @return 返回视图
+     */
+    @ExceptionHandler
+    public void exception(HttpServletRequest request,HttpServletResponse response, Exception e) {
+    	Map<String, Object> result = new HashMap<String, Object>();
+    	result.put("code", -200);
+    	WebUtils.renderJson(response, JSON.toJSONString(result));
+    }
+    
+	
 	public Map<String,Object> pagingParamError(){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 
@@ -38,5 +74,35 @@ public class BaseController {
 		ret.put("code", RespCode.INTERFACE_FAIL.Code());
 		ret.put("msg", "not found");
 		return ret;
+	}
+	
+	/**
+	 * 服务端参数有效性验证
+	 * @param object 验证的实体对象
+	 * @param groups 验证组
+	 * @return 验证成功：返回true；严重失败：将错误信息添加到 message 中
+	 */
+	protected boolean beanValidator(Model model, Object object, Class<?>... groups) {
+		try{
+			BeanValidators.validateWithException(validator, object, groups);
+		}catch(ConstraintViolationException ex){
+			List<String> list = BeanValidators.extractPropertyAndMessageAsList(ex, ": ");
+			list.add(0, "数据验证失败：");
+			addMessage(model, list.toArray(new String[]{}));
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * 添加Model消息
+	 * @param messages 消息
+	 */
+	protected void addMessage(Model model, String... messages) {
+		StringBuilder sb = new StringBuilder();
+		for (String message : messages){
+			sb.append(message).append(messages.length>1?"<br/>":"");
+		}
+		model.addAttribute("msg", sb.toString());
 	}
 }

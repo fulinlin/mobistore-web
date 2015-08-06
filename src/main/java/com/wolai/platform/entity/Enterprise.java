@@ -54,7 +54,6 @@ public class Enterprise extends IdEntity {
     /** 
      * 客户id
      */
-    @NotNull(message="客户所属id不能为空！")
     @Column(name="user_id")
     private String userId;
     

@@ -239,7 +239,7 @@ public class Page<T> {
 					+ (i + 1 - first) + "</a></li>\n");
 		}
 
-		if (pageNo == last) {
+		if (pageNo == last || last<=1) {
 			pageHtml.append("<li class=\"disabled\"><a href=\"javascript:\">下一页 &#187;</a></li>\n");
 		} else {
 			pageHtml.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+getNextPage()+","+limit+");\">"

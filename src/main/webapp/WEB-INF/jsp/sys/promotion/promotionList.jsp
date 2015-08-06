@@ -52,7 +52,10 @@
 					</a>
 				</td>
 				<td>
-					${promotion.limitType}
+					${promotion.code.textLable}
+				</td>
+				<td>
+					${promotion.limitType.textLable}
 				</td>
 				<td>
 					<fmt:formatDate value="${promotion.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/>

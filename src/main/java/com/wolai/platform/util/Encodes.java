@@ -3,11 +3,19 @@ package com.wolai.platform.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.security.Key;
+import java.util.Arrays;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * 封装各种格式的编码解码工具类.
@@ -20,9 +28,14 @@ import org.apache.commons.lang3.StringEscapeUtils;
  */
 public class Encodes {
 
+	private static Log log =LogFactory.getLog(Encodes.class);
 	private static final String DEFAULT_URL_ENCODING = "UTF-8";
 	private static final char[] BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
+	private static final String CIPHER_ALGORITHM_CBC = "AES/CBC/PKCS5Padding";
+	private static final String KEY_ALGORITHM = "AES";
+	private static final String IV="1234567812345678";
+	
 	/**
 	 * Hex编码.
 	 */
@@ -122,5 +135,58 @@ public class Encodes {
 		} catch (UnsupportedEncodingException e) {
 			throw Exceptions.unchecked(e);
 		}
+	}
+	
+	public static String encodeAES(byte[] source,String key){
+		try {
+			Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_CBC);
+			Key secretKey =getAESKeyForPKCS7Padding(key);
+			//使用加密模式初始化 密钥
+			cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(IV.getBytes()));
+			byte[] encrypt = cipher.doFinal(source); //按单部分操作加密或解密数据，或者结束一个多部分操作。
+			
+			return  Base64.encodeBase64String(encrypt);
+		} catch (Exception e) {
+			if(log.isErrorEnabled()){
+				log.error(e.getMessage());
+			}
+		}
+		return "";
+	}
+	
+	public static byte[]  decodeAES(String dest,String key){
+		try {
+			Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_CBC);
+			Key secretKey =getAESKeyForPKCS7Padding(key);
+			
+			cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(IV.getBytes()));//使用解密模式初始化 密钥
+			return(cipher.doFinal(decodeBase64(dest)));
+		} catch (Exception e) {
+			if(log.isErrorEnabled()){
+				log.error(e.getMessage());
+			}
+		}
+		return new byte[]{};
+	}
+	
+	private static  Key getAESKeyForPKCS7Padding(String key){
+		int base = 16;
+		
+		byte[] keyBytes = key.getBytes();
+		
+		/* 因为java没有PKCS7Padding的支持方式，
+		 * 此处虽然了采用PKCS7Padding，
+		 * 当自己实现补位后其实就不需要进行补位了，
+		 * 实际使用的即为PKCS7Padding
+		*/
+		if (keyBytes.length % base != 0) {
+			int groups = keyBytes.length / base + (keyBytes.length % base != 0 ? 1 : 0);
+			byte[] temp = new byte[groups * base];
+			Arrays.fill(temp, (byte) 0);
+			System.arraycopy(keyBytes, 0, temp, 0, keyBytes.length);
+			keyBytes = temp;
+		}
+		
+		return new SecretKeySpec(keyBytes, KEY_ALGORITHM);
 	}
 }

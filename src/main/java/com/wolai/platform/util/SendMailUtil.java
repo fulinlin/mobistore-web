@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
@@ -18,41 +20,20 @@ import freemarker.template.Template;
  */
 public class SendMailUtil {
 
-	// private static final String smtphost = "192.168.1.70";
-	private static final String from = "thinkgem@163.com";
-	private static final String fromName = "测试公司";
+	private static final Log log= LogFactory.getLog(SendMailUtil.class);
+	
+	private static final String from = "service@tinypace.com";
+	private static final String fromName = "江苏喔来有限公司";
 	private static final String charSet = "utf-8";
-	private static final String username = "thinkgem@163.com";
-	private static final String password = "123456";
+	private static final String username = "service@tinypace.com";
+	private static final String password = "P2ssw0rd";
 
 	private static Map<String, String> hostMap = new HashMap<String, String>();
+	
 	static {
-		// 126
-		hostMap.put("smtp.126", "smtp.126.com");
-		// qq
-		hostMap.put("smtp.qq", "smtp.qq.com");
-
-		// 163
-		hostMap.put("smtp.163", "smtp.163.com");
-
-		// sina
-		hostMap.put("smtp.sina", "smtp.sina.com.cn");
-
-		// tom
-		hostMap.put("smtp.tom", "smtp.tom.com");
-
-		// 263
-		hostMap.put("smtp.263", "smtp.263.net");
-
-		// yahoo
-		hostMap.put("smtp.yahoo", "smtp.mail.yahoo.com");
-
-		// hotmail
-		hostMap.put("smtp.hotmail", "smtp.live.com");
-
 		// gmail
-		hostMap.put("smtp.gmail", "smtp.gmail.com");
-		hostMap.put("smtp.port.gmail", "465");
+		hostMap.put("smtp.tinypace", "smtp.exmail.qq.com");
+		hostMap.put("smtp.tinypace.gmail", "465");
 	}
 
 	public static String getHost(String email) throws Exception {
@@ -117,13 +98,18 @@ public class SendMailUtil {
 			// 模板内容转换为string
 			String htmlText = FreeMarkerTemplateUtils
 					.processTemplateIntoString(template, map);
-			System.out.println(htmlText);
 			hemail.setMsg(htmlText);
+			if(log.isDebugEnabled()){
+				log.debug(htmlText);
+			}
 			hemail.send();
-			System.out.println("email send true!");
+			if(log.isDebugEnabled()){
+				log.debug("发送至"+toMailAddr+"的："+subject+"发送成功");
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("email send error!");
+			if(log.isErrorEnabled()){
+				log.error("email send error! detail:"+e.getMessage());
+			}
 		}
 	}
 
@@ -150,10 +136,13 @@ public class SendMailUtil {
 			hemail.setSubject(subject);
 			hemail.setMsg(message);
 			hemail.send();
-			System.out.println("email send true!");
+			if(log.isDebugEnabled()){
+				log.debug("发送至"+toMailAddr+"的："+subject+"发送成功");
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("email send error!");
+			if(log.isErrorEnabled()){
+				log.error("email send error! detail:"+e.getMessage());
+			}
 		}
 
 	}
@@ -173,9 +162,10 @@ public class SendMailUtil {
 			// 模板内容转换为string
 			htmlText = FreeMarkerTemplateUtils.processTemplateIntoString(
 					template, map);
-			System.out.println(htmlText);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if(log.isErrorEnabled()){
+				log.error("组装HTML内容失败:"+e.getMessage());
+			}
 		}
 		return htmlText;
 	}
@@ -184,13 +174,11 @@ public class SendMailUtil {
 		String path = getAppPath(SendMailUtil.class);
 		path = path + File.separator + "mailtemplate" + File.separator;
 		path = path.replace("\\", "/");
-		System.out.println(path);
 		return path;
 	}
 
 	private static String getFileName(String path) {
 		path = path.replace("\\", "/");
-		System.out.println(path);
 		return path.substring(path.lastIndexOf("/") + 1);
 	}
 
@@ -252,40 +240,14 @@ public class SendMailUtil {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		System.out.println("realPath----->" + realPath);
 		return realPath;
 	}
 
-	// private static File getFile(String path){
-	// File file =
-	// SendMail.class.getClassLoader().getResource("mailtemplate/test.ftl").getFile();
-	// return file;
-	// }
-	//
-
 	public static void main(String[] args) {
-		// HtmlEmail hemail = new HtmlEmail();
-		// try {
-		// hemail.setHostName("smtp.exmail.qq.com");
-		// hemail.setCharset("utf-8");
-		// hemail.addTo("fly.1206@qq.com");
-		// hemail.setFrom("zhoujunfeng@et-bank.com", "周俊峰");
-		// hemail.setAuthentication("zhoujunfeng@et-bank.com", "31415926@aa");
-		// hemail.setSubject("sendemail test!");
-		// hemail.setMsg("<a href=\"http://www.google.cn\">谷歌</a><br/>");
-		// hemail.send();
-		// System.out.println("email send true!");
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// System.out.println("email send error!");
-		// }
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("subject", "测试标题");
-		map.put("content", "测试 内容");
-		String templatePath = "mailtemplate/test.ftl";
-		sendFtlMail("test@163.com", "sendemail test!", templatePath, map);
-
-		// System.out.println(getFileName("mailtemplate/test.ftl"));
+		Map<String, Object> a = new HashMap<String, Object>();
+		a.put("userName", "徐祥");
+		a.put("activeUrl", "www.baidu.com");
+		sendFtlMail("xuxiang945@126.com", "账户激活", "mailtemplate/ActiveLogin.ftl",a);
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.ParkingRecord;
+import com.wolai.platform.entity.ParkingRecord.ParkStatus;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.util.TimeUtils;
 
@@ -46,6 +47,21 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 		Page ls = findPage(dc, startIndex, pageSize);
 		
 		return ls;
+	}
+
+	@Override
+	public ParkingRecord getParkingRecordbyExNo(String exNo) {
+		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
+		dc.add(Restrictions.eq("exNo",exNo));
+		return (ParkingRecord) getDao().getByCriteria(dc);
+	}
+
+	@Override
+	public void saveNotWolaiPaingRecord(ParkingRecord record) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
