@@ -16,6 +16,7 @@ import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.entity.DeductHistory;
 import com.wolai.platform.entity.Enterprise;
 import com.wolai.platform.service.CouponService;
+import com.wolai.platform.util.StringUtil;
 
 @Service
 public class CouponServiceImpl extends CommonServiceImpl implements CouponService {
@@ -32,18 +33,23 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 
 	@Override
 	public void holdCouponPers(String couponId, String oldCouponId) {
-		if (couponId != null) {
+		if (StringUtil.isNotEmpty(oldCouponId) && StringUtil.isNotEmpty(couponId) && oldCouponId.equals(couponId)) {
+			// 未换
+			return;
+		}
+		
+		if (StringUtil.isNotEmpty(oldCouponId)) {
+			Coupon old = (Coupon) get(Coupon.class, oldCouponId);
+			old.setStatus(Coupon.CouponStatus.INIT);
+			saveOrUpdate(old);
+		}
+		
+		if (StringUtil.isNotEmpty(couponId)) {
 			Coupon coupon = (Coupon) get(Coupon.class, couponId);
 			if (coupon != null) {
 				coupon.setStatus(Coupon.CouponStatus.HOLD);
 				saveOrUpdate(coupon);
 			}
-		}
-		
-		if (oldCouponId != null) {
-			Coupon old = (Coupon) get(Coupon.class, oldCouponId);
-			old.setStatus(Coupon.CouponStatus.INIT);
-			saveOrUpdate(old);
 		}
 	}
 
