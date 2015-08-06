@@ -64,6 +64,14 @@
 			<url>https://raw.github.com/thinkgem/repository/master</url>
 		</repository>
 
+	    <repository>
+	        <snapshots>
+	            <enabled>true</enabled>
+	        </snapshots>
+	        <id>thirdparty</id>
+	        <name>thirdparty</name>
+	　　　　 <url>http://101.200.189.57:8081/nexus/content/repositories/thirdparty</url>
+	    </repository>
 	</repositories>
 
 	<dependencies>
@@ -242,6 +250,23 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>unionpay</groupId>
+			<artifactId>upacp_sdk</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk16</artifactId>
+			<version>1.45</version>
 		</dependency>
 
 		<dependency>
@@ -532,6 +557,7 @@
 					<update>true</update>
 				</configuration>
 			</plugin>
-		</plugins>
+		</plugins>  
 	</build>
+	 
 </project>
