@@ -49,6 +49,36 @@ public class Coupon extends IdEntity {
             return textVal;
         }
     }
+    
+    /**
+     * 优惠券状态
+     */
+    public static enum CouponStatus {
+        /**
+         * 初始状态
+         */
+    	INIT("INIT"),
+        
+        /**
+         * 冻结
+         */
+        HOLD("HOLD"),
+
+        /**
+         * 已使用
+         */
+        USED("USED");
+
+        private CouponStatus(String textVal) {
+            this.textVal = textVal;
+        }
+
+        private String textVal;
+
+        public String toString() {
+            return textVal;
+        }
+    }
 
     @Column(name = "owner_id")
     private String ownerId;
@@ -70,6 +100,12 @@ public class Coupon extends IdEntity {
      */
     @Enumerated(EnumType.STRING)
     private CouponType type;
+    
+    /**
+     * 优惠券状态
+     */
+    @Enumerated(EnumType.STRING)
+    private CouponStatus status;
 
     /**
      * 优惠金额
@@ -95,11 +131,6 @@ public class Coupon extends IdEntity {
      * 来源
      */
     private String origin;
-
-    /**
-     * 是否已使用
-     */
-    private Boolean isUsed = false;
 
     /**
      * 备注
@@ -209,14 +240,6 @@ public class Coupon extends IdEntity {
         this.carNo = carNo;
     }
 
-    public Boolean getIsUsed() {
-        return isUsed;
-    }
-
-    public void setIsUsed(Boolean isUsed) {
-        this.isUsed = isUsed;
-    }
-
     public String getLicenseId() {
         return licenseId;
     }
@@ -273,4 +296,12 @@ public class Coupon extends IdEntity {
     public void setLoginAccount(SysLoginAccount loginAccount) {
         this.loginAccount = loginAccount;
     }
+
+	public CouponStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(CouponStatus status) {
+		this.status = status;
+	}
 }

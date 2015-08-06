@@ -20,17 +20,31 @@ import com.wolai.platform.service.CouponService;
 @Service
 public class CouponServiceImpl extends CommonServiceImpl implements CouponService {
     
-    
-    
-
 	@Override
-	public Page listByUser(String userId, int startIndex, int pageSize) {
+	public List listByUser(String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
-		dc.add(Restrictions.eq("isUsed", false));
-		Page page = findPage(dc, startIndex, pageSize);
+		dc.add(Restrictions.eq("status", Coupon.CouponStatus.INIT));
+		List ls = findAllByCriteria(dc);
 		
-		return page;
+		return ls;
+	}
+
+	@Override
+	public void holdCouponPers(String couponId, String oldCouponId) {
+		if (couponId != null) {
+			Coupon coupon = (Coupon) get(Coupon.class, couponId);
+			if (coupon != null) {
+				coupon.setStatus(Coupon.CouponStatus.HOLD);
+				saveOrUpdate(coupon);
+			}
+		}
+		
+		if (oldCouponId != null) {
+			Coupon old = (Coupon) get(Coupon.class, oldCouponId);
+			old.setStatus(Coupon.CouponStatus.INIT);
+			saveOrUpdate(old);
+		}
 	}
 
 	@Override
@@ -38,7 +52,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.eq("type", CouponType.MONEY));
-		dc.add(Restrictions.eq("isUsed", false));
+		dc.add(Restrictions.eq("status", Coupon.CouponStatus.INIT));
 		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;
@@ -49,7 +63,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.eq("type", CouponType.TIME));
-		dc.add(Restrictions.eq("isUsed", false));
+		dc.add(Restrictions.eq("status", Coupon.CouponStatus.INIT));
 		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;
@@ -65,7 +79,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.le("startDate", now));
 		dc.add(Restrictions.ge("endDate", now));
-		dc.add(Restrictions.eq("isUsed", false));
+		dc.add(Restrictions.ne("status", Coupon.CouponStatus.USED));
 		
 		List<Coupon> coupons = (List<Coupon>) findAllByCriteria(dc);
 		if (coupons.size() < 1) {
@@ -75,7 +89,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		}
 		
 		Coupon coupon = coupons.get(0);
-		coupon.setIsUsed(true);
+		coupon.setStatus(Coupon.CouponStatus.USED);
 		getDao().saveOrUpdate(coupon);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
@@ -88,7 +102,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
-		dc.add(Restrictions.eq("isUsed", false));
+		dc.add(Restrictions.eq("status", Coupon.CouponStatus.INIT));
 		dc.add(Restrictions.le("startDate", now));
 		dc.add(Restrictions.ge("endDate", now));
 		return getDao().count(dc);
@@ -101,7 +115,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.eq("type", CouponType.MONEY));
-		dc.add(Restrictions.eq("isUsed", false));
+		dc.add(Restrictions.eq("status", Coupon.CouponStatus.INIT));
 		dc.add(Restrictions.le("startDate", now));
 		dc.add(Restrictions.ge("endDate", now));
 		return getDao().count(dc);
@@ -114,7 +128,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
 		dc.add(Restrictions.eq("ownerId", userId));
 		dc.add(Restrictions.eq("type", CouponType.TIME));
-		dc.add(Restrictions.eq("isUsed", false));
+		dc.add(Restrictions.eq("status", Coupon.CouponStatus.INIT));
 		dc.add(Restrictions.le("startDate", now));
 		dc.add(Restrictions.ge("endDate", now));
 		return getDao().count(dc);

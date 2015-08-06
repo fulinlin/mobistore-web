@@ -2,6 +2,7 @@ package com.wolai.platform.service.impl;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,8 +51,11 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 
 		bill.setIsPostPay(isPostPay);
 		
-		Coupon coupon = (Coupon) couponService.get(Coupon.class, couponId);
+		// 解冻和冻结相关
+		String oldCouponId = bill.getCouponId();
+		couponService.holdCouponPers(couponId, oldCouponId);
 		
+		Coupon coupon = (Coupon) couponService.get(Coupon.class, couponId);
 		// TODO: 调用新利泊计费接口，更新费用数据
 		BigDecimal totalAmount = new BigDecimal(0.02);
 		BigDecimal payAmount = new BigDecimal(0.01);

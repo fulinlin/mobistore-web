@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.wolai.platform.bean.LoginInfo;
 import com.wolai.platform.config.SystemConfig;
 import com.wolai.platform.entity.Coupon;
+import com.wolai.platform.entity.Coupon.CouponStatus;
 import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.entity.Enterprise;
 import com.wolai.platform.entity.LicenseCategory;
@@ -72,7 +73,7 @@ public class CouponController extends BaseController {
     public String list(Coupon coupon, HttpServletRequest request, HttpServletResponse response, Model model) {
         DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
-        dc.add(Restrictions.eq("isUsed", coupon.getIsUsed()));
+        dc.add(Restrictions.ne("status", CouponStatus.USED));
         LoginInfo loginInfo = getLoginInfoSession(request);
         dc.add(Restrictions.eq("loginAccountId", loginInfo.getLoginAccount().getId()));
         if( StringUtils.isNotBlank(coupon.getCarNo())){

@@ -9,7 +9,8 @@ import com.wolai.platform.entity.Enterprise;
 
 public interface CouponService extends CommonService {
 
-    Page listByUser(String userId, int startIndex, int pageSize);
+	List listByUser(String userId);
+	void holdCouponPers(String couponId, String oldCouponId);
 
     Page listMoneyByUser(String userId, int startIndex, int pageSize);
 
