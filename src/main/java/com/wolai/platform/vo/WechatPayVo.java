@@ -1,6 +1,7 @@
 package com.wolai.platform.vo;
 
 import com.wolai.platform.constant.Constant;
+import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.util.IdGen;
 
 public class WechatPayVo {
@@ -11,6 +12,7 @@ public class WechatPayVo {
 		this.body = Constant.payment_productionDesrcription;
 		this.notify_url = Constant.wechat_pay_notify_url;
 		this.trade_type = "APP";
+		this.payType = PayType.WEIXIN.toString();
 	}
 	
     private String appid;
@@ -24,6 +26,7 @@ public class WechatPayVo {
     private Integer total_fee;
     private String spbill_create_ip;
     private String trade_type;
+    private String payType;
 
     private String sign;
 
@@ -121,6 +124,14 @@ public class WechatPayVo {
 
 	public void setSign(String sign) {
 		this.sign = sign;
+	}
+
+	public String getPayType() {
+		return payType;
+	}
+
+	public void setPayType(String payType) {
+		this.payType = payType;
 	}
 	
 }

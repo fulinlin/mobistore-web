@@ -72,6 +72,9 @@
     <listener>
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
+    <listener>
+		<listener-class>com.wolai.platform.listener.SysListener</listener-class>
+	</listener>
    
      <!--Hibernate Open Session in View Filter-->
     <filter>

@@ -174,6 +174,12 @@ public class Bill extends IdEntity {
 	@Enumerated(EnumType.ORDINAL)
 	private PayStatus payStatus = PayStatus.INIT;
 	
+	/**
+	 * 是否是后付费
+	 * @return
+	 */
+	private  Boolean isPostPay = false;
+	
 	
 	public String getCarNo() {
 		return carNo;
@@ -325,6 +331,14 @@ public class Bill extends IdEntity {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public Boolean getIsPostPay() {
+		return isPostPay;
+	}
+
+	public void setIsPostPay(Boolean isPostPay) {
+		this.isPostPay = isPostPay;
 	}
 	
 }

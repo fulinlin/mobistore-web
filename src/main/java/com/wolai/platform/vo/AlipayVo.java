@@ -13,6 +13,7 @@ public class AlipayVo {
 		this.partnerPrivKey = Constant.alipay_partnerPrivKey;
 		this.sellerAccount = Constant.alipay_sellerAccount;
 		this.notifyUrl = Constant.alipay_notify_url;
+		this.payType = PayType.ALIPAY.toString();
 	}
 	
 	private String partnerId;
@@ -24,6 +25,7 @@ public class AlipayVo {
 	
 	private String wolaiTradeNo;
 	private BigDecimal amount;
+	private String payType;
 	
 
 	public String getPartnerId() {
@@ -73,6 +75,12 @@ public class AlipayVo {
 	}
 	public void setWolaiTradeNo(String wolaiTradeNo) {
 		this.wolaiTradeNo = wolaiTradeNo;
+	}
+	public String getPayType() {
+		return payType;
+	}
+	public void setPayType(String payType) {
+		this.payType = payType;
 	}
 
 }

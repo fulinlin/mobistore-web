@@ -22,6 +22,11 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	
 	@Override
 	public Bill createBillIfNeededPers(ParkingRecord parking, String couponId) {
+		return this.createBillIfNeededPers(parking, couponId, false);
+	}
+	
+	@Override
+	public Bill createBillIfNeededPers(ParkingRecord parking, String couponId, boolean isPostPay) {
 		String parkingId = parking.getId();
 		
 		Bill bill = billService.getBillByParking(parkingId);
@@ -37,6 +42,8 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		if (StringUtil.isNotEmpty(couponId)) {
 			bill.setCouponId(couponId);
 		}
+
+		bill.setIsPostPay(isPostPay);
 		
 		// TODO: 调用新利泊计费接口，更新费用数据
 		BigDecimal money = new BigDecimal(0.02);

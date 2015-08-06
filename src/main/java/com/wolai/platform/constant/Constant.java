@@ -40,6 +40,11 @@ public final class Constant {
 	public static final  String alipay_partnerPrivKey_pkcs8 = "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBALZByW9V7qGCChL87TOQTHLxVapz7EIqXz06FTrwt/XZkkSvFlcBf3wb++SZdCLu2APsXvt5fFA1GqTNwwjF08KhkWgXvuJ0LaXgvSOjqdfsuKJtoOQQ6ufjXMfWE74+6hM5gazhyJ7qZ2RWK9qSfUUtBTUGylirSXqpmMhnc9EdAgMBAAECgYBu0QFRmMZHnXHSqcbwG0Tgfqy/v0xfzrOp3q8Z71NrQKcW6/6BWH/TTpCSJlvfAaqGeCoobW2QtzlEC3gS1XYzUmfyp1SYJoW8q2NQooNoOBTMtm3IzHQs6wBBDeHxbY6/pc+dPu7YaKy1dpN4Y0S3xAr3MBsrVS/zhQdRt/v6YQJBAOIDrAHAZVrOuZepJCUfdb4oHJFXw/32ULpQpap+/rougWVBBUeHTAJGGxF9kZrpYbNOlrnu/8r7GErIYGduKncCQQDOb/G/S4iXdQChemcsLefj2txw2nnmDi0wQsrCQLiifUvm9xagMNSHXwYf+oLLf8YFY2N7+J7SqlNvCWlkaXILAkAeVLXRqlsvu4xmkPlbzgQEF+f1jVytCVA+ILKK1e4jWDhfOUGXHs4RhAz/5OUUb/t/j61kmHFVcSsKZieh2cPzAkAuygSa/P26hlRcRSf5RXZXmJV6JqqWUARB+gGGwbCXc5qugLZqHGcvP4Rd3yOiCBXTxtEXmiQ1T1GVyyZOEfA9AkA0MQ/wxvMFPq7n6UWkFpqLJ7sG0kRyyZBE2Ama0/K8YAmVEWTeCGxbVT9ODP/lh6+Rm6NqjTIdgLA9SB9ppX7J";
 	public static final  String alipay_sellerAccount = "wolai@wolaitech.com";
 	public static final  String alipay_notify_url = "http://101.200.189.57:9090/wolai-web/api/mobi/payment/alipayCallback";
+
+	public static final  String unionpay_mchId = "777290058116776";
+	public static final  String unionpay_request_url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+	public static final  String unionpay_notify_url_consume = "http://101.200.189.57:9090/wolai-web/api/mobi/payment/unionpay/consumeCallback";
+	public static final  String unionpay_notify_url_delegate = "http://101.200.189.57:9090/wolai-web/api/mobi/payment/unionpay/delegateCallback";
 	
 	public static final  String wechat_pay_appId = "";
 	public static final  String wechat_pay_mchId = "";
@@ -48,7 +53,7 @@ public final class Constant {
 	public static final  String wechat_pay_certPassword = "";
 	public static final  String wechat_pay_cert_local_path = "";
 	public static final  String wechat_pay_request_url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-	public static final  String wechat_pay_notify_url = "http://localhost:8080/wolai-web/api/mobi/payment/wechat/callback";
+	public static final  String wechat_pay_notify_url = "http://101.200.189.57:9090/wolai-web/api/mobi/payment/wechat/callback";
 	
     /**
      * 管理员权限编码

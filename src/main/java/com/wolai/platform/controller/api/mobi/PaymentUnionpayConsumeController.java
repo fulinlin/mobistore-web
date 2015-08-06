@@ -38,8 +38,8 @@ import com.wolai.platform.vo.ParkingVo;
 import com.wolai.platform.vo.UnionpayVo;
 
 @Controller
-@RequestMapping(Constant.API_MOBI + "payment/unionpay/")
-public class PaymentUnionpayController extends BaseController {
+@RequestMapping(Constant.API_MOBI + "payment/unionpay/consume/")
+public class PaymentUnionpayConsumeController extends BaseController {
 	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
 	
 	@Autowired
@@ -67,7 +67,6 @@ public class PaymentUnionpayController extends BaseController {
 		
 		String parkingId = json.get("parkingId");
 		String couponId = json.get("couponId");
-		String clientType = json.get("clientType");
 		
 		if (StringUtils.isEmpty(parkingId)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
@@ -90,8 +89,8 @@ public class PaymentUnionpayController extends BaseController {
 		payVo.setWolaiTradeNo(wolaiTradeNo);
 		payVo.setAmount(money);
 		
-		Map<String, String> resMap = paymentUnionpayService.prepareTrans(money.multiply(new BigDecimal(100)).intValue());
-		payVo.setPayTradeNo("");
+		Map<String, String> resMap = paymentUnionpayService.prepareTrans(wolaiTradeNo, money.multiply(new BigDecimal(100)).intValue());
+		payVo.setPayTradeNo(resMap.get("tn"));
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", payVo);
@@ -100,43 +99,20 @@ public class PaymentUnionpayController extends BaseController {
 	
 	// 银联消费回调
 	@AuthPassport(validate=false)
-	@RequestMapping(value="consumeCallback")
+	@RequestMapping(value="callback")
 	@ResponseBody
 	public String unionpayConsumeCallback(HttpServletRequest request){
 		Map<String, String[]> params = request.getParameterMap(); 
 		
-		return "";
-	}
-	
-	// 银联代扣回调
-	@AuthPassport(validate=false)
-	@RequestMapping(value="delegateCallback")
-	@ResponseBody
-	public String unionpayDelegateCallback(HttpServletRequest request){
-		Map<String, String[]> params = request.getParameterMap(); 
+		String[] merId = params.get("merId");
+		String[] orderId = params.get("orderId");
+		String[] txnAmt = params.get("merId");
+		String[] queryId = params.get("orderId");
+		String[] payCardNo = params.get("trade_status");
+		String[] payCardIssueName = params.get("merId");
+		// TODO: 
 		
 		return "";
-	}
-	
-	@AuthPassport(validate=false)
-	@RequestMapping(value="confirmPostPay")
-	@ResponseBody
-	public Map<String,Object> confirmPostPay(HttpServletRequest request, @RequestBody Map<String, String> json){
-		Map<String,Object> ret = new HashMap<String, Object>();
-		
-		String parkingId = json.get("parkingId");
-		String couponId = json.get("couponId");
-		String clientType = json.get("clientType");
-		
-		if (StringUtils.isEmpty(parkingId)) {
-			ret.put("code", RespCode.INTERFACE_FAIL.Code());
-			ret.put("msg", "parameters error");
-			return ret;
-		}
-		
-		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("data", "");
-		return ret;
 	}
 	
 }
