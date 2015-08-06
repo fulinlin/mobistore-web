@@ -65,11 +65,12 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	}
 	
 	@Override
-	public UnionpayCardBound createBoundRecordPers(String userId, String accNo, String wolaiTradeNo) {
+	public UnionpayCardBound createBoundRecordPers(String userId, String accNo, String expired, String wolaiTradeNo) {
 		
 		UnionpayCardBound bound = new UnionpayCardBound();
 		bound.setUserId(userId);
 		bound.setAccNo(accNo);
+		bound.setExpired(expired);
 		bound.setWolaiTradeNo(wolaiTradeNo);
 		saveOrUpdate(bound);
 		return bound;
@@ -259,7 +260,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			}
 			
 			// 创建新的记录
-			createBoundRecordPers(userId, accNo, orderId);
+			createBoundRecordPers(userId, accNo, expired, orderId);
 		}
 
 //		System.out.println(html);

@@ -78,9 +78,13 @@ public class PaymentUnionpayDelegateController extends BaseController {
 		
 		UnionpayCardBound bound = paymentUnionpayService.boundQueryByUser(userId);
 		UnionpayCardBoundVo vo = new UnionpayCardBoundVo();
-		BeanUtilEx.copyProperties(vo, bound);
+		
+		if(bound != null) {
+			BeanUtilEx.copyProperties(vo, bound);
+		}
 		
 		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("payMode", user.getPayType());
 		ret.put("data", vo);
 		return ret;
 	}

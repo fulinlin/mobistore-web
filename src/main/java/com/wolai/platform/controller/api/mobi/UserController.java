@@ -229,4 +229,25 @@ public class UserController extends BaseController{
 		Map<String, Object> map = userService.resetPasswordPers(phone, password);
 		return map;
 	}
+	
+	@RequestMapping(value="payType")
+	@ResponseBody
+	public Map<String,Object> payType(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret =new HashMap<String, Object>();
+		
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
+		
+		String payType = json.get("payType");
+		
+		if (StringUtils.isEmpty(payType) || SysUser.PayType.value(payType) == null) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		userService.setPayTypePers(user, payType);
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
 }

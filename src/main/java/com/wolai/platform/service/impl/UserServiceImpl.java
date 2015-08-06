@@ -294,4 +294,10 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		}
 		return user;
 	}
+
+	@Override
+	public void setPayTypePers(SysUser user, String payType) {
+		user.setPayType(SysUser.PayType.value(payType));
+		saveOrUpdate(user);
+	}
 }

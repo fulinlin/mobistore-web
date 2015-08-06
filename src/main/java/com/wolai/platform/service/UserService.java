@@ -31,4 +31,6 @@ public interface UserService extends CommonService {
 	Enterprise getEnterpriceInfo(String userId);
 	
 	SysUser getTempUserPers();
+
+	void setPayTypePers(SysUser user, String payType);
 }

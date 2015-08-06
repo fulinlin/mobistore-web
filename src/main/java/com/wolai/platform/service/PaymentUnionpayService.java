@@ -16,7 +16,7 @@ public interface PaymentUnionpayService extends CommonService {
 
 	Map<String, String> unboundPers(String userId, String orderId);
 
-	UnionpayCardBound createBoundRecordPers(String userId, String accNo, String wolaiTradeNo);
+	UnionpayCardBound createBoundRecordPers(String userId, String accNo, String expired, String wolaiTradeNo);
 
 	UnionpayCardBound boundQueryByCard(String accNo);
 

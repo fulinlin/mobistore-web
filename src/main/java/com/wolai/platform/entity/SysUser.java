@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.wolai.platform.entity.License.LICENSE_COLOR;
+
 /**
  * @author xuxiang
  *
@@ -93,6 +95,19 @@ public class SysUser extends IdEntity {
   		public String toString(){
   			return textVal;
   		}
+
+ 		 public static PayType value(String value) {
+ 	        switch (value) {
+ 	        case "PERPAID":
+ 	        	return PERPAID;
+ 	        case "CONFIRM_POSTPAID":
+ 	            return CONFIRM_POSTPAID;
+ 	        case "POSTPAID":
+ 	        	return POSTPAID;
+ 	        default:
+ 	            return null;
+ 	        }
+ 	    }
   	}
   	
     /**

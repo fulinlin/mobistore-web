@@ -7,6 +7,7 @@ public class UnionpayCardBoundVo {
 	private String accNo;
 	private String boundType;
 	private String wolaiTradeNo;
+	private String expired;
 	
 	public String getId() {
 		return id;
@@ -37,5 +38,11 @@ public class UnionpayCardBoundVo {
 	}
 	public void setWolaiTradeNo(String wolaiTradeNo) {
 		this.wolaiTradeNo = wolaiTradeNo;
+	}
+	public String getExpired() {
+		return expired;
+	}
+	public void setExpired(String expired) {
+		this.expired = expired;
 	}
 }
