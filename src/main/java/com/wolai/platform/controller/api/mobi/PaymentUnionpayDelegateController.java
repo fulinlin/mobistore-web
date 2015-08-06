@@ -23,7 +23,10 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Bill;
+import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.ParkingRecord;
+import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.entity.UnionpayCardBound;
 import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.ParkingLotService;
@@ -33,10 +36,13 @@ import com.wolai.platform.service.PaymentUnionpayService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.util.FileUtils;
+import com.wolai.platform.util.IdGen;
 import com.wolai.platform.vo.AlipayVo;
 import com.wolai.platform.vo.BillVo;
+import com.wolai.platform.vo.LicenseVo;
 import com.wolai.platform.vo.ParkingLotVo;
 import com.wolai.platform.vo.ParkingVo;
+import com.wolai.platform.vo.UnionpayCardBoundVo;
 import com.wolai.platform.vo.UnionpayVo;
 
 @Controller
@@ -62,41 +68,81 @@ public class PaymentUnionpayDelegateController extends BaseController {
 	@Autowired
 	BillService billService;
 	
-	// 银联代扣回调
-	@AuthPassport(validate=false)
+	// 银联卡绑定查询
+	@RequestMapping(value="boundQuery")
+	@ResponseBody
+	public Map<String,Object> boundQuery(HttpServletRequest request){
+		Map<String,Object> ret = new HashMap<String, Object>();
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
+		String userId = user.getId();
+		
+		UnionpayCardBound bound = paymentUnionpayService.boundQueryByUser(userId);
+		UnionpayCardBoundVo vo = new UnionpayCardBoundVo();
+		BeanUtilEx.copyProperties(vo, bound);
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vo);
+		return ret;
+	}
+	
+	// 银联卡绑定
 	@RequestMapping(value="bound")
 	@ResponseBody
 	public Map<String,Object> bound(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
-		String orderId = "ff8080814ed32540014ed32547b30001";
 		String accNo = json.get("accNo");
 		String certifId = json.get("certifId");
 		String cvn = json.get("cvn");
 		String expired = json.get("expired");
-		Map<String, String> resMap = paymentUnionpayService.bound(orderId, accNo, certifId, cvn, expired);
+		
+		if (StringUtils.isEmpty(accNo) || StringUtils.isEmpty(certifId) || StringUtils.isEmpty(cvn) || StringUtils.isEmpty(expired)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		UnionpayCardBound po1 = paymentUnionpayService.boundQueryByCard(accNo);
+		if (po1 != null) {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "该卡已经绑定");
+			return ret;
+		}
+		
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
+		String userId = user.getId();
+		
+		String wolaiTradeNo = IdGen.uuid();
+		Map<String, String> resMap = paymentUnionpayService.boundPers(userId, wolaiTradeNo, accNo, certifId, cvn, expired);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", resMap);
 		return ret;
 	}
 	
-	// 银联代扣回调
-	@AuthPassport(validate=false)
+	// 银联卡解绑
 	@RequestMapping(value="unbound")
 	@ResponseBody
 	public Map<String,Object> unbound(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>(); 
-		
 		String orderId = json.get("orderId");
-		Map<String, String> resMap = paymentUnionpayService.unbound(orderId);
+		
+		if (StringUtils.isEmpty(orderId)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
+		String userId = user.getId();
+		
+		Map<String, String> resMap = paymentUnionpayService.unboundPers(userId, orderId);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", resMap);
 		return ret;
 	}
 	
-	@AuthPassport(validate=false)
 	@RequestMapping(value="confirmPostPay")
 	@ResponseBody
 	public Map<String,Object> confirmPostPay(HttpServletRequest request, @RequestBody Map<String, String> json){

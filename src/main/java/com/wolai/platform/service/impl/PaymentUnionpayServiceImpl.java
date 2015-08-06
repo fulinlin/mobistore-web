@@ -6,10 +6,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.FetchMode;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.unionpay.acp.sdk.HttpClient;
@@ -18,12 +23,56 @@ import com.unionpay.acp.sdk.SDKConstants;
 import com.unionpay.acp.sdk.SDKUtil;
 import com.unionpay.acp.sdk.SecureUtil;
 import com.wolai.platform.constant.Constant;
+import com.wolai.platform.entity.ParkingRecord;
+import com.wolai.platform.entity.UnionpayCardBound;
 import com.wolai.platform.service.PaymentUnionpayService;
+import com.wolai.platform.util.TimeUtils;
 
 @Service
 public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements PaymentUnionpayService {
 	public static String encoding = "UTF-8";
 	public static String version = "5.0.0";
+	
+	@Override
+	public UnionpayCardBound boundQueryByCard(String accNo) {
+		DetachedCriteria dc = DetachedCriteria.forClass(UnionpayCardBound.class);
+		dc.add(Restrictions.eq("accNo", accNo));
+		dc.add(Restrictions.eq("isDelete", false));
+		dc.add(Restrictions.eq("isDisable", false));
+
+		List ls = findAllByCriteria(dc);
+		if (ls.size() > 0) {
+			return (UnionpayCardBound)ls.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public UnionpayCardBound boundQueryByUser(String userId) {
+		DetachedCriteria dc = DetachedCriteria.forClass(UnionpayCardBound.class);
+		dc.add(Restrictions.eq("userId", userId));
+		dc.add(Restrictions.eq("isDelete", false));
+		dc.add(Restrictions.eq("isDisable", false));
+
+		List ls = findAllByCriteria(dc);
+		if (ls.size() > 0) {
+			return (UnionpayCardBound)ls.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public UnionpayCardBound createBoundRecordPers(String userId, String accNo, String wolaiTradeNo) {
+		
+		UnionpayCardBound bound = new UnionpayCardBound();
+		bound.setUserId(userId);
+		bound.setAccNo(accNo);
+		bound.setWolaiTradeNo(wolaiTradeNo);
+		saveOrUpdate(bound);
+		return bound;
+	}
 	
 	@Override
 	public Map<String, String> prepareTrans(String wolaiTradeNo, int amount) {
@@ -86,8 +135,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	}
 	
 	@Override
-	public Map<String, String> bound(String orderId, String accNo, String certifId, String cvn, String expired) {
-		String merId = "802290049000180";
+	public Map<String, String> boundPers(String userId, String orderId, String accNo, String certifId, String cvn, String expired) {
 		String txnTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); //"201508145625";// --订单发送时间
 		/**
 		 * 初始化证书
@@ -140,7 +188,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		contentData.put("accessType", "0");// M
 
 		// 　
-		contentData.put("merId", merId);// M
+		contentData.put("merId", Constant.unionpay_mchId);// M
 
 		// //商户类型为平台类商户接入时必须上送
 		// contentData.put("subMerId", subMerId);//C
@@ -200,6 +248,18 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 //		String html = createHtml(requestBackUrl, submitFromData);
 
 		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl);
+		
+		if ("00".equals(resMap.get("respCode"))) {
+			// 移除老的绑定记录
+			UnionpayCardBound po = boundQueryByUser(userId);
+			if (po != null) {
+				po.setIsDelete(true);
+				saveOrUpdate(po);
+			}
+			
+			// 创建新的记录
+			createBoundRecordPers(userId, accNo, orderId);
+		}
 
 //		System.out.println(html);
 
@@ -208,8 +268,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	}
 	
 	@Override
-	public Map<String, String> unbound(String orderId) {
-		String merId = "802290049000180";
+	public Map<String, String> unboundPers(String userId, String orderId) {
 		String txnTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());// --订单发送时间
 		/**
 		 * 初始化证书
@@ -255,7 +314,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		contentData.put("accessType", "0");// M
 
 		// 　
-		contentData.put("merId", merId);// M
+		contentData.put("merId", Constant.unionpay_mchId);// M
 
 		// //商户类型为平台类商户接入时必须上送
 		// contentData.put("subMerId", subMerId);//C
@@ -296,11 +355,17 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		Map<String, String> submitFromData = signData(contentData);
 
 		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl);
-		/**
-		 * 
-		 * 创建表单
-		 */
 
+		
+		if ("00".equals(resMap.get("respCode"))) {
+			// 移除绑定记录
+			UnionpayCardBound po = boundQueryByUser(userId);
+			if (po != null) {
+				po.setIsDelete(true);
+				saveOrUpdate(po);
+			}
+		}
+		
 		System.out.println(resMap.toString());
 		
 		return resMap;
@@ -414,4 +479,5 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		}
 		return customerInfo;
 	}
+
 }

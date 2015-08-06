@@ -41,7 +41,7 @@ public final class Constant {
 	public static final  String alipay_sellerAccount = "wolai@wolaitech.com";
 	public static final  String alipay_notify_url = "http://101.200.189.57:9090/wolai-web/api/mobi/payment/alipayCallback";
 
-	public static final  String unionpay_mchId = "777290058116776";
+	public static final  String unionpay_mchId = "802290049000180";
 	public static final  String unionpay_request_url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 	public static final  String unionpay_notify_url_consume = "http://101.200.189.57:9090/wolai-web/api/mobi/payment/unionpay/consumeCallback";
 	public static final  String unionpay_notify_url_delegate = "http://101.200.189.57:9090/wolai-web/api/mobi/payment/unionpay/delegateCallback";
