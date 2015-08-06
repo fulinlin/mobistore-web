@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.Bill.PayStatus;
 import com.wolai.platform.entity.Bill.PayType;
+import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.service.BillService;
+import com.wolai.platform.service.CouponService;
 import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.util.StringUtil;
 
@@ -19,6 +21,9 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 
 	@Autowired
 	BillService billService;
+	
+	@Autowired
+	CouponService couponService;
 	
 	@Override
 	public Bill createBillIfNeededPers(ParkingRecord parking, String couponId) {
@@ -45,15 +50,23 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 
 		bill.setIsPostPay(isPostPay);
 		
-		// TODO: 调用新利泊计费接口，更新费用数据
-		BigDecimal money = new BigDecimal(0.02);
-		BigDecimal paidMoney = new BigDecimal(0.01);
+		Coupon coupon = (Coupon) couponService.get(Coupon.class, couponId);
 		
-		parking.setMoney(money);
-		parking.setPaidMoney(paidMoney);
+		// TODO: 调用新利泊计费接口，更新费用数据
+		BigDecimal totalAmount = new BigDecimal(0.02);
+		BigDecimal payAmount = new BigDecimal(0.01);
+		
+		if (Coupon.CouponType.MONEY.toString().equals(coupon.getType().toString())) {
+			payAmount = payAmount.subtract(new BigDecimal(coupon.getMoney()));
+			if (payAmount.intValue() < 0) {
+				payAmount = new BigDecimal(0);
+			}
+		}
+
 		saveOrUpdate(parking);
 		
-		bill.setMoney(paidMoney);
+		bill.setTotalAmount(totalAmount);
+		bill.setPayAmount(payAmount);
 		saveOrUpdate(bill);
 		
 		return bill;

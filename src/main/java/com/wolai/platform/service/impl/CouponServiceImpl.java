@@ -76,7 +76,7 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		
 		Coupon coupon = coupons.get(0);
 		coupon.setIsUsed(true);
-//		getDao().saveOrUpdate(coupon);
+		getDao().saveOrUpdate(coupon);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;

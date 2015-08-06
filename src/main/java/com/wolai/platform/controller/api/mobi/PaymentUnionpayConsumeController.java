@@ -84,12 +84,14 @@ public class PaymentUnionpayConsumeController extends BaseController {
 		ParkingRecord park = (ParkingRecord) obj;
 		Bill bill = paymentService.createBillIfNeededPers(park, couponId);
 		String wolaiTradeNo = bill.getId();
-		BigDecimal money = bill.getMoney();
+		BigDecimal totalAmount = bill.getTotalAmount();
+		BigDecimal payAmount = bill.getPayAmount();
 		UnionpayVo payVo = new UnionpayVo();
 		payVo.setWolaiTradeNo(wolaiTradeNo);
-		payVo.setAmount(money);
+		payVo.setTotalAmount(totalAmount);
+		payVo.setPayAmount(payAmount);
 		
-		Map<String, String> resMap = paymentUnionpayService.prepareTrans(wolaiTradeNo, money.multiply(new BigDecimal(100)).intValue());
+		Map<String, String> resMap = paymentUnionpayService.prepareTrans(wolaiTradeNo, payAmount.multiply(new BigDecimal(100)).intValue());
 		payVo.setPayTradeNo(resMap.get("tn"));
 		
 		ret.put("code", RespCode.SUCCESS.Code());

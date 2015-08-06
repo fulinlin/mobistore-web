@@ -24,7 +24,8 @@ public class AlipayVo {
 	private String notifyUrl;
 	
 	private String wolaiTradeNo;
-	private BigDecimal amount;
+	private BigDecimal totalAmount;
+	private BigDecimal payAmount;
 	private String payType;
 	
 
@@ -58,12 +59,7 @@ public class AlipayVo {
 	public void setProductionDesrcription(String productionDesrcription) {
 		this.productionDesrcription = productionDesrcription;
 	}
-	public BigDecimal getAmount() {
-		return amount;
-	}
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
+
 	public String getNotifyUrl() {
 		return notifyUrl;
 	}
@@ -81,6 +77,18 @@ public class AlipayVo {
 	}
 	public void setPayType(String payType) {
 		this.payType = payType;
+	}
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+	public BigDecimal getPayAmount() {
+		return payAmount;
+	}
+	public void setPayAmount(BigDecimal payAmount) {
+		this.payAmount = payAmount;
 	}
 
 }

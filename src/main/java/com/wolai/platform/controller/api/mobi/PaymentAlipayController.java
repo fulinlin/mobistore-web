@@ -81,7 +81,8 @@ public class PaymentAlipayController extends BaseController {
 		Bill bill = paymentService.createBillIfNeededPers(park, couponId);
 		AlipayVo alipayVo = new AlipayVo();
 		alipayVo.setWolaiTradeNo(bill.getId());
-		alipayVo.setAmount(bill.getMoney());
+		alipayVo.setTotalAmount(bill.getTotalAmount());
+		alipayVo.setPayAmount(bill.getPayAmount());
 		
 		if (clientType != null && "ios".equals(clientType.toLowerCase())) {
 			alipayVo.setPartnerPrivKey(Constant.alipay_partnerPrivKey_pkcs8);

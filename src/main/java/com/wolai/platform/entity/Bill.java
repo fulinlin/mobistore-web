@@ -112,14 +112,14 @@ public class Bill extends IdEntity {
 	private String carNo;
 	
 	/**
-	 * 应付金额, 扣除代金券
+	 * 总额
 	 */
-	private BigDecimal Money;
+	private BigDecimal totalAmount;
 	
 	/**
-	 * 实际支付成功金额
+	 * 优惠后，实际需支付金额
 	 */
-	private BigDecimal realMoney;
+	private BigDecimal payAmount;
 	
 	/**
 	 * 付款方式：alipay(支付宝),unionpay(银联),weixin(微信),remaint(余额)
@@ -205,14 +205,6 @@ public class Bill extends IdEntity {
 		this.parkingRecord = parkingRecord;
 	}
 
-	public BigDecimal getMoney() {
-		return Money;
-	}
-
-	public void setMoney(BigDecimal money) {
-		Money = money;
-	}
-
 	public String getCouponId() {
 		return couponId;
 	}
@@ -293,14 +285,6 @@ public class Bill extends IdEntity {
 		this.payStatus = payStatus;
 	}
 
-	public BigDecimal getRealMoney() {
-		return realMoney;
-	}
-
-	public void setRealMoney(BigDecimal realMoney) {
-		this.realMoney = realMoney;
-	}
-
 	public String getTradeStatus() {
 		return tradeStatus;
 	}
@@ -339,6 +323,22 @@ public class Bill extends IdEntity {
 
 	public void setIsPostPay(Boolean isPostPay) {
 		this.isPostPay = isPostPay;
+	}
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public BigDecimal getPayAmount() {
+		return payAmount;
+	}
+
+	public void setPayAmount(BigDecimal payAmount) {
+		this.payAmount = payAmount;
 	}
 	
 }

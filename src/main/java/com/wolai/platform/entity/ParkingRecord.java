@@ -102,16 +102,6 @@ public class ParkingRecord extends IdEntity {
 	private ParkStatus parkStatus;
 	
 	/**
-	 * 应付金额
-	 */
-	private BigDecimal money;
-	
-	/**
-	 * 实付金额
-	 */
-	private BigDecimal paidMoney;
-	
-	/**
 	 * 是否已付款
 	 */
 	private Boolean isPaid = false;
@@ -209,22 +199,6 @@ public class ParkingRecord extends IdEntity {
 
 	public void setDriveOutTime(Date driveOutTime) {
 		this.driveOutTime = driveOutTime;
-	}
-
-	public BigDecimal getMoney() {
-		return money;
-	}
-
-	public void setMoney(BigDecimal money) {
-		this.money = money;
-	}
-
-	public BigDecimal getPaidMoney() {
-		return paidMoney;
-	}
-
-	public void setPaidMoney(BigDecimal paidMoney) {
-		this.paidMoney = paidMoney;
 	}
 
 	public String getUserId() {

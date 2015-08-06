@@ -1,5 +1,7 @@
 package com.wolai.platform.vo;
 
+import java.math.BigDecimal;
+
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.util.IdGen;
@@ -29,6 +31,9 @@ public class WechatPayVo {
     private String payType;
 
     private String sign;
+    
+	private BigDecimal totalAmount;
+	private BigDecimal payAmount;
 
 	public String getAppid() {
 		return appid;
@@ -132,6 +137,22 @@ public class WechatPayVo {
 
 	public void setPayType(String payType) {
 		this.payType = payType;
+	}
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public BigDecimal getPayAmount() {
+		return payAmount;
+	}
+
+	public void setPayAmount(BigDecimal payAmount) {
+		this.payAmount = payAmount;
 	}
 	
 }

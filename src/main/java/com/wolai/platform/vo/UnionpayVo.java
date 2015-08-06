@@ -15,7 +15,8 @@ public class UnionpayVo {
 	
 	private String wolaiTradeNo;
 	private String payTradeNo;
-	private BigDecimal amount;	
+	private BigDecimal totalAmount;
+	private BigDecimal payAmount;
 	private String payType;
 	
 	public String getMerId() {
@@ -36,17 +37,24 @@ public class UnionpayVo {
 	public void setPayTradeNo(String payTradeNo) {
 		this.payTradeNo = payTradeNo;
 	}
-	public BigDecimal getAmount() {
-		return amount;
-	}
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
+
 	public String getPayType() {
 		return payType;
 	}
 	public void setPayType(String payType) {
 		this.payType = payType;
+	}
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+	public BigDecimal getPayAmount() {
+		return payAmount;
+	}
+	public void setPayAmount(BigDecimal payAmount) {
+		this.payAmount = payAmount;
 	}
 	
 
