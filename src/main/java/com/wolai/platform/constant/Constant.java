@@ -1,6 +1,5 @@
 package com.wolai.platform.constant;
 
-import java.math.BigDecimal;
 
 
 /**
@@ -26,6 +25,11 @@ public final class Constant {
 	 * webClint访问接口前缀
 	 */
 	public static final String API_WEB = "api/web/";
+	
+	/**
+	 * 外部接口访问接口前缀
+	 */
+	public static final String API_EX= "api/ex/";
 	
 	/**
 	 * 
@@ -84,6 +88,8 @@ public final class Constant {
      * app端用户获取key
      */
     public static final String REQUEST_USER = "request_user";
+    
+    public static final String REQUEST_PARINGLOTID = "parkingLotId";
     
     /**
      * 排序方向-升序

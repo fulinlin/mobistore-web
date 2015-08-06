@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  *  
  * @author Ethan
@@ -34,21 +36,25 @@ public class SysAPIKey extends IdEntity {
 	/**
 	 * 回传主机ip或域名
 	 */
+	@NotBlank
 	private String url;
 	
 	/**
 	 * 端口
 	 */
+	@NotBlank
 	private String port;
 	
 	/**
 	 * 根路径
 	 */
+	@NotBlank
 	private String rootPath;
 	
 	/**
 	 * 接入的停车场
 	 */
+	@NotBlank
 	@Column(name="parking_lot_id")
 	private String parkingLotId;
 	

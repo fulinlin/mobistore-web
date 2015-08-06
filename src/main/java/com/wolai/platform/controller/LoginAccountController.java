@@ -139,6 +139,24 @@ public class LoginAccountController extends BaseController{
 		return "redirect:"+SystemConfig.getAdminPath()+"/prepareLogin";
 	}
 	
+	@AuthPassport(validate=false)
+	@RequestMapping("${adminPath}/sys/loginaccount/active")
+	private String active(String activeCode,RedirectAttributes redirectAttributes){
+		DetachedCriteria dc = DetachedCriteria.forClass(SysLoginAccount.class);
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
+		dc.add(Restrictions.eq("activeCode", activeCode));
+		SysLoginAccount account = (SysLoginAccount) loginAccountService.getObjectByCriteria(dc);
+		if(account!=null){
+			account.setStatus(SysLoginAccount.STATUS_NORMAL);
+			loginAccountService.saveOrUpdate(account);
+			redirectAttributes.addFlashAttribute("email", account.getEmail());
+			addMessage(redirectAttributes, "激活成功,请登陆！");
+		}else{
+			addMessage(redirectAttributes, "激活码错误！");
+		}
+		return "";
+	}
 	
 	@RequestMapping("${adminPath}/sys/loginaccount/form")
 	public String edit(SysLoginAccount loginAccount, Model model,RedirectAttributes redirectAttributes){
@@ -173,20 +191,24 @@ public class LoginAccountController extends BaseController{
 		}
 		
 		// email唯一校验
-		if (!"true".equals(checkEmail(loginAccount.getId(),loginAccount.getEmail()))) {
+		if (!"true".equals(checkEmail(request,loginAccount.getId(),loginAccount.getEmail()))) {
 			addMessage(model, "保存登陆账户'" +loginAccount.getEmail() + "'失败，邮箱已存在");
 			return edit(loginAccount, model,redirectAttributes);
 		}
+		
 		userService.saveOrUpdate(loginAccount);
+		
 		addMessage(redirectAttributes, "保存用户'" + loginAccount.getEmail()+ "'登陆账号成功");
 		return "redirect:" + SystemConfig.getAdminPath() + "/user/?repage";
 	}
 	
-	
-	
 	@ResponseBody
 	@RequestMapping("${adminPath}/sys/loginaccount/checkEmail")
-	public String checkEmail(String lId,String email){
+	public String checkEmail(HttpServletRequest request,String lId,String email){
+		String uemail = request.getParameter("user.email");
+		if(StringUtils.isNotBlank(uemail)){
+			email = uemail.trim();
+		}
 		if(StringUtils.isBlank(email)){
 			return "false";
 		}

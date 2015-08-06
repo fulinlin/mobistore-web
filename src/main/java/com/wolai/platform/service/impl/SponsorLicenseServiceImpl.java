@@ -42,7 +42,6 @@ public class SponsorLicenseServiceImpl extends CommonServiceImpl implements Spon
 
 	@Override
 	public void saveOrUpdate(SponsorLicense sponsorLicense) {
-		 
 	        if (sponsorLicense.getLicenseId() == null) {
 	        	SysUser user = userService.getTempUserPers();
 	            //创建车牌

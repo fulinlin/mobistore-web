@@ -15,7 +15,7 @@
 				}
 			});
 			$(".accordion-body a").click(function(){
-				$("#menu li").removeClass("active");
+				$("#menu li").removeClass("active");  
 				$("#menu li i").removeClass("icon-white");
 				$(this).parent().addClass("active");
 				$(this).children("i").addClass("icon-white");
@@ -39,10 +39,11 @@
 							<li><a href="${ctx}/parkinglot" target="mainFrame" ><i class="icon-road"></i>&nbsp;停车场管理</a></li>
 							<li><a href="${ctx}/promotion" target="mainFrame" ><i class="icon-barcode"></i>&nbsp;优惠活动管理</a></li>
 							<li><a href="${ctx}/license" target="mainFrame" ><i class="icon-star"></i>&nbsp;车牌管理</a></li>
-							<li><a href="${ctx}/sysMessage" target="mainFrame" ><i class="icon-home"></i>&nbsp;推送消息管理</a></li>
-							<li><a href="${ctx}/area" target="mainFrame" ><i class="icon-home"></i>&nbsp;区域管理</a></li>
-							<li><a href="${ctx}/zone" target="mainFrame" ><i class="icon-home"></i>&nbsp;商圈管理</a></li>
+							<li><a href="${ctx}/sysMessage" target="mainFrame" ><i class="icon-envelope"></i>&nbsp;推送消息管理</a></li>
+							<li><a href="${ctx}/area" target="mainFrame" ><i class="icon-map-marker"></i>&nbsp;区域管理</a></li>
+							<li><a href="${ctx}/zone" target="mainFrame" ><i class="icon-flag"></i>&nbsp;商圈管理</a></li>
 							<li><a href="${ctx}/parking" target="mainFrame" ><i class="icon-home"></i>&nbsp;停车记录查询</a></li>
+							<li><a href="${ctx}/apikey" target="mainFrame" ><i class="icon-inbox"></i>&nbsp;系统接入管理</a></li>
 						</c:if>
 						<c:if test="${admin==null}">
 							<li><a href="${ctx}/coupon" target="mainFrame" ><i class="icon-barcode"></i>&nbsp;优惠券管理</a></li>

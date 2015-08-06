@@ -8,11 +8,12 @@
 	$(document).ready(function() {
 		$("#inputForm").validate({
 			rules: {
-				name: {remote: "${ctx}/sys/enterprise/checkName?eId=${enterprise.id}"},
-				user.email: {remote: "sys/loginaccount/checkEmail"}
+				'name': {remote: "${ctx}/sys/enterprise/checkName?eId=${enterprise.id}"},
+				'user.email': {remote: "${ctx}/sys/loginaccount/checkEmail"}
 			},
 			messages: {
-				name: {remote: "企业名称已存在"}
+				name: {remote: "企业名称已存在"},
+				'user.email':{remote:"Email已被注册"}
 			},
 			submitHandler: function(form){
 				loading('正在提交，请稍等...');
@@ -33,12 +34,13 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
+		<li><a href="${ctx}/sys/enterprise">企业列表</a></li>
 		<li class="active"><a href="${ctx}/sys/enterprise/form?id=${enterprise.id}">企业${not empty enterprise.id?'修改':'添加'}</a></li>
 	</ul>
 	<br />
 	<form:form id="inputForm" modelAttribute="enterprise" action="${ctx}/sys/enterprise/save" method="post" class="form-horizontal">
 		<form:hidden path="id" />
-		<sys:message content="${message}" />
+		<tags:message content="${message}" />
 		<div class="control-group">
 			<label class="control-label">名字：</label>
 			<div class="controls">
@@ -49,7 +51,7 @@
 			<div class="control-group">
 				<label class="control-label">邮箱：</label>
 				<div class="controls">
-					<form:input path="user.email" htmlEscape="false" maxlength="255" class="input-xlarge required" />
+					<form:input path="user.email" htmlEscape="false" maxlength="255" class="input-xlarge required email" />
 				</div>
 			</div>
 			<div class="control-group">
@@ -87,7 +89,9 @@
 		<div class="control-group">
             <label class="control-label">余额：</label>
             <div class="controls">
-                <form:input path="balance" htmlEscape="false" maxlength="255" class="input-xlarge digits" /><span class="help-inline">分钟</span>
+            	<form:hidden path="balance"/>
+            	<input type="text" id="day" class="digits input-mini"/>天<input id="hour"  type="text" class="digits input-mini"/>小时<input id="hour" type="text" class="digits input-mini"/>分钟
+                <%-- <form:input path="balance" htmlEscape="false" maxlength="255" class="input-xlarge digits" /><span class="help-inline">分钟</span> --%>
             </div>
         </div>
 		<div class="form-actions">

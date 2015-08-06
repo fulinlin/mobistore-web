@@ -43,6 +43,11 @@ public class ParkingRecord extends IdEntity {
   		}
   	}
 
+  	/**
+  	 * 外部数据id
+  	 */
+  	private String exNo;
+  	
 	/**
 	 * 车牌号
 	 */
@@ -94,7 +99,7 @@ public class ParkingRecord extends IdEntity {
 	 * 在库状态
 	 */
 	@Enumerated(EnumType.STRING)
-	private ParkStatus parkStatus = ParkingRecord.ParkStatus.OUT;
+	private ParkStatus parkStatus;
 	
 	/**
 	 * 应付金额
@@ -260,5 +265,13 @@ public class ParkingRecord extends IdEntity {
 
 	public void setTradeSuccessTime(Date tradeSuccessTime) {
 		this.tradeSuccessTime = tradeSuccessTime;
+	}
+
+	public String getExNo() {
+		return exNo;
+	}
+
+	public void setExNo(String exNo) {
+		this.exNo = exNo;
 	}
 }

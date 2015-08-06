@@ -8,5 +8,10 @@ public interface ParkingService extends CommonService {
 	ParkingRecord parkInfo(String id);
 
 	Page parkHistory(String userId, int startIndex, int pageSize);
-
+	
+	public ParkingRecord getParkingRecordbyExNo(String exNo);
+	
+	public void saveNotWolaiPaingRecord(ParkingRecord record);
+	
+	
 }

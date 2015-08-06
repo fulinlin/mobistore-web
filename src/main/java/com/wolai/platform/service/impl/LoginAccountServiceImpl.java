@@ -1,5 +1,8 @@
 package com.wolai.platform.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Service;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.SysLoginAccount;
 import com.wolai.platform.service.LoginAccountService;
+import com.wolai.platform.util.CustomizedPropertyConfigurer;
+import com.wolai.platform.util.SendMailUtil;
 
 @Service
 public class LoginAccountServiceImpl extends CommonServiceImpl implements LoginAccountService {
@@ -56,6 +61,10 @@ public class LoginAccountServiceImpl extends CommonServiceImpl implements LoginA
 	@Override
 	public void saveOrUpdate(SysLoginAccount loginaccount) {
 		getDao().saveOrUpdate(loginaccount);
+		Map<String, Object> a = new HashMap<String, Object>();
+		a.put("userName", "徐祥");
+		a.put("activeUrl",CustomizedPropertyConfigurer.getContextProperty("web.url")+"/loginAccount/active?"+loginaccount.getActiveCode());
+		SendMailUtil.sendFtlMail(loginaccount.getEmail(), "账户激活", "mailtemplate/ActiveLogin.ftl",a);
 	}
 
 }
