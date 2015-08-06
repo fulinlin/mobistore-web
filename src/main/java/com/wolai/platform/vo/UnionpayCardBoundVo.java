@@ -6,6 +6,7 @@ public class UnionpayCardBoundVo {
 	private String accType;
 	private String accNo;
 	private String boundType;
+	private String wolaiTradeNo;
 	
 	public String getId() {
 		return id;
@@ -30,5 +31,11 @@ public class UnionpayCardBoundVo {
 	}
 	public void setBoundType(String boundType) {
 		this.boundType = boundType;
+	}
+	public String getWolaiTradeNo() {
+		return wolaiTradeNo;
+	}
+	public void setWolaiTradeNo(String wolaiTradeNo) {
+		this.wolaiTradeNo = wolaiTradeNo;
 	}
 }
