@@ -60,12 +60,12 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		BigDecimal totalAmount = new BigDecimal(0.02);
 		BigDecimal payAmount = new BigDecimal(0.01);
 		
-		if (Coupon.CouponType.MONEY.toString().equals(coupon.getType().toString())) {
-			payAmount = payAmount.subtract(new BigDecimal(coupon.getMoney()));
-			if (payAmount.intValue() < 0) {
-				payAmount = new BigDecimal(0);
-			}
-		}
+//		if (Coupon.CouponType.MONEY.toString().equals(coupon.getType().toString())) {
+//			payAmount = payAmount.subtract(new BigDecimal(coupon.getMoney()));
+//			if (payAmount.intValue() < 0) {
+//				payAmount = new BigDecimal(0);
+//			}
+//		}
 
 		saveOrUpdate(parking);
 		
