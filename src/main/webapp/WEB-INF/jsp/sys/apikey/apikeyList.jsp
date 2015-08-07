@@ -64,14 +64,14 @@
 					${apikey.rootPath}
 				</td>
 				<td>
-    				<a href="${ctx}/apikey/form?id=${license.id}">修改</a>
+    				<a href="${ctx}/apikey/form?id=${apikey.id}">修改</a>
     				<c:if test="${!apikey.isDisable }">
-    					<a href="${ctx}/apikey/disable?id=${license.id}" onclick="return confirmx('确认要删除该接入key吗？', this.href)">禁用</a>
+    					<a href="${ctx}/apikey/disable?id=${apikey.id}" onclick="return confirmx('确认要删除该接入key吗？', this.href)">禁用</a>
     				</c:if>
     				<c:if test="${apikey.isDisable }">
-    					<a href="${ctx}/apikey/disable?id=${license.id}" onclick="return confirmx('确认要删除该接入key吗？', this.href)">启用</a>
+    					<a href="${ctx}/apikey/eisable?id=${apikey.id}" onclick="return confirmx('确认要删除该接入key吗？', this.href)">启用</a>
     				</c:if>
-					<a href="${ctx}/apikey/delete?id=${license.id}" onclick="return confirmx('确认要删除该接入key吗？', this.href)">删除</a>
+					<a href="${ctx}/apikey/delete?id=${apikey.id}" onclick="return confirmx('确认要删除该接入key吗？', this.href)">删除</a>
 				</td>
 			</tr>
 		</c:forEach>

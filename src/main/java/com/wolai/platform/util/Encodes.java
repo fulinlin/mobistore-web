@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.Key;
 import java.util.Arrays;
+import java.util.Date;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -14,8 +15,13 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.wolai.platform.vo.EntranceNoticeVo;
 
 /**
  * 封装各种格式的编码解码工具类.
@@ -188,5 +194,26 @@ public class Encodes {
 		}
 		
 		return new SecretKeySpec(keyBytes, KEY_ALGORITHM);
+	}
+	
+	public static void main(String args[]){
+		String a = "{\"sign\":\"d7912479dddd40ffecb59b5c6cce4865a+XXT1LqrsVCbXEFX8RI0W0H6j+U0jpzzevcajKpGUS9QHy8N4QHp33SWapJ1F62ayuGQrNL18eUc+78CXuClSAojHsqGSV6f/HZox9mfmSMUmyI6mEab3/Hp0For1ppo9Sr4pk8z1u++M+pQISKcbEf+7H0yEMUDvDgmX/5Op4=\"}";
+		Date d = new Date();
+		for(int i=0;i<10000;i++){
+			getRequestParameter(EntranceNoticeVo.class,a);
+		}
+		Date d1 = new Date();
+		System.out.println((d1.getTime()-d.getTime()));
+	}
+	
+	public static <E> E  getRequestParameter(Class<E> voClass,String sign){
+		sign = (String) JSONObject.parseObject(sign).get("sign");
+		if(StringUtils.isNotBlank(sign)){
+			String MD5key = sign.substring(0, 32);
+			String aesKey  = MD5key.substring(0,3)+MD5key.substring(8,11)+MD5key.substring(19, 22);// 1-3,9-11,20-22
+			String jsonString=new String(Encodes.decodeAES(sign.substring(32),aesKey));
+				return JSON.parseObject(jsonString,voClass);
+		}
+		return null;
 	}
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.License;
-import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.LicenseService;
 
 @Service

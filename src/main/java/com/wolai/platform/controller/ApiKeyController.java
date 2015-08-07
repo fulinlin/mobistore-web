@@ -79,9 +79,9 @@ public class ApiKeyController extends BaseController{
 		if (!beanValidator(model, apikey)) {
 			return form(apikey, model);
 		}
-		
-		apikey.setToken(IdGen.uuid());
-	
+		if(apikey.getId()!=null){
+			apikey.setToken(IdGen.uuid());
+		}
 		apiKeyService.saveOrUpdate(apikey);
 		addMessage(redirectAttributes, "保存成功");
 		return "redirect:" + SystemConfig.getAdminPath() + "/apikey/?repage";

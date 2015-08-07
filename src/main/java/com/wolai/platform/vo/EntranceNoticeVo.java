@@ -28,13 +28,13 @@ public class EntranceNoticeVo implements Serializable {
 	/**
 	 * 入口编号
 	 */
-	private String entranceNO;
+	private String entranceNo;
 	
 	/**
 	 * 车牌号
 	 */
 	@NotBlank
-	private String carNO;
+	private String carNo;
 	
 	/**
 	 * 入场时间
@@ -51,31 +51,9 @@ public class EntranceNoticeVo implements Serializable {
 	/**
 	 * 时间戳
 	 */
+	@NotNull
 	private Long timestamp;
 
-	public String getExNo() {
-		return exNo;
-	}
-
-	public void setExNo(String exNo) {
-		this.exNo = exNo;
-	}
-
-	public String getEntranceNO() {
-		return entranceNO;
-	}
-
-	public void setEntranceNO(String entranceNO) {
-		this.entranceNO = entranceNO;
-	}
-
-	public String getCarNO() {
-		return carNO;
-	}
-
-	public void setCarNO(String carNO) {
-		this.carNO = carNO;
-	}
 
 	public Long getEnterTime() {
 		return enterTime;
@@ -99,6 +77,30 @@ public class EntranceNoticeVo implements Serializable {
 
 	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public String getExNo() {
+		return exNo;
+	}
+
+	public void setExNo(String exNo) {
+		this.exNo = exNo;
+	}
+
+	public String getEntranceNo() {
+		return entranceNo;
+	}
+
+	public void setEntranceNo(String entranceNo) {
+		this.entranceNo = entranceNo;
+	}
+
+	public String getCarNo() {
+		return carNo;
+	}
+
+	public void setCarNo(String carNo) {
+		this.carNo = carNo;
 	}
 
 }

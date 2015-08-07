@@ -15,15 +15,14 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.bean.LoginInfo;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.SysAPIKey;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.service.ApiKeyService;
 import com.wolai.platform.service.CommonService;
 import com.wolai.platform.service.UserService;
-import com.wolai.platform.util.Encodes;
 import com.wolai.platform.util.SpringContextHolder;
 import com.wolai.platform.util.WebUtils;
 
@@ -71,7 +70,7 @@ public class SystemInterceptor implements HandlerInterceptor {
 					/* 对外接口安全性认证 */
 					if (packageName.equals(Constant.API_OUT_PACKAGE_CLIENT)) {
 						Map<String, Object> result = new HashMap<String, Object>();
-						CommonService commonservice = SpringContextHolder.getBean(CommonService.class);
+						CommonService commonservice = SpringContextHolder.getBean(ApiKeyService.class);
 						// 获取消息加密key
 						DetachedCriteria dc = DetachedCriteria.forClass(SysAPIKey.class);
 						dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
@@ -79,33 +78,10 @@ public class SystemInterceptor implements HandlerInterceptor {
 						dc.add(Restrictions.eq("token", token.trim()));
 						SysAPIKey key = (SysAPIKey) commonservice.getObjectByCriteria(dc);
 						
-						if(key!=null){
-							request.setAttribute(Constant.REQUEST_PARINGLOTID, key.getParkingLotId());
-							RequestWrapper waper = new RequestWrapper(request);
-							String body = waper.getBody();
-							JSONObject json = JSONObject.parseObject(body);
-							String sign = json.getString("sign");
-							if(StringUtils.isNotBlank(sign)){
-								String MD5key = sign.substring(0, 31);
-								String aesKey  = MD5key.substring(0,2)+MD5key.substring(8,10)+MD5key.substring(19, 21);// 1-3,9-11,20-22
-								String jsonString=new String(Encodes.decodeAES(sign.substring(31),aesKey));
-								Class<?> voClass = null;
-								for(Class<?> classz:((HandlerMethod) handler).getMethod().getParameterTypes()){
-									if(classz.getSimpleName().toLowerCase().endsWith("vo")){
-										voClass=classz;
-										break;
-									}
-								}
-								if(voClass!=null){
-									request.setAttribute("vo", JSON.parseObject(jsonString,voClass));
-									return true;
-								}else{
-									throw new RuntimeException(((HandlerMethod) handler).getMethod().getName()+"参数不正确！请使用Vo作为requestBody参数！");
-								}
+							if(key!=null){
+								request.setAttribute(Constant.REQUEST_PARINGLOTID, key.getParkingLotId());
+								return true;
 							}
-							result.put("code", -100);
-							result.put("msg", "参数不正确，未找到sign字符串");
-						}
 						result.put("code", -100);
 						result.put("msg", "授权token认证失败");
 						
@@ -145,15 +121,7 @@ public class SystemInterceptor implements HandlerInterceptor {
 				}
 			}
 		} else {
-			String uriPrefix = request.getContextPath();
-			String requestRri = request.getRequestURI();
-			if (requestRri.endsWith("/")) {
-				requestRri = requestRri.substring(0, requestRri.length() - 1);
-			}
-			if (requestRri.equals(uriPrefix)) {
-				return true;
-			}
-
+			return true;
 		}
 		return false;
 	}

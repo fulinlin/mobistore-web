@@ -11,7 +11,6 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.alibaba.fastjson.JSON;
@@ -48,6 +47,8 @@ public class BaseController {
     public void exception(HttpServletRequest request,HttpServletResponse response, Exception e) {
     	Map<String, Object> result = new HashMap<String, Object>();
     	result.put("code", -200);
+    	result.put("msg", e.getMessage());
+    	e.printStackTrace();
     	WebUtils.renderJson(response, JSON.toJSONString(result));
     }
     
@@ -82,13 +83,13 @@ public class BaseController {
 	 * @param groups 验证组
 	 * @return 验证成功：返回true；严重失败：将错误信息添加到 message 中
 	 */
-	protected boolean beanValidator(Model model, Object object, Class<?>... groups) {
+	protected boolean beanValidator(Map<String,Object> result, Object object, Class<?>... groups) {
 		try{
 			BeanValidators.validateWithException(validator, object, groups);
 		}catch(ConstraintViolationException ex){
 			List<String> list = BeanValidators.extractPropertyAndMessageAsList(ex, ": ");
 			list.add(0, "数据验证失败：");
-			addMessage(model, list.toArray(new String[]{}));
+			addMessage(result, list.toArray(new String[]{}));
 			return false;
 		}
 		return true;
@@ -98,11 +99,11 @@ public class BaseController {
 	 * 添加Model消息
 	 * @param messages 消息
 	 */
-	protected void addMessage(Model model, String... messages) {
+	protected void addMessage(Map<String,Object> result, String... messages) {
 		StringBuilder sb = new StringBuilder();
 		for (String message : messages){
 			sb.append(message).append(messages.length>1?"<br/>":"");
 		}
-		model.addAttribute("msg", sb.toString());
+		result.put("msg", sb.toString());
 	}
 }

@@ -1,6 +1,5 @@
 package com.wolai.platform.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,9 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 停车记录
@@ -18,7 +21,8 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="wo_parking_record")
+@Table(name="wo_parking_record",indexes={@Index(columnList="ex_no")})
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ParkingRecord extends IdEntity {
 
 	/**
@@ -46,6 +50,7 @@ public class ParkingRecord extends IdEntity {
   	/**
   	 * 外部数据id
   	 */
+  	@Column(name="ex_no")
   	private String exNo;
   	
 	/**
@@ -98,6 +103,7 @@ public class ParkingRecord extends IdEntity {
 	/**
 	 * 在库状态
 	 */
+	@Column(name="park_status")
 	@Enumerated(EnumType.STRING)
 	private ParkStatus parkStatus;
 	
