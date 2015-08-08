@@ -22,14 +22,20 @@ import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.License.LICENSE_COLOR;
+import com.wolai.platform.entity.SysCarBrand;
+import com.wolai.platform.entity.SysCarModel;
 import com.wolai.platform.entity.SysMessage;
+import com.wolai.platform.entity.SysMessageSend;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.service.CarService;
 import com.wolai.platform.service.LicenseService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.util.CommonUtils;
+import com.wolai.platform.vo.BrandVo;
 import com.wolai.platform.vo.LicenseVo;
 import com.wolai.platform.vo.MessageVo;
+import com.wolai.platform.vo.ModelVo;
 
 @Controller
 @RequestMapping(Constant.API_MOBI + "license/")
@@ -40,6 +46,9 @@ public class LicenseController extends BaseController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	CarService carService;
 
 	@RequestMapping(value="list")
 	@ResponseBody
@@ -220,6 +229,51 @@ public class LicenseController extends BaseController {
 		licensePlateService.update(po);
 
 		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
+	
+	@RequestMapping(value="listBrand")
+	@ResponseBody
+	public Map<String,Object> listBrand(HttpServletRequest request){
+		Map<String,Object> ret =new HashMap<String, Object>(); 
+		
+		List<SysCarBrand> ls = carService.listBrand();
+		
+		List<BrandVo> vols = new ArrayList<BrandVo>();
+		for (SysCarBrand po : ls) {
+			BrandVo vo = new BrandVo();
+			BeanUtilEx.copyProperties(vo, po);
+			vols.add(vo);
+		}
+
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vols);
+		return ret;
+	}
+	
+	@RequestMapping(value="listModel")
+	@ResponseBody
+	public Map<String,Object> listModel(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret =new HashMap<String, Object>(); 
+		
+		String brandId = json.get("brandId");
+		if (StringUtils.isEmpty(brandId)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		List<SysCarModel> ls = carService.listModelByBrand(brandId);
+		
+		List<ModelVo> vols = new ArrayList<ModelVo>();
+		for (SysCarModel po : ls) {
+			ModelVo vo = new ModelVo();
+			BeanUtilEx.copyProperties(vo, po);
+			vols.add(vo);
+		}
+
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vols);
 		return ret;
 	}
 }
