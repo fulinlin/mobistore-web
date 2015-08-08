@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
@@ -68,9 +67,9 @@ public class CommonServiceImpl extends BaseServiceImpl implements CommonService 
 	}
 
 	@Override
-	public Object getObjectByCriteria(DetachedCriteria dc) {
-		return  getDao().getByCriteria(dc);
-	}
+	 public Object  FindFirstByCriteria(DetachedCriteria dc) {
+		 return getDao().FindFirstByCriteria(dc);
+	 }
 
 	@Override
 	public List<Map> findMapByHQL(String hqlString, Object... values) {
@@ -96,4 +95,9 @@ public class CommonServiceImpl extends BaseServiceImpl implements CommonService 
     public void saveOrUpdateAll(List<?> list) {
         getDao().saveOrUpdateAll(list);
     }
+
+	@Override
+	public Object getObjectByCriteria(DetachedCriteria dc) {
+		return getDao().getByCriteria(dc);
+	}
 }

@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.ParkingRecord.ParkStatus;
+import com.wolai.platform.entity.TempParkingRecord;
 import com.wolai.platform.service.ParkingService;
+import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.util.TimeUtils;
 
 @Service
@@ -55,14 +57,48 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
 		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
 		dc.add(Restrictions.eq("exNo",exNo));
+		dc.add(Restrictions.ne("parkStatus", ParkStatus.OUT));
 		return (ParkingRecord) getDao().getByCriteria(dc);
+	}
+	
+	@Override
+	public TempParkingRecord getTempParkingRecordbyExNo(String exNo) {
+		DetachedCriteria dc = DetachedCriteria.forClass(TempParkingRecord.class);
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
+		dc.add(Restrictions.eq("exNo",exNo));
+		return (TempParkingRecord) getDao().getByCriteria(dc);
 	}
 
 	@Override
-	public void saveNotWolaiPaingRecord(ParkingRecord record) {
-		// TODO Auto-generated method stub
+	public void savePaingRecord(ParkingRecord record) {
+		if(record.getCarNoId()!=null){
+			getDao().saveOrUpdate(record);
+		}else{
+			DetachedCriteria dc = DetachedCriteria.forClass(TempParkingRecord.class);
+			dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+			dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
+			dc.add(Restrictions.eq("exNo",record.getExNo()));
+			TempParkingRecord temp = (TempParkingRecord) getDao().FindFirstByCriteria(dc);
+			if(temp==null){
+				temp= new TempParkingRecord();
+			}
+			BeanUtilEx.copyProperties(temp, record);
+			getDao().saveOrUpdate(temp);
+		}
 		
 	}
-	
+
+	@Override
+	public void deleteTempRecord(String exNo) {
+		String hql ="delete "+TempParkingRecord.class.getSimpleName()+" where exNo=?";
+		getDao().executeByHql(hql, exNo);
+	}
+
+	@Override
+	public void updatePaingRecord(ParkingRecord record) {
+		
+		
+	}
 	
 }

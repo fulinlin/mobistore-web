@@ -22,6 +22,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.internal.CriteriaImpl;
@@ -213,6 +214,22 @@ public class HibernateDao {
     public Object  getByCriteria(DetachedCriteria dc) throws HibernateException {
     	Criteria  ca =  dc.getExecutableCriteria(getSession());
         return ca.uniqueResult();
+    }
+    
+    
+    /**
+     * 根据Criteria查找唯一实体
+     * @param dc Criteria条件
+     * @return 查询实体
+     * @since 	1.0
+     */
+    public Object  FindFirstByCriteria(DetachedCriteria dc) {
+    	Criteria  ca =  dc.getExecutableCriteria(getSession());
+    	ca.setFirstResult(0);
+    	ca.setMaxResults(1);
+    	ca.addOrder(Order.desc("id"));
+    	List<Object> list =  ca.list();
+        return list==null|| list.size()==0?null:list.get(0);
     }
     
     /**

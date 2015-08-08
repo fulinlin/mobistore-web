@@ -83,6 +83,8 @@ public interface CommonService extends BaseService {
     
     Object getObjectByCriteria(DetachedCriteria dc);
     
+    Object  FindFirstByCriteria(DetachedCriteria dc);
+    
     List<Map> findMapByHQL(String hqlString, Object... values);
     
     /**
