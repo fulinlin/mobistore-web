@@ -79,6 +79,11 @@ public class License extends IdEntity{
 	private String brand;
 	
 	/**
+	 * 型号
+	 */
+	private String model;
+	
+	/**
 	 * 颜色
 	 */
 	@Enumerated(EnumType.STRING)
@@ -153,5 +158,13 @@ public class License extends IdEntity{
 	}
 	public void setColor(LICENSE_COLOR color) {
 		this.color = color;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
 	}
 }

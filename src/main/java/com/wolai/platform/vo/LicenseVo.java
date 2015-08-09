@@ -5,6 +5,7 @@ public class LicenseVo {
 	private String carNo;
 	private String frameNumber;
 	private String brand;
+	private String model;
 	private Boolean isPostpaid;
 	private String color;
 	
@@ -43,6 +44,12 @@ public class LicenseVo {
 	}
 	public void setColor(String color) {
 		this.color = color;
+	}
+	public String getModel() {
+		return model;
+	}
+	public void setModel(String model) {
+		this.model = model;
 	}
 
 }

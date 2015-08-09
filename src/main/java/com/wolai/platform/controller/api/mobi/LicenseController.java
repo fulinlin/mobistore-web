@@ -110,11 +110,12 @@ public class LicenseController extends BaseController {
 		String carNo = json.get("carNo");
 		String frameNumber = json.get("frameNumber");
 		String brand = json.get("brand");
+		String model = json.get("model");
 		String isPostpaid = json.get("isPostpaid");
 		String color = json.get("color");
 		
 		if (StringUtils.isEmpty(carNo) 
-				|| StringUtils.isEmpty(brand) || StringUtils.isEmpty(isPostpaid)  || StringUtils.isEmpty(color)
+				|| StringUtils.isEmpty(brand) || StringUtils.isEmpty(model) || StringUtils.isEmpty(isPostpaid)  || StringUtils.isEmpty(color)
 				|| LICENSE_COLOR.value(color) == null) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
@@ -144,6 +145,7 @@ public class LicenseController extends BaseController {
 			po.setCarNo(carNo.toUpperCase());
 			po.setFrameNumber(frameNumber);
 			po.setBrand(brand);
+			po.setModel(model);
 			po.setColor(LICENSE_COLOR.value(color));
 			
 			po.setIsPostpaid(Boolean.valueOf(isPostpaid));
@@ -167,6 +169,7 @@ public class LicenseController extends BaseController {
 		String carNo = json.get("carNo");
 		String frameNumber = json.get("frameNumber");
 		String brand = json.get("brand");
+		String model = json.get("model");
 		String isPostpaid = json.get("isPostpaid");
 		
 		if (StringUtils.isEmpty(id) || 
@@ -193,6 +196,9 @@ public class LicenseController extends BaseController {
 		}
 		if (!StringUtils.isEmpty(brand)) {
 			po.setBrand(brand);
+		}
+		if (!StringUtils.isEmpty(model)) {
+			po.setModel(model);
 		}
 		if (!StringUtils.isEmpty(isPostpaid)) {
 			po.setIsPostpaid(Boolean.valueOf(isPostpaid));
