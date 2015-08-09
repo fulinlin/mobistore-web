@@ -29,7 +29,9 @@ import com.wolai.platform.service.CouponService;
 import com.wolai.platform.service.ExchangePlanService;
 import com.wolai.platform.service.PromotionService;
 import com.wolai.platform.service.UserService;
+import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.util.CommonUtils;
+import com.wolai.platform.vo.UserVo;
 
 @Service
 public class UserServiceImpl extends CommonServiceImpl implements UserService {
@@ -209,7 +211,11 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		user.setName(name);
 		saveOrUpdate(user);
 		
+		UserVo vo = new UserVo();
+		BeanUtilEx.copyProperties(vo, user);
+		
 		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", vo);
 		
 		return ret;
 	}
