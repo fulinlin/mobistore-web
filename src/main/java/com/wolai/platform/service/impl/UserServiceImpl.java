@@ -179,7 +179,7 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> updateProfilePers(String phone, String password,String newPassword) {
+	public Map<String, Object> updatePassword(String phone, String password,String newPassword) {
 		Map<String, Object> ret = new HashMap<String, Object>(); 
 
 		SysUser po = getUserByPhoneAndPassword(phone, password);
@@ -196,6 +196,18 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 //		po.setAuthToken(newToken);
 		po.setLastLoginTime(new Date());
 		saveOrUpdate(po);
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		
+		return ret;
+	}
+	
+	@Override
+	public Map<String, Object> updateProfile(SysUser user, String name) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		user.setName(name);
+		saveOrUpdate(user);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		

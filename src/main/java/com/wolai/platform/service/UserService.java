@@ -14,7 +14,7 @@ public interface UserService extends CommonService {
 	SysUser loginWithToken(String token);
 	SysUser loginPers(String phone, String password);
 	SysUser logoutPers(String token);
-	Map<String, Object> updateProfilePers(String phone, String password, String newPassword);
+	Map<String, Object> updatePassword(String phone, String password, String newPassword);
 
 	SysUser getUserByPhone(String phone);
 	SysUser getUserByPhoneAndPassword(String phone, String password);
@@ -33,4 +33,6 @@ public interface UserService extends CommonService {
 	SysUser getTempUserPers();
 
 	void setPayTypePers(SysUser user, String payType);
+
+	Map<String, Object> updateProfile(SysUser user, String nickName);
 }

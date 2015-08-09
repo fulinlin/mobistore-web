@@ -26,6 +26,14 @@ import org.springframework.web.servlet.LocaleResolver;
  */
 public class StringUtil extends org.apache.commons.lang3.StringUtils {
 	
+	public static boolean IsEmpty(String str){
+		if(str == null || str.trim().equals("")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public static String lowerFirst(String str){
 		if(StringUtil.isBlank(str)) {
 			return "";

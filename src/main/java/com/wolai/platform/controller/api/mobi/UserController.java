@@ -25,6 +25,7 @@ import com.wolai.platform.service.VerificationService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.util.CommonUtils;
 import com.wolai.platform.util.SmsUtil;
+import com.wolai.platform.util.StringUtil;
 import com.wolai.platform.vo.UserVo;
 
 @Controller
@@ -188,18 +189,39 @@ public class UserController extends BaseController{
 	public Map<String,Object> updateProfile(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>(); 
 		
+		String action = json.get("action");
 		String phone = json.get("phone");
+		String name = json.get("name");
 		String password = json.get("password");
 		String newPassword = json.get("newPassword");
 		
-		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) 
-				|| StringUtils.isEmpty(newPassword)) {
-			ret.put("code", RespCode.INTERFACE_FAIL.Code());
-			ret.put("msg", "parameters error");
-			return ret;
+		if (StringUtils.isEmpty(action)) {
+			action = "password";
 		}
 		
-		ret = userService.updateProfilePers(phone, password, newPassword);
+		if ("password".equals(action)) {
+			if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) 
+					|| StringUtils.isEmpty(newPassword)) {
+				ret.put("code", RespCode.INTERFACE_FAIL.Code());
+				ret.put("msg", "parameters error");
+				return ret;
+			}
+			
+			ret = userService.updatePassword(phone, password, newPassword);
+		} else if ("profile".equals(action))  {
+			if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(name)) {
+				ret.put("code", RespCode.INTERFACE_FAIL.Code());
+				ret.put("msg", "parameters error");
+				return ret;
+			}
+			
+			SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
+			ret = userService.updateProfile(user, name);
+		} else {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameter type must be 'password' or 'profile'");
+			return ret;
+		}
 		
 		return ret;
 	}
