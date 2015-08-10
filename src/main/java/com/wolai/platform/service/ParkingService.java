@@ -12,7 +12,7 @@ public interface ParkingService extends CommonService {
 	
 	public ParkingRecord getParkingRecordbyExNo(String exNo,String parkingLotId);
 	
-	public TempParkingRecord getTempParkingRecordbyExNo(String exNo);
+	public TempParkingRecord getTempParkingRecordbyCarNo(String carNo);
 	
 	public void savePaingRecord(ParkingRecord record);
 	

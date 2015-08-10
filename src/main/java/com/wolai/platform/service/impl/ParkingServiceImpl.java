@@ -63,11 +63,11 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 	}
 	
 	@Override
-	public TempParkingRecord getTempParkingRecordbyExNo(String exNo) {
+	public TempParkingRecord getTempParkingRecordbyCarNo(String carNo) {
 		DetachedCriteria dc = DetachedCriteria.forClass(TempParkingRecord.class);
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
 		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
-		dc.add(Restrictions.eq("exNo",exNo));
+		dc.add(Restrictions.eq("carNo",carNo));
 		return (TempParkingRecord) getDao().getByCriteria(dc);
 	}
 

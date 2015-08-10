@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.License;
+import com.wolai.platform.entity.ParkingRecord;
+import com.wolai.platform.entity.ParkingRecord.ParkStatus;
+import com.wolai.platform.entity.TempParkingRecord;
 import com.wolai.platform.service.LicenseService;
 
 @Service
@@ -31,6 +34,25 @@ public class LicenseServiceImpl extends CommonServiceImpl implements LicenseServ
 	public void create(License po) {
 		getDao().saveOrUpdate(po);
 		
+		DetachedCriteria dc = DetachedCriteria.forClass(TempParkingRecord.class);
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
+		dc.add(Restrictions.eq("carNo",po.getCarNo()));
+		dc.addOrder(Order.desc("driveInTime"));
+		
+		TempParkingRecord tempRecord = (TempParkingRecord) getDao().FindFirstByCriteria(dc);
+		ParkingRecord record = new ParkingRecord();
+		record.setCarNo(record.getCarNo());
+		record.setCarNoId(po.getId());
+		record.setCarPicPath(tempRecord.getCarPicPath());
+		record.setDriveInTime(tempRecord.getDriveInTime());
+		record.setEntranceNo(tempRecord.getEntranceNo());
+		record.setExNo(tempRecord.getExNo());
+		record.setUserId(po.getUserId());
+		record.setParkStatus(ParkStatus.IN);
+		
+		getDao().delete(tempRecord);
+		getDao().save(record);
 	}
 
 	@Override
