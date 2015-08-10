@@ -158,10 +158,14 @@ public class ApiController extends BaseController {
 				bill.setPayStatus(PayStatus.INIT);
 				bill.setPaytype(PayType.UNIONPAY);
 				billService.saveOrUpdate(bill);
+				record.setParkStatus(ParkStatus.OUT);
+				parkingService.saveOrUpdate(record);
 				responseVo.setIsPaid(true);
 			}else{
 				if(PayStatus.SUCCESSED.equals(bill.getPayStatus())){
 					responseVo.setIsPaid(true);
+					record.setParkStatus(ParkStatus.OUT);
+					parkingService.saveOrUpdate(record);
 				}else{
 					responseVo.setIsPaid(false);
 				}
