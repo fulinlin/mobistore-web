@@ -1,6 +1,7 @@
 package com.wolai.platform.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -11,12 +12,15 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.TestService;
+import com.wolai.platform.util.IdGen;
 import com.wolai.platform.util.TimeUtils;
+import com.wolai.platform.util.WebClientUtil;
 
 @Service
 public class TestServiceImpl extends CommonServiceImpl implements TestService {
@@ -58,28 +62,31 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		List<SysUser> users = (List<SysUser>) findAllByCriteria(dc);
 		return users;
 	}
+	
 	@Override
-	public List<License> listCarsOut() {
+	public List<License> listCarsOut(String userId) {
 		Date dt = TimeUtils.getDateBefore(new Date(), 10);
 		
-		String  hql = "from License lc where lc.isDelete = ? and lc.isDisable = ? and lc.id not in (" +
-					"select id from ParkingRecord pr where pr.parkStatus != ? and pr.driveInTime > ?"
+		String  hql = "from License lc where userId=? and lc.isDelete = ? and lc.isDisable = ? and lc.id not in (" +
+					"select carNoId from ParkingRecord pr where (pr.parkStatus = ? or pr.parkStatus = ?) and pr.driveInTime > ?"
 				+ ")";
 		
-		List ls = getListByHQL(hql, false, false, ParkingRecord.ParkStatus.OUT, dt);
+		List ls = getListByHQL(hql, userId, false, false, ParkingRecord.ParkStatus.IN, ParkingRecord.ParkStatus.PARKED, dt);
 		return ls;
 	}
+	
 	@Override
-	public List<License> listCarsIn() {
+	public List<License> listCarsIn(String userId) {
 		Date dt = TimeUtils.getDateBefore(new Date(), 10);
 		
-		String  hql = "from License lc where lc.isDelete = ? and lc.isDisable = ? and lc.id in (" +
-					"select id from ParkingRecord pr where pr.parkStatus != ? and pr.driveInTime > ?"
+		String  hql = "from License lc where userId=? and lc.isDelete = ? and lc.isDisable = ? and lc.id in (" +
+					"select carNoId from ParkingRecord pr where (pr.parkStatus = ? or pr.parkStatus = ?) and pr.driveInTime > ?"
 				+ ")";
 		
-		List ls = getListByHQL(hql, false, false, ParkingRecord.ParkStatus.OUT, dt);
+		List ls = getListByHQL(hql, userId, false, false, ParkingRecord.ParkStatus.IN, ParkingRecord.ParkStatus.PARKED, dt);
 		return ls;
 	}
+	
 	@Override
 	public List<ParkingLot> listParkingLot() {
 		DetachedCriteria dc2 = DetachedCriteria.forClass(ParkingLot.class);
@@ -90,14 +97,50 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		
 		return lots;
 	}
+	
 	@Override
-	public Map<String, Object> enter(String carToIn, String lotToIn) {
+	public String bound(String url, String token) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("url", url);
+		map.put("token", token);
 		
-		return null;
+		String ret = WebClientUtil.post("http://10.0.0.13/wolai/wolai/rt/simuseturltoken", JSON.toJSONString(map));
+		return ret;
 	}
+	
 	@Override
-	public Map<String, Object> exit(String carToOut) {
+	public String enter(String carNo) {
+		// {"carNo":"","exNo":"","entranceNo":""} 
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("carNo", carNo);
+		map.put("exNo", IdGen.uuid());
+		map.put("entranceNo", "11");
 		
-		return null;
+		String ret = WebClientUtil.post("http://10.0.0.13/wolai/wolai/rt/simucarenter", JSON.toJSONString(map));
+		return ret;
+	}
+	
+	@Override
+	public String exit(String carNo) {
+		DetachedCriteria dc2 = DetachedCriteria.forClass(ParkingRecord.class);
+		dc2.add(Restrictions.eq("isDelete", false));
+		dc2.add(Restrictions.eq("isDisable", false));
+		dc2.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
+		dc2.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.UNKONW));
+		dc2.addOrder(Order.desc("id"));
+		List<ParkingRecord> parks = (List<ParkingRecord>) findAllByCriteria(dc2);
+		ParkingRecord park = parks.get(0);
+		String exNo = park.getExNo();
+		Date intime = park.getDriveInTime();
+		
+		// {"carNo":"苏E11111","exNo":"1","exportNo":"A1","enterTime":"1438936610000"}
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("carNo", carNo);
+		map.put("exNo", exNo);
+		map.put("entranceNo", "11");
+		map.put("enterTime", String.valueOf(intime.getTime()));
+		
+		String ret = WebClientUtil.post("http://10.0.0.13/wolai/wolai/rt/simucarleave", JSON.toJSONString(map));
+		return ret;
 	}
 }

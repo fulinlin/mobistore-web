@@ -16,11 +16,13 @@ public interface TestService extends CommonService {
 
 	List<SysUser> listTestUsers();
 	
-	List<License> listCarsOut();
-	List<License> listCarsIn();
+	List<License> listCarsOut(String userId);
+	List<License> listCarsIn(String userId);
 	List<ParkingLot> listParkingLot();
 
-	Map<String, Object> enter(String carToIn, String lotToIn);
+	String enter(String carNo);
 
-	Map<String, Object> exit(String carToOut);
+	String exit(String carNo);
+
+	String bound(String url, String token);
 }
