@@ -108,7 +108,6 @@ public class LicenseController extends BaseController {
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
 		String carNo = json.get("carNo");
-		String frameNumber = json.get("frameNumber");
 		String brand = json.get("brand");
 		String model = json.get("model");
 		String color = json.get("color");
@@ -142,7 +141,6 @@ public class LicenseController extends BaseController {
 			// 新创建车牌
 			License po = new License();
 			po.setCarNo(carNo.toUpperCase());
-			po.setFrameNumber(frameNumber);
 			po.setBrand(brand);
 			po.setModel(model);
 			po.setColor(LICENSE_COLOR.value(color));
@@ -165,7 +163,6 @@ public class LicenseController extends BaseController {
 		String id = json.get("id");
 		String color = json.get("color");
 		String carNo = json.get("carNo");
-		String frameNumber = json.get("frameNumber");
 		String brand = json.get("brand");
 		String model = json.get("model");
 		
@@ -187,9 +184,6 @@ public class LicenseController extends BaseController {
 		
 		if (!StringUtils.isEmpty(carNo)) {
 			po.setCarNo(carNo);
-		}
-		if (!StringUtils.isEmpty(frameNumber)) {
-			po.setFrameNumber(frameNumber);
 		}
 		if (!StringUtils.isEmpty(brand)) {
 			po.setBrand(brand);

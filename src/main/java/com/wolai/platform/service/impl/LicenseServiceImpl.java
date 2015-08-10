@@ -41,18 +41,21 @@ public class LicenseServiceImpl extends CommonServiceImpl implements LicenseServ
 		dc.addOrder(Order.desc("driveInTime"));
 		
 		TempParkingRecord tempRecord = (TempParkingRecord) getDao().FindFirstByCriteria(dc);
-		ParkingRecord record = new ParkingRecord();
-		record.setCarNo(record.getCarNo());
-		record.setCarNoId(po.getId());
-		record.setCarPicPath(tempRecord.getCarPicPath());
-		record.setDriveInTime(tempRecord.getDriveInTime());
-		record.setEntranceNo(tempRecord.getEntranceNo());
-		record.setExNo(tempRecord.getExNo());
-		record.setUserId(po.getUserId());
-		record.setParkStatus(ParkStatus.IN);
-		
-		getDao().delete(tempRecord);
-		getDao().save(record);
+		if (tempRecord != null) {
+			ParkingRecord record = new ParkingRecord();
+			record.setCarNo(record.getCarNo());
+			record.setCarNoId(po.getId());
+			record.setCarPicPath(tempRecord.getCarPicPath());
+			record.setDriveInTime(tempRecord.getDriveInTime());
+			record.setEntranceNo(tempRecord.getEntranceNo());
+			record.setExNo(tempRecord.getExNo());
+			record.setUserId(po.getUserId());
+			record.setParkStatus(ParkStatus.IN);
+			
+			getDao().delete(tempRecord);
+			getDao().save(record);
+		}
+
 	}
 
 	@Override
