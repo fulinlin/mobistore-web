@@ -80,6 +80,7 @@ public class ApiController extends BaseController {
 		}else{
 			result.put("code", 2);
 		}
+		record.setUserId(license.getUserId());
 		record.setCarNo(vo.getCarNo().trim());
 		record.setCarPicPath(vo.getCarPicUrl().trim());
 		record.setEntranceNo(vo.getEntranceNo().trim());
