@@ -61,8 +61,8 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		return user;
 	}
 
-	@Override
-	public SysUser loginPers(String phone, String password) {
+	
+	private SysUser loginPers(String phone, String password, boolean updateToken) {
 		String newToken = null;
 		List<SysUser> users;	
 
@@ -77,11 +77,17 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		if (users.size() > 0) {
 			user = users.get(0);
 			newToken = UUID.randomUUID().toString();
-			user.setAuthToken(newToken); //TODO: 
+			if (updateToken || StringUtils.isEmpty(user.getAuthToken())) {
+				user.setAuthToken(newToken);
+			}
 			user.setLastLoginTime(new Date());
 			saveOrUpdate(user);
 		} 
 		return user;
+	}
+	@Override
+	public SysUser loginPers(String phone, String password) {
+		return loginPers(phone, password, true);
 	}
 	
 	@Override

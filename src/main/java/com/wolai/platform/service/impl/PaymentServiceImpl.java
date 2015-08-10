@@ -54,8 +54,10 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		// 解冻和冻结相关
 		String oldCouponId = bill.getCouponId();
 		couponService.holdCouponPers(couponId, oldCouponId);
+		if (couponId != null) {
+			Object couponOject = couponService.get(Coupon.class, couponId);
+		}
 		
-		Coupon coupon = (Coupon) couponService.get(Coupon.class, couponId);
 		// TODO: 调用新利泊计费接口，更新费用数据
 		BigDecimal totalAmount = new BigDecimal(0.02);
 		BigDecimal payAmount = new BigDecimal(0.01);

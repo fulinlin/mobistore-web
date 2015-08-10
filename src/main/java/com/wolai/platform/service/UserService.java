@@ -35,4 +35,6 @@ public interface UserService extends CommonService {
 	void setPayTypePers(SysUser user, String payType);
 
 	Map<String, Object> updateProfile(SysUser user, String nickName);
+
+	
 }

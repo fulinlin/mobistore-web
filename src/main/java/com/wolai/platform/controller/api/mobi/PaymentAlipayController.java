@@ -22,6 +22,7 @@ import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.ParkingRecord;
+import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.ParkingLotService;
@@ -60,6 +61,8 @@ public class PaymentAlipayController extends BaseController {
 	public Map<String,Object> prepare(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
+		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
+		
 		String parkingId = json.get("parkingId");
 		String couponId = json.get("couponId");
 		String clientType = json.get("clientType");
@@ -86,6 +89,12 @@ public class PaymentAlipayController extends BaseController {
 		
 		if (clientType != null && "ios".equals(clientType.toLowerCase())) {
 			alipayVo.setPartnerPrivKey(Constant.alipay_partnerPrivKey_pkcs8);
+		}
+		
+		if (SysUser.PayType.CONFIRM_POSTPAID.toString().equals(user.getPayType().toString()) ) {
+			ret.put("confirmPostPay", true);
+		} else {
+			ret.put("confirmPostPay", false);
 		}
 		
 		ret.put("code", RespCode.SUCCESS.Code());

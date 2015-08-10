@@ -5,4 +5,5 @@
 	<!-- 默认装饰页面, 在需要装饰的页面增加<meta name="decorator" content="default"/> -->
 	<decorator name="default" page="layouts/default.jsp" />
 	
+	<decorator name="default1" page="layouts/default1.jsp" />
 </decorators>

@@ -24,8 +24,8 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 	public ParkingRecord parkInfo(String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
 		dc.add(Restrictions.eq("userId", userId));
-		Date dt = TimeUtils.getDateBefore(new Date(), 10);
-		dc.add(Restrictions.gt("driveInTime", dt));
+//		Date dt = TimeUtils.getDateBefore(new Date(), 10);
+//		dc.add(Restrictions.gt("driveInTime", dt));
 		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
 		dc.addOrder(Order.desc("driveInTime"));
 		dc.setFetchMode("parkingLot", FetchMode.JOIN);
