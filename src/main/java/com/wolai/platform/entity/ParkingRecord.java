@@ -31,7 +31,7 @@ public class ParkingRecord extends IdEntity {
 	private static final long serialVersionUID = 6012441198587216743L;
 	
   	public static enum ParkStatus{
-  		IN("IN"), PARKED("PARKED"), OUT("OUT");
+  		IN("IN"), PARKED("PARKED"), OUT("OUT"),UNKONW("UNKONW");
   		
   		private ParkStatus(String code){
   			this.code = code;

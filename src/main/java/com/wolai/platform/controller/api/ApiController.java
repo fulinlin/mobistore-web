@@ -67,7 +67,7 @@ public class ApiController extends BaseController {
 		License license = licenseService.getLincense(vo.getCarNo().trim());
 
 		// 防止多次调用
-		ParkingRecord record = parkingService.getParkingRecordbyExNo(vo.getCarNo());
+		ParkingRecord record = parkingService.getParkingRecordbyExNo(vo.getCarNo(),parkingLotId);
 		if (record == null) {
 			record = new ParkingRecord();
 		}
@@ -112,8 +112,9 @@ public class ApiController extends BaseController {
 		}
 		
 		PaychekResponseVo responseVo = new PaychekResponseVo();
+		String parkingLotId = getParkingLotId(request);
 		
-		ParkingRecord record = parkingService.getParkingRecordbyExNo(vo.getExNo());
+		ParkingRecord record = parkingService.getParkingRecordbyExNo(vo.getExNo(),parkingLotId);
 		if(record==null){
 			parkingService.deleteTempRecord(vo.getExNo());
 			responseVo.setIsPaid(false);

@@ -10,7 +10,7 @@ public interface ParkingService extends CommonService {
 
 	Page parkHistory(String userId, int startIndex, int pageSize);
 	
-	public ParkingRecord getParkingRecordbyExNo(String exNo);
+	public ParkingRecord getParkingRecordbyExNo(String exNo,String parkingLotId);
 	
 	public TempParkingRecord getTempParkingRecordbyExNo(String exNo);
 	
@@ -18,5 +18,5 @@ public interface ParkingService extends CommonService {
 	
 	public void deleteTempRecord(String exNo);
 	
-	public void updatePaingRecord(ParkingRecord record);
+	public void updatePaingRecord(String  carNo);
 }

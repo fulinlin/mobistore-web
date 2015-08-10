@@ -24,8 +24,8 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 	public ParkingRecord parkInfo(String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
 		dc.add(Restrictions.eq("userId", userId));
-//		Date dt = TimeUtils.getDateBefore(new Date(), 10);
-//		dc.add(Restrictions.gt("driveInTime", dt));
+		Date dt = TimeUtils.getDateBefore(new Date(), 10);
+		dc.add(Restrictions.gt("driveInTime", dt));
 		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
 		dc.addOrder(Order.desc("driveInTime"));
 		dc.setFetchMode("parkingLot", FetchMode.JOIN);
@@ -52,11 +52,12 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 	}
 
 	@Override
-	public ParkingRecord getParkingRecordbyExNo(String exNo) {
+	public ParkingRecord getParkingRecordbyExNo(String exNo,String parkingLotId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
 		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
 		dc.add(Restrictions.eq("exNo",exNo));
+		dc.add(Restrictions.eq("parkingLotId",parkingLotId));
 		dc.add(Restrictions.ne("parkStatus", ParkStatus.OUT));
 		return (ParkingRecord) getDao().getByCriteria(dc);
 	}
@@ -73,12 +74,13 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 	@Override
 	public void savePaingRecord(ParkingRecord record) {
 		if(record.getCarNoId()!=null){
+			updatePaingRecord(record.getCarNo());
 			getDao().saveOrUpdate(record);
 		}else{
 			DetachedCriteria dc = DetachedCriteria.forClass(TempParkingRecord.class);
 			dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
 			dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
-			dc.add(Restrictions.eq("exNo",record.getExNo()));
+			dc.add(Restrictions.eq("carNo",record.getCarNo()));
 			TempParkingRecord temp = (TempParkingRecord) getDao().FindFirstByCriteria(dc);
 			if(temp==null){
 				temp= new TempParkingRecord();
@@ -96,8 +98,18 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 	}
 
 	@Override
-	public void updatePaingRecord(ParkingRecord record) {
+	public void updatePaingRecord(String carNo) {
+		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
+		dc.add(Restrictions.eq("carNo",carNo));
+		dc.add(Restrictions.or(Restrictions.eq("parkStatus",ParkStatus.IN),Restrictions.eq("parkStatus",ParkStatus.PARKED)));
 		
+		List<ParkingRecord> parkingRecords = getDao().findAllByCriteria(dc);
+		for(ParkingRecord record1:parkingRecords){
+			record1.setParkStatus(ParkStatus.UNKONW);
+		}
+		getDao().updateAll(parkingRecords);
 		
 	}
 	
