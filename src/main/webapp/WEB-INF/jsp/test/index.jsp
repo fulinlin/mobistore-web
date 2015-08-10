@@ -7,6 +7,12 @@
 	<meta name="decorator" content="default1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>异常信息</title>
+	
+	 <style type="text/css">
+		.controls select, .controls input {
+			width: 400px;
+		}
+	</style>
 </head>
 
 <body>
@@ -15,7 +21,7 @@
 		<form action="#" class="form-inline">
 			<div class="control-group">
 				<!-- <label class="control-label"></label> -->
-				<div class="controls" style="margin-left: 0px;">
+				<div class="controls" >
 					<input id="token" value="b1d4163f9829453d9aeed855b02b4cbc" />
 					<button id="boundToken" type="submit" class="btn">绑定</button>
 				</div>
@@ -28,9 +34,14 @@
 				<div class="controls">
 					<select id="user">
 						<c:forEach items="${users}" var="usr"> 
-							<option value ="${usr.mobile}" 
+							<option value ="${usr.mobile}-${usr.password}" 
 								<c:if test="${user == usr.id}">selected="selected"</c:if>
-								>${usr.name}</option>
+								>${usr.name} :   
+								<c:if test="${usr.payType == 'PERPAID'}">现付费&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
+								<c:if test="${usr.payType == 'CONFIRM_POSTPAID'}">确认后付费</c:if>
+								<c:if test="${usr.payType == 'POSTPAID'}">后付费&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
+								 : ${usr.mobile} / ${usr.password} 
+								</option>
 						</c:forEach>
 					</select>
 					<button id="login" type="submit" class="btn">模拟登录</button>
@@ -39,7 +50,7 @@
 		<H3>临时车</H3>
 			<div class="control-group">
 				<!-- <label class="control-label"></label> -->
-				<div class="controls" style="margin-left: 0px;">
+				<div class="controls" >
 					<input id="carToInTemp" />
 					<button id="tempEnter" type="submit" class="btn">入库</button>
 				</div>
@@ -50,7 +61,7 @@
 
 			<div class="control-group">
 				<!-- <label class="control-label"></label> -->
-				<div class="controls" style="margin-left: 0px;">
+				<div class="controls" >
 					<select id="carToIn">
 						<c:forEach items="${carsOutList}" var="car">
 							<option value ="${car.carNo}">${car.carNo}</option>
@@ -65,10 +76,12 @@
 
 			<div class="control-group">
 				<!-- <label class="control-label"></label> -->
-				<div class="controls" style="margin-left: 0px;">
+				<div class="controls" >
 					<select id="carToOut">
 						<c:forEach items="${carsInList}" var="car">
-							<option value ="${car.carNo}">${car.carNo}</option>
+							<option value ="${car.carNo}">${car.carNo}
+								<c:if test="${car.isPaid == true}"> - 已支付</c:if>
+							</option>
 						</c:forEach>
 					</select>
 					<button id="exit" type="submit" class="btn">出库</button>
@@ -103,11 +116,13 @@
 		
 		$("#login").click(function(){
 			
-			var phone = $("#user").val();
+			var v = $("#user").val();
+			var phone = v.split('-')[0];
+			var password = v.split('-')[1];
 			
  			var data2 = {
             	"phone": phone, 
-				"password":"123456"
+				"password":password
 			};
 			$.ajax({
 	             type: "POST",

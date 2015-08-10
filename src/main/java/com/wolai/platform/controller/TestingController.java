@@ -47,6 +47,9 @@ public class TestingController extends BaseController{
 			return "test/index"; 
 		}
 		SysUser user = userService.getUserByToken(token);
+		if (user == null) {
+			return "test/index"; 
+		}
 		model.addAttribute("user", user.getId());
 		List<License> carsOutList = testService.listCarsOut(user.getId());
 		model.addAttribute("carsOutList", carsOutList);

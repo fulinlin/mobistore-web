@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -89,10 +90,12 @@ public class License extends IdEntity{
 	@Enumerated(EnumType.STRING)
 	private LICENSE_COLOR color;
 	
+	
 	/**
-	 * 是否绑定
+	 * 是否已支付
 	 */
-	private Boolean isPostpaid=Boolean.FALSE;
+	@Transient
+	private Boolean isPaid=Boolean.FALSE;
 	
 	/**
 	 * 所属用户
@@ -129,14 +132,6 @@ public class License extends IdEntity{
 		this.brand = brand;
 	}
 
-	public Boolean getIsPostpaid() {
-		return isPostpaid;
-	}
-
-	public void setIsPostpaid(Boolean isPostpaid) {
-		this.isPostpaid = isPostpaid;
-	}
-
 	public String getUserId() {
 		return userId;
 	}
@@ -166,5 +161,13 @@ public class License extends IdEntity{
 
 	public void setModel(String model) {
 		this.model = model;
+	}
+
+	public Boolean getIsPaid() {
+		return isPaid;
+	}
+
+	public void setIsPaid(Boolean isPaid) {
+		this.isPaid = isPaid;
 	}
 }

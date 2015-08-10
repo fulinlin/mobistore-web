@@ -57,8 +57,8 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		dc.add(Restrictions.eq("isDelete", false));
 		dc.add(Restrictions.eq("isDisable", false));
 		dc.add(Restrictions.eq("customerType", SysUser.UserType.INDIVIDUAL));
-		dc.add(Restrictions.ne("name", ""));
-		dc.addOrder(Order.desc("name"));
+		dc.add(Restrictions.like("name", "%测试%"));
+		dc.addOrder(Order.asc("name"));
 		List<SysUser> users = (List<SysUser>) findAllByCriteria(dc);
 		return users;
 	}
@@ -83,7 +83,18 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 					"select carNoId from ParkingRecord pr where (pr.parkStatus = ? or pr.parkStatus = ?) and pr.driveInTime > ?"
 				+ ")";
 		
-		List ls = getListByHQL(hql, userId, false, false, ParkingRecord.ParkStatus.IN, ParkingRecord.ParkStatus.PARKED, dt);
+		List<License> ls = getListByHQL(hql, userId, false, false, ParkingRecord.ParkStatus.IN, ParkingRecord.ParkStatus.PARKED, dt);
+		for (License l:ls) {
+			DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
+			dc.add(Restrictions.eq("isDelete", false));
+			dc.add(Restrictions.eq("isDisable", false));
+			dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
+			dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.UNKONW));
+			dc.add(Restrictions.eq("carNoId", l.getId()));
+			dc.addOrder(Order.desc("driveInTime"));
+			ParkingRecord park = (ParkingRecord) FindFirstByCriteria(dc);
+			l.setIsPaid(park.getIsPaid());
+		}
 		return ls;
 	}
 	
