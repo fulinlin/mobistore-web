@@ -27,6 +27,7 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 		Date dt = TimeUtils.getDateBefore(new Date(), 10);
 		dc.add(Restrictions.gt("driveInTime", dt));
 		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
+		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.UNKONW));
 		dc.addOrder(Order.desc("driveInTime"));
 		dc.setFetchMode("parkingLot", FetchMode.JOIN);
 

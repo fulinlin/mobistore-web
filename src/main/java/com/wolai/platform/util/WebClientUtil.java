@@ -33,7 +33,7 @@ public class WebClientUtil {
 	        HttpPost httppost = new HttpPost(url);
 	        // 设置超时时间
 	        RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(2000).setConnectTimeout(2000)  
-	        	    .setSocketTimeout(50).build();
+	        	    .setSocketTimeout(2000).build();
 	        httppost.setConfig(requestConfig);
 	        
 	        CloseableHttpResponse response = null;
@@ -46,9 +46,9 @@ public class WebClientUtil {
 	    		HttpEntity result = response.getEntity();
 	    		resultJson = EntityUtils.toString(result, HttpServerConstants.Encoding);
 	        } catch (Exception e) {
-	        	if(logger.isDebugEnabled()){
-	        		logger.debug(Exceptions.getStackTraceAsString(e));
-	        	}
+//	        	if(logger.isDebugEnabled()){
+	        		logger.error(Exceptions.getStackTraceAsString(e));
+//	        	}
 	        } finally {
 	        	// 关闭连接,释放资源
 	        	if (response != null){
