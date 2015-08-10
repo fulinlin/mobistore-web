@@ -18,6 +18,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.Bill;
+import com.wolai.platform.entity.Bill.PayStatus;
+import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.ParkingRecord.ParkStatus;
@@ -101,7 +103,7 @@ public class ApiController extends BaseController {
 	
 	@RequestMapping("payCheck")
 	@ResponseBody
-	public Map<String,Object> payCheck(@RequestBody String  sign, HttpServletRequest request) {
+	public Object payCheck(@RequestBody String  sign, HttpServletRequest request) {
 		Map<String,Object> result = Maps.newHashMap();
 		PaycheckVo vo =getRequestParameter(PaycheckVo.class,sign);
 		if (vo==null || !beanValidator(result, vo)) {
@@ -114,6 +116,8 @@ public class ApiController extends BaseController {
 		ParkingRecord record = parkingService.getParkingRecordbyExNo(vo.getExNo());
 		if(record==null){
 			parkingService.deleteTempRecord(vo.getExNo());
+			responseVo.setIsPaid(false);
+			responseVo.setCode(2);
 		}else{
 			//  出库时间
 			Calendar ca = Calendar.getInstance();
@@ -133,7 +137,7 @@ public class ApiController extends BaseController {
 			responseVo.setEnterTime(record.getDriveInTime().getTime());
 			responseVo.setExitTime(record.getDriveOutTime().getTime());
 			responseVo.setExNo(record.getExNo());
-			
+			responseVo.setExportNo(record.getExportNo());
 			
 			/*
 			 * 1.非后付费人员，检查是否已付费，以及付费金额是否足额
@@ -149,23 +153,25 @@ public class ApiController extends BaseController {
 				bill.setIsPostPay(true);
 				bill.setParkingRecordId(record.getId());
 				bill.setTotalAmount(vo.getFee());
-				/*bill.set
-				bill.setPayStatus(PayStatus.INIT);*/
-				
-			}
-			
-			/*if(!PayType.POSTPAID.equals(record.getUser().getPayType())){
-				Bill bill = billService.getBillByParking(record.getId());
-				if(!bill.getIsPostPay()){
-					bill.setTotalAmount(vo.getFee());
+				bill.setPayStatus(PayStatus.INIT);
+				bill.setPaytype(PayType.UNIONPAY);
+				billService.saveOrUpdate(bill);
+				responseVo.setIsPaid(true);
+			}else{
+				if(PayStatus.SUCCESSED.equals(bill.getPayStatus())){
 					responseVo.setIsPaid(true);
-					responseVo.setOrderId(bill.getId());
-					//responseVo
-				}*/
+				}else{
+					responseVo.setIsPaid(false);
+				}
 			}
-		return result;
+			responseVo.setCode(1);
+			responseVo.setPayTime(bill.getCreateTime().getTime());
+			responseVo.setOrderCreateTime(bill.getCreateTime().getTime());
+			responseVo.setOrderId(bill.getId());
+			responseVo.setPayAmount(bill.getTotalAmount());
 		}
-		
+		return responseVo;
+	}
 	private String getParkingLotId(HttpServletRequest request) {
 		return request.getAttribute(Constant.REQUEST_PARINGLOTID).toString();
 	}
