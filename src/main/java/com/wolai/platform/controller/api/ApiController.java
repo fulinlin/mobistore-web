@@ -1,7 +1,6 @@
 package com.wolai.platform.controller.api;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +18,15 @@ import com.google.common.collect.Maps;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.Bill.PayStatus;
-import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.ParkingRecord.ParkStatus;
+import com.wolai.platform.entity.SysUser.PayType;
 import com.wolai.platform.entity.SysUser.UserType;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.LicenseService;
 import com.wolai.platform.service.ParkingService;
+import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.util.Encodes;
 import com.wolai.platform.vo.EntranceNoticeVo;
 import com.wolai.platform.vo.PaycheckVo;
@@ -45,6 +45,8 @@ public class ApiController extends BaseController {
 	@Autowired
 	private LicenseService licenseService;
 
+	@Autowired
+	private PaymentService paymentService;
 	/**
 	 * 进场信息通知接口
 	 * 
@@ -116,6 +118,7 @@ public class ApiController extends BaseController {
 		String parkingLotId = getParkingLotId(request);
 		
 		ParkingRecord record = parkingService.getParkingRecordbyExNo(vo.getExNo(),parkingLotId);
+	
 		if(record==null){
 			parkingService.deleteTempRecord(vo.getExNo());
 			responseVo.setIsPaid(false);
@@ -146,30 +149,32 @@ public class ApiController extends BaseController {
 			 * 2.确认后付费的用户，检查账单是否已付，以及付费金额是否足额
 			 * 3.后付费用户，新建待扣费账单，直接返回已付费
 			 */
+			
 			Bill bill = billService.getBillByParking(record.getId());
-			if(bill==null){
-				bill = new Bill();
-				bill.setCarNo(record.getCarNo());
-				bill.setLicensePlateId(record.getCarNoId());
-				bill.setCreateTime(new Date());
-				bill.setIsPostPay(true);
-				bill.setParkingRecordId(record.getId());
-				bill.setTotalAmount(vo.getFee());
-				bill.setPayStatus(PayStatus.INIT);
-				bill.setPaytype(PayType.UNIONPAY);
-				billService.saveOrUpdate(bill);
-				record.setParkStatus(ParkStatus.OUT);
-				parkingService.saveOrUpdate(record);
+			// 除开已支付的账单不处理，其他情况计算下
+			if(!(bill !=null && PayStatus.SUCCESSED.equals(bill.getPayStatus()))){
+				boolean isPostPay =false;
+				
+				if(PayType.CONFIRM_POSTPAID.equals(record.getUser().getPayType()) && bill !=null && bill.getIsPostPay()){
+					isPostPay=true;
+				}else if(PayType.POSTPAID.equals(record.getUser().getPayType())){
+					isPostPay=true;
+				}
+				paymentService.createBillIfNeededWithoutUpdateCouponPers(record,isPostPay);
+			}
+			
+			if(bill.getIsPostPay()){
 				responseVo.setIsPaid(true);
 			}else{
 				if(PayStatus.SUCCESSED.equals(bill.getPayStatus())){
 					responseVo.setIsPaid(true);
-					record.setParkStatus(ParkStatus.OUT);
-					parkingService.saveOrUpdate(record);
 				}else{
 					responseVo.setIsPaid(false);
 				}
 			}
+			record.setParkStatus(ParkStatus.OUT);
+			parkingService.saveOrUpdate(record);
+			
 			responseVo.setCode(1);
 			responseVo.setPayTime(bill.getCreateTime().getTime());
 			responseVo.setOrderCreateTime(bill.getCreateTime().getTime());
