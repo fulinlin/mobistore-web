@@ -47,7 +47,9 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 			bill.setLicensePlateId(parking.getCarNoId());
 			bill.setCreateTime(new Date());
 		}
-		bill.setIsPostPay(isPostPay);
+		if(!isPostPay) { // 后付费账单一直保留为true
+			bill.setIsPostPay(isPostPay);
+		}
 		
 		if (needUpdateCoupon) {
 			bill.setCouponId(newCouponId);
