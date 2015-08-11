@@ -88,8 +88,12 @@ public class PaymentUnionpayConsumeController extends BaseController {
 		BigDecimal payAmount = bill.getPayAmount();
 		UnionpayVo payVo = new UnionpayVo();
 		payVo.setWolaiTradeNo(wolaiTradeNo);
-		payVo.setTotalAmount(totalAmount);
-		payVo.setPayAmount(payAmount);
+		
+		// TODO: 测试数据
+//		payVo.setTotalAmount(totalAmount);
+//		payVo.setPayAmount(payAmount);
+		payVo.setTotalAmount(new BigDecimal(0.02));
+		payVo.setPayAmount(new BigDecimal(0.01));
 		
 		Map<String, String> resMap = paymentUnionpayService.prepareTrans(wolaiTradeNo, payAmount.multiply(new BigDecimal(100)).intValue());
 		payVo.setPayTradeNo(resMap.get("tn"));
