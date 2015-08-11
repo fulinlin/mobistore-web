@@ -28,8 +28,16 @@ public class ParkingController extends BaseController{
 	ParkingService parkingService;
 	
     @RequestMapping(value = {"list", ""})
-    public String list(ParkingRecord parkingRecord, @RequestParam (required = false) String mobile , HttpServletRequest request, HttpServletResponse response, Model model) {
-        DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
+    public String list(ParkingRecord parkingRecord, @RequestParam (required = false) String mobile ,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize, HttpServletRequest request, HttpServletResponse response, Model model) {
+    	if(pageNo==null){
+			pageNo=1;
+		}
+		
+		if(pageSize==null){
+			pageSize=limit;
+		}
+		
+    	DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
         if(StringUtils.isNotBlank(parkingRecord.getCarNo())){
             dc.add(Restrictions.like("carNo", parkingRecord.getCarNo(),MatchMode.ANYWHERE).ignoreCase());
@@ -45,7 +53,8 @@ public class ParkingController extends BaseController{
             dc.add(Restrictions.like("user_.mobile", mobile,MatchMode.ANYWHERE).ignoreCase());
             model.addAttribute("mobile", mobile);
         }
-        page = parkingService.findPage(dc, start, limit);
+        page = parkingService.findPage(dc, (pageNo-1)*pageSize, pageSize);
+        
         model.addAttribute("page", page);
         model.addAttribute("parkingRecord", parkingRecord);
         return "sys/parkingRecord/parkingRecordList";

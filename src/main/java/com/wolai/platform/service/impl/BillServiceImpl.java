@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.entity.Bill;
@@ -33,16 +34,12 @@ public class BillServiceImpl extends CommonServiceImpl implements BillService {
 		dc.add(Restrictions.eq("payStatus",PayStatus.INIT));
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
 		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
-/*		ProjectionList projectionList = Projections.projectionList();  
-        projectionList.add(Projections.property("carNo"));  
-        dc.setProjection(Projections.distinct(projectionList));
-		dc.addOrder(Order.desc("carNo"))*/;
 		return getDao().findAllByCriteria(dc);
 	}
 
 	@Override
 	public List<Bill> getPostPayBillByCarNo(String carNo) {
-	DetachedCriteria dc = DetachedCriteria.forClass(Bill.class);
+		DetachedCriteria dc = DetachedCriteria.forClass(Bill.class);
 		dc.add(Restrictions.eq("isPostPay",Boolean.TRUE));
 		dc.add(Restrictions.eq("payStatus",PayStatus.INIT));
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
@@ -50,6 +47,19 @@ public class BillServiceImpl extends CommonServiceImpl implements BillService {
 		dc.add(Restrictions.eq("carNo",carNo));
 		
 		return getDao().findAllByCriteria(dc);
+	}
+
+	@Override
+	public Boolean hasUnPayedBill(String CarNo) {
+		DetachedCriteria dc = DetachedCriteria.forClass(Bill.class);
+		dc.createAlias("parkingRecord", "parkingRecord",JoinType.LEFT_OUTER_JOIN);
+		dc.add(Restrictions.eq("isPostPay",Boolean.TRUE));
+		dc.add(Restrictions.ne("payStatus",PayStatus.SUCCESSED));
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
+		dc.add(Restrictions.eq("carNo",CarNo));
+		
+		return null;
 	}
 
 }

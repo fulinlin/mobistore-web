@@ -47,12 +47,19 @@ public class LicenseCategoryController extends BaseController {
 	}
 	
 	@RequestMapping(value = {"list", ""})
-	public String list(LicenseCategory licenseCategory, HttpServletRequest request, HttpServletResponse response, Model model) {
-	    DetachedCriteria dc = DetachedCriteria.forClass(LicenseCategory.class);
+	public String list(LicenseCategory licenseCategory,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,HttpServletRequest request, HttpServletResponse response, Model model) {
+		if(pageNo==null){
+			pageNo=1;
+		}
+		
+		if(pageSize==null){
+			pageSize=limit;
+		}
+		DetachedCriteria dc = DetachedCriteria.forClass(LicenseCategory.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
         LoginInfo loginInfo = getLoginInfoSession(request);
         dc.add(Restrictions.eq("loginAccountId",   loginInfo.getLoginAccount().getId()));
-        page = licenseCategoryService.findPage(dc, start, limit);
+        page = licenseCategoryService.findPage(dc,(pageNo-1)*pageSize, pageSize);
 		model.addAttribute("page", page);
 		model.addAttribute("licenseCategory", licenseCategory);
 		return "sys/licenseCategory/licenseCategoryList";

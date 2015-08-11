@@ -246,9 +246,9 @@ public class Page<T> {
 					+ "下一页 &#187;</a></li>\n");
 		}
 
-		pageHtml.append("<li class=\"disabled controls\"><a href=\"javascript:\">当前 ");
+		pageHtml.append("<li class=\"disabled controls\"><a href=\"javascript:\">当前 第");
 		pageHtml.append("<input type=\"text\" value=\""+pageNo+"\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
-		pageHtml.append(funcName+"(this.value,"+limit+");\" onclick=\"this.select();\"/> / ");
+		pageHtml.append(funcName+"(this.value,"+limit+");\" onclick=\"this.select();\"/> 页,每页 ");
 		pageHtml.append("<input type=\"text\" value=\""+limit+"\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
 		pageHtml.append(funcName+"("+pageNo+",this.value);\" onclick=\"this.select();\"/> 条，");
 		pageHtml.append("共 " + getTotal() + " 条</a><li>\n");

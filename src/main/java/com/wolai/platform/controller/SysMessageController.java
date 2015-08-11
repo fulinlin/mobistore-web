@@ -48,14 +48,21 @@ public class SysMessageController extends BaseController {
 	}
 	
 	@RequestMapping(value = {"list", ""})
-	public String list(SysMessage sysMessage, HttpServletRequest request, HttpServletResponse response, Model model) {
-	    DetachedCriteria dc = DetachedCriteria.forClass(SysMessage.class);
+	public String list(SysMessage sysMessage, @RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,HttpServletRequest request, HttpServletResponse response, Model model) {
+		if(pageNo==null){
+			pageNo=1;
+		}
+		
+		if(pageSize==null){
+			pageSize=limit;
+		}
+		DetachedCriteria dc = DetachedCriteria.forClass(SysMessage.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
         if(StringUtils.isNotBlank(sysMessage.getTitle())){
             dc.add(Restrictions.like("title", sysMessage.getTitle() , MatchMode.ANYWHERE).ignoreCase());
         }
         dc.add(Restrictions.eq("published", sysMessage.getPublished()));
-        page = sysMessageService.findPage(dc, start, limit);
+        page = sysMessageService.findPage(dc,  (pageNo-1)*pageSize, pageSize);
 		model.addAttribute("page", page);
 		model.addAttribute("sysMessage", sysMessage);
 		return "sys/sysMessage/sysMessageList";

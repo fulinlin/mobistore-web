@@ -42,7 +42,15 @@ public class ApiKeyController extends BaseController{
 	}
 	
     @RequestMapping(value = {"list", ""})
-    public String list(SysAPIKey apikey,@RequestParam(required=false) String name,HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String list(SysAPIKey apikey,@RequestParam(required=false) String name,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,HttpServletRequest request, HttpServletResponse response, Model model) {
+    	if(pageNo==null){
+			pageNo=1;
+		}
+		
+		if(pageSize==null){
+			pageSize=limit;
+		}
+    	
         DetachedCriteria dc = DetachedCriteria.forClass(SysAPIKey.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
         dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
@@ -57,7 +65,7 @@ public class ApiKeyController extends BaseController{
             dc.add(Restrictions.like("token", apikey.getToken(),MatchMode.ANYWHERE));
         }
         
-        page = apiKeyService.findPage(dc, start, limit);
+        page = apiKeyService.findPage(dc, (pageNo-1)*pageSize, pageSize);
         model.addAttribute("page", page);
         model.addAttribute("name", name);
         model.addAttribute("apikey", apikey);

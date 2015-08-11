@@ -69,8 +69,10 @@ public class ApiController extends BaseController {
 
 		License license = licenseService.getLincense(vo.getCarNo().trim());
 
+		
 		// 防止多次调用
 		ParkingRecord record = parkingService.getParkingRecordbyExNo(vo.getCarNo(),parkingLotId);
+		
 		if (record == null) {
 			record = new ParkingRecord();
 		}

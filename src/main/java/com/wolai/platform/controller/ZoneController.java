@@ -47,8 +47,16 @@ public class ZoneController extends BaseController {
 	}
 	
 	@RequestMapping(value = {"list", ""})
-	public String list(Zone zone, HttpServletRequest request, HttpServletResponse response, Model model) {
-	    DetachedCriteria dc = DetachedCriteria.forClass(Zone.class);
+	public String list(Zone zone, HttpServletRequest request, @RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,HttpServletResponse response, Model model) {
+		if(pageNo==null){
+			pageNo=1;
+		}
+		
+		if(pageSize==null){
+			pageSize=limit;
+		}
+		
+		DetachedCriteria dc = DetachedCriteria.forClass(Zone.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
         if(StringUtils.isNotBlank(zone.getAreaId())){
             dc.add(Restrictions.eq("areaId", zone.getAreaId()));
@@ -59,7 +67,7 @@ public class ZoneController extends BaseController {
         if(StringUtils.isNotBlank(zone.getName())){
             dc.add(Restrictions.like("name", zone.getName(),MatchMode.ANYWHERE).ignoreCase());
         }
-        page = zoneService.findPage(dc, start, limit);
+        page = zoneService.findPage(dc,(pageNo-1)*pageSize, pageSize);
 		model.addAttribute("page", page);
 		model.addAttribute("zone", zone);
 		return "sys/zone/zoneList";

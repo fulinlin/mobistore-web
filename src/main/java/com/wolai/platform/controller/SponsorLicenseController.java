@@ -27,7 +27,6 @@ import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.LicenseCategory;
 import com.wolai.platform.entity.SponsorLicense;
-import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.LicenseCategoryService;
 import com.wolai.platform.service.LicenseService;
 import com.wolai.platform.service.SponsorLicenseService;
@@ -69,8 +68,15 @@ public class SponsorLicenseController extends BaseController {
     }
 
     @RequestMapping(value = { "list", "" })
-    public String list(SponsorLicense sponsorLicense, HttpServletRequest request, HttpServletResponse response, Model model) {
-        DetachedCriteria dc = DetachedCriteria.forClass(SponsorLicense.class);
+    public String list(SponsorLicense sponsorLicense, @RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,HttpServletRequest request, HttpServletResponse response, Model model) {
+    	if(pageNo==null){
+			pageNo=1;
+		}
+		
+		if(pageSize==null){
+			pageSize=limit;
+		}
+    	DetachedCriteria dc = DetachedCriteria.forClass(SponsorLicense.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
         LoginInfo loginInfo = getLoginInfoSession(request);
         dc.add(Restrictions.eq("loginAccountId", loginInfo.getLoginAccount().getId()));
@@ -83,7 +89,7 @@ public class SponsorLicenseController extends BaseController {
         List<LicenseCategory> licenseCategories = licenseCategoryService.getLicenseCategories(loginInfo.getLoginAccount().getId());
         model.addAttribute("licenseCategories", licenseCategories);
 
-        page = sponsorLicenseService.findPage(dc, start, limit);
+        page = sponsorLicenseService.findPage(dc,  (pageNo-1)*pageSize, pageSize);
         model.addAttribute("page", page);
         model.addAttribute("sponsorLicense", sponsorLicense);
         return "sys/sponsorLicense/sponsorLicenseList";

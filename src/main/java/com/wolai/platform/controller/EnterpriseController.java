@@ -44,10 +44,18 @@ public class EnterpriseController extends BaseController {
 	}
 	
 	@RequestMapping(value = {"list", ""})
-	public String list(Enterprise enterprise, HttpServletRequest request, HttpServletResponse response, Model model) {
-	    DetachedCriteria dc = DetachedCriteria.forClass(Enterprise.class);
+	public String list(Enterprise enterprise, @RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,HttpServletRequest request, HttpServletResponse response, Model model) {
+		if(pageNo==null){
+			pageNo=1;
+		}
+		
+		if(pageSize==null){
+			pageSize=limit;
+		}
+		
+		DetachedCriteria dc = DetachedCriteria.forClass(Enterprise.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
-	    page = enterpriseService.findPage(dc, start, limit);
+	    page = enterpriseService.findPage(dc,(pageNo-1)*pageSize, pageSize);
         model.addAttribute("page", page);
         model.addAttribute("enterprise", enterprise);
 		return "sys/enterpriseList";
