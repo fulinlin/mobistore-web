@@ -28,6 +28,7 @@ import com.wolai.platform.service.LicenseService;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.util.Encodes;
+import com.wolai.platform.util.StringUtil;
 import com.wolai.platform.vo.EntranceNoticeVo;
 import com.wolai.platform.vo.PaycheckVo;
 import com.wolai.platform.vo.PaychekResponseVo;
@@ -124,6 +125,7 @@ public class ApiController extends BaseController {
 	
 		if(record==null){
 			parkingService.deleteTempRecord(vo.getExNo());
+			responseVo.setExNo(vo.getExNo());
 			responseVo.setIsPaid(false);
 			responseVo.setCode(2);
 		}else{
@@ -182,7 +184,12 @@ public class ApiController extends BaseController {
 			responseVo.setPayTime(bill.getCreateTime().getTime());
 			responseVo.setOrderCreateTime(bill.getCreateTime().getTime());
 			responseVo.setOrderId(bill.getId());
-			responseVo.setPayAmount(bill.getTotalAmount());
+			if(StringUtils.isNotBlank(bill.getCouponId())){
+				responseVo.setCouponSn(bill.getCouponId());
+				responseVo.setCouponTime(bill.getCoupon().getTime());
+				responseVo.setCouponAmount(bill.getCoupon().getMoney());
+			}
+			responseVo.setPayAmount(StringUtil.formatMoney(bill.getPayAmount()));
 		}
 		return responseVo;
 	}

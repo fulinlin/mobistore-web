@@ -6,6 +6,8 @@
 package com.wolai.platform.util;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
@@ -218,9 +220,15 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
         return str.toUpperCase();  
     }  
     
-    public static void main(String[] args) {  
-        String ss = GetUuid();  
-            System.out.println(ss.length());
-            System.out.println(ss);
+    public static String formatMoney(BigDecimal d){
+    	DecimalFormat mformat = new DecimalFormat(); 
+    	mformat.setMaximumFractionDigits(2);
+    	mformat.setMinimumFractionDigits(2);
+    	mformat.setGroupingSize(20);
+    	return mformat.format(d);
+    }
+    
+    public static void main(String[] args) { 
+    	System.out.println(formatMoney(new BigDecimal(99999999999.123333333)));
     }  
 }
