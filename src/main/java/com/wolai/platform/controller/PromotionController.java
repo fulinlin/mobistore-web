@@ -50,10 +50,17 @@ public class PromotionController extends BaseController {
 	}
 	
 	@RequestMapping(value = {"list", ""})
-	public String list(Promotion promotion, HttpServletRequest request, HttpServletResponse response, Model model) {
-	    DetachedCriteria dc = DetachedCriteria.forClass(Promotion.class);
+	public String list(Promotion promotion,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize, HttpServletRequest request, HttpServletResponse response, Model model) {
+		if(pageNo==null){
+			pageNo=1;
+		}
+		
+		if(pageSize==null){
+			pageSize=limit;
+		}
+		DetachedCriteria dc = DetachedCriteria.forClass(Promotion.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
-        page = promotionService.findPage(dc, start, limit);
+        page = promotionService.findPage(dc,  (pageNo-1)*pageSize, pageSize);
 		model.addAttribute("page", page);
 		model.addAttribute("promotion", promotion);
 		return "sys/promotion/promotionList";

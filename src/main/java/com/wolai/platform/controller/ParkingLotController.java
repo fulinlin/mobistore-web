@@ -33,8 +33,15 @@ public class ParkingLotController extends BaseController {
 	}
 	
 	@RequestMapping({"list", ""})
-	public String list(HttpServletRequest request,ParkingLot parkingLot,Model model){
-		page = parkingLotService.findAllByPage(parkingLot, start, limit);
+	public String list(HttpServletRequest request,ParkingLot parkingLot,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,Model model){
+		if(pageNo==null){
+			pageNo=1;
+		}
+		
+		if(pageSize==null){
+			pageSize=limit;
+		}
+		page = parkingLotService.findAllByPage(parkingLot, (pageNo-1)*pageSize, pageSize);
 		model.addAttribute("page", page);
 		model.addAttribute("parkingLot", parkingLot);
 		return "sys/parkinglot/list";

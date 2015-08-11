@@ -70,8 +70,16 @@ public class CouponController extends BaseController {
     }
 
     @RequestMapping(value = { "list", "" })
-    public String list(Coupon coupon, HttpServletRequest request, HttpServletResponse response, Model model) {
-        DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
+    public String list(Coupon coupon,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize, HttpServletRequest request, HttpServletResponse response, Model model) {
+    	if(pageNo==null){
+			pageNo=1;
+		}
+		
+		if(pageSize==null){
+			pageSize=limit;
+		}
+		
+    	DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
         dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
         dc.add(Restrictions.ne("status", CouponStatus.USED));
         LoginInfo loginInfo = getLoginInfoSession(request);
@@ -88,7 +96,7 @@ public class CouponController extends BaseController {
         if( coupon.getEndDate() != null){
             dc.add(Restrictions.lt("startDate", coupon.getEndDate()));
         }
-        page = couponService.findPage(dc, start, limit);
+        page = couponService.findPage(dc,(pageNo-1)*pageSize, pageSize);
         model.addAttribute("page", page);
         model.addAttribute("coupon", coupon);
         return "sys/coupon/couponList";

@@ -173,8 +173,15 @@ public class LoginAccountController extends BaseController{
 	}
 	
 	@RequestMapping({"${adminPath}/sys/loginaccount/list", "${adminPath}/sys/loginaccount"})
-	public String list(HttpServletRequest request,SysLoginAccount loginAccount,Model model){
-		page = loginAccountService.findAllByPage(loginAccount, start, limit);
+	public String list(HttpServletRequest request,SysLoginAccount loginAccount,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,Model model){
+		if(pageNo==null){
+			pageNo=1;
+		}
+		
+		if(pageSize==null){
+			pageSize=limit;
+		}
+		page = loginAccountService.findAllByPage(loginAccount,  (pageNo-1)*pageSize, pageSize);
 		model.addAttribute("page", page);
 		return "sys/loginaccount/loginaccountList";
 	}
