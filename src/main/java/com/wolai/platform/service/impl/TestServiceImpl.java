@@ -67,13 +67,14 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 	
 	@Override
 	public List<License> listCarsOut(String userId) {
-		Date dt = TimeUtils.getDateBefore(new Date(), 10);
+//		Date dt = TimeUtils.getDateBefore(new Date(), 10);
 		
-		String  hql = "from License lc where userId=? and lc.isDelete = ? and lc.isDisable = ? and lc.id not in (" +
-					"select carNoId from ParkingRecord pr where (pr.parkStatus = ? or pr.parkStatus = ?) and pr.driveInTime > ?"
+		String  hql = "from License lc where userId=? and lc.isDelete = ? and lc.isDisable = ? and lc.id not "
+				+ " in (" +
+					"select carNoId from ParkingRecord pr where (pr.parkStatus = ? or pr.parkStatus = ?)"
 				+ ")";
 		
-		List ls = getListByHQL(hql, userId, false, false, ParkingRecord.ParkStatus.IN, ParkingRecord.ParkStatus.PARKED, dt);
+		List ls = getListByHQL(hql, userId, false, false, ParkingRecord.ParkStatus.IN, ParkingRecord.ParkStatus.PARKED);
 		return ls;
 	}
 	
@@ -81,8 +82,9 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 	public List<License> listCarsIn(String userId) {
 		Date dt = TimeUtils.getDateBefore(new Date(), 10);
 		
-		String  hql = "from License lc where userId=? and lc.isDelete = ? and lc.isDisable = ? and lc.id in (" +
-					"select carNoId from ParkingRecord pr where (pr.parkStatus = ? or pr.parkStatus = ?) and pr.driveInTime > ?"
+		String  hql = "from License lc where userId=? and lc.isDelete = ? and lc.isDisable = ? and lc.id "
+				+ " in (" +
+					"select carNoId from ParkingRecord pr where (pr.parkStatus = ? or pr.parkStatus = ?)"
 				+ ")";
 		
 		List<License> ls = getListByHQL(hql, userId, false, false, ParkingRecord.ParkStatus.IN, ParkingRecord.ParkStatus.PARKED, dt);

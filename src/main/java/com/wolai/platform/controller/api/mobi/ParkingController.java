@@ -57,8 +57,6 @@ public class ParkingController extends BaseController{
 	public Map<String,Object> parkInfo(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
-		
-		
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 		ParkingRecord po = parkingService.parkInfo(userId);

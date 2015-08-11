@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
+import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.ParkingRecord.ParkStatus;
 import com.wolai.platform.entity.TempParkingRecord;
@@ -22,16 +23,32 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 
 	@Override
 	public ParkingRecord parkInfo(String userId) {
-		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
-		dc.add(Restrictions.eq("userId", userId));
-		Date dt = TimeUtils.getDateBefore(new Date(), 10);
-		dc.add(Restrictions.gt("driveInTime", dt));
-		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
-		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.UNKONW));
-		dc.addOrder(Order.desc("driveInTime"));
-		dc.setFetchMode("parkingLot", FetchMode.JOIN);
-
-		List ls = findAllByCriteria(dc);
+//		DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
+//		dc.add(Restrictions.eq("userId", userId));
+//		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
+//		dc.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.UNKONW));
+//		dc.addOrder(Order.desc("driveInTime"));
+//		dc.setFetchMode("parkingLot", FetchMode.JOIN);
+		
+//		String  hql1 = "select bl.parkingRecordId from Bill bl where bl.parkingRecordId = ? and bl.payStatus != ?)";
+//		
+//		List ls1 = getListByHQL(hql1, 
+//				"ff8080814f1a5730014f1a57fc530000", 
+//				Bill.PayStatus.SUCCESSED
+//				);
+		
+		String  hql = "from ParkingRecord pr where "
+				+ "userId=? "
+				+ "and (pr.parkStatus = ? or pr.parkStatus = ? "
+									  + " or pr.id in ( select bl.parkingRecordId from Bill bl where bl.parkingRecordId = pr.id and bl.payStatus != ?) "
+					+ ")";
+		
+		List ls = getListByHQL(hql, 
+				userId, 
+				ParkingRecord.ParkStatus.IN,
+				ParkingRecord.ParkStatus.PARKED,
+				Bill.PayStatus.SUCCESSED
+				);
 		if (ls.size() > 0) {
 			return (ParkingRecord)ls.get(0);
 		} else {
