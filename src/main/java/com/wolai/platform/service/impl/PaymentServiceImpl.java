@@ -3,22 +3,36 @@ package com.wolai.platform.service.impl;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.Bill.PayStatus;
 import com.wolai.platform.entity.Bill.PayType;
+import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.ParkingRecord;
+import com.wolai.platform.entity.SysAPIKey;
+import com.wolai.platform.service.ApiKeyService;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.CouponService;
 import com.wolai.platform.service.PaymentService;
+import com.wolai.platform.util.FileUtils;
 import com.wolai.platform.util.StringUtil;
+import com.wolai.platform.util.WebClientUtil;
+import com.wolai.platform.vo.PayQueryResponseVo;
+import com.wolai.platform.vo.PayQueryVo;
 
 @Service
 public class PaymentServiceImpl extends CommonServiceImpl implements PaymentService {
+	private static Logger log = LoggerFactory.getLogger(PaymentServiceImpl.class);
 
+	@Autowired
+	ApiKeyService apiKeyService;
+	
 	@Autowired
 	BillService billService;
 	
@@ -63,8 +77,9 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		Coupon validCoupon = (Coupon) couponService.get(Coupon.class, validCouponId);
 		
 		// TODO: 用validCoupon调用新利泊计费接口，更新费用数据
-		BigDecimal totalAmount = new BigDecimal(0.02);
-		BigDecimal payAmount = new BigDecimal(0.01);
+		PayQueryResponseVo payQueryResponseVo = getPayAmountFromThirdPart(parking, bill, validCoupon);
+		BigDecimal totalAmount = payQueryResponseVo.getExpenses();
+		BigDecimal payAmount = payQueryResponseVo.getAccruedExpenses();
 		
 		if (Coupon.CouponType.MONEY.equals(validCoupon.getType())) {
 			payAmount = payAmount.subtract(new BigDecimal(validCoupon.getMoney()));
@@ -72,8 +87,6 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 				payAmount = new BigDecimal(0);
 			}
 		}
-
-		saveOrUpdate(parking);
 		
 		bill.setTotalAmount(totalAmount);
 		bill.setPayAmount(payAmount);
@@ -109,5 +122,30 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		bill.setPayStatus(PayStatus.SUCCESSED);
 		saveOrUpdate(bill);
 		return bill;
+	}
+	
+	private PayQueryResponseVo getPayAmountFromThirdPart (ParkingRecord parking, Bill bill, Coupon coupon) {
+		SysAPIKey key = apiKeyService.getKeyByParinglotId(parking.getParkingLotId());
+		PayQueryVo vo = new PayQueryVo();
+		vo.setCarNo(bill.getCarNo());
+		if (CouponType.TIME.equals(coupon.getType())) {
+			vo.setCouponTime(coupon.getTime());
+		} else {
+			vo.setCouponTime(Long.valueOf(0));
+		}
+		
+		vo.setEnterTime(parking.getDriveInTime().getTime());
+		vo.setExNo(parking.getExNo());
+		vo.setTimestamp(new Date().getTime());
+		
+		PayQueryResponseVo response = null;
+		try{
+			String result = WebClientUtil.post(key.getUrl()+":"+key.getPort()+key.getRootPath(), JSON.toJSONString(vo));
+			response = JSON.parseObject(result, PayQueryResponseVo.class);
+			
+		} catch(Exception e){
+			log.error(e.getStackTrace().toString());
+		}
+		return response;
 	}
 }
