@@ -2,7 +2,6 @@ package com.wolai.platform.service.impl;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,5 +92,21 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		ParkingRecord park = (ParkingRecord) billService.get(ParkingRecord.class, bill.getParkingRecordId());
 		park.setIsPaid(true);
 		saveOrUpdate(park);
+	}
+
+	@Override
+	public Bill releaseCashPaidCouponsPers(String billId) {
+		Bill bill = (Bill) get(Bill.class, billId);
+		if (StringUtil.isNotBlank(bill.getCouponId())) {
+			Coupon old = (Coupon) get(Coupon.class, bill.getCouponId());
+			old.setStatus(Coupon.CouponStatus.INIT);
+			saveOrUpdate(old);
+		}
+		bill.setPayAmount(new BigDecimal(0));
+		bill.setCouponId(null);
+		bill.setPaytype(PayType.CASH);
+		bill.setPayStatus(PayStatus.SUCCESSED);
+		saveOrUpdate(bill);
+		return bill;
 	}
 }

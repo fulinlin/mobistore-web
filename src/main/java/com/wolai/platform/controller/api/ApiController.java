@@ -48,6 +48,11 @@ public class ApiController extends BaseController {
 
 	@Autowired
 	private PaymentService paymentService;
+	
+	private static Integer NOT_WOLAI_USER=2;
+	private static Integer IS_WOLAI_USER=1;
+	
+	
 	/**
 	 * 进场信息通知接口
 	 * 
@@ -69,6 +74,12 @@ public class ApiController extends BaseController {
 
 		License license = licenseService.getLincense(vo.getCarNo().trim());
 
+		// 检测是否有未付费账单
+		if(billService.hasUnPayedBill(vo.getCarNo().trim())){
+			result.put("code",NOT_WOLAI_USER);
+			result.put("msg", "喔来客户，但是存在未结清账单！");
+			return result;
+		}
 		
 		// 防止多次调用
 		ParkingRecord record = parkingService.getParkingRecordbyExNo(vo.getCarNo(),parkingLotId);
@@ -83,9 +94,9 @@ public class ApiController extends BaseController {
 		}
 		
 		if(license==null || UserType.TEMP.equals(license.getUser().getCustomerType())){
-			result.put("code",2);
+			result.put("code",NOT_WOLAI_USER);
 		}else{
-			result.put("code",1);
+			result.put("code",IS_WOLAI_USER);
 		}
 		
 		record.setUserId(license.getUserId());
@@ -122,15 +133,17 @@ public class ApiController extends BaseController {
 		
 		PaychekResponseVo responseVo = new PaychekResponseVo();
 		String parkingLotId = getParkingLotId(request);
-		
+		// 获取请求停车记录
 		ParkingRecord record = parkingService.getParkingRecordbyExNo(vo.getExNo(),parkingLotId);
 	
-		if(record==null){
+		if(record==null){   // 没有停车记录即为非喔来用户
 			parkingService.deleteTempRecord(vo.getExNo());
 			responseVo.setExNo(vo.getExNo());
 			responseVo.setIsPaid(false);
-			responseVo.setCode(2);
+			responseVo.setCode(NOT_WOLAI_USER);
 		}else{
+			/* 根据外部接口修正停车记录相关信息*/
+			
 			//  出库时间
 			Calendar ca = Calendar.getInstance();
 			ca.setTimeInMillis(vo.getExitTime());
@@ -151,15 +164,10 @@ public class ApiController extends BaseController {
 			responseVo.setExNo(record.getExNo());
 			responseVo.setExportNo(record.getExportNo());
 			
-			/*
-			 * 1.非后付费人员，检查是否已付费，以及付费金额是否足额
-			 * 2.确认后付费的用户，检查账单是否已付，以及付费金额是否足额
-			 * 3.后付费用户，新建待扣费账单，直接返回已付费
-			 */
-			
+			/* 出账处理 */
 			Bill bill = billService.getBillByParking(record.getId());
-			System.out.print(bill);
-			// 除开已支付的账单不处理，其他情况计算下
+			
+			// 除开已支付的账单不处理，其他情况计算下账单信息
 			if(!(bill !=null && PayStatus.SUCCESSED.equals(bill.getPayStatus()))){
 				boolean isPostPay =false;
 				
@@ -171,22 +179,36 @@ public class ApiController extends BaseController {
 				bill = paymentService.createBillIfNeededWithoutUpdateCouponPers(record,isPostPay);
 			}
 			
+			/*
+			 * 是否已付费检查：
+			 * 1.手动付费账单，检查是否已付费，以及付费金额是否足额
+			 * 2.后付费用户，新建待扣费账单，直接返回已付费
+			 */
 			if(bill.getIsPostPay()){
+				// 后付费账单直接放行
 				responseVo.setIsPaid(true);
 			}else{
+				// 预付费账单检查是否已缴费成功
 				if(PayStatus.SUCCESSED.equals(bill.getPayStatus())){
 					responseVo.setIsPaid(true);
 				}else{
+					// 未缴费成功的账单，更改缴费方式为现金缴费，同时释放曾经选择的优惠券
 					responseVo.setIsPaid(false);
+					bill = paymentService.releaseCashPaidCouponsPers(parkingLotId);
 				}
 			}
+			// 更新记录为离场
 			record.setParkStatus(ParkStatus.OUT);
 			parkingService.saveOrUpdate(record);
 			
-			responseVo.setCode(1);
+			/* 
+			 * 拼接返回字段
+			 */
+			responseVo.setCode(IS_WOLAI_USER);
 			responseVo.setPayTime(bill.getCreateTime().getTime());
 			responseVo.setOrderCreateTime(bill.getCreateTime().getTime());
 			responseVo.setOrderId(bill.getId());
+			// 如果选择了优惠券进行结算的话，返回优惠券的id以及相关信息
 			if(StringUtils.isNotBlank(bill.getCouponId())){
 				responseVo.setCouponSn(bill.getCouponId());
 				responseVo.setCouponTime(bill.getCoupon().getTime());

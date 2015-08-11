@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.wolai.platform.entity.Bill;
+import com.wolai.platform.entity.Bill.PayStatus;
+import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.entity.SysAPIKey;
 import com.wolai.platform.entity.UnionpayCardBound;
@@ -72,7 +74,15 @@ public class SettlementJob {
 						}
 					}else{
 						bill.setPayAmount(bill.getTotalAmount().subtract(new BigDecimal(bill.getCoupon().getMoney())));
+						if(bill.getPayAmount().compareTo(new BigDecimal(0))<1){
+							bill.setPayAmount(new BigDecimal(0));
+							bill.setPaytype(PayType.UNIONPAY);
+							bill.setPayStatus(PayStatus.SUCCESSED);
+						}
 						billService.saveOrUpdate(bill);
+						if(PayStatus.SUCCESSED.equals(bill.getPayStatus())){
+							continue;
+						}
 					}
 					paymentUnionpayService.postPayConsume(bill.getId(),bound.getAccNo(),bill.getPayAmount());
 				}

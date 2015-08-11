@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.Bill.PayStatus;
+import com.wolai.platform.entity.ParkingRecord.ParkStatus;
 import com.wolai.platform.service.BillService;
 
 @Service
@@ -58,8 +59,8 @@ public class BillServiceImpl extends CommonServiceImpl implements BillService {
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
 		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
 		dc.add(Restrictions.eq("carNo",CarNo));
-		
-		return null;
+		dc.add(Restrictions.eq("parkingRecord.ParkStatus",ParkStatus.OUT));
+		return getDao().FindFirstByCriteria(dc)!=null;
 	}
 
 }
