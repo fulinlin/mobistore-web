@@ -39,6 +39,11 @@ public class Bill extends IdEntity {
   		UNIONPAY("UNIONPAY"),
 
   		/**
+  		 * CASH(现金)
+  		 */
+  		CASH("CASH"),
+  		
+  		/**
   		 * weixin(微信)
   		 */
   		WEIXIN("WEIXIN");
