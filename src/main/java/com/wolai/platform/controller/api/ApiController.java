@@ -73,15 +73,18 @@ public class ApiController extends BaseController {
 		if (record == null) {
 			record = new ParkingRecord();
 		}
-		// 存在已绑定车牌
+		
 		if (license != null) {
 			record.setCarNoId(license.getId());
-			if(UserType.TEMP.equals(license.getUser().getCustomerType())){
-				result.put("code", 1);
-			}
-		}else{
-			result.put("code", 2);
+			
 		}
+		
+		if(license==null || UserType.TEMP.equals(license.getUser().getCustomerType())){
+			result.put("code",2);
+		}else{
+			result.put("code",1);
+		}
+		
 		record.setUserId(license.getUserId());
 		record.setCarNo(vo.getCarNo().trim());
 		record.setCarPicPath(vo.getCarPicUrl().trim());
