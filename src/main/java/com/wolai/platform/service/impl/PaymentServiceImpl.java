@@ -140,9 +140,11 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		
 		PayQueryResponseVo response = null;
 		try{
+			log.error("===请求新利泊计费服务===");
+			log.error(vo.toString());
 			String result = WebClientUtil.post(key.getUrl()+":"+key.getPort()+key.getRootPath(), JSON.toJSONString(vo));
 			response = JSON.parseObject(result, PayQueryResponseVo.class);
-			
+			log.error(response.toString());
 		} catch(Exception e){
 			log.error(e.getStackTrace().toString());
 		}
