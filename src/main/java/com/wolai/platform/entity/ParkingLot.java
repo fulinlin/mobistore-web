@@ -36,6 +36,12 @@ public class ParkingLot extends IdEntity {
 	private String summary;
 	
 	/**
+	 * 图片
+	 */
+	@Lob
+	private String image;
+	
+	/**
 	 * 收费信息
 	 */
 	private String chargeInfo;
@@ -127,5 +133,13 @@ public class ParkingLot extends IdEntity {
 
 	public void setChargeInfo(String chargeInfo) {
 		this.chargeInfo = chargeInfo;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }
