@@ -11,6 +11,7 @@ public class ParkingLotVo {
 	private String chargeInfo;
 	private String city;
 	private Boolean isProprietary;
+	private String image;
 	
 	public String getName() {
 		return name;
@@ -71,6 +72,12 @@ public class ParkingLotVo {
 	}
 	public void setIsProprietary(Boolean isProprietary) {
 		this.isProprietary = isProprietary;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

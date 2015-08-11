@@ -57,6 +57,8 @@ public class ParkingController extends BaseController{
 	public Map<String,Object> parkInfo(HttpServletRequest request, @RequestParam String token){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
+		
+		
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 		ParkingRecord po = parkingService.parkInfo(userId);
@@ -69,6 +71,11 @@ public class ParkingController extends BaseController{
 			ParkingLotVo parkingLotVo = new ParkingLotVo();
 			BeanUtilEx.copyProperties(parkingLotVo, parkingLotPo);
 			vo.setParkingLotVo(parkingLotVo);
+			
+			if (vo.getCarPicPath() == null) { //TODO: 
+				String baseUrl = request.getRequestURL().toString().split("api/")[0];
+				vo.setCarPicPath(baseUrl + parkingLotPo.getImage());
+			}
 			ret.put("data", vo);
 		} else {
 			ret.put("data", null);
@@ -92,6 +99,8 @@ public class ParkingController extends BaseController{
 		
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
+		String baseUrl = request.getRequestURL().toString().split("api/")[0];
+		
 		SysUser user = userService.getUserByToken(token);
 		String userId = user.getId();
 		Page page = parkingService.parkHistory(userId, startIndex, pageSize);
@@ -107,6 +116,9 @@ public class ParkingController extends BaseController{
 			ParkingLotVo parkingLotVo = new ParkingLotVo();
 			BeanUtilEx.copyProperties(parkingLotVo, parkingLotPo);
 			vo.setParkingLotVo(parkingLotVo);
+//			if (vo.getCarPicPath() == null) { //TODO: 
+				vo.setCarPicPath(baseUrl + parkingLotPo.getImage());
+//			}
 			
 			parkVoList.add(vo);
 		}
@@ -141,6 +153,11 @@ public class ParkingController extends BaseController{
 		
 		ParkingVo vo = new ParkingVo();
 		BeanUtilEx.copyProperties(vo, park);
+//		if (vo.getCarPicPath() == null) {  //TODO: 
+			ParkingLot parkingLotPo = park.getParkingLot();
+			String baseUrl = request.getRequestURL().toString().split("api/")[0];
+			vo.setCarPicPath(baseUrl + parkingLotPo.getImage());
+//		}
 		if (bill != null) {
 			vo.setPaytype(bill.getPaytype());
 			vo.setCouponType(bill.getCoupon().getType());
