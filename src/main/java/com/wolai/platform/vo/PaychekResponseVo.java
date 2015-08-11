@@ -1,7 +1,6 @@
 package com.wolai.platform.vo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class PaychekResponseVo implements Serializable {
@@ -43,7 +42,7 @@ public class PaychekResponseVo implements Serializable {
 	/**
 	 * 已付金额
 	 */
-	private BigDecimal payAmount=BigDecimal.ZERO;
+	private String payAmount="0";
 	
 	/**
 	 * 抵时券时长
@@ -53,7 +52,7 @@ public class PaychekResponseVo implements Serializable {
 	/**
 	 * 代金券金额
 	 */
-	private BigDecimal couponAmount=BigDecimal.ZERO;
+	private Integer couponAmount=0;
 	
 	/**
 	 *  抵时券或代金券编号
@@ -117,11 +116,11 @@ public class PaychekResponseVo implements Serializable {
 		this.payTime = payTime;
 	}
 
-	public BigDecimal getPayAmount() {
+	public String getPayAmount() {
 		return payAmount;
 	}
 
-	public void setPayAmount(BigDecimal payAmount) {
+	public void setPayAmount(String payAmount) {
 		this.payAmount = payAmount;
 	}
 
@@ -133,11 +132,11 @@ public class PaychekResponseVo implements Serializable {
 		this.couponTime = couponTime;
 	}
 
-	public BigDecimal getCouponAmount() {
+	public Integer getCouponAmount() {
 		return couponAmount;
 	}
 
-	public void setCouponAmount(BigDecimal couponAmount) {
+	public void setCouponAmount(Integer couponAmount) {
 		this.couponAmount = couponAmount;
 	}
 
