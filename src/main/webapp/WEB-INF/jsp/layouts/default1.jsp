@@ -4,6 +4,9 @@
 <!DOCTYPE html>
 <html style="overflow-x:hidden;overflow-y:auto;">
 	<head>
+		<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+		<META HTTP-EQUIV="expires" CONTENT="0">
 		<title><sitemesh:title/></title>
 		<%@include file="/WEB-INF/jsp/include/head1.jsp" %>
 		<sitemesh:head/>

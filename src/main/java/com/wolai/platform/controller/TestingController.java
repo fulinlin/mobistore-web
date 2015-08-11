@@ -52,6 +52,7 @@ public class TestingController extends BaseController{
 		}
 		model.addAttribute("user", user.getId());
 		List<License> carsOutList = testService.listCarsOut(user.getId());
+		System.out.print(carsOutList.size());
 		model.addAttribute("carsOutList", carsOutList);
 //		String carToIn = "";
 //		if (carsOutList.size() > 0) {
