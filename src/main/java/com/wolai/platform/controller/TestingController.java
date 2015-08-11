@@ -148,6 +148,12 @@ public class TestingController extends BaseController{
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("msg", res);
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return ret;
 	}
 	
@@ -168,6 +174,12 @@ public class TestingController extends BaseController{
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("msg", res);
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return ret;
 	}
 }
