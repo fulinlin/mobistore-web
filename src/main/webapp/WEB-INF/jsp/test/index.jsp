@@ -23,6 +23,7 @@
 				<!-- <label class="control-label"></label> -->
 				<div class="controls" >
 					<input id="token" value="b1d4163f9829453d9aeed855b02b4cbc" />
+					<input id="url" value="http://101.200.189.57:9090/wolai-web" />
 					<button id="boundToken" type="submit" class="btn">绑定</button>
 				</div>
 			</div>
@@ -96,8 +97,9 @@
 	$(document).ready(function(){
 		$("#boundToken").click(function(){
 			var sysToken = $("#token").val();
+			var url = $("#url").val();
 			var data1 = {
-				"url":"http://10.0.1.107:8080/wolai-web",
+				"url":url,
 				"token":sysToken
 			};
 			$.ajax({
