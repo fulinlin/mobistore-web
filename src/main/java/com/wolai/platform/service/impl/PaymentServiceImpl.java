@@ -77,7 +77,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		Coupon validCoupon = (Coupon) couponService.get(Coupon.class, validCouponId);
 		
 		// TODO: 用validCoupon调用新利泊计费接口，更新费用数据
-		PayQueryResponseVo payQueryResponseVo = getPayAmountFromThirdPart(parking, bill, validCoupon);
+		PayQueryResponseVo payQueryResponseVo = getPayAmountFromThirdPartServer(parking, bill, validCoupon);
 		BigDecimal totalAmount = payQueryResponseVo.getExpenses();
 		BigDecimal payAmount = payQueryResponseVo.getAccruedExpenses();
 		
@@ -124,7 +124,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		return bill;
 	}
 	
-	private PayQueryResponseVo getPayAmountFromThirdPart (ParkingRecord parking, Bill bill, Coupon coupon) {
+	private PayQueryResponseVo getPayAmountFromThirdPartServer (ParkingRecord parking, Bill bill, Coupon coupon) {
 		SysAPIKey key = apiKeyService.getKeyByParinglotId(parking.getParkingLotId());
 		PayQueryVo vo = new PayQueryVo();
 		vo.setCarNo(bill.getCarNo());
