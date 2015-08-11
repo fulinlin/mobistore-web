@@ -82,7 +82,7 @@ public class PaymentUnionpayConsumeController extends BaseController {
 		}
 		
 		ParkingRecord park = (ParkingRecord) obj;
-		Bill bill = paymentService.createBillIfNeededPers(park, couponId);
+		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, false);
 		String wolaiTradeNo = bill.getId();
 		BigDecimal totalAmount = bill.getTotalAmount();
 		BigDecimal payAmount = bill.getPayAmount();

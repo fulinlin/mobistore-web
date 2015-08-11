@@ -33,6 +33,9 @@ public class CommonServiceImpl extends BaseServiceImpl implements CommonService 
 
 	@Override
 	public Object get(Class clazz, Serializable id) {
+		if (id == null) {
+			return null;
+		}
 		return getDao().get(clazz, id);
 	}
 

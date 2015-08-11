@@ -81,7 +81,7 @@ public class PaymentAlipayController extends BaseController {
 		}
 		
 		ParkingRecord park = (ParkingRecord) obj;
-		Bill bill = paymentService.createBillIfNeededPers(park, couponId);
+		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, false);
 		AlipayVo alipayVo = new AlipayVo();
 		alipayVo.setWolaiTradeNo(bill.getId());
 		alipayVo.setTotalAmount(bill.getTotalAmount());

@@ -169,7 +169,7 @@ public class PaymentUnionpayDelegateController extends BaseController {
 		}
 		
 		ParkingRecord park = (ParkingRecord) obj;
-		Bill bill = paymentService.createBillIfNeededPers(park, couponId, true);
+		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, true);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;

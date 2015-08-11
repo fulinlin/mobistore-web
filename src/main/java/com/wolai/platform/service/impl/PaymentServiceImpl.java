@@ -27,16 +27,19 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	CouponService couponService;
 	
 	@Override
-	public Bill createBillIfNeededPers(ParkingRecord parking, String couponId) {
-		return this.createBillIfNeededPers(parking, couponId, false);
+	public Bill createBillIfNeededPersAndUpdateCouponPers(ParkingRecord parking, String couponId, boolean isPostPay) {
+		return this.createBillIfNeededPers(parking, couponId, isPostPay, true);
 	}
 	
 	@Override
-	public Bill createBillIfNeededPers(ParkingRecord parking, String couponId, boolean isPostPay) {
+	public Bill createBillIfNeededWithoutUpdateCouponPers(ParkingRecord parking, boolean isPostPay) {
+		return this.createBillIfNeededPers(parking, null, isPostPay, false);
+	}
+	
+	private Bill createBillIfNeededPers(ParkingRecord parking, String newCouponId, boolean isPostPay, boolean needUpdateCoupon) {
 		String parkingId = parking.getId();
 		
 		Bill bill = billService.getBillByParking(parkingId);
-		
 		if (bill == null) {
 			bill = new Bill();
 			bill.setCarNo(parking.getCarNo());
@@ -44,26 +47,25 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 			bill.setLicensePlateId(parking.getCarNoId());
 			bill.setCreateTime(new Date());
 		}
-		
-		if (StringUtil.isNotEmpty(couponId)) {
-			bill.setCouponId(couponId);
-		}
-
 		bill.setIsPostPay(isPostPay);
 		
-		// 解冻和冻结相关
-		String oldCouponId = bill.getCouponId();
-		couponService.holdCouponPers(couponId, oldCouponId);
-		if (couponId != null) {
-			Object couponOject = couponService.get(Coupon.class, couponId);
+		if (needUpdateCoupon) {
+			bill.setCouponId(newCouponId);
+			
+			// 解冻和冻结相关
+			String oldCouponId = bill.getCouponId();
+			couponService.holdCouponPers(newCouponId, oldCouponId);
 		}
 		
-		// TODO: 调用新利泊计费接口，更新费用数据
+		String validCouponId = bill.getCouponId();
+		Coupon validCoupon = (Coupon) couponService.get(Coupon.class, validCouponId);
+		
+		// TODO: 用validCoupon调用新利泊计费接口，更新费用数据
 		BigDecimal totalAmount = new BigDecimal(0.02);
 		BigDecimal payAmount = new BigDecimal(0.01);
 		
-//		if (Coupon.CouponType.MONEY.toString().equals(coupon.getType().toString())) {
-//			payAmount = payAmount.subtract(new BigDecimal(coupon.getMoney()));
+//		if (Coupon.CouponType.MONEY.toString().equals(validCoupon.getType().toString())) {
+//			payAmount = payAmount.subtract(new BigDecimal(validCoupon.getMoney()));
 //			if (payAmount.intValue() < 0) {
 //				payAmount = new BigDecimal(0);
 //			}
