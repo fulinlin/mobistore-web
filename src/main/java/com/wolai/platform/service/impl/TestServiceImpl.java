@@ -24,7 +24,7 @@ import com.wolai.platform.util.WebClientUtil;
 
 @Service
 public class TestServiceImpl extends CommonServiceImpl implements TestService {
-	public static String url = "http://112.80.18.202:8888/wolai/wolai/rt/";
+	public static String REMOTE_URL = "http://10.0.1.134:80/wolai/wolai/rt/";
 	
 	private SysUser loginPers(String phone, String password, boolean updateToken) {
 		String newToken = null;
@@ -117,7 +117,7 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		map.put("url", url);
 		map.put("token", token);
 		
-		String ret = WebClientUtil.post(url + "simuseturltoken", JSON.toJSONString(map));
+		String ret = WebClientUtil.post(REMOTE_URL + "simuseturltoken", JSON.toJSONString(map));
 		return ret;
 	}
 	
@@ -129,7 +129,7 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		map.put("exNo", IdGen.uuid());
 		map.put("entranceNo", "11");
 		
-		String ret = WebClientUtil.post(url + "simucarenter", JSON.toJSONString(map));
+		String ret = WebClientUtil.post(REMOTE_URL + "simucarenter", JSON.toJSONString(map));
 		return ret;
 	}
 	
@@ -153,7 +153,7 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		map.put("entranceNo", "11");
 		map.put("enterTime", String.valueOf(intime.getTime()));
 		
-		String ret = WebClientUtil.post(url + "simucarleave", JSON.toJSONString(map));
+		String ret = WebClientUtil.post(REMOTE_URL + "simucarleave", JSON.toJSONString(map));
 		return ret;
 	}
 }

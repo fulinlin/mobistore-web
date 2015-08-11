@@ -25,7 +25,7 @@ public class WebClientUtil {
 		public static	Log logger = LogFactory.getLog(WebClientUtil.class);
 	
 	   public  static String post(String url, String json) {
-	    	String resultJson = "";
+	    	String resultJson = "BEFORE_POST";
 	    	// 创建默认的httpClient实例.
 	        CloseableHttpClient httpclient = HttpClients.createDefault();
 	        
@@ -33,7 +33,7 @@ public class WebClientUtil {
 	        HttpPost httppost = new HttpPost(url);
 	        // 设置超时时间
 	        RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(2000).setConnectTimeout(2000)  
-	        	    .setSocketTimeout(2000).build();
+	        	    .setSocketTimeout(10000).build();
 	        httppost.setConfig(requestConfig);
 	        
 	        CloseableHttpResponse response = null;

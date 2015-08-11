@@ -154,6 +154,7 @@ public class ApiController extends BaseController {
 			 */
 			
 			Bill bill = billService.getBillByParking(record.getId());
+			System.out.print(bill);
 			// 除开已支付的账单不处理，其他情况计算下
 			if(!(bill !=null && PayStatus.SUCCESSED.equals(bill.getPayStatus()))){
 				boolean isPostPay =false;
@@ -163,7 +164,7 @@ public class ApiController extends BaseController {
 				}else if(PayType.POSTPAID.equals(record.getUser().getPayType())){
 					isPostPay=true;
 				}
-				paymentService.createBillIfNeededWithoutUpdateCouponPers(record,isPostPay);
+				bill = paymentService.createBillIfNeededWithoutUpdateCouponPers(record,isPostPay);
 			}
 			
 			if(bill.getIsPostPay()){
