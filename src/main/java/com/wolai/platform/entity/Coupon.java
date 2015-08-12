@@ -105,7 +105,7 @@ public class Coupon extends IdEntity {
      * 优惠券状态
      */
     @Enumerated(EnumType.STRING)
-    private CouponStatus status;
+    private CouponStatus status = CouponStatus.INIT;
 
     /**
      * 优惠金额

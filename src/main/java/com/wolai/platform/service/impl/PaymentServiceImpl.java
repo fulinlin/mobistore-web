@@ -88,7 +88,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		
 		if (validCoupon != null && Coupon.CouponType.MONEY.equals(validCoupon.getType())) {
 			payAmount = payAmount.subtract(new BigDecimal(validCoupon.getMoney()));
-			if (payAmount.intValue() < 0) {
+			if (payAmount.doubleValue() < 0) {
 				payAmount = new BigDecimal(0);
 			}
 		}
