@@ -87,7 +87,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		BigDecimal payAmount = payQueryResponseVo.getAccruedExpenses();
 		
 		if (validCoupon != null && Coupon.CouponType.MONEY.equals(validCoupon.getType())) {
-			payAmount = payAmount.subtract(new BigDecimal(validCoupon.getMoney()));
+			payAmount = totalAmount.subtract(new BigDecimal(validCoupon.getMoney()));
 			if (payAmount.doubleValue() < 0) {
 				payAmount = new BigDecimal(0);
 			}
