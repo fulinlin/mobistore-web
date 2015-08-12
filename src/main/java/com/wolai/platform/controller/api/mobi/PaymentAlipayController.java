@@ -117,29 +117,29 @@ public class PaymentAlipayController extends BaseController {
 		
 		if (wolaiTradeNo ==null || alipayTradeNo ==null || alipayTradeStatus ==null || 
 				wolaiTradeNo.length == 0 || alipayTradeNo.length == 0 || alipayTradeStatus.length == 0) {
-			log.error("支付宝异步接口参数错误");
+			log.info("支付宝异步接口参数错误");
 			return "error";
 		}
 		
 		if (!"TRADE_SUCCESS".equals(alipayTradeStatus[0]) && !"TRADE_FINISHED".equals(alipayTradeStatus[0])) {
-			log.error("收到支付宝异步接口'" + alipayTradeStatus[0] + "'类型的请求，不处理！");
+			log.info("收到支付宝异步接口'" + alipayTradeStatus[0] + "'类型的请求，不处理！");
 			return "success";
 		}
 		
 		Object obj = billService.get(Bill.class, wolaiTradeNo[0]);
 		if (obj == null) {
-			log.error("未找到out_trade_no对应的Bill对象");
+			log.info("未找到out_trade_no对应的Bill对象");
 			return "error";
 		}
 		
 		Bill bill = (Bill) obj;
 		if (alipayTradeNo[0].equals(bill.getTradeNo())) {
-			log.error("trade_no参数跟Bill对象的TradeNo不匹配");
+			log.info("trade_no参数跟Bill对象的TradeNo不匹配");
 			return "error";
 		}
 		
 		paymentService.successPers(bill, alipayTradeNo[0], alipayTradeStatus[0], Bill.PayType.ALIPAY);
-		log.error("支付宝交易返回：" + alipayTradeNo[0] + "-" + alipayTradeStatus[0]);
+		log.info("支付宝交易返回：" + alipayTradeNo[0] + "-" + alipayTradeStatus[0]);
 		
 		return "success";
 	}

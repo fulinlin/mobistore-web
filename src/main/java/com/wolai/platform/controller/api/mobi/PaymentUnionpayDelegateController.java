@@ -181,7 +181,7 @@ public class PaymentUnionpayDelegateController extends BaseController {
 	@ResponseBody
 	public String unionpayDelegateCallback(HttpServletRequest request){
 		Map<String, String[]> params = request.getParameterMap(); 
-		log.error(params.toString());
+		log.info(params.toString());
 		
 		String[] merId = params.get("merId");
 		String[] orderId = params.get("orderId");

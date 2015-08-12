@@ -86,7 +86,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		BigDecimal totalAmount = payQueryResponseVo.getExpenses();
 		BigDecimal payAmount = payQueryResponseVo.getAccruedExpenses();
 		
-		if (Coupon.CouponType.MONEY.equals(validCoupon.getType())) {
+		if (validCoupon != null && Coupon.CouponType.MONEY.equals(validCoupon.getType())) {
 			payAmount = payAmount.subtract(new BigDecimal(validCoupon.getMoney()));
 			if (payAmount.intValue() < 0) {
 				payAmount = new BigDecimal(0);
@@ -145,13 +145,13 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		
 		PayQueryResponseVo response = null;
 		try{
-			log.error("===请求新利泊计费服务===");
-			log.error(vo.toString());
+			log.info("===请求新利泊计费服务===");
+			log.info(vo.toString());
 			String result = WebClientUtil.post(key.getUrl()+":"+key.getPort()+key.getRootPath()+HttpServerConstants.POST_PAY_QUERY, JSON.toJSONString(vo));
 			response = Encodes.getRequestParameter(PayQueryResponseVo.class, result);
-			log.error(response.toString());
+			log.info(response.toString());
 		} catch(Exception e){
-			log.error(e.getStackTrace().toString());
+			log.info(e.getStackTrace().toString());
 		}
 		return response;
 	}
