@@ -87,7 +87,7 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 					"select carNoId from ParkingRecord pr where (pr.parkStatus = ? or pr.parkStatus = ?)"
 				+ ")";
 		
-		List<License> ls = getListByHQL(hql, userId, false, false, ParkingRecord.ParkStatus.IN, ParkingRecord.ParkStatus.PARKED, dt);
+		List<License> ls = getListByHQL(hql, userId, false, false, ParkingRecord.ParkStatus.IN, ParkingRecord.ParkStatus.PARKED);
 		for (License l:ls) {
 			DetachedCriteria dc = DetachedCriteria.forClass(ParkingRecord.class);
 			dc.add(Restrictions.eq("isDelete", false));
