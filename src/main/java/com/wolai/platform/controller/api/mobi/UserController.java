@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ import com.wolai.platform.service.UserService;
 import com.wolai.platform.service.VerificationService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.util.CommonUtils;
+import com.wolai.platform.util.FileUtils;
 import com.wolai.platform.util.SmsUtil;
 import com.wolai.platform.util.StringUtil;
 import com.wolai.platform.vo.UserVo;
@@ -31,7 +34,7 @@ import com.wolai.platform.vo.UserVo;
 @Controller
 @RequestMapping(Constant.API_MOBI + "user/")
 public class UserController extends BaseController{
-	
+	private static Logger log = LoggerFactory.getLogger(UserController.class);
 	public static String MSG = "【喔来智能停车系统】您正在注册我们的应用，验证码是%CODE%，请在10分钟内提交改验证码，切勿将该验证码泄露于他人。";
 	
 	@Autowired
@@ -45,7 +48,7 @@ public class UserController extends BaseController{
 	@ResponseBody
 	public Map<String,Object> verify(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
-		
+		log.info("===测试===");
 		String phone = json.get("phone");
 		
 		if (StringUtils.isEmpty(phone)) {

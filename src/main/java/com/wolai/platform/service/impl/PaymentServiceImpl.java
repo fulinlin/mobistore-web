@@ -74,7 +74,11 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		}
 		
 		String validCouponId = bill.getCouponId();
-		Coupon validCoupon = (Coupon) couponService.get(Coupon.class, validCouponId);
+		Coupon validCoupon = null;
+		Object validObj = couponService.get(Coupon.class, validCouponId);
+		if (validObj != null) {
+			validCoupon = (Coupon)validObj;
+		}
 		
 		// TODO: 用validCoupon调用新利泊计费接口，更新费用数据
 		PayQueryResponseVo payQueryResponseVo = getPayAmountFromThirdPartServer(parking, bill, validCoupon);
