@@ -6,7 +6,7 @@
 <head>
 	<meta name="decorator" content="default1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>异常信息</title>
+	<title>喔来停车系统测试</title>
 	
 	 <style type="text/css">
 		.controls select, .controls input {

@@ -80,11 +80,6 @@ public class ParkingController extends BaseController{
 				vo.setCarPicPath(baseUrl + parkingLotPo.getImage());
 			}
 			ret.put("data", vo);
-
-			Bill bill = paymentService.createBillIfNeededWithoutUpdateCouponPers(po, SysUser.PayType.POSTPAID.equals(user.getPayType()));
-			
-			vo.setMoney(bill.getTotalAmount());
-			vo.setPaidMoney(bill.getPayAmount());
 		} else {
 			ret.put("data", null);
 		}
@@ -94,11 +89,6 @@ public class ParkingController extends BaseController{
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("couponCount", couponCount);
 		
-		if (SysUser.PayType.CONFIRM_POSTPAID.toString().equals(user.getPayType().toString()) ) {
-			ret.put("confirmPostPay", true);
-		} else {
-			ret.put("confirmPostPay", false);
-		}
 		return ret;
 	}
 
