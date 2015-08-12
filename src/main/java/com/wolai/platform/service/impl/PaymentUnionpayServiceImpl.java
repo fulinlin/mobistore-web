@@ -16,6 +16,8 @@ import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.unionpay.acp.sdk.HttpClient;
@@ -27,10 +29,13 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.UnionpayCardBound;
 import com.wolai.platform.service.PaymentUnionpayService;
+import com.wolai.platform.util.FileUtils;
 import com.wolai.platform.util.TimeUtils;
 
 @Service
 public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements PaymentUnionpayService {
+	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
+	
 	public static String encoding = "UTF-8";
 	public static String version = "5.0.0";
 	
@@ -131,8 +136,8 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 
 		Map<String, String> resmap = submitUrl(data, requestAppUrl);
 
-		System.out.println("请求报文=["+data.toString()+"]");
-		System.out.println("应答报文=["+resmap.toString()+"]");
+		log.info("请求报文=["+data.toString()+"]");
+		log.info("应答报文=["+resmap.toString()+"]");
 		return resmap;
 	}
 	
@@ -263,9 +268,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			createBoundRecordPers(userId, accNo, expired, orderId);
 		}
 
-//		System.out.println(html);
-
-		System.out.println(resMap.toString());
+		log.info(resMap.toString());
 		return resMap;
 	}
 	
@@ -368,7 +371,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			}
 		}
 		
-		System.out.println(resMap.toString());
+		log.info(resMap.toString());
 		
 		return resMap;
 	}
@@ -501,7 +504,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		Map<String, String> submitFromData = signData(contentData);
 
 		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl);
-		System.out.println(resMap.toString());
+		log.info(resMap.toString());
 		return resMap;
 
 	}
@@ -530,8 +533,8 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	private Map<String, String> submitUrl(
 			Map<String, String> submitFromData,String requestUrl) {
 		String resultString = "";
-		System.out.println("requestUrl====" + requestUrl);
-		System.out.println("submitFromData====" + submitFromData.toString());
+		log.info("requestUrl====" + requestUrl);
+		log.info("submitFromData====" + submitFromData.toString());
 		/**
 		 * 发送
 		 */
@@ -552,12 +555,12 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			// 将返回结果转换为map
 			resData = SDKUtil.convertResultStringToMap(resultString);
 			if (SDKUtil.validate(resData, encoding)) {
-				System.out.println("验证签名成功");
+				log.info("验证签名成功");
 			} else {
-				System.out.println("验证签名失败");
+				log.info("验证签名失败");
 			}
 			// 打印返回报文
-			System.out.println("打印返回报文：" + resultString);
+			log.info("打印返回报文：" + resultString);
 		}
 		return resData;
 	}
