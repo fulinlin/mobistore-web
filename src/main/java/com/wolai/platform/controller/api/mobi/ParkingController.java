@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
@@ -92,6 +93,12 @@ public class ParkingController extends BaseController{
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("couponCount", couponCount);
+		
+		if (SysUser.PayType.CONFIRM_POSTPAID.toString().equals(user.getPayType().toString()) ) {
+			ret.put("confirmPostPay", true);
+		} else {
+			ret.put("confirmPostPay", false);
+		}
 		return ret;
 	}
 

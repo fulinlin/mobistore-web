@@ -38,7 +38,7 @@ import com.wolai.platform.vo.ParkingVo;
 
 @Controller
 @RequestMapping(Constant.API_MOBI + "payment/")
-public class PaymentAlipayController extends BaseController {
+public class PaymentController extends BaseController {
 	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
 	
 	@Autowired
