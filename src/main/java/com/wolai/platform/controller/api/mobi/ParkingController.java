@@ -28,6 +28,7 @@ import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.CouponService;
 import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.ParkingService;
+import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.vo.ParkingLotVo;
@@ -51,6 +52,9 @@ public class ParkingController extends BaseController{
 	
 	@Autowired
 	BillService billService;
+	
+	@Autowired
+	PaymentService paymentService;
 
 	@RequestMapping(value="parkInfo")
 	@ResponseBody
@@ -75,9 +79,11 @@ public class ParkingController extends BaseController{
 				vo.setCarPicPath(baseUrl + parkingLotPo.getImage());
 			}
 			ret.put("data", vo);
+
+			Bill bill = paymentService.createBillIfNeededWithoutUpdateCouponPers(po, SysUser.PayType.POSTPAID.equals(user.getPayType()));
 			
-			vo.setMoney(new BigDecimal(2));
-			vo.setPaidMoney(new BigDecimal(1));
+			vo.setMoney(bill.getTotalAmount());
+			vo.setPaidMoney(bill.getPayAmount());
 		} else {
 			ret.put("data", null);
 		}
