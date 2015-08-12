@@ -87,7 +87,7 @@ public class ApiKeyController extends BaseController{
 		if (!beanValidator(model, apikey)) {
 			return form(apikey, model);
 		}
-		if(apikey.getId()!=null){
+		if(StringUtils.isBlank(apikey.getId())){
 			apikey.setToken(IdGen.uuid());
 		}
 		apiKeyService.saveOrUpdate(apikey);
