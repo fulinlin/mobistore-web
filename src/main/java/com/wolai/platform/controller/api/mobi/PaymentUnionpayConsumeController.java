@@ -109,6 +109,7 @@ public class PaymentUnionpayConsumeController extends BaseController {
 	@ResponseBody
 	public String unionpayConsumeCallback(HttpServletRequest request){
 		Map<String, String[]> params = request.getParameterMap(); 
+		log.error(params.toString());
 		
 		String[] merId = params.get("merId");
 		String[] orderId = params.get("orderId");
