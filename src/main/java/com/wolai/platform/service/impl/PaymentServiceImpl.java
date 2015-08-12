@@ -3,6 +3,7 @@ package com.wolai.platform.service.impl;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,10 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	}
 	
 	private Bill createBillIfNeededPers(ParkingRecord parking, String newCouponId, boolean isPostPay, boolean needUpdateCoupon) {
+		if (StringUtils.isEmpty(newCouponId)) {
+			newCouponId = null;
+		}
+		
 		String parkingId = parking.getId();
 		
 		Bill bill = billService.getBillByParking(parkingId);

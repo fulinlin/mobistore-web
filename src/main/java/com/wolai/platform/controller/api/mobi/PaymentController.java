@@ -66,9 +66,6 @@ public class PaymentController extends BaseController {
 		
 		String parkingId = json.get("parkingId");
 		String couponId = json.get("couponId");
-		if (StringUtils.isEmpty(couponId)) {
-			couponId = null;
-		}
 		
 		if (StringUtils.isEmpty(parkingId)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
