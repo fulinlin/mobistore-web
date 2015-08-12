@@ -77,6 +77,12 @@ public class PaymentUnionpayDelegateController extends BaseController {
 		String userId = user.getId();
 		
 		UnionpayCardBound bound = paymentUnionpayService.boundQueryByUser(userId);
+		if (bound == null) {
+			ret.put("code", RespCode.SUCCESS.Code());
+			ret.put("payMode", user.getPayType());
+			ret.put("data", null);
+			return ret;
+		}
 		UnionpayCardBoundVo vo = new UnionpayCardBoundVo();
 		
 		if(bound != null) {
