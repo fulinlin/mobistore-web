@@ -17,9 +17,10 @@ public class ParkingVo {
 	private Date driveInTime;
 	private Date driveOutTime;
 	private String parkStatus;
+	private Boolean isPaid;
+	
 	private BigDecimal money; // 应付金额
 	private BigDecimal paidMoney; // 实付金额
-	private Boolean isPaid;
 	
 	private PayType paytype;
 	private CouponType couponType;

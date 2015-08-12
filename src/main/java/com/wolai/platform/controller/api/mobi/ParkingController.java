@@ -75,6 +75,9 @@ public class ParkingController extends BaseController{
 				vo.setCarPicPath(baseUrl + parkingLotPo.getImage());
 			}
 			ret.put("data", vo);
+			
+			vo.setMoney(new BigDecimal(2));
+			vo.setPaidMoney(new BigDecimal(1));
 		} else {
 			ret.put("data", null);
 		}
