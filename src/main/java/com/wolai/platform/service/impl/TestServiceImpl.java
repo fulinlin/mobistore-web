@@ -24,7 +24,7 @@ import com.wolai.platform.util.WebClientUtil;
 
 @Service
 public class TestServiceImpl extends CommonServiceImpl implements TestService {
-	public static String REMOTE_URL = "http://112.80.18.202:8888/wolai/wolai/rt/";
+	public static String REMOTE_URL = "http://10.0.1.134/wolai/wolai/rt/";
 	
 	private SysUser loginPers(String phone, String password, boolean updateToken) {
 		String newToken = null;
