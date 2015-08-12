@@ -44,11 +44,6 @@ public class UnionpayCardBound extends IdEntity{
 	private String wolaiTradeNo;
 	
 	/**
-	 * 卡有效期
-	 */
-	private String expired;
-	
-	/**
 	 * 所属用户
 	 */
 	@Column(name="user_id")
@@ -97,14 +92,6 @@ public class UnionpayCardBound extends IdEntity{
 
 	public void setWolaiTradeNo(String wolaiTradeNo) {
 		this.wolaiTradeNo = wolaiTradeNo;
-	}
-
-	public String getExpired() {
-		return expired;
-	}
-
-	public void setExpired(String expired) {
-		this.expired = expired;
 	}
 
 }

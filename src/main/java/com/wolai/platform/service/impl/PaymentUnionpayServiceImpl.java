@@ -70,12 +70,11 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	}
 	
 	@Override
-	public UnionpayCardBound createBoundRecordPers(String userId, String accNo, String expired, String wolaiTradeNo) {
+	public UnionpayCardBound createBoundRecordPers(String userId, String accNo, String wolaiTradeNo) {
 		
 		UnionpayCardBound bound = new UnionpayCardBound();
 		bound.setUserId(userId);
 		bound.setAccNo(accNo);
-		bound.setExpired(expired);
 		bound.setWolaiTradeNo(wolaiTradeNo);
 		saveOrUpdate(bound);
 		return bound;
@@ -134,10 +133,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		// 交易请求url 从配置文件读取
 		String requestAppUrl = SDKConfig.getConfig().getAppRequestUrl();
 
-		Map<String, String> resmap = submitUrl(data, requestAppUrl);
-
-		log.info("请求报文=["+data.toString()+"]");
-		log.info("应答报文=["+resmap.toString()+"]");
+		Map<String, String> resmap = submitUrl(data, requestAppUrl, "交易准备");
 		return resmap;
 	}
 	
@@ -252,9 +248,8 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		// contentData.put("vpcTransData", vpcTransData);//C
 
 		Map<String, String> submitFromData = signData(contentData);
-//		String html = createHtml(requestBackUrl, submitFromData);
 
-		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl);
+		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl, "信用卡绑定");
 		
 		if ("00".equals(resMap.get("respCode"))) {
 			// 移除老的绑定记录
@@ -265,7 +260,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			}
 			
 			// 创建新的记录
-			createBoundRecordPers(userId, accNo, expired, orderId);
+			createBoundRecordPers(userId, accNo, orderId);
 		}
 
 		log.info(resMap.toString());
@@ -359,7 +354,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 				.getBackRequestUrl();
 		Map<String, String> submitFromData = signData(contentData);
 
-		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl);
+		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl, "解除绑定");
 
 		
 		if ("00".equals(resMap.get("respCode"))) {
@@ -503,7 +498,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 
 		Map<String, String> submitFromData = signData(contentData);
 
-		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl);
+		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl, "后付费付款");
 		log.info(resMap.toString());
 		return resMap;
 
@@ -530,11 +525,12 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		return submitFromData;
 	}
 	
-	private Map<String, String> submitUrl(
-			Map<String, String> submitFromData,String requestUrl) {
+	private Map<String, String> submitUrl(Map<String, String> submitFromData,String requestUrl, String action) {
 		String resultString = "";
-		log.info("requestUrl====" + requestUrl);
-		log.info("submitFromData====" + submitFromData.toString());
+		
+		
+		log.info("请求URL====" + requestUrl);
+		log.info("请求数据====" + submitFromData.toString());
 		/**
 		 * 发送
 		 */
@@ -560,7 +556,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 				log.info("验证签名失败");
 			}
 			// 打印返回报文
-			log.info("打印返回报文：" + resultString);
+			log.info("返回数据====" + resultString);
 		}
 		return resData;
 	}
