@@ -9,18 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.wolai.platform.constant.HttpServerConstants;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.Bill.PayStatus;
 import com.wolai.platform.entity.Bill.PayType;
-import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.entity.Coupon;
+import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysAPIKey;
 import com.wolai.platform.service.ApiKeyService;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.CouponService;
 import com.wolai.platform.service.PaymentService;
-import com.wolai.platform.util.FileUtils;
+import com.wolai.platform.util.Encodes;
 import com.wolai.platform.util.StringUtil;
 import com.wolai.platform.util.WebClientUtil;
 import com.wolai.platform.vo.PayQueryResponseVo;
@@ -146,8 +147,8 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		try{
 			log.error("===请求新利泊计费服务===");
 			log.error(vo.toString());
-			String result = WebClientUtil.post(key.getUrl()+":"+key.getPort()+key.getRootPath(), JSON.toJSONString(vo));
-			response = JSON.parseObject(result, PayQueryResponseVo.class);
+			String result = WebClientUtil.post(key.getUrl()+":"+key.getPort()+key.getRootPath()+HttpServerConstants.POST_PAY_QUERY, JSON.toJSONString(vo));
+			response = Encodes.getRequestParameter(PayQueryResponseVo.class, result);
 			log.error(response.toString());
 		} catch(Exception e){
 			log.error(e.getStackTrace().toString());
