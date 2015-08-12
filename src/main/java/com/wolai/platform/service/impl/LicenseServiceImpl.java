@@ -43,12 +43,13 @@ public class LicenseServiceImpl extends CommonServiceImpl implements LicenseServ
 		TempParkingRecord tempRecord = (TempParkingRecord) getDao().FindFirstByCriteria(dc);
 		if (tempRecord != null) {
 			ParkingRecord record = new ParkingRecord();
-			record.setCarNo(record.getCarNo());
+			record.setCarNo(tempRecord.getCarNo());
 			record.setCarNoId(po.getId());
 			record.setCarPicPath(tempRecord.getCarPicPath());
 			record.setDriveInTime(tempRecord.getDriveInTime());
 			record.setEntranceNo(tempRecord.getEntranceNo());
 			record.setExNo(tempRecord.getExNo());
+			record.setParkingLotId(tempRecord.getParkingLotId());
 			record.setUserId(po.getUserId());
 			record.setParkStatus(ParkStatus.IN);
 			
