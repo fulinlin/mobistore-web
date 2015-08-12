@@ -100,11 +100,13 @@ public class PaymentUnionpayDelegateController extends BaseController {
 		String cvn = json.get("cvn");
 		String expired = json.get("expired");
 		
+		
 		if (StringUtils.isEmpty(accNo) || StringUtils.isEmpty(certifId) || StringUtils.isEmpty(cvn) || StringUtils.isEmpty(expired)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
+		expired = "" + expired.substring(2,4) + expired.substring(0,2);
 		
 		UnionpayCardBound po1 = paymentUnionpayService.boundQueryByCard(accNo);
 		if (po1 != null) {
