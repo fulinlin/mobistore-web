@@ -128,7 +128,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		SysAPIKey key = apiKeyService.getKeyByParinglotId(parking.getParkingLotId());
 		PayQueryVo vo = new PayQueryVo();
 		vo.setCarNo(bill.getCarNo());
-		if (CouponType.TIME.equals(coupon.getType())) {
+		if (coupon != null && CouponType.TIME.equals(coupon.getType())) {
 			vo.setCouponTime(coupon.getTime());
 		} else {
 			vo.setCouponTime(Long.valueOf(0));
