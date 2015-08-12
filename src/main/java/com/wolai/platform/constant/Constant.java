@@ -13,7 +13,7 @@ package com.wolai.platform.constant;
 
 public final class Constant {
 	// webClient 访问地址
-	public static final String WEB_CLIENT_URL = "http://112.80.18.202:9999";
+	public static final String WEB_CLIENT_URL = "http://101.200.189.57:9090";
 	
 	/**
 	 * appClient访问接口前缀
