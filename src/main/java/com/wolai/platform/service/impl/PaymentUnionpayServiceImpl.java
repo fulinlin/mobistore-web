@@ -663,7 +663,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			
 			if("00".equals(respCode)){
 				sendStatus=  true;
-
+				bill.setTradeNo(queryId);
 			}else{
 				// 发送失败则账单支付失败
 				bill.setPayStatus(PayStatus.FEATURE);
