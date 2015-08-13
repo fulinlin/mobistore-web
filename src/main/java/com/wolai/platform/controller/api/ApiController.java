@@ -199,7 +199,7 @@ public class ApiController extends BaseController {
 				responseVo.setIsPaid(true);
 				// 调用一次扣费接口
 				try{
-					paymentUnionpayService.postPayBillSattlement(bill.getId());
+					paymentUnionpayService.postPayBillSattlement(bill.getId(),record.getUserId());
 				}catch(Exception e){
 					if(log.isWarnEnabled()){
 						log.warn(Exceptions.getStackTraceAsString(e));

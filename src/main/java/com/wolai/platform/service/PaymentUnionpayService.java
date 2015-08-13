@@ -3,8 +3,6 @@ package com.wolai.platform.service;
 import java.math.BigDecimal;
 import java.util.Map;
 
-import com.wolai.platform.entity.Bill;
-import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.UnionpayCardBound;
 
 
@@ -24,6 +22,6 @@ public interface PaymentUnionpayService extends CommonService {
 
 	Map<String, String> postPayConsume(String wolaiTradeNo, String accNo, BigDecimal amount);
 
-	boolean postPayBillSattlement(String billId);
+	boolean postPayBillSattlement(String billId,String userId);
 	
 }

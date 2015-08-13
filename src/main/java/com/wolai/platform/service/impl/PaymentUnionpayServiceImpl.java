@@ -621,9 +621,8 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	}
 
 	@Override
-	public boolean postPayBillSattlement(String billId) {
+	public boolean postPayBillSattlement(String billId,String userId) {
 		Bill bill = (Bill) getDao().get(Bill.class, billId);
-		String userId= bill.getParkingRecord().getUserId();
 		if(bill.getCouponId()==null){
 			Coupon coupon  = couponService.getSuitableMoneyCoupon(bill.getTotalAmount(),userId);
 			if(coupon!=null){
