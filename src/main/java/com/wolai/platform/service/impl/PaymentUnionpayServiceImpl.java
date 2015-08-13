@@ -385,6 +385,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	
 	@Override
 	public Map<String, String> postPayConsume(String wolaiTradeNo, String accNo, BigDecimal amount) {
+		accNo = accNo.replaceAll(" ", "").replaceAll(" ", "");
 		String txnTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // --订单发送时间
 		/**
 		 * 初始化证书
