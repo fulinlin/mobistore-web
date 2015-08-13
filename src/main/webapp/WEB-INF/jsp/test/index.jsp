@@ -46,6 +46,7 @@
 						</c:forEach>
 					</select>
 					<button id="login" type="submit" class="btn">模拟登录</button>
+					<div id="token" ></div>
 				</div>
 			</div>
 		<H3>临时车</H3>
@@ -95,6 +96,7 @@
 	var userToken = "";
 	
 	$(document).ready(function(){
+		
 		$("#boundToken").click(function(){
 			var sysToken = $("#token").val();
 			var url = $("#url").val();
@@ -221,6 +223,12 @@
 			}
 			return null; 
 		}
+		
+		var token = getParam("token");
+		console.log(token);
+		console.log(token);
+		
+		$('#token').text(token);
 	});
   </script>
 

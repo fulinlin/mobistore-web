@@ -20,7 +20,11 @@ public class RewardPointsServiceImpl extends CommonServiceImpl implements Reward
 		if (ls.size() > 0) {
 			return ls.get(0);
 		} else {
-			return null;
+			RewardPoints rewardPoints = new RewardPoints();
+			rewardPoints.setBalance(0);
+			rewardPoints.setUserId(userId);
+			saveOrUpdate(rewardPoints);
+			return rewardPoints;
 		}
 	}
 
