@@ -114,15 +114,18 @@ public class PaymentUnionpayConsumeController extends BaseController {
 	@RequestMapping(value="callback")
 	@ResponseBody
 	public String unionpayConsumeCallback(HttpServletRequest request){
-		Map<String, String[]> params = request.getParameterMap(); 
-		log.info("银联消费回调===" + params.toString());
+		log.info("银联消费回调===");
 		
-		String[] merId = params.get("merId");
-		String[] orderId = params.get("orderId");
-		String[] txnAmt = params.get("merId");
-		String[] queryId = params.get("orderId");
-		String[] payCardNo = params.get("trade_status");
-		String[] payCardIssueName = params.get("merId");
+		Map<String, String> resp = paymentService.getUnionpayResp(request);
+		
+		log.info(resp.toString());
+		
+//		String[] merId = params.get("merId");
+//		String[] orderId = params.get("orderId");
+//		String[] txnAmt = params.get("merId");
+//		String[] queryId = params.get("orderId");
+//		String[] payCardNo = params.get("trade_status");
+//		String[] payCardIssueName = params.get("merId");
 		// TODO: 
 		
 		return "";

@@ -1,11 +1,14 @@
 package com.wolai.platform.controller.api.mobi;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.unionpay.acp.sdk.LogUtil;
+import com.unionpay.acp.sdk.SDKConstants;
+import com.unionpay.acp.sdk.SDKUtil;
 import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
@@ -198,13 +204,16 @@ public class PaymentUnionpayDelegateController extends BaseController {
 	@RequestMapping(value="callback")
 	@ResponseBody
 	public String unionpayDelegateCallback(HttpServletRequest request){
-		Map<String, String[]> params = request.getParameterMap(); 
-		log.info("银联代扣回调===" + params.toString());
+		log.info("银联代扣回调===");
 		
-		String[] merId = params.get("merId");
-		String[] orderId = params.get("orderId");
-		String[] txnAmt = params.get("merId");
-		String[] queryId = params.get("orderId");
+		Map<String, String> resp = paymentService.getUnionpayResp(request);
+		
+		log.info(resp.toString());
+		
+//		String[] merId = params.get("merId");
+//		String[] orderId = params.get("orderId");
+//		String[] txnAmt = params.get("merId");
+//		String[] queryId = params.get("orderId");
 		// TODO: 
 		
 		return "";
