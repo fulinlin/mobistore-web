@@ -2,14 +2,13 @@ package com.wolai.platform.controller.api.mobi;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,13 +27,13 @@ import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.service.UserService;
-import com.wolai.platform.util.FileUtils;
 import com.wolai.platform.vo.AlipayVo;
 
 @Controller
 @RequestMapping(Constant.API_MOBI + "payment/alipay/")
 public class PaymentAlipayController extends BaseController {
-	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
+	
+	private static Log log = LogFactory.getLog(PaymentAlipayController.class);
 	
 	@Autowired
 	UserService userService;
