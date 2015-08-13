@@ -30,7 +30,7 @@ import com.wolai.platform.util.WebClientUtil;
 @Service
 public class TestServiceImpl extends CommonServiceImpl implements TestService {
 	
-	public static final String THIRD_PART_SERVER_TEST = "http://10.0.1.109:80/";
+	public static final String THIRD_PART_SERVER_TEST = "http://10.0.1.109:80";
 	public static final String PARKINGLOT_ID = "5F12DD31-8B34-8B9F-E50B-D990615132A9";
 	
 	@Autowired
@@ -176,11 +176,11 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 	
 	private void setRemoteUrl(HttpServletRequest request) {
 		SysAPIKey key = apiKeyService.getKeyByParinglotId(PARKINGLOT_ID);
-		String url = key.getUrl()+":"+key.getPort()+key.getRootPath();
+		String root = key.getUrl() + ":" + key.getPort();
 		String myurl = request.getRequestURL().toString();
 		if (myurl.indexOf("//10.0") > -1) {
-			url = THIRD_PART_SERVER_TEST;
+			root = THIRD_PART_SERVER_TEST;
 		}
-		Constant.THIRD_PART_SERVER = url;
+		Constant.THIRD_PART_SERVER = root + key.getRootPath();;
 	}
 }
