@@ -46,8 +46,8 @@ public final class Constant {
 
 	public static final  String unionpay_mchId = "802290049000180";
 	public static final  String unionpay_request_url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-	public static final  String unionpay_notify_url_consume = WEB_CLIENT_URL + "/wolai-web/api/mobi/payment/unionpay/consumeCallback";
-	public static final  String unionpay_notify_url_delegate = WEB_CLIENT_URL + "/wolai-web/api/mobi/payment/unionpay/delegateCallback";
+	public static final  String unionpay_notify_url_consume = WEB_CLIENT_URL + "/wolai-web/api/mobi/payment/unionpay/consume/callback";
+	public static final  String unionpay_notify_url_delegate = WEB_CLIENT_URL + "/wolai-web/api/mobi/payment/unionpay/delegate/callback";
 	
 	public static final  String wechat_pay_appId = "";
 	public static final  String wechat_pay_mchId = "";
