@@ -1,8 +1,10 @@
 package com.wolai.platform.service;
 
 import com.wolai.platform.bean.Page;
+import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.TempParkingRecord;
+import com.wolai.platform.vo.ParkingVo;
 
 public interface ParkingService extends CommonService {
 	
@@ -19,4 +21,6 @@ public interface ParkingService extends CommonService {
 	public void deleteTempRecord(String exNo);
 	
 	public void updatePaingRecord(String  carNo);
+
+	void setBillInfoForPark(ParkingVo vo, Bill bill);
 }

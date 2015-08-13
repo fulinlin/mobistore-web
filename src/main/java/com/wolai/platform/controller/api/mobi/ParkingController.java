@@ -26,6 +26,8 @@ import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.entity.Bill.PayType;
+import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.CouponService;
 import com.wolai.platform.service.ParkingLotService;
@@ -117,6 +119,9 @@ public class ParkingController extends BaseController{
 			ParkingVo vo = new ParkingVo();
 			BeanUtilEx.copyProperties(vo, po);
 			
+			Bill bill = billService.getBillByParking(po.getId());
+			parkingService.setBillInfoForPark(vo, bill);
+			
 			ParkingLot parkingLotPo = po.getParkingLot();
 			ParkingLotVo parkingLotVo = new ParkingLotVo();
 			BeanUtilEx.copyProperties(parkingLotVo, parkingLotPo);
@@ -163,16 +168,8 @@ public class ParkingController extends BaseController{
 			String baseUrl = request.getRequestURL().toString().split("api/")[0];
 			vo.setCarPicPath(baseUrl + parkingLotPo.getImage());
 //		}
-		if (bill != null) {
-			vo.setPaytype(bill.getPaytype());
-			Coupon coupon = bill.getCoupon();
-			if (coupon != null) {
-				vo.setCouponType(coupon.getType());
-				vo.setCouponMoney(new BigDecimal(coupon.getMoney()));
-				vo.setCouponTime(coupon.getTime());
-			}
-
-		}
+		
+		parkingService.setBillInfoForPark(vo, bill);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", vo);

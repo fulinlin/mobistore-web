@@ -1,5 +1,6 @@
 package com.wolai.platform.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -11,12 +12,14 @@ import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
 import com.wolai.platform.entity.Bill;
+import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.ParkingRecord.ParkStatus;
 import com.wolai.platform.entity.TempParkingRecord;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.util.BeanUtilEx;
 import com.wolai.platform.util.TimeUtils;
+import com.wolai.platform.vo.ParkingVo;
 
 @Service
 public class ParkingServiceImpl extends CommonServiceImpl implements ParkingService {
@@ -129,6 +132,22 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 		}
 		getDao().updateAll(parkingRecords);
 		
+	}
+
+	@Override
+	public void setBillInfoForPark(ParkingVo vo, Bill bill) {
+		if (bill != null) {
+			vo.setPaytype(bill.getPaytype());
+			vo.setMoney(bill.getTotalAmount());
+			vo.setPaidMoney(bill.getPayAmount());
+			
+			Coupon coupon = bill.getCoupon();
+			if (coupon != null) {
+				vo.setCouponType(coupon.getType());
+				vo.setCouponMoney(new BigDecimal(coupon.getMoney()));
+				vo.setCouponTime(coupon.getTime());
+			}
+		}
 	}
 	
 }
