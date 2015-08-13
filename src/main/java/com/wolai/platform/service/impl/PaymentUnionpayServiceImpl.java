@@ -729,7 +729,8 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			bill.setTradeStatus(respCode);
 			if ("00".equals(respCode)) {
 				bill.setPayStatus(Bill.PayStatus.SUCCESSED);
-				bill.setTradeAmount(new BigDecimal(settleAmt));
+				bill.setTradeAmount(new BigDecimal(settleAmt).divide(new BigDecimal(100)));
+				bill.setTradeSuccessTime(new Date());
 			} else {
 				bill.setPayStatus(Bill.PayStatus.FEATURE);
 			}
