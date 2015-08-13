@@ -6,16 +6,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
+import com.wolai.platform.entity.SysAPIKey;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.service.TestService;
 import com.wolai.platform.util.IdGen;
@@ -24,7 +29,12 @@ import com.wolai.platform.util.WebClientUtil;
 
 @Service
 public class TestServiceImpl extends CommonServiceImpl implements TestService {
-	public static String REMOTE_URL = "http://10.0.1.109/wolai/wolai/rt/";
+	
+	public static final String THIRD_PART_SERVER_TEST = "http://10.0.1.109:80/";
+	public static final String PARKINGLOT_ID = "5F12DD31-8B34-8B9F-E50B-D990615132A9";
+	
+	@Autowired
+	com.wolai.platform.service.ApiKeyService apiKeyService;
 	
 	private SysUser loginPers(String phone, String password, boolean updateToken) {
 		String newToken = null;
@@ -118,12 +128,13 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 	}
 	
 	@Override
-	public String bound(String url, String token) {
+	public String bound(String url, String token, HttpServletRequest request) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("url", url);
 		map.put("token", token);
 		
-		String ret = WebClientUtil.post(REMOTE_URL + "simuseturltoken", JSON.toJSONString(map));
+		setRemoteUrl(request);
+		String ret = WebClientUtil.post(Constant.THIRD_PART_SERVER + "simuseturltoken", JSON.toJSONString(map));
 		return ret;
 	}
 	
@@ -135,7 +146,7 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		map.put("exNo", IdGen.uuid());
 		map.put("entranceNo", "11");
 		
-		String ret = WebClientUtil.post(REMOTE_URL + "simucarenter", JSON.toJSONString(map));
+		String ret = WebClientUtil.post(Constant.THIRD_PART_SERVER + "simucarenter", JSON.toJSONString(map));
 		return ret;
 	}
 	
@@ -159,7 +170,17 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		map.put("entranceNo", "11");
 		map.put("enterTime", String.valueOf(intime.getTime()));
 		
-		String ret = WebClientUtil.post(REMOTE_URL + "simucarleave", JSON.toJSONString(map));
+		String ret = WebClientUtil.post(Constant.THIRD_PART_SERVER + "simucarleave", JSON.toJSONString(map));
 		return ret;
+	}
+	
+	private void setRemoteUrl(HttpServletRequest request) {
+		SysAPIKey key = apiKeyService.getKeyByParinglotId(PARKINGLOT_ID);
+		String url = key.getUrl()+":"+key.getPort()+key.getRootPath();
+		String myurl = request.getRequestURL().toString();
+		if (myurl.indexOf("//10.0") > -1) {
+			url = THIRD_PART_SERVER_TEST;
+		}
+		Constant.THIRD_PART_SERVER = url;
 	}
 }

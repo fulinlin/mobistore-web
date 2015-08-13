@@ -111,7 +111,6 @@
 	            dataType: "json",
 	            success: function(json){
 					console.log(json);
-					console.log("成功初始化新利泊端安全凭证");
 	           }
 	        });
 			return false;

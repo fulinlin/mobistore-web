@@ -92,7 +92,7 @@ public class TestingController extends BaseController{
 			ret.put("msg", "parameters error");
 			return ret;
 		}
-		String res = testService.bound(url, token);
+		String res = testService.bound(url, token, request);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("msg", res);

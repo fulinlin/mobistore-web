@@ -3,6 +3,8 @@ package com.wolai.platform.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.hibernate.criterion.DetachedCriteria;
 
 import com.wolai.platform.bean.Page;
@@ -24,5 +26,5 @@ public interface TestService extends CommonService {
 
 	String exit(String carNo);
 
-	String bound(String url, String token);
+	String bound(String url, String token, HttpServletRequest request);
 }

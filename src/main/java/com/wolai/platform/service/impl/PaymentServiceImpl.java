@@ -3,6 +3,8 @@ package com.wolai.platform.service.impl;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.HttpServerConstants;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.Bill.PayStatus;
@@ -135,7 +138,11 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	}
 	
 	private PayQueryResponseVo getPayAmountFromThirdPartServer (ParkingRecord parking, Bill bill, Coupon coupon) {
-		SysAPIKey key = apiKeyService.getKeyByParinglotId(parking.getParkingLotId());
+		if (Constant.THIRD_PART_SERVER == null) {
+			SysAPIKey key = apiKeyService.getKeyByParinglotId(parking.getParkingLotId());
+			Constant.THIRD_PART_SERVER = key.getUrl()+":"+key.getPort()+key.getRootPath();
+		}
+		
 		PayQueryVo vo = new PayQueryVo();
 		vo.setCarNo(bill.getCarNo());
 		if (coupon != null && CouponType.TIME.equals(coupon.getType())) {
@@ -152,7 +159,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		try{
 			log.info("===请求新利泊计费服务===");
 			log.info(vo.toString());
-			String result = WebClientUtil.post(key.getUrl()+":"+key.getPort()+key.getRootPath()+HttpServerConstants.POST_PAY_QUERY, JSON.toJSONString(vo));
+			String result = WebClientUtil.post(Constant.THIRD_PART_SERVER + HttpServerConstants.POST_PAY_QUERY, JSON.toJSONString(vo));
 			response = Encodes.getRequestParameter(PayQueryResponseVo.class, result);
 			log.info(response.toString());
 		} catch(Exception e){
