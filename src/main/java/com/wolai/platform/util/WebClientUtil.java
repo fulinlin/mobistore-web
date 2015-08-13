@@ -13,6 +13,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wolai.platform.constant.HttpServerConstants;
 
 /**
@@ -46,10 +47,15 @@ public class WebClientUtil {
 	    		HttpEntity result = response.getEntity();
 	    		resultJson = EntityUtils.toString(result, HttpServerConstants.Encoding);
 	        } catch (Exception e) {
-//	        	if(logger.isDebugEnabled()){
-	        		logger.error("url = " + url);
-	        		logger.error(Exceptions.getStackTraceAsString(e));
-//	        	}
+	        		if(logger.isErrorEnabled()){
+		        		logger.error(Exceptions.getStackTraceAsString(e));
+		        	}
+		        	JSONObject jsonobject = new JSONObject();
+		        	jsonobject.put("code", -1);
+		        	jsonobject.put("url",url);
+		        	jsonobject.put("data", JSONObject.parse(json));
+		        	jsonobject.put("msg", e.getMessage());
+		        	resultJson = jsonobject.toJSONString();
 	        } finally {
 	        	// 关闭连接,释放资源
 	        	if (response != null){
