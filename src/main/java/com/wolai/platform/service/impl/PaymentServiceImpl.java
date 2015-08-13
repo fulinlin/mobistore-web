@@ -121,11 +121,13 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	}
 
 	@Override
-	public void successPers(Bill bill, String trade_no, String trade_status, Bill.PayType payType) {
+	public void alipayCallbackPers(Bill bill, String trade_no, String trade_status, String alipayTotal, Bill.PayType payType) {
 		bill.setPaytype(payType);
 		bill.setTradeStatus(trade_status);
+		bill.setTradeAmount(new BigDecimal(alipayTotal));
 		bill.setPayStatus(PayStatus.SUCCESSED);
 		bill.setTradeSuccessTime(new Date());
+		
 		saveOrUpdate(bill);
 		
 		ParkingRecord park = (ParkingRecord) billService.get(ParkingRecord.class, bill.getParkingRecordId());

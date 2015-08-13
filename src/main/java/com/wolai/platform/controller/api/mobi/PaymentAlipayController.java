@@ -56,8 +56,6 @@ public class PaymentAlipayController extends BaseController {
 	public Map<String,Object> prepare(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
-		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
-		
 		String parkingId = json.get("parkingId");
 		String couponId = json.get("couponId");
 		String clientType = json.get("clientType");
@@ -103,9 +101,10 @@ public class PaymentAlipayController extends BaseController {
 		String[] wolaiTradeNo = params.get("out_trade_no"); // 订单交易号
 		String[] alipayTradeNo = params.get("trade_no"); // 支付宝交易号
 		String[] alipayTradeStatus = params.get("trade_status"); // 支付宝交易状态
+		String[] alipayTotal = params.get("total_fee"); // 支付宝交易金额
 		
-		if (wolaiTradeNo ==null || alipayTradeNo ==null || alipayTradeStatus ==null || 
-				wolaiTradeNo.length == 0 || alipayTradeNo.length == 0 || alipayTradeStatus.length == 0) {
+		if (wolaiTradeNo ==null || alipayTradeNo ==null || alipayTradeStatus ==null || alipayTotal == null ||
+				wolaiTradeNo.length == 0 || alipayTradeNo.length == 0 || alipayTradeStatus.length == 0 || alipayTotal.length == 0) {
 			log.info("支付宝异步接口参数错误");
 			return "error";
 		}
@@ -127,7 +126,7 @@ public class PaymentAlipayController extends BaseController {
 			return "error";
 		}
 		
-		paymentService.successPers(bill, alipayTradeNo[0], alipayTradeStatus[0], Bill.PayType.ALIPAY);
+		paymentService.alipayCallbackPers(bill, alipayTradeNo[0], alipayTradeStatus[0], alipayTotal[0], Bill.PayType.ALIPAY);
 		log.info("支付宝交易返回：" + alipayTradeNo[0] + "-" + alipayTradeStatus[0]);
 		
 		return "success";

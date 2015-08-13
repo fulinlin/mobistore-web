@@ -151,6 +151,11 @@ public class Bill extends IdEntity {
 	private BigDecimal payAmount;
 	
 	/**
+	 * 支付成功返回的金额
+	 */
+	private BigDecimal tradeAmount;
+	
+	/**
 	 * 付款方式：alipay(支付宝),unionpay(银联),weixin(微信),remaint(余额)
 	 */
 	@Enumerated(EnumType.STRING)
@@ -368,6 +373,14 @@ public class Bill extends IdEntity {
 
 	public void setPayAmount(BigDecimal payAmount) {
 		this.payAmount = payAmount;
+	}
+
+	public BigDecimal getTradeAmount() {
+		return tradeAmount;
+	}
+
+	public void setTradeAmount(BigDecimal tradeAmount) {
+		this.tradeAmount = tradeAmount;
 	}
 	
 }

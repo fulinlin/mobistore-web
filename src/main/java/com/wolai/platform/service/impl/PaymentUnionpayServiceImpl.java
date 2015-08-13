@@ -722,12 +722,14 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		String respCode = resp.get("respCode");
 		String orderId = resp.get("orderId");
 		String queryId = resp.get("queryId");
-		String settle = resp.get("settle");
+		String settleAmt = resp.get("settleAmt");
 		
 		Bill bill = (Bill) get(Bill.class, orderId.trim());
 		if (bill != null) {
+			bill.setTradeStatus(respCode);
 			if ("00".equals(respCode)) {
 				bill.setPayStatus(Bill.PayStatus.SUCCESSED);
+				bill.setTradeAmount(new BigDecimal(settleAmt));
 			} else {
 				bill.setPayStatus(Bill.PayStatus.FEATURE);
 			}
