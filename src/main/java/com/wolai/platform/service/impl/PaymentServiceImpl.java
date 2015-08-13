@@ -45,16 +45,16 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	CouponService couponService;
 	
 	@Override
-	public Bill createBillIfNeededPersAndUpdateCouponPers(ParkingRecord parking, String couponId, boolean isPostPay) {
-		return this.createBillIfNeededPers(parking, couponId, isPostPay, true);
+	public Bill createBillIfNeededPersAndUpdateCouponPers(ParkingRecord parking, String couponId, boolean isPostPay, PayType payType) {
+		return this.createBillIfNeededPers(parking, couponId, isPostPay, true, payType);
 	}
 	
 	@Override
 	public Bill createBillIfNeededWithoutUpdateCouponPers(ParkingRecord parking, boolean isPostPay) {
-		return this.createBillIfNeededPers(parking, null, isPostPay, false);
+		return this.createBillIfNeededPers(parking, null, isPostPay, false, null);
 	}
 	
-	private Bill createBillIfNeededPers(ParkingRecord parking, String newCouponId, boolean isPostPay, boolean needUpdateCoupon) {
+	private Bill createBillIfNeededPers(ParkingRecord parking, String newCouponId, boolean isPostPay, boolean needUpdateCoupon, PayType payType) {
 		if (StringUtils.isEmpty(newCouponId)) {
 			newCouponId = null;
 		}
@@ -103,6 +103,9 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		
 		bill.setTotalAmount(totalAmount);
 		bill.setPayAmount(payAmount);
+		if (payType != null) {
+			bill.setPaytype(payType);
+		}
 		saveOrUpdate(bill);
 		
 		return bill;

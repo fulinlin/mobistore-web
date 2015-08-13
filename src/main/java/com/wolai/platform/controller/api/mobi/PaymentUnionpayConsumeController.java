@@ -21,6 +21,7 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Bill;
+import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.BillService;
@@ -82,7 +83,7 @@ public class PaymentUnionpayConsumeController extends BaseController {
 		}
 		
 		ParkingRecord park = (ParkingRecord) obj;
-		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, false);
+		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, false, PayType.UNIONPAY);
 		String wolaiTradeNo = bill.getId();
 		BigDecimal totalAmount = bill.getTotalAmount();
 		BigDecimal payAmount = bill.getPayAmount();

@@ -23,6 +23,7 @@ import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.ParkingLotService;
@@ -81,7 +82,7 @@ public class PaymentController extends BaseController {
 		}
 		
 		ParkingRecord park = (ParkingRecord) obj;
-		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, false);
+		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, false, null);
 		PayVo payVo = new PayVo();
 
 		payVo.setTotalAmount(bill.getTotalAmount());

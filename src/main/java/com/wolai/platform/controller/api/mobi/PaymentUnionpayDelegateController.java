@@ -27,6 +27,7 @@ import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.UnionpayCardBound;
+import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.service.AssetService;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.ParkingLotService;
@@ -177,7 +178,7 @@ public class PaymentUnionpayDelegateController extends BaseController {
 		}
 		
 		ParkingRecord park = (ParkingRecord) obj;
-		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, true);
+		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, true, PayType.UNIONPAY);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;

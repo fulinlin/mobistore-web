@@ -22,6 +22,7 @@ import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
+import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.ParkingService;
@@ -75,7 +76,7 @@ public class PaymentAlipayController extends BaseController {
 		}
 		
 		ParkingRecord park = (ParkingRecord) obj;
-		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, false);
+		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, false, PayType.ALIPAY);
 		AlipayVo alipayVo = new AlipayVo();
 		alipayVo.setWolaiTradeNo(bill.getId());
 		// TODO: 测试数据
