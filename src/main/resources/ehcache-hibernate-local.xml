@@ -21,6 +21,9 @@
     <cache name="com.wolai.platform.entity.SysRLoginAccountRole" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
     
      <cache name="com.wolai.platform.entity.ParkingLot" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
-        
+     
+     <cache name="com.wolai.platform.entity.ParkingRecord" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+     
+     <cache name="com.wolai.platform.entity.Bill" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
     
 </ehcache>

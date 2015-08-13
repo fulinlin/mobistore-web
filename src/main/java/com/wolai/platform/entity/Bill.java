@@ -12,6 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 /**
  * 账单实体
  * 每笔消费记录
@@ -20,6 +25,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="wo_bill")
+@DynamicInsert @DynamicUpdate
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Bill extends IdEntity {
 
 	/**

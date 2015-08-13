@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +31,7 @@ import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.service.PaymentUnionpayService;
 import com.wolai.platform.util.Encodes;
+import com.wolai.platform.util.Exceptions;
 import com.wolai.platform.util.StringUtil;
 import com.wolai.platform.vo.EntranceNoticeVo;
 import com.wolai.platform.vo.PaycheckVo;
@@ -56,6 +59,7 @@ public class ApiController extends BaseController {
 	private static Integer NOT_WOLAI_USER=2;
 	private static Integer IS_WOLAI_USER=1;
 	
+	private static Log log = LogFactory.getLog(ApiController.class);
 	
 	/**
 	 * 进场信息通知接口
@@ -197,7 +201,9 @@ public class ApiController extends BaseController {
 				try{
 					paymentUnionpayService.postPayBillSattlement(bill.getId());
 				}catch(Exception e){
-					;
+					if(log.isWarnEnabled()){
+						log.warn(Exceptions.getStackTraceAsString(e));
+					}
 				}
 			}else{
 				// 预付费账单检查是否已缴费成功

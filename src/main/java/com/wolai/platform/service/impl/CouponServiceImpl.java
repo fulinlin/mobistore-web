@@ -173,9 +173,16 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 		dc.add(Restrictions.eq("status", Coupon.CouponStatus.INIT));
 		dc.add(Restrictions.le("startDate", now));
 		dc.add(Restrictions.ge("endDate", now));
-		Integer maxOverMoney = SystemConfig.getMaxOverMoney();
+		String maxOverMoney_String = SystemConfig.getMaxOverMoney();
+		Integer maxOverMoney=0;
+		try{
+			maxOverMoney = new Integer(maxOverMoney_String);
+		}catch(Exception e){
+			;
+		}
 		dc.add(Restrictions.le("money",(money.intValue()+maxOverMoney)));
 		dc.addOrder(Order.desc("money"));
+		dc.addOrder(Order.asc("endDate"));
 		return (Coupon) getDao().FindFirstByCriteria(dc);
 	}
 }

@@ -27,6 +27,7 @@ import com.unionpay.acp.sdk.SecureUtil;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.Bill.PayStatus;
+import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.Coupon.CouponStatus;
 import com.wolai.platform.entity.UnionpayCardBound;
@@ -621,7 +622,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 
 	@Override
 	public boolean postPayBillSattlement(String billId) {
-		Bill bill = (Bill) get(Bill.class, billId);
+		Bill bill = (Bill) getDao().get(Bill.class, billId);
 		String userId= bill.getParkingRecord().getUserId();
 		if(bill.getCouponId()==null){
 			Coupon coupon  = couponService.getSuitableMoneyCoupon(bill.getTotalAmount(),userId);
@@ -633,13 +634,15 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 					bill.setPayAmount(BigDecimal.ZERO);
 					bill.setPayStatus(PayStatus.SUCCESSED);
 				}
-				getDao().saveOrUpdate(bill);
+				
 			}
 		}
+		bill.setPaytype(PayType.UNIONPAY);
+		bill.setPayStatus(PayStatus.INIT);
+		getDao().saveOrUpdate(bill);
 		
 		if(!PayStatus.SUCCESSED.equals(bill.getPayStatus())){
 			UnionpayCardBound bound = boundQueryByUser(userId);
-			
 			
 			Map<String,String> result=  postPayConsume(bill.getId(), bound.getAccNo(), bill.getPayAmount());
 			if("00".equals(result.get("respCode"))){
