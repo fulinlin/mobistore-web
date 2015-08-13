@@ -182,11 +182,15 @@ public class ApiController extends BaseController {
 			if(!(bill !=null && PayStatus.SUCCESSED.equals(bill.getPayStatus()))){
 				boolean isPostPay =false;
 				
-				if(PayType.CONFIRM_POSTPAID.equals(record.getUser().getPayType()) && bill !=null && bill.getIsPostPay()){
-					isPostPay=true;
-				}else if(PayType.POSTPAID.equals(record.getUser().getPayType())){
-					isPostPay=true;
+				// 用户为后付费用户的情况
+				isPostPay = PayType.POSTPAID.equals(record.getUser().getPayType());
+				
+				if(!isPostPay){
+					// 确认后付费的用户：只有确认后才进行后付费扣款
+					// 当前状态为预付费的用户：账单为后付费账单
+					isPostPay= bill !=null && bill.getIsPostPay();
 				}
+				
 				bill = paymentService.createBillIfNeededWithoutUpdateCouponPers(record,isPostPay);
 			}
 			
