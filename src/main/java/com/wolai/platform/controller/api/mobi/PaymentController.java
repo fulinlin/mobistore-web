@@ -86,7 +86,10 @@ public class PaymentController extends BaseController {
 
 		payVo.setTotalAmount(bill.getTotalAmount());
 		payVo.setPayAmount(bill.getPayAmount());
+		
 		payVo.setIsPaid(Bill.PayStatus.SUCCESSED.equals(bill.getPayStatus()));
+		payVo.setCanPay(Bill.PayStatus.INIT.equals(bill.getPayStatus()) || Bill.PayStatus.FEATURE.equals(bill.getPayStatus()));
+		
 		if (SysUser.PayType.CONFIRM_POSTPAID.toString().equals(user.getPayType().toString()) ) {
 			payVo.setConfirmPostPay(true);
 		} else {
