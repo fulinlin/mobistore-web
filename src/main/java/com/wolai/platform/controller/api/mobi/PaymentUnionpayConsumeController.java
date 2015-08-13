@@ -99,7 +99,12 @@ public class PaymentUnionpayConsumeController extends BaseController {
 		Map<String, String> resMap = paymentUnionpayService.prepareTrans(wolaiTradeNo, payAmount.multiply(new BigDecimal(100)).intValue());
 		payVo.setPayTradeNo(resMap.get("tn"));
 		
-		ret.put("code", RespCode.SUCCESS.Code());
+		if ("00".equals(resMap.get("respCode"))) {
+			ret.put("code", RespCode.SUCCESS.Code());
+		} else {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "银联支付服务不可用");
+		}
 		ret.put("data", payVo);
 		return ret;
 	}

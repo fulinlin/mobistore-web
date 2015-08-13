@@ -275,7 +275,6 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			createBoundRecordPers(userId, accNo, orderId);
 		}
 
-		log.info(resMap.toString());
 		return resMap;
 	}
 	
@@ -510,7 +509,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		// contentData.put("cardTransData", cardTransData);//C
 
 		Map<String, String> submitFromData = signData(contentData);
-		log.info(submitFromData.toString());
+
 		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl, "后付费付款");
 		log.info(resMap.toString());
 		return resMap;
@@ -568,7 +567,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 				log.info("验证签名失败");
 			}
 		}
-		log.info("返回数据====" + resultString);
+		log.info("返回数据====" + resData);
 		return resData;
 	}
 

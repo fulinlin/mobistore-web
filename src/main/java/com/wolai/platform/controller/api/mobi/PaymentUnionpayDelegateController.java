@@ -127,8 +127,13 @@ public class PaymentUnionpayDelegateController extends BaseController {
 		
 		String wolaiTradeNo = IdGen.uuid();
 		Map<String, String> resMap = paymentUnionpayService.boundPers(userId, wolaiTradeNo, accNo, certifId, cvn, expired);
+		if ("00".equals(resMap.get("respCode"))) {
+			ret.put("code", RespCode.SUCCESS.Code());
+		} else {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "银联卡绑定失败");
+		}
 		
-		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", resMap);
 		return ret;
 	}
@@ -150,8 +155,12 @@ public class PaymentUnionpayDelegateController extends BaseController {
 		String userId = user.getId();
 		
 		Map<String, String> resMap = paymentUnionpayService.unboundPers(userId, orderId);
-		
-		ret.put("code", RespCode.SUCCESS.Code());
+		if ("00".equals(resMap.get("respCode"))) {
+			ret.put("code", RespCode.SUCCESS.Code());
+		} else {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "银联卡解绑失败");
+		}
 		ret.put("data", resMap);
 		return ret;
 	}
