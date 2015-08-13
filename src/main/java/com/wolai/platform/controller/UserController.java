@@ -103,6 +103,12 @@ public class UserController extends BaseController {
 		return "";
 	}
 	
+	@RequestMapping("info")
+	public String info(Model model,HttpServletRequest request) {
+		model.addAttribute("logininfo",getLoginInfoSession(request));
+		return "user/userInfo";
+	}
+	
 	@RequestMapping("disable")
 	public String disable(SysUser user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
 		if(user!=null){

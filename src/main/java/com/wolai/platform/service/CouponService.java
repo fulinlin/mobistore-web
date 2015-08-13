@@ -1,5 +1,6 @@
 package com.wolai.platform.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -24,4 +25,5 @@ public interface CouponService extends CommonService {
 
     String deductTime(Enterprise enterprise, List<Coupon> list ,long Time);
 
+    Coupon getSuitableMoneyCoupon(BigDecimal money,String userId);
 }

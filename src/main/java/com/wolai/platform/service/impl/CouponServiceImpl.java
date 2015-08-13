@@ -1,15 +1,18 @@
 package com.wolai.platform.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
+import com.wolai.platform.config.SystemConfig;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.Coupon.CouponType;
@@ -159,5 +162,20 @@ public class CouponServiceImpl extends CommonServiceImpl implements CouponServic
 	    saveOrUpdate(enterprise);
 	    saveOrUpdateAll(list);
 	    return "添加优惠券成功!扣除 " + total + " 分钟" ;
+	}
+
+	@Override
+	public Coupon getSuitableMoneyCoupon(BigDecimal money,String userId) {
+		Date now = new Date();
+		DetachedCriteria dc = DetachedCriteria.forClass(Coupon.class);
+		dc.add(Restrictions.eq("ownerId", userId));
+		dc.add(Restrictions.eq("type", CouponType.MONEY));
+		dc.add(Restrictions.eq("status", Coupon.CouponStatus.INIT));
+		dc.add(Restrictions.le("startDate", now));
+		dc.add(Restrictions.ge("endDate", now));
+		Integer maxOverMoney = SystemConfig.getMaxOverMoney();
+		dc.add(Restrictions.le("money",(money.intValue()+maxOverMoney)));
+		dc.addOrder(Order.desc("money"));
+		return (Coupon) getDao().FindFirstByCriteria(dc);
 	}
 }

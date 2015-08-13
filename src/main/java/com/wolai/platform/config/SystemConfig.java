@@ -16,5 +16,7 @@ public  class SystemConfig {
 		return CustomizedPropertyConfigurer.getAdminPath();
 	}
 	
-	
+	public static Integer getMaxOverMoney(){
+		return (Integer)CustomizedPropertyConfigurer.getContextProperty("coupon.max_over_money");
+	}
 }

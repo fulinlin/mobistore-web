@@ -23,7 +23,7 @@
 				<!-- <label class="control-label"></label> -->
 				<div class="controls" >
 					<input id="token" value="b1d4163f9829453d9aeed855b02b4cbc" />
-					<input id="url" value="http://10.0.1.107:8080/wolai-web" />
+					<input id="url" value="http://10.0.1.107:8080/wolai" />
 					<button id="boundToken" type="submit" class="btn">绑定</button>
 				</div>
 			</div>
@@ -104,7 +104,7 @@
 			};
 			$.ajax({
 	            type: "POST",
-	            url: "/wolai-web/test/bound",
+	            url: "/wolai/test/bound",
 	            data: JSON.stringify(data1),
 				contentType: "application/json",
 	            dataType: "json",
@@ -128,7 +128,7 @@
 			};
 			$.ajax({
 	             type: "POST",
-	             url: "/wolai-web/test/login",
+	             url: "/wolai/test/login",
 	             data: JSON.stringify(data2),
 				 contentType: "application/json",
 	             dataType: "json",
@@ -155,7 +155,7 @@
 			
 			$.ajax({
 	             type: "POST",
-	             url: "/wolai-web/test/enter",
+	             url: "/wolai/test/enter",
 	             data: JSON.stringify(data3),
 				 contentType: "application/json",
 	             dataType: "json",
@@ -175,7 +175,7 @@
 			
 			$.ajax({
 	             type: "POST",
-	             url: "/wolai-web/test/enter",
+	             url: "/wolai/test/enter",
 	             data: JSON.stringify(data3),
 				 contentType: "application/json",
 	             dataType: "json",
@@ -194,7 +194,7 @@
 			
 			$.ajax({
 	             type: "POST",
-	             url: "/wolai-web/test/exit",
+	             url: "/wolai/test/exit",
 	             data: JSON.stringify(data3),
 				 contentType: "application/json",
 	             dataType: "json",

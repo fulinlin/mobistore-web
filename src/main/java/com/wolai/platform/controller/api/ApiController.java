@@ -27,6 +27,7 @@ import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.LicenseService;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.service.PaymentService;
+import com.wolai.platform.service.PaymentUnionpayService;
 import com.wolai.platform.util.Encodes;
 import com.wolai.platform.util.StringUtil;
 import com.wolai.platform.vo.EntranceNoticeVo;
@@ -48,6 +49,9 @@ public class ApiController extends BaseController {
 
 	@Autowired
 	private PaymentService paymentService;
+	
+	@Autowired
+	private PaymentUnionpayService paymentUnionpayService;
 	
 	private static Integer NOT_WOLAI_USER=2;
 	private static Integer IS_WOLAI_USER=1;
@@ -98,8 +102,9 @@ public class ApiController extends BaseController {
 		}else{
 			result.put("code",IS_WOLAI_USER);
 		}
-		
-		record.setUserId(license.getUserId());
+		if(license!=null){
+			record.setUserId(license.getUserId());
+		}
 		record.setCarNo(vo.getCarNo().trim());
 		record.setCarPicPath(vo.getCarPicUrl().trim());
 		record.setEntranceNo(vo.getEntranceNo().trim());
@@ -110,6 +115,7 @@ public class ApiController extends BaseController {
 		ca.setTimeInMillis(vo.getEnterTime());
 		record.setDriveInTime(ca.getTime());
 		parkingService.savePaingRecord(record);
+
 		result.put("msg", "success");
 		return result;
 	}
@@ -187,6 +193,12 @@ public class ApiController extends BaseController {
 			if(bill.getIsPostPay()){
 				// 后付费账单直接放行
 				responseVo.setIsPaid(true);
+				// 调用一次扣费接口
+				try{
+					paymentUnionpayService.postPayBillSattlement(bill.getId());
+				}catch(Exception e){
+					;
+				}
 			}else{
 				// 预付费账单检查是否已缴费成功
 				if(PayStatus.SUCCESSED.equals(bill.getPayStatus())){
@@ -194,7 +206,7 @@ public class ApiController extends BaseController {
 				}else{
 					// 未缴费成功的账单，更改缴费方式为现金缴费，同时释放曾经选择的优惠券
 					responseVo.setIsPaid(false);
-					bill = paymentService.releaseCashPaidCouponsPers(parkingLotId);
+					bill = paymentService.releaseCashPaidCouponsPers(bill.getId());
 				}
 			}
 			// 更新记录为离场

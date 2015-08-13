@@ -186,6 +186,27 @@ public class LoginAccountController extends BaseController{
 		return "sys/loginaccount/loginaccountList";
 	}
 	
+	@RequestMapping("${adminPath}/sys/loginaccount/modifyPwd")
+	public String modifyPwd(Model model,HttpServletRequest request) {
+		model.addAttribute("loginaccount",getLoginInfoSession(request).getLoginAccount());
+		model.addAttribute("modifyPwd",true);
+		return "sys/loginaccount/loginaccountModifyPwd";
+	}
+	@RequestMapping("${adminPath}/sys/loginaccount/modifySave")
+	public String modifySave(SysLoginAccount loginAccount,String newPassword,String oldPassword,HttpServletRequest request,Model model) {
+		if (StringUtils.isBlank(newPassword) || newPassword.length()<8) {
+			addMessage(model, "密码至少为8位非空字符");
+		}
+		
+		if (StringUtils.isBlank(oldPassword)) {
+			addMessage(model, "密码至少为8位非空字符");
+		}
+		//if(loginAccount.getPassword().)
+		
+		loginAccount.setPassword(DigestUtils.md5Hex(DigestUtils.md5Hex(newPassword)));
+		return logout(request);
+	}
+	
 	@RequestMapping("${adminPath}/sys/loginaccount/save")
 	public String save(SysLoginAccount loginAccount, String oldLoginName, String newPassword, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
 		// 如果新密码为空，则不更换密码
@@ -205,7 +226,12 @@ public class LoginAccountController extends BaseController{
 		
 		userService.saveOrUpdate(loginAccount);
 		
-		addMessage(redirectAttributes, "保存用户'" + loginAccount.getEmail()+ "'登陆账号成功");
+		String addMessage = "";
+		addMessage(redirectAttributes, "保存用户'" + loginAccount.getEmail()+ "'信息成功");
+		
+		if(loginAccount.getId().equals(getLoginInfoSession(request).getLoginAccount().getId())){
+			this.logout(request);
+		}
 		return "redirect:" + SystemConfig.getAdminPath() + "/user/?repage";
 	}
 	

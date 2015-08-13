@@ -12,12 +12,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.FetchMode;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.unionpay.acp.sdk.HttpClient;
@@ -26,18 +25,24 @@ import com.unionpay.acp.sdk.SDKConstants;
 import com.unionpay.acp.sdk.SDKUtil;
 import com.unionpay.acp.sdk.SecureUtil;
 import com.wolai.platform.constant.Constant;
-import com.wolai.platform.entity.ParkingRecord;
+import com.wolai.platform.entity.Bill;
+import com.wolai.platform.entity.Bill.PayStatus;
+import com.wolai.platform.entity.Coupon;
+import com.wolai.platform.entity.Coupon.CouponStatus;
 import com.wolai.platform.entity.UnionpayCardBound;
+import com.wolai.platform.service.CouponService;
 import com.wolai.platform.service.PaymentUnionpayService;
-import com.wolai.platform.util.FileUtils;
-import com.wolai.platform.util.TimeUtils;
 
 @Service
 public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements PaymentUnionpayService {
-	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
+	
+	private static Log log = LogFactory.getLog(PaymentUnionpayServiceImpl.class);
 	
 	public static String encoding = "UTF-8";
 	public static String version = "5.0.0";
+	
+	@Autowired
+	private CouponService couponService;
 	
 	@Override
 	public UnionpayCardBound boundQueryByCard(String accNo) {
@@ -612,6 +617,38 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			e.printStackTrace();
 		}
 		return customerInfo;
+	}
+
+	@Override
+	public boolean postPayBillSattlement(String billId) {
+		Bill bill = (Bill) get(Bill.class, billId);
+		String userId= bill.getParkingRecord().getUserId();
+		if(bill.getCouponId()==null){
+			Coupon coupon  = couponService.getSuitableMoneyCoupon(bill.getTotalAmount(),userId);
+			if(coupon!=null){
+				coupon.setStatus(CouponStatus.USED);
+				bill.setCouponId(coupon.getId());
+				bill.setPayAmount(bill.getTotalAmount().subtract(new BigDecimal(coupon.getMoney())));
+				if(bill.getPayAmount().compareTo(BigDecimal.ZERO)<0){
+					bill.setPayAmount(BigDecimal.ZERO);
+					bill.setPayStatus(PayStatus.SUCCESSED);
+				}
+				getDao().saveOrUpdate(bill);
+			}
+		}
+		
+		if(!PayStatus.SUCCESSED.equals(bill.getPayStatus())){
+			UnionpayCardBound bound = boundQueryByUser(userId);
+			
+			
+			Map<String,String> result=  postPayConsume(bill.getId(), bound.getAccNo(), bill.getPayAmount());
+			if("00".equals(result.get("respCode"))){
+				return true;
+			}
+		}else{
+			return true;
+		}
+		return false;
 	}
 
 }

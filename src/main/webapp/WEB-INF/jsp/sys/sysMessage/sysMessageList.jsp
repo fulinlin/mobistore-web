@@ -27,7 +27,7 @@
 		<div>
 			<label>标题：</label>
 				<form:input path="title" htmlEscape="false" maxlength="255" class="input-medium"/>
-			<label>日否已推送：</label>
+			<label>是否已推送：</label>
 				<form:checkbox path="published" htmlEscape="false" maxlength="1" class="input-medium"/>
 			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 		</div>
@@ -47,13 +47,13 @@
 		<c:forEach items="${page.items}" var="sysMessage">
 			<tr>
 				<td><a href="${ctx}/sysMessage/form?id=${sysMessage.id}">
-					${sysMessage.content}
+					${fns:rabbr(sysMessage.content,50)}
 				</a></td>
 				<td>
 					<fmt:formatDate value="${sysMessage.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${sysMessage.title}
+					${fns:rabbr(sysMessage.title,20)}
 				</td>
 				<td>
 					${sysMessage.published == 'true' ? '是':'否'   }

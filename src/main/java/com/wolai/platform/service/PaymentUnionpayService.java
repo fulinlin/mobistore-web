@@ -24,5 +24,6 @@ public interface PaymentUnionpayService extends CommonService {
 
 	Map<String, String> postPayConsume(String wolaiTradeNo, String accNo, BigDecimal amount);
 
+	boolean postPayBillSattlement(String billId);
 	
 }

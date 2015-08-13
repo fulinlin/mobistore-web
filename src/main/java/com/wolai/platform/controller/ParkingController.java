@@ -10,10 +10,13 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.ParkingRecord;
+import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.service.UserService;
 
@@ -26,6 +29,18 @@ public class ParkingController extends BaseController{
 	
 	@Autowired
 	ParkingService parkingService;
+	
+	@Autowired
+	private BillService billService;
+	
+	@ModelAttribute
+	public ParkingRecord get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
+			return (ParkingRecord) parkingService.get(ParkingRecord.class,id);
+		}else{
+			return 	new ParkingRecord();
+		}
+	}
 	
     @RequestMapping(value = {"list", ""})
     public String list(ParkingRecord parkingRecord, @RequestParam (required = false) String mobile ,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize, HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -58,6 +73,14 @@ public class ParkingController extends BaseController{
         model.addAttribute("page", page);
         model.addAttribute("parkingRecord", parkingRecord);
         return "sys/parkingRecord/parkingRecordList";
+    }
+    
+    @RequestMapping("view")
+    public String view(ParkingRecord parkingRecord, Model model ){
+    	model.addAttribute("parkingRecord", parkingRecord);
+    	Bill bill  = billService.getBillByParking(parkingRecord.getId());
+    	model.addAttribute("bill", bill);
+    	return "sys/parkingRecord/parkingRecordView";
     }
 	
 }

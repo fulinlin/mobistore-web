@@ -31,34 +31,51 @@ public class Bill extends IdEntity {
   		/**
   		 * alipay(支付宝)
   		 */
-  		ALIPAY("ALIPAY"),
+  		ALIPAY("ALIPAY","支付宝"),
   		
   		/**
   		 * unionpay(银联)
   		 */
-  		UNIONPAY("UNIONPAY"),
+  		UNIONPAY("UNIONPAY","银联"),
 
   		/**
   		 * CASH(现金)
   		 */
-  		CASH("CASH"),
+  		CASH("CASH","现金"),
   		
   		/**
   		 * weixin(微信)
   		 */
-  		WEIXIN("WEIXIN");
+  		WEIXIN("WEIXIN","微信支付");
   		
   		/**
   		 *remaint(余额)
   		 */
   		/*REMAINT("REMAINT"),*/
   		
-  		private PayType(String textVal){
+  		private PayType(String textVal,String textLable){
   			this.textVal=textVal;
+  			this.textLable=textLable;
   		}
   		private String textVal;
+  		private String textLable;
   		
-  		public String toString(){
+  		public String getTextVal(){
+  			return this.textVal;
+  		}
+  		
+  		public void setTextVal(String textVal){
+  			this.textVal = textVal;
+  		}
+		public String getTextLable() {
+			return textLable;
+		}
+
+		public void setTextLable(String textLable) {
+			this.textLable = textLable;
+		}
+
+		public String toString(){
   			return textVal;
   		}
   	}

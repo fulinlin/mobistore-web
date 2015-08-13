@@ -32,19 +32,34 @@ public class Coupon extends IdEntity {
         /**
          * money(抵用券)
          */
-        MONEY("MONEY"),
+        MONEY("MONEY","代金券"),
 
         /**
          * time(抵时券)
          */
-        TIME("TIME");
+        TIME("TIME","抵时券");
 
-        private CouponType(String textVal) {
-            this.textVal = textVal;
-        }
+        private CouponType(String textVal,String textLable){
+  			this.textVal=textVal;
+  			this.textLable=textLable;
+  		}
+  		private String textVal;
+  		private String textLable;
+  		
+  		public String getTextVal(){
+  			return this.textVal;
+  		}
+  		
+  		public void setTextVal(String textVal){
+  			this.textVal = textVal;
+  		}
+		public String getTextLable() {
+			return textLable;
+		}
 
-        private String textVal;
-
+		public void setTextLable(String textLable) {
+			this.textLable = textLable;
+		}
         public String toString() {
             return textVal;
         }
