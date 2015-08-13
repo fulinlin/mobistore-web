@@ -503,7 +503,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		// contentData.put("cardTransData", cardTransData);//C
 
 		Map<String, String> submitFromData = signData(contentData);
-
+		log.info(submitFromData.toString());
 		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl, "后付费付款");
 		log.info(resMap.toString());
 		return resMap;
@@ -519,8 +519,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			if (StringUtils.isNotBlank(value)) {
 				// 对value值进行去除前后空处理
 				submitFromData.put(obj.getKey(), value.trim());
-				System.out
-						.println(obj.getKey() + "-->" + String.valueOf(value));
+				log.info(obj.getKey() + "-->" + String.valueOf(value));
 			}
 		}
 		/**
