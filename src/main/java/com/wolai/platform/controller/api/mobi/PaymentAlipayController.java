@@ -97,7 +97,7 @@ public class PaymentAlipayController extends BaseController {
 	@AuthPassport(validate=false)
 	@RequestMapping(value="callback")
 	@ResponseBody
-	public String alipayCallback(HttpServletRequest request){
+	public String callback(HttpServletRequest request){
 		Map<String, String[]> params = request.getParameterMap(); 
 		
 		String[] wolaiTradeNo = params.get("out_trade_no"); // 订单交易号

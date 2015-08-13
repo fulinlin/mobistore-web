@@ -82,6 +82,10 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 	public List<License> listCarsIn(String userId) {
 		Date dt = TimeUtils.getDateBefore(new Date(), 10);
 		
+		
+		String  hql1 = "select carNoId from ParkingRecord pr where (pr.parkStatus = ? or pr.parkStatus = ?)";
+		List<License> ls1 = getListByHQL(hql1, ParkingRecord.ParkStatus.IN, ParkingRecord.ParkStatus.PARKED);
+		
 		String  hql = "from License lc where userId=? and lc.isDelete = ? and lc.isDisable = ? and lc.id "
 				+ " in (" +
 					"select carNoId from ParkingRecord pr where (pr.parkStatus = ? or pr.parkStatus = ?)"

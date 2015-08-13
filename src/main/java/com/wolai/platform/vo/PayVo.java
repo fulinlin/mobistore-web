@@ -13,6 +13,7 @@ public class PayVo {
 	private BigDecimal totalAmount;
 	private BigDecimal payAmount;
 	private Boolean confirmPostPay;
+	private Boolean isPaid;
 
 	public BigDecimal getTotalAmount() {
 		return totalAmount;
@@ -31,6 +32,12 @@ public class PayVo {
 	}
 	public void setConfirmPostPay(Boolean confirmPostPay) {
 		this.confirmPostPay = confirmPostPay;
+	}
+	public Boolean getIsPaid() {
+		return isPaid;
+	}
+	public void setIsPaid(Boolean isPaid) {
+		this.isPaid = isPaid;
 	}
 
 }

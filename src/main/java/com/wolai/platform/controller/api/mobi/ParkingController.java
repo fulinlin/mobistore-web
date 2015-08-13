@@ -22,6 +22,7 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Bill;
+import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.ParkingLot;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
@@ -164,9 +165,13 @@ public class ParkingController extends BaseController{
 //		}
 		if (bill != null) {
 			vo.setPaytype(bill.getPaytype());
-			vo.setCouponType(bill.getCoupon().getType());
-			vo.setCouponMoney(new BigDecimal(bill.getCoupon().getMoney()));
-			vo.setCouponTime(bill.getCoupon().getTime());
+			Coupon coupon = bill.getCoupon();
+			if (coupon != null) {
+				vo.setCouponType(coupon.getType());
+				vo.setCouponMoney(new BigDecimal(coupon.getMoney()));
+				vo.setCouponTime(coupon.getTime());
+			}
+
 		}
 		
 		ret.put("code", RespCode.SUCCESS.Code());
