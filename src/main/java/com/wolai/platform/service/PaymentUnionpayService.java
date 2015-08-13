@@ -3,6 +3,8 @@ package com.wolai.platform.service;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.wolai.platform.entity.UnionpayCardBound;
 
 
@@ -23,5 +25,8 @@ public interface PaymentUnionpayService extends CommonService {
 	Map<String, String> postPayConsume(String wolaiTradeNo, String accNo, BigDecimal amount);
 
 	boolean postPayBillSattlement(String billId,String userId);
+
+	Map<String, String> getUnionpayResp(HttpServletRequest request);
+	void unionpayCallbackPers(Map<String, String> resp);
 	
 }

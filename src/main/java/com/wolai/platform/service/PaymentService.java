@@ -15,6 +15,5 @@ public interface PaymentService extends CommonService {
 	Bill createBillIfNeededPersAndUpdateCouponPers(ParkingRecord parking, String couponId, boolean isPostPay, PayType payType);
 	Bill createBillIfNeededWithoutUpdateCouponPers(ParkingRecord parking, boolean isPostPay);
 	Bill releaseCashPaidCouponsPers(String billId);
-	Map<String, String> getAllRequestParam(HttpServletRequest request);
-	Map<String, String> getUnionpayResp(HttpServletRequest request);
+
 }

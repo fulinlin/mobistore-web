@@ -5,11 +5,14 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -20,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.unionpay.acp.sdk.HttpClient;
+import com.unionpay.acp.sdk.LogUtil;
 import com.unionpay.acp.sdk.SDKConfig;
 import com.unionpay.acp.sdk.SDKConstants;
 import com.unionpay.acp.sdk.SDKUtil;
@@ -511,7 +515,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		Map<String, String> submitFromData = signData(contentData);
 
 		Map<String, String> resMap = submitUrl(submitFromData,requestBackUrl, "后付费付款");
-		log.info(resMap.toString());
+		
 		return resMap;
 
 	}
@@ -652,8 +656,14 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			UnionpayCardBound bound = boundQueryByUser(userId);
 			Map<String,String> result=  postPayConsume(bill.getId(), bound.getAccNo(), bill.getPayAmount());
 			
-			if("00".equals(result.get("respCode"))){
+			String respCode = result.get("respCode");
+			String orderId = result.get("orderId");
+			String queryId = result.get("queryId");
+			String settle = result.get("settle");
+			
+			if("00".equals(respCode)){
 				sendStatus=  true;
+
 			}else{
 				// 发送失败则账单支付失败
 				bill.setPayStatus(PayStatus.FEATURE);
@@ -665,6 +675,84 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		getDao().saveOrUpdate(bill);
 		
 		return sendStatus;
+	}
+	
+	@Override
+	public Map<String, String> getUnionpayResp(HttpServletRequest request) {
+		try {
+			request.setCharacterEncoding("ISO-8859-1");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		String encoding = "UTF-8";
+		// 获取请求参数中所有的信息
+		Map<String, String> reqParam = getAllRequestParam(request);
+		// 打印请求报文
+		LogUtil.printRequestLog(reqParam);
+
+		Map<String, String> valideData = null;
+		if (null != reqParam && !reqParam.isEmpty()) {
+			Iterator<Entry<String, String>> it = reqParam.entrySet().iterator();
+			valideData = new HashMap<String, String>(reqParam.size());
+			while (it.hasNext()) {
+				Entry<String, String> e = it.next();
+				String key = (String) e.getKey();
+				String value = (String) e.getValue();
+				try {
+					value = new String(value.getBytes("ISO-8859-1"), encoding);
+				} catch (UnsupportedEncodingException e1) {
+					e1.printStackTrace();
+				}
+				valideData.put(key, value);
+			}
+		}
+
+		// 验证签名
+		if (!SDKUtil.validate(valideData, encoding)) {
+			LogUtil.writeLog("验证签名结果[失败].");
+		} else {
+			System.out.println(valideData.get("orderId")); //其他字段也可用类似方式获取
+			LogUtil.writeLog("验证签名结果[成功].");
+		}
+		return valideData;
+	}
+
+	@Override
+	public void unionpayCallbackPers(Map<String, String> resp) {
+		String respCode = resp.get("respCode");
+		String orderId = resp.get("orderId");
+		String queryId = resp.get("queryId");
+		String settle = resp.get("settle");
+		
+		Bill bill = (Bill) get(Bill.class, orderId.trim());
+		if (bill != null) {
+			if ("00".equals(respCode)) {
+				bill.setPayStatus(Bill.PayStatus.SUCCESSED);
+			} else {
+				bill.setPayStatus(Bill.PayStatus.FEATURE);
+			}
+		} else {
+			bill.setPayStatus(Bill.PayStatus.FEATURE);
+			log.error("根据银联回调的orderId" + orderId + "，找不到相应的Bill");
+		}
+	}
+
+	private Map<String, String> getAllRequestParam(HttpServletRequest request) {
+			Map<String, String> res = new HashMap<String, String>();
+			Enumeration<?> temp = request.getParameterNames();
+			if (null != temp) {
+				while (temp.hasMoreElements()) {
+					String en = (String) temp.nextElement();
+					String value = request.getParameter(en);
+					res.put(en, value);
+					//在报文上送时，如果字段的值为空，则不上送<下面的处理为在获取所有参数数据时，判断若值为空，则删除这个字段>
+					//System.out.println("ServletUtil类247行  temp数据的键=="+en+"     值==="+value);
+					if (null == res.get(en) || "".equals(res.get(en))) {
+						res.remove(en);
+					}
+				}
+			}
+			return res;
 	}
 
 }
