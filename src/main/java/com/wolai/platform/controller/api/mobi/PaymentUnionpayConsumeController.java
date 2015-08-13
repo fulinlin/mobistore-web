@@ -40,7 +40,7 @@ import com.wolai.platform.vo.UnionpayVo;
 @Controller
 @RequestMapping(Constant.API_MOBI + "payment/unionpay/consume/")
 public class PaymentUnionpayConsumeController extends BaseController {
-	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
+	private static Logger log = LoggerFactory.getLogger(PaymentUnionpayConsumeController.class);
 	
 	@Autowired
 	UserService userService;
@@ -109,7 +109,7 @@ public class PaymentUnionpayConsumeController extends BaseController {
 	@ResponseBody
 	public String unionpayConsumeCallback(HttpServletRequest request){
 		Map<String, String[]> params = request.getParameterMap(); 
-		log.info(params.toString());
+		log.info("银联消费回调===" + params.toString());
 		
 		String[] merId = params.get("merId");
 		String[] orderId = params.get("orderId");

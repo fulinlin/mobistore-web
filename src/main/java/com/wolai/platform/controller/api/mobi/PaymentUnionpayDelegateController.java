@@ -48,7 +48,7 @@ import com.wolai.platform.vo.UnionpayVo;
 @Controller
 @RequestMapping(Constant.API_MOBI + "payment/unionpay/delegate/")
 public class PaymentUnionpayDelegateController extends BaseController {
-	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
+	private static Logger log = LoggerFactory.getLogger(PaymentUnionpayDelegateController.class);
 	
 	@Autowired
 	UserService userService;
@@ -189,7 +189,7 @@ public class PaymentUnionpayDelegateController extends BaseController {
 	@ResponseBody
 	public String unionpayDelegateCallback(HttpServletRequest request){
 		Map<String, String[]> params = request.getParameterMap(); 
-		log.info(params.toString());
+		log.info("银联代扣回调===" + params.toString());
 		
 		String[] merId = params.get("merId");
 		String[] orderId = params.get("orderId");

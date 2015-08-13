@@ -45,8 +45,8 @@
 								</option>
 						</c:forEach>
 					</select>
-					<button id="login" type="submit" class="btn">模拟登录</button>
-					<div id="token" ></div>
+					<button id="login" type="submit" class="btn">模拟登录</button>&nbsp;&nbsp;&nbsp;
+					<span id="userToken" ></span>
 				</div>
 			</div>
 		<H3>临时车</H3>
@@ -57,7 +57,6 @@
 					<button id="tempEnter" type="submit" class="btn">入库</button>
 				</div>
 			</div>
-
 		
 		<H3>场外车</H3>
 
@@ -225,10 +224,7 @@
 		}
 		
 		var token = getParam("token");
-		console.log(token);
-		console.log(token);
-		
-		$('#token').text(token);
+		$('#userToken').text(token);
 	});
   </script>
 

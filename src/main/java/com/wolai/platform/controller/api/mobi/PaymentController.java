@@ -40,7 +40,7 @@ import com.wolai.platform.vo.PayVo;
 @Controller
 @RequestMapping(Constant.API_MOBI + "payment/")
 public class PaymentController extends BaseController {
-	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
+	private static Logger log = LoggerFactory.getLogger(PaymentController.class);
 	
 	@Autowired
 	UserService userService;
