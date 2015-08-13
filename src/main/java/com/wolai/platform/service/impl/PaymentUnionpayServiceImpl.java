@@ -77,11 +77,17 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	
 	@Override
 	public UnionpayCardBound createBoundRecordPers(String userId, String accNo, String wolaiTradeNo) {
-		
-		UnionpayCardBound bound = new UnionpayCardBound();
+		UnionpayCardBound old = boundQueryByUser(userId);
+		UnionpayCardBound bound = null;
+		if (old == null) {
+			bound = new UnionpayCardBound();
+		} else {
+			bound = old;
+		}
 		bound.setUserId(userId);
 		bound.setAccNo(accNo);
 		bound.setWolaiTradeNo(wolaiTradeNo);
+		
 		saveOrUpdate(bound);
 		return bound;
 	}
