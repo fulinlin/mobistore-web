@@ -561,9 +561,8 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			} else {
 				log.info("验证签名失败");
 			}
-			// 打印返回报文
-			log.info("返回数据====" + resultString);
 		}
+		log.info("返回数据====" + resultString);
 		return resData;
 	}
 
