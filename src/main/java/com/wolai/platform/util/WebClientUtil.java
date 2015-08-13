@@ -47,6 +47,7 @@ public class WebClientUtil {
 	    		resultJson = EntityUtils.toString(result, HttpServerConstants.Encoding);
 	        } catch (Exception e) {
 //	        	if(logger.isDebugEnabled()){
+	        		logger.error("url = " + url);
 	        		logger.error(Exceptions.getStackTraceAsString(e));
 //	        	}
 	        } finally {

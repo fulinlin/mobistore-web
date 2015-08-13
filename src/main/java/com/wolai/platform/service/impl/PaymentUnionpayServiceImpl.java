@@ -515,7 +515,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		Map<String, String> submitFromData = new HashMap<String, String>();
 		for (Iterator<?> it = contentData.entrySet().iterator(); it.hasNext();) {
 			obj = (Entry<String, String>) it.next();
-			String value = obj.getValue();
+			String value = String.valueOf(obj.getValue());
 			if (StringUtils.isNotBlank(value)) {
 				// 对value值进行去除前后空处理
 				submitFromData.put(obj.getKey(), value.trim());

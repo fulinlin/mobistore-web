@@ -20,6 +20,7 @@ import com.google.common.collect.Maps;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.Bill.PayStatus;
+import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.ParkingRecord.ParkStatus;
@@ -229,8 +230,13 @@ public class ApiController extends BaseController {
 			// 如果选择了优惠券进行结算的话，返回优惠券的id以及相关信息
 			if(StringUtils.isNotBlank(bill.getCouponId())){
 				responseVo.setCouponSn(bill.getCouponId());
-				responseVo.setCouponTime(bill.getCoupon().getTime());
-				responseVo.setCouponAmount(bill.getCoupon().getMoney());
+				Object couponObj = paymentService.get(Coupon.class, bill.getCouponId()); 
+				Coupon coupon = null;
+				if (couponObj != null) {
+					coupon = (Coupon)couponObj;
+					responseVo.setCouponTime(coupon.getTime());
+					responseVo.setCouponAmount(coupon.getMoney());
+				}
 			}
 			responseVo.setPayAmount(StringUtil.formatMoney(bill.getPayAmount()));
 		}
