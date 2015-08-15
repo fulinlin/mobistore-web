@@ -27,6 +27,7 @@ import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.Bill.PayStatus;
 import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.entity.Coupon;
+import com.wolai.platform.entity.Coupon.CouponStatus;
 import com.wolai.platform.entity.Coupon.CouponType;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysAPIKey;
@@ -129,6 +130,26 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		bill.setTradeSuccessTime(new Date());
 		
 		saveOrUpdate(bill);
+		
+		ParkingRecord park = (ParkingRecord) billService.get(ParkingRecord.class, bill.getParkingRecordId());
+		park.setIsPaid(true);
+		saveOrUpdate(park);
+	}
+	
+	@Override
+	public void payNonePers(Bill bill, String couponId) {
+		bill.setPaytype(Bill.PayType.CASH);
+		bill.setTradeStatus("SUCCESS");
+		bill.setTradeAmount(bill.getPayAmount());
+		bill.setPayStatus(PayStatus.SUCCESSED);
+		bill.setTradeSuccessTime(new Date());
+		saveOrUpdate(bill);
+		
+		Coupon coupon  = (Coupon) couponService.get(Bill.class, couponId);
+		if(coupon!=null){
+			coupon.setStatus(CouponStatus.USED);
+			saveOrUpdate(coupon);
+		}
 		
 		ParkingRecord park = (ParkingRecord) billService.get(ParkingRecord.class, bill.getParkingRecordId());
 		park.setIsPaid(true);

@@ -60,7 +60,7 @@ public class PaymentController extends BaseController {
 
 	@RequestMapping(value="payInfo")
 	@ResponseBody
-	public Map<String,Object> prepare(HttpServletRequest request, @RequestBody Map<String, String> json){
+	public Map<String,Object> payInfo(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
@@ -99,6 +99,31 @@ public class PaymentController extends BaseController {
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", payVo);
+		
+		return ret;
+	}
+	
+	@RequestMapping(value="payNone")
+	@ResponseBody
+	public Map<String,Object> payNone(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret = new HashMap<String, Object>();
+		
+		String parkingId = json.get("parkingId");
+		String couponId = json.get("couponId");
+		if (StringUtils.isEmpty(parkingId)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		Bill bill = billService.getBillByParking(parkingId);
+		if (bill == null) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "bill not found");
+			return ret;
+		}
+
+		paymentService.payNonePers(bill, couponId);
 		
 		return ret;
 	}
