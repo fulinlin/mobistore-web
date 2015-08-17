@@ -12,8 +12,8 @@ package com.wolai.platform.constant;
  */
 
 public final class Constant {
-	public static final String WEB_ROOT = "http://101.200.189.57:9090";
-	public static final String WEB_PATH = WEB_ROOT + "/wolai-web/";
+	public static String WEB_ROOT = "N/A";
+	public static String WEB_PATH = "N/A";
 	
 	public static String THIRD_PART_SERVER = null;
 	

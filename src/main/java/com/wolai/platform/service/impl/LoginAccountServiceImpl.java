@@ -12,6 +12,7 @@ import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Service;
 
 import com.wolai.platform.bean.Page;
+import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.SysLoginAccount;
 import com.wolai.platform.service.LoginAccountService;
 import com.wolai.platform.util.CustomizedPropertyConfigurer;
@@ -62,8 +63,8 @@ public class LoginAccountServiceImpl extends CommonServiceImpl implements LoginA
 	public void saveOrUpdate(SysLoginAccount loginaccount) {
 		getDao().saveOrUpdate(loginaccount);
 		Map<String, Object> a = new HashMap<String, Object>();
-		a.put("userName", "徐祥");
-		a.put("activeUrl",CustomizedPropertyConfigurer.getContextProperty("web.url")+"/loginAccount/active?"+loginaccount.getActiveCode());
+		a.put("userName", loginaccount);
+		a.put("activeUrl",Constant.WEB_PATH+"/loginAccount/active?"+loginaccount.getActiveCode());
 		SendMailUtil.sendFtlMail(loginaccount.getEmail(), "账户激活", "mailtemplate/ActiveLogin.ftl",a);
 	}
 

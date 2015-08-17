@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import org.apache.log4j.Logger;
 
 import com.unionpay.acp.sdk.SDKConfig;
+import com.wolai.platform.constant.Constant;
 
 public class SysListener extends HttpServlet implements ServletContextListener {
 
@@ -24,14 +25,19 @@ public class SysListener extends HttpServlet implements ServletContextListener {
 	protected final Logger log = Logger.getLogger(getClass());
 
 	public void contextInitialized(ServletContextEvent sce) {
-//		Properties prop = new Properties();
-//		InputStream in = getClass().getResourceAsStream("/appConfig.properties");
-//		
-//        try {
-//			prop.load(in);
-//        } catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		Properties prop = new Properties();
+		InputStream in = getClass().getResourceAsStream("/config.properties");
+		
+        try {
+			prop.load(in);
+			
+			String webRoot = prop.getProperty("web.root");
+			String webUri = prop.getProperty("web.uri");
+			Constant.WEB_ROOT = webRoot;
+			Constant.WEB_PATH = Constant.WEB_ROOT + webUri;
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		SDKConfig.getConfig().loadPropertiesFromSrc();
 	}

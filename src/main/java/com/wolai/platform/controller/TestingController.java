@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolai.platform.annotation.AuthPassport;
+import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.entity.License;
 import com.wolai.platform.entity.ParkingLot;
@@ -53,27 +54,11 @@ public class TestingController extends BaseController{
 		model.addAttribute("user", user.getId());
 		List<License> carsOutList = testService.listCarsOut(user.getId());
 		model.addAttribute("carsOutList", carsOutList);
-//		String carToIn = "";
-//		if (carsOutList.size() > 0) {
-//			carToIn = carsOutList.get(0).getId();
-//		}
-//		model.addAttribute("carToIn", carToIn);
 		
 		List<License> carsInList = testService.listCarsIn(user.getId());
 		model.addAttribute("carsInList", carsInList);
-//		String carToOut = "";
-//		if (carsInList.size() > 0) {
-//			carToOut = carsInList.get(0).getId();
-//		}
-//		model.addAttribute("carToOut", carToOut);
 		
-//		List<ParkingLot> lots = testService.listParkingLot();
-//		model.addAttribute("lots", lots);
-//		String lotToIn = "";
-//		if (lots.size() > 0) {
-//			lotToIn = carsOutList.get(0).getId();
-//		}
-//		model.addAttribute("lotToIn", lotToIn);
+		model.addAttribute("webPath", Constant.WEB_PATH);
 		
 		return "test/index";
 	}
@@ -96,6 +81,7 @@ public class TestingController extends BaseController{
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("msg", res);
+		ret.put("url", url);
 		return ret;
 	}
 	
