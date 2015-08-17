@@ -13,4 +13,6 @@ public interface BillService extends CommonService {
 //	List<Bill> getPostPayBillByCarNo(String carNo);
 //	
 	Boolean hasUnPayedBill(String CarNo);
+	
+	List<Bill> findPaidBillButNotCallBack();
 }

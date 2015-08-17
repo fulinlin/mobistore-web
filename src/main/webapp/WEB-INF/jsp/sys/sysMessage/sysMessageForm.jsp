@@ -36,13 +36,13 @@
 		<div class="control-group">
             <label class="control-label">标题：</label>
             <div class="controls">
-                <form:input path="title" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+                <form:input path="title" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
             </div>
         </div>		
 		<div class="control-group">
 			<label class="control-label">内容：</label>
 			<div class="controls">
-				<form:textarea path="content" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
+				<form:textarea path="content" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge required"/>
 			</div>
 		</div>
 		<div class="form-actions">

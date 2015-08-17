@@ -1,5 +1,6 @@
 package com.wolai.platform.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.FetchMode;
@@ -12,6 +13,7 @@ import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.Bill.PayStatus;
 import com.wolai.platform.entity.ParkingRecord.ParkStatus;
 import com.wolai.platform.service.BillService;
+import com.wolai.platform.util.DateUtils;
 
 @Service
 public class BillServiceImpl extends CommonServiceImpl implements BillService {
@@ -64,6 +66,18 @@ public class BillServiceImpl extends CommonServiceImpl implements BillService {
 		List ls = getDao().findAllByCriteria(dc);
 		Object obj = getDao().FindFirstByCriteria(dc);
 		return obj!=null;
+	}
+
+	@Override
+	public List<Bill> findPaidBillButNotCallBack() {
+		DetachedCriteria dc = DetachedCriteria.forClass(Bill.class);
+		dc.add(Restrictions.eq("isPostPay",Boolean.TRUE));
+		dc.add(Restrictions.eq("payStatus",PayStatus.IN_PROGRESS));
+		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
+		dc.add(Restrictions.ge("tradeSendTime", DateUtils.addHours(new Date(),1)));
+		
+		return getDao().findAllByCriteria(dc);
 	}
 
 }
