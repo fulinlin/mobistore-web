@@ -687,8 +687,9 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		String encoding = "UTF-8";
 		// 获取请求参数中所有的信息
 		Map<String, String> reqParam = getAllRequestParam(request);
-		// 打印请求报文
-		LogUtil.printRequestLog(reqParam);
+		// 
+		log.info("打印Unionpay回调请求报文");
+		log.info(reqParam);
 
 		Map<String, String> valideData = null;
 		if (null != reqParam && !reqParam.isEmpty()) {
@@ -708,11 +709,14 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		}
 
 		// 验证签名
-		if (!SDKUtil.validate(valideData, encoding)) {
-			LogUtil.writeLog("验证签名结果[失败].");
-		} else {
-			System.out.println(valideData.get("orderId")); //其他字段也可用类似方式获取
-			LogUtil.writeLog("验证签名结果[成功].");
+		try {
+			if (!SDKUtil.validate(valideData, encoding)) {
+				log.info("验证签名结果[失败].");
+			} else {
+				log.info("验证签名结果[成功].");
+			}
+		} catch (Exception e) {
+			log.info("验证签名结果[失败]" + e.getStackTrace());
 		}
 		return valideData;
 	}
