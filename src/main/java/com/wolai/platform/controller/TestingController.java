@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.wolai.platform.annotation.AuthPassport;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
@@ -133,9 +135,14 @@ public class TestingController extends BaseController{
 			return ret;
 		}
 		
-		String res = testService.enter(carNo);
+		String res = testService.enter(carNo).replaceAll("\\\\", "");
+		if (res.startsWith("\"")) {
+			res = res.substring(1, res.length() - 1);
+		}
+		JSONObject map = JSONObject.parseObject(res);
+		int code = map.getInteger("code");
 		
-		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("code", code);
 		ret.put("msg", res);
 		
 		return ret;

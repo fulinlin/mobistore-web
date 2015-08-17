@@ -194,10 +194,10 @@
 				 contentType: "application/json",
 	             dataType: "json",
 	             success: function(json){
-	            	if (json.code == '-1') {
+	            	if (json.code < 0 || json.code == 2) {
 	            		alert("错误 " + json.msg);
 					} else {
-						refresh(); 
+						refresh();
 					}
 	            	
 	            }
