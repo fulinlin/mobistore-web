@@ -12,7 +12,7 @@ public class AlipayVo {
 		this.partnerId = Constant.alipay_partnerId;
 		this.partnerPrivKey = Constant.alipay_partnerPrivKey;
 		this.sellerAccount = Constant.alipay_sellerAccount;
-		this.notifyUrl = Constant.alipay_notify_url;
+		this.notifyUrl = Constant.WEB_PATH + Constant.alipay_notify_uri;
 		this.payType = PayType.ALIPAY.toString();
 	}
 	

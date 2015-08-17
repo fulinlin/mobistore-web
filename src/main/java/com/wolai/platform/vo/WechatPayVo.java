@@ -12,7 +12,7 @@ public class WechatPayVo {
 		this.mch_id = Constant.wechat_pay_mchId;
 		this.nonce_str = IdGen.uuid();
 		this.body = Constant.payment_productionDesrcription;
-		this.notify_url = Constant.wechat_pay_notify_url;
+		this.notify_url = Constant.WEB_PATH + Constant.wechat_pay_notify_uri;
 		this.trade_type = "APP";
 		this.payType = PayType.WEIXIN.toString();
 	}

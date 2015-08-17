@@ -126,7 +126,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		// 前台通知地址 ，控件接入方式无作用
 //		data.put("frontUrl", "http://localhost:8080/ACPTest/acp_front_url.do");
 		// 后台通知地址
-		data.put("backUrl", Constant.unionpay_notify_url_consume);
+		data.put("backUrl", Constant.WEB_PATH + Constant.unionpay_notify_uri_consume);
 		// 接入类型，商户接入填0 0- 商户 ， 1： 收单， 2：平台商户
 		data.put("accessType", "0");
 		// 商户号码，请改成自己的商户号
@@ -435,7 +435,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 
 
 		// 交易后台返回商户结果时使用，如上送，则发送商户后台交易结果通知
-		contentData.put("backUrl", Constant.unionpay_notify_url_delegate);// M
+		contentData.put("backUrl", Constant.WEB_PATH + Constant.unionpay_notify_uri_delegate);// M
 
 		// 0：普通商户直连接入2：平台类商户接入
 		contentData.put("accessType", "0");// M
