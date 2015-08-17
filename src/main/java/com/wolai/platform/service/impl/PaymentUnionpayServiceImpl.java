@@ -792,6 +792,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 				bill.setPayStatus(Bill.PayStatus.FEATURE);
 			}
 			bill.setTradeResponseTime(new Date());
+			bill.setTradeStatus(respCode);
 			saveOrUpdate(bill);
 		} else {
 			log.error("根据银联回调的orderId" + orderId + "，找不到相应的Bill");
