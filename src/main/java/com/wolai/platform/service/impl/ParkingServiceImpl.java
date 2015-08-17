@@ -42,7 +42,7 @@ public class ParkingServiceImpl extends CommonServiceImpl implements ParkingServ
 		
 		String  hql = "from ParkingRecord pr where "
 				+ "userId=? "
-				+ "and (pr.parkStatus = ? or pr.parkStatus = ? ";
+				+ "and (pr.parkStatus = ? or pr.parkStatus = ? )";
 //				+ "and (pr.parkStatus = ? or pr.parkStatus = ? "
 //									  + " or pr.id in ( select bl.parkingRecordId from Bill bl where bl.parkingRecordId = pr.id and bl.payStatus != ?) "
 //					+ ")";

@@ -61,7 +61,9 @@ public class BillServiceImpl extends CommonServiceImpl implements BillService {
 		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
 		dc.add(Restrictions.eq("carNo",CarNo));
 		dc.add(Restrictions.eq("parkingRecord.parkStatus",ParkStatus.OUT));
-		return getDao().FindFirstByCriteria(dc)!=null;
+		List ls = getDao().findAllByCriteria(dc);
+		Object obj = getDao().FindFirstByCriteria(dc);
+		return obj!=null;
 	}
 
 }

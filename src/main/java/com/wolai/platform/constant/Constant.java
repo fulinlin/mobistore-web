@@ -12,10 +12,10 @@ package com.wolai.platform.constant;
  */
 
 public final class Constant {
-	public static String WEB_ROOT = "N/A";
-	public static String WEB_PATH = "N/A";
+	public static String WEB_ROOT = "__UNKNOW__";
+	public static String WEB_PATH = "__UNKNOW__";
 	
-	public static String THIRD_PART_SERVER = "N/A";
+	public static String THIRD_PART_SERVER = "__UNKNOW__";
 	
 	/**
 	 * appClient访问接口前缀

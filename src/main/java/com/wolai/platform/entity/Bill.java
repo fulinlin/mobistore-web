@@ -91,7 +91,6 @@ public class Bill extends IdEntity {
 	 * 支付状态
 	 */
 	public static  enum PayStatus{
-//		NOT_USE(-1000);
 		FEATURE(-1), INIT(0),IN_PROGRESS(1),SUCCESSED(2);
 		
 		private PayStatus(Integer textVal){
