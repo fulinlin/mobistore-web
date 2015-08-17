@@ -180,7 +180,7 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		SysAPIKey key = apiKeyService.getKeyByParinglotId(PARKINGLOT_ID);
 		TestServiceImpl.THIRD_PART_SERVER = key.getUrl() + ":" + key.getPort();
 		String myurl = request.getRequestURL().toString();
-		if (myurl.indexOf("//10.0") > -1) {
+		if (myurl.indexOf("//10.0") > -1 || myurl.indexOf("//localhost") > -1) {
 			TestServiceImpl.THIRD_PART_SERVER = THIRD_PART_SERVER_LOCAL;
 		} else if (myurl.indexOf("//101.200.189.57") > -1) {
 			TestServiceImpl.THIRD_PART_SERVER = THIRD_PART_SERVER_REMOTE;
