@@ -229,15 +229,15 @@
 			return false;
 		});
 		
-		var refresh = function(token) {
-			if (!token) {
-				token = getParam("token");
+		var refresh = function() {
+			if (!userToken) {
+				userToken = getParam("token");
 			}
 			
 			$('#carToIn option').remove();
 			$('#carToOut option').remove();
 			
-			var url = window.location.href.split("?")[0] + "?r=" + new Date().getTime() + "&token=" + token;
+			var url = window.location.href.split("?")[0] + "?r=" + new Date().getTime() + "&token=" + userToken;
 			window.location.href = url;
 		}
 		var getParam = function(name) {
