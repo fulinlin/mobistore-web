@@ -22,8 +22,9 @@
 			<div class="control-group">
 				<!-- <label class="control-label"></label> -->
 				<div class="controls" >
-					<input id="token" value="b1d4163f9829453d9aeed855b02b4cbc" />
-					<input id="url" value="${webPath}" />
+					<input id="token" value="b1d4163f9829453d9aeed855b02b4cbc" /><br/>
+					<input id="url" value="${webPath}" /><br/>
+					<input id="thirdPartPath" value="${thirdPartPath}" />
 					<button id="boundToken" type="submit" class="btn">绑定</button>
 				</div>
 			</div>
@@ -95,13 +96,14 @@
 	var userToken = "";
 	
 	$(document).ready(function(){
-		
 		$("#boundToken").click(function(){
 			var sysToken = $("#token").val();
 			var url = $("#url").val();
+			var thirdPartPath = $("#thirdPartPath").val();
 			var data1 = {
 				"url":url,
-				"token":sysToken
+				"token":sysToken,
+				"thirdPartPath": thirdPartPath
 			};
 			$.ajax({
 	            type: "POST",
@@ -110,8 +112,13 @@
 				contentType: "application/json",
 	            dataType: "json",
 	            success: function(json){
-					console.log(json);
-					$("#url").val(url);
+	            	console.log(json);
+					if (json.code == '-1') {
+						alert("错误 " + json.msg);
+					} else {
+						$("#url").val(url);
+						console.log("绑定成功");
+					}
 	           }
 	        });
 			return false;
@@ -134,9 +141,12 @@
 				 contentType: "application/json",
 	             dataType: "json",
 	             success: function(json){
-					console.log(json.token);
-					userToken = json.token;
-					window.location.href = newUrl(userToken);
+					if (json.code == '-1') {
+						alert("错误 " + json.msg);
+					} else {
+						userToken = json.token;  
+						refresh(); 
+					}
 	            }
 	         });
 			
@@ -161,8 +171,11 @@
 				 contentType: "application/json",
 	             dataType: "json",
 	             success: function(json){
-					console.log(json);
-					window.location.href = newUrl();   
+					if (json.code == '-1') {
+						alert("错误 " + json.msg);
+					} else {
+						refresh();    	
+					}
 	            }
 	         });
 			return false;
@@ -181,7 +194,12 @@
 				 contentType: "application/json",
 	             dataType: "json",
 	             success: function(json){
-					window.location.href = newUrl(); 
+	            	if (json.code == '-1') {
+	            		alert("错误 " + json.msg);
+					} else {
+						refresh(); 
+					}
+	            	
 	            }
 	         });
 			return false;
@@ -200,19 +218,27 @@
 				 contentType: "application/json",
 	             dataType: "json",
 	             success: function(json){
-					console.log(json);
-					//window.location.href = newUrl(); 
+	            	if (json.code == '-1') {
+	            		alert("错误 " + json.msg);
+					} else {
+						refresh(); 
+					}
+	            	
 	            }
 	         });
 			return false;
 		});
 		
-		var newUrl = function(token) {
+		var refresh = function(token) {
 			if (!token) {
 				token = getParam("token");
 			}
 			
-			return window.location.href.split("?")[0] + "?r=" + new Date().getTime() + "&token=" + token;
+			$('#carToIn option').remove();
+			$('#carToOut option').remove();
+			
+			var url = window.location.href.split("?")[0] + "?r=" + new Date().getTime() + "&token=" + token;
+			window.location.href = url;
 		}
 		var getParam = function(name) {
 			var reg = new RegExp("(^|&|\\?)" + name + "=([^&]*)(&|$)", "i"); 

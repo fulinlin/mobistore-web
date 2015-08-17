@@ -15,7 +15,7 @@ public final class Constant {
 	public static String WEB_ROOT = "N/A";
 	public static String WEB_PATH = "N/A";
 	
-	public static String THIRD_PART_SERVER = null;
+	public static String THIRD_PART_SERVER = "N/A";
 	
 	/**
 	 * appClient访问接口前缀

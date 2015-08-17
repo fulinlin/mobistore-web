@@ -29,8 +29,9 @@ import com.wolai.platform.util.WebClientUtil;
 
 @Service
 public class TestServiceImpl extends CommonServiceImpl implements TestService {
-	
-	public static final String THIRD_PART_SERVER_TEST = "http://10.0.1.109:80";
+	public static String THIRD_PART_SERVER = "";
+	public static final String THIRD_PART_SERVER_LOCAL = "http://10.0.0.13:80";
+	public static final String THIRD_PART_SERVER_REMOTE = "http://112.80.18.202:8888";
 	public static final String PARKINGLOT_ID = "5F12DD31-8B34-8B9F-E50B-D990615132A9";
 	
 	@Autowired
@@ -133,7 +134,7 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		map.put("url", url);
 		map.put("token", token);
 		
-		setRemoteUrl(request);
+		initRemoteUrl(request);
 		String ret = WebClientUtil.post(Constant.THIRD_PART_SERVER + "simuseturltoken", JSON.toJSONString(map));
 		return ret;
 	}
@@ -174,13 +175,16 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		return ret;
 	}
 	
-	private void setRemoteUrl(HttpServletRequest request) {
+	@Override
+	public void initRemoteUrl(HttpServletRequest request) {
 		SysAPIKey key = apiKeyService.getKeyByParinglotId(PARKINGLOT_ID);
-		String root = key.getUrl() + ":" + key.getPort();
+		TestServiceImpl.THIRD_PART_SERVER = key.getUrl() + ":" + key.getPort();
 		String myurl = request.getRequestURL().toString();
 		if (myurl.indexOf("//10.0") > -1) {
-			root = THIRD_PART_SERVER_TEST;
+			TestServiceImpl.THIRD_PART_SERVER = THIRD_PART_SERVER_LOCAL;
+		} else if (myurl.indexOf("//101.200.189.57") > -1) {
+			TestServiceImpl.THIRD_PART_SERVER = THIRD_PART_SERVER_REMOTE;
 		}
-		Constant.THIRD_PART_SERVER = root + key.getRootPath();;
+		Constant.THIRD_PART_SERVER = TestServiceImpl.THIRD_PART_SERVER + key.getRootPath();;
 	}
 }

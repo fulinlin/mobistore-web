@@ -26,7 +26,7 @@ public class WebClientUtil {
 		public static	Log logger = LogFactory.getLog(WebClientUtil.class);
 	
 	   public  static String post(String url, String json) {
-	    	String resultJson = "BEFORE_POST";
+	    	String resultJson = "";
 	    	// 创建默认的httpClient实例.
 	        CloseableHttpClient httpclient = HttpClients.createDefault();
 	        

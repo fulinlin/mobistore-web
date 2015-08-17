@@ -40,6 +40,10 @@ public class TestingController extends BaseController{
 	@AuthPassport(validate=false)
 	@RequestMapping("7e6d54c2-4db9-459b-8c02-5a0f1a07ff73")
 	public String index(HttpServletRequest request, Model model){
+		testService.initRemoteUrl(request);
+		model.addAttribute("thirdPartPath", Constant.THIRD_PART_SERVER);
+		model.addAttribute("webPath", Constant.WEB_PATH);
+		
 		String token = request.getParameter("token");
 		List<SysUser> users = testService.listTestUsers();
 		model.addAttribute("users", users);
@@ -58,8 +62,6 @@ public class TestingController extends BaseController{
 		List<License> carsInList = testService.listCarsIn(user.getId());
 		model.addAttribute("carsInList", carsInList);
 		
-		model.addAttribute("webPath", Constant.WEB_PATH);
-		
 		return "test/index";
 	}
 	
@@ -71,17 +73,19 @@ public class TestingController extends BaseController{
 		
 		String url = json.get("url");
 		String token = json.get("token");
+		String thirdPartPath = json.get("thirdPartPath");
 		
-		if (StringUtils.isEmpty(url) || StringUtils.isEmpty(token)) {
+		if (StringUtils.isEmpty(url) || StringUtils.isEmpty(token) || StringUtils.isEmpty(thirdPartPath)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
 		String res = testService.bound(url, token, request);
+		Constant.WEB_PATH = url;
+		Constant.THIRD_PART_SERVER = thirdPartPath;
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("msg", res);
-		ret.put("url", url);
 		return ret;
 	}
 	
@@ -134,11 +138,6 @@ public class TestingController extends BaseController{
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("msg", res);
 		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return ret;
 	}
 	
@@ -160,11 +159,6 @@ public class TestingController extends BaseController{
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("msg", res);
 		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return ret;
 	}
 }
