@@ -91,19 +91,19 @@ public class Bill extends IdEntity {
 	 * 支付状态
 	 */
 	public static  enum PayStatus{
-		FEATURE(-1), INIT(0),IN_PROGRESS(1),SUCCESSED(2);
+		FEATURE("FEATURE"), INIT("INIT"),IN_PROGRESS("IN_PROGRESS"),SUCCESSED("SUCCESSED");
 		
-		private PayStatus(Integer textVal){
+		private PayStatus(String textVal){
   			this.textVal=textVal;
   		}
-  		private Integer textVal;
+  		private String textVal;
   		
-  		public Integer value(){
+  		public String value(){
   			return textVal;
   		}
   		
   		public String toString(){
-  			return textVal.toString();
+  			return textVal;
   		}
 	}
 	
@@ -205,7 +205,7 @@ public class Bill extends IdEntity {
 	/**
 	 * 支付状态
 	 */
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private PayStatus payStatus = PayStatus.INIT;
 	
 	/**

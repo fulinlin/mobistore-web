@@ -1,20 +1,9 @@
 package com.wolai.platform.vo;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import com.wolai.platform.entity.Coupon;
-import com.wolai.platform.entity.SysAccount;
 import com.wolai.platform.entity.Bill.PayStatus;
 import com.wolai.platform.entity.Bill.PayType;
-import com.wolai.platform.entity.Coupon.CouponType;
 
 public class BillVo {
 	private String id;
