@@ -178,8 +178,8 @@ public class ApiController extends BaseController {
 			/* 出账处理 */
 			Bill bill = billService.getBillByParking(record.getId());
 			
-			// 除开已支付的账单不处理，其他情况计算下账单信息
-			if(!(bill !=null && PayStatus.SUCCESSED.equals(bill.getPayStatus()))){
+			// 除支付成功的账单不处理，其他情况计算下账单信息
+			if(!(bill !=null && ( PayStatus.SUCCESSED.equals(bill.getPayStatus()) || PayStatus.IN_PROGRESS.equals(bill.getPayStatus()) ) )){
 				boolean isPostPay =false;
 				
 				// 用户为后付费用户的情况

@@ -126,8 +126,13 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		bill.setPaytype(payType);
 		bill.setTradeStatus(trade_status);
 		bill.setTradeAmount(new BigDecimal(alipayTotal));
-		bill.setPayStatus(PayStatus.SUCCESSED);
-		bill.setTradeSuccessTime(new Date());
+		if ("TRADE_SUCCESS".equals(trade_status)) {
+			bill.setPayStatus(PayStatus.SUCCESSED);
+			
+		} else {
+			bill.setPayStatus(PayStatus.FEATURE);
+		}
+		bill.setTradeResponseTime(new Date());
 		
 		saveOrUpdate(bill);
 		
@@ -142,7 +147,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		bill.setTradeStatus("SUCCESS");
 		bill.setTradeAmount(bill.getPayAmount());
 		bill.setPayStatus(PayStatus.SUCCESSED);
-		bill.setTradeSuccessTime(new Date());
+		bill.setTradeResponseTime(new Date());
 		saveOrUpdate(bill);
 		
 		Coupon coupon  = (Coupon) couponService.get(Bill.class, couponId);

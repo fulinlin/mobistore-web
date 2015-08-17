@@ -28,34 +28,35 @@ public class BillServiceImpl extends CommonServiceImpl implements BillService {
 		return null;
 	}
 	
-	@Override
-	public List<Bill> getPostPayCarsFromBill() {
-		DetachedCriteria dc = DetachedCriteria.forClass(Bill.class);
-		dc.add(Restrictions.eq("isPostPay",Boolean.TRUE));
-		dc.add(Restrictions.eq("payStatus",PayStatus.INIT));
-		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
-		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
-		return getDao().findAllByCriteria(dc);
-	}
-
-	@Override
-	public List<Bill> getPostPayBillByCarNo(String carNo) {
-		DetachedCriteria dc = DetachedCriteria.forClass(Bill.class);
-		dc.add(Restrictions.eq("isPostPay",Boolean.TRUE));
-		dc.add(Restrictions.eq("payStatus",PayStatus.INIT));
-		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
-		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
-		dc.add(Restrictions.eq("carNo",carNo));
-		
-		return getDao().findAllByCriteria(dc);
-	}
-
+//	@Override
+//	public List<Bill> getPostPayCarsFromBill() {
+//		DetachedCriteria dc = DetachedCriteria.forClass(Bill.class);
+//		dc.add(Restrictions.eq("isPostPay",Boolean.TRUE));
+//		dc.add(Restrictions.eq("payStatus",PayStatus.INIT));
+//		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+//		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
+//		return getDao().findAllByCriteria(dc);
+//	}
+//
+//	@Override
+//	public List<Bill> getPostPayBillByCarNo(String carNo) {
+//		DetachedCriteria dc = DetachedCriteria.forClass(Bill.class);
+//		dc.add(Restrictions.eq("isPostPay",Boolean.TRUE));
+//		dc.add(Restrictions.eq("payStatus",PayStatus.INIT));
+//		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
+//		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
+//		dc.add(Restrictions.eq("carNo",carNo));
+//		
+//		return getDao().findAllByCriteria(dc);
+//	}
+//
 	@Override
 	public Boolean hasUnPayedBill(String CarNo) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Bill.class);
 		dc.createAlias("parkingRecord", "parkingRecord",JoinType.LEFT_OUTER_JOIN);
 		dc.add(Restrictions.eq("isPostPay",Boolean.TRUE));
 		dc.add(Restrictions.ne("payStatus",PayStatus.SUCCESSED));
+		dc.add(Restrictions.ne("payStatus",PayStatus.IN_PROGRESS));
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
 		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
 		dc.add(Restrictions.eq("carNo",CarNo));

@@ -91,7 +91,8 @@ public class Bill extends IdEntity {
 	 * 支付状态
 	 */
 	public static  enum PayStatus{
-		INIT(0),SUCCESSED(1),FEATURE(-1);
+//		NOT_USE(-1000);
+		FEATURE(-1), INIT(0),IN_PROGRESS(1),SUCCESSED(2);
 		
 		private PayStatus(Integer textVal){
   			this.textVal=textVal;
@@ -184,7 +185,7 @@ public class Bill extends IdEntity {
 	/**
 	 * 支付完成时间
 	 */
-	private Date tradeSuccessTime;
+	private Date tradeResponseTime;
 	
 	/**
 	 * 付款账号
@@ -335,14 +336,6 @@ public class Bill extends IdEntity {
 		this.tradeSendTime = tradeSendTime;
 	}
 
-	public Date getTradeSuccessTime() {
-		return tradeSuccessTime;
-	}
-
-	public void setTradeSuccessTime(Date tradeSuccessTime) {
-		this.tradeSuccessTime = tradeSuccessTime;
-	}
-
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -381,6 +374,14 @@ public class Bill extends IdEntity {
 
 	public void setTradeAmount(BigDecimal tradeAmount) {
 		this.tradeAmount = tradeAmount;
+	}
+
+	public Date getTradeResponseTime() {
+		return tradeResponseTime;
+	}
+
+	public void setTradeResponseTime(Date tradeResponseTime) {
+		this.tradeResponseTime = tradeResponseTime;
 	}
 	
 }

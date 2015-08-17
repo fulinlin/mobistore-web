@@ -24,8 +24,8 @@ public class BillVo {
 	private PayType paytype;
 	private String tradeNo;
 	private String tradeStatus;
-	private  Boolean isSendedInvoice = false;
-	private PayStatus payStatus = PayStatus.INIT;
+	private  Boolean isSendedInvoice;
+	private PayStatus payStatus;
 	public String getId() {
 		return id;
 	}

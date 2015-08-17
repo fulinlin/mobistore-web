@@ -8,9 +8,9 @@ public interface BillService extends CommonService {
 	
 	Bill getBillByParking(String parkingId);
 	
-	List<Bill> getPostPayCarsFromBill();
-	
-	List<Bill> getPostPayBillByCarNo(String carNo);
-	
+//	List<Bill> getPostPayCarsFromBill();
+//	
+//	List<Bill> getPostPayBillByCarNo(String carNo);
+//	
 	Boolean hasUnPayedBill(String CarNo);
 }

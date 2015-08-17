@@ -631,6 +631,8 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	@Override
 	public boolean postPayBillSattlement(String billId,String userId) {
 		Bill bill = (Bill) getDao().get(Bill.class, billId);
+		bill.setPaytype(PayType.UNIONPAY);
+		
 		// 后付费用户未选择券的情况，程序自动选择最适合的优惠券
 		if(bill.getCouponId()==null){
 			Coupon coupon  = couponService.getSuitableMoneyCoupon(bill.getTotalAmount(),userId);
@@ -638,21 +640,25 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 				coupon.setStatus(CouponStatus.USED);
 				bill.setCouponId(coupon.getId());
 				bill.setPayAmount(bill.getTotalAmount().subtract(new BigDecimal(coupon.getMoney())));
+				
 				// 当优惠券金额大于等于应缴费用的话，直接认为用户缴费成功
-				if(bill.getPayAmount().compareTo(BigDecimal.ZERO)<0){
+				if(bill.getPayAmount().compareTo(BigDecimal.ZERO)<1){
 					bill.setPayAmount(BigDecimal.ZERO);
 					bill.setPayStatus(PayStatus.SUCCESSED);
-					bill.setTradeSuccessTime(new Date());
+					bill.setTradeSendTime(new Date());
+					bill.setTradeResponseTime(new Date());
+					
+					getDao().saveOrUpdate(bill);
+					return true;
 				}
 			}
 		}
-		bill.setPaytype(PayType.UNIONPAY);
-		bill.setPayStatus(PayStatus.INIT);
-		bill.setTradeSendTime(new Date());
 		
 		boolean sendStatus = false;
 		// 优惠券金额小于应缴费用时，进行银联代收相应金额
-		if(!PayStatus.SUCCESSED.equals(bill.getPayStatus())){
+		if(! (PayStatus.SUCCESSED.equals(bill.getPayStatus()) || PayStatus.IN_PROGRESS.equals(bill.getPayStatus() )) ){
+			bill.setTradeSendTime(new Date());
+			bill.setPayStatus(PayStatus.IN_PROGRESS);
 			UnionpayCardBound bound = boundQueryByUser(userId);
 			Map<String,String> result=  postPayConsume(bill.getId(), bound.getAccNo(), bill.getPayAmount());
 			
@@ -668,11 +674,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 				// 发送失败则账单支付失败
 				bill.setPayStatus(PayStatus.FEATURE);
 			}
-		}else{
-			sendStatus =  true;
 		}
-		
-		getDao().saveOrUpdate(bill);
 		
 		return sendStatus;
 	}
@@ -734,10 +736,11 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 			if ("00".equals(respCode)) {
 				bill.setPayStatus(Bill.PayStatus.SUCCESSED);
 				bill.setTradeAmount(new BigDecimal(settleAmt).divide(new BigDecimal(100)));
-				bill.setTradeSuccessTime(new Date());
+				
 			} else {
 				bill.setPayStatus(Bill.PayStatus.FEATURE);
 			}
+			bill.setTradeResponseTime(new Date());
 			saveOrUpdate(bill);
 		} else {
 			log.error("根据银联回调的orderId" + orderId + "，找不到相应的Bill");
