@@ -228,7 +228,21 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
     	return mformat.format(d);
     }
     
-    public static void main(String[] args) { 
-    	System.out.println(formatMoney(new BigDecimal(99999999999.123333333)));
+    public static String Confuse(String str){
+    	str = str.substring(10, str.length()) + str.substring(0,10);
+    	return str;
+    }
+    public static String UnConfuse(String str){
+    	str = str.substring(str.length()-10, str.length()) + str.substring(0, str.length() - 10);
+    	return str;
+    }
+    
+    public static void main(String[] args) {
+    	String aa = "1234567890ABCDEFG";
+    	System.out.println(aa);
+    	aa = Confuse(aa);
+    	System.out.println(aa);
+    	aa = UnConfuse(aa);
+    	System.out.println(aa);
     }  
 }
