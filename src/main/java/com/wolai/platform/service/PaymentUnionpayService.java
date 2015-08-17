@@ -28,5 +28,7 @@ public interface PaymentUnionpayService extends CommonService {
 
 	Map<String, String> getUnionpayResp(HttpServletRequest request);
 	void unionpayCallbackPers(Map<String, String> resp);
+
+	Map<String, String> postPayQuery(String orderId, String queryId);
 	
 }

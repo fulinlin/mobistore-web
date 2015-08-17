@@ -162,14 +162,19 @@ public class Bill extends IdEntity {
 	private PayType paytype;
 	
 	/**
-	 * 支付宝交易号
+	 * 交易号
 	 */
 	private String tradeNo;
 	
 	/**
-	 * 支付宝交易状态
+	 * 交易状态
 	 */
 	private String tradeStatus;
+	
+	/**
+	 * 交易查询状态
+	 */
+	private String tradeMsg;
 	
 	/**
 	 * 创建时间
@@ -381,6 +386,14 @@ public class Bill extends IdEntity {
 
 	public void setTradeResponseTime(Date tradeResponseTime) {
 		this.tradeResponseTime = tradeResponseTime;
+	}
+
+	public String getTradeMsg() {
+		return tradeMsg;
+	}
+
+	public void setTradeMsg(String tradeMsg) {
+		this.tradeMsg = tradeMsg;
 	}
 	
 }

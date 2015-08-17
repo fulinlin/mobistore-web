@@ -520,6 +520,57 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 
 	}
 	
+	@Override
+	public Map<String, String> postPayQuery(String orderId, String queryId) {
+		String txnTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		Map<String, Object> contentData = new HashMap<String, Object>();
+		// queryId = "201508171936565902088";// --交易查询号
+
+		// 固定填写
+		contentData.put("version", version);// M
+
+		// 默认取值：UTF-8
+		contentData.put("encoding", encoding);// M
+
+		// //通过MPI插件获取
+		// contentData.put("certId", certId);//M
+		//
+		// //填写对报文摘要的签名
+		// contentData.put("signature", signature);//M
+
+		// 01RSA02 MD5 (暂不支持)
+		contentData.put("signMethod", "01");// M
+
+		// 交易类型 00
+		contentData.put("txnType", "00");// M
+
+		// 默认00
+		contentData.put("txnSubType", "00");// M
+
+		// 默认:000000
+		contentData.put("bizType", "000000");// M
+
+		// 0：普通商户直连接入2：平台类商户接入
+		contentData.put("accessType", "0");// M
+
+		// 　
+		contentData.put("merId", Constant.unionpay_mchId);// M
+
+//		// 被查询交易的交易时间
+		contentData.put("txnTime", txnTime);// M
+//
+//		// 被查询交易的订单号
+		contentData.put("orderId", orderId);// M
+
+		// //待查询交易的流水号
+		 contentData.put("queryId", queryId);//C
+
+		Map<String, String> submitFromData = signData(contentData);
+
+		Map<String, String> resMap = submitUrl(submitFromData, "", "后付费查询");
+		return resMap;
+	}
+	
 	private Map<String, String> signData(Map<String, ?> contentData) {
 		Entry<String, String> obj = null;
 		Map<String, String> submitFromData = new HashMap<String, String>();
@@ -544,8 +595,8 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		String resultString = "";
 		
 		
-		log.info("请求URL====" + requestUrl);
-		log.info("请求数据====" + submitFromData.toString());
+		log.info(action + ", 请求URL====" + requestUrl);
+		log.info(action + ", 请求数据====" + submitFromData.toString());
 		/**
 		 * 发送
 		 */
@@ -571,7 +622,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 				log.info("验证签名失败");
 			}
 		}
-		log.info("返回数据====" + resData);
+		log.info(action + ", 返回数据====" + resData);
 		return resData;
 	}
 
