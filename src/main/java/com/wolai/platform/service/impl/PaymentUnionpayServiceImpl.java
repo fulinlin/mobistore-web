@@ -567,7 +567,9 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 
 		Map<String, String> submitFromData = signData(contentData);
 
-		Map<String, String> resMap = submitUrl(submitFromData, "", "后付费查询");
+		String requestBackUrl = SDKConfig.getConfig()
+				.getBackRequestUrl();
+		Map<String, String> resMap = submitUrl(submitFromData, requestBackUrl, "后付费查询");
 		return resMap;
 	}
 	

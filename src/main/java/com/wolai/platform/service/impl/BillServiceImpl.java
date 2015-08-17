@@ -75,7 +75,7 @@ public class BillServiceImpl extends CommonServiceImpl implements BillService {
 		dc.add(Restrictions.eq("payStatus",PayStatus.IN_PROGRESS));
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
 		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
-		dc.add(Restrictions.ge("tradeSendTime", DateUtils.addHours(new Date(),1)));
+		dc.add(Restrictions.le("tradeSendTime", DateUtils.addHours(new Date(), -1)));
 		
 		return getDao().findAllByCriteria(dc);
 	}
