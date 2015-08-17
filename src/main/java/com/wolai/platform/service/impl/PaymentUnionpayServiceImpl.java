@@ -718,7 +718,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 				log.info("验证签名结果[成功].");
 			}
 		} catch (Exception e) {
-			log.info("验证签名结果[失败]" + e.getStackTrace());
+			log.info("验证签名结果[失败]");
 		}
 		return valideData;
 	}
