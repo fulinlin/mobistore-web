@@ -39,6 +39,7 @@ public class SysListener extends HttpServlet implements ServletContextListener {
 			e.printStackTrace();
 		}
 		
+        // 加载银联配置信息
 		SDKConfig.getConfig().loadPropertiesFromSrc();
 	}
 

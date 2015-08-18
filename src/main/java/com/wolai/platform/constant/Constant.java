@@ -46,7 +46,7 @@ public final class Constant {
 	public static final  String alipay_sellerAccount = "wolai@wolaitech.com";
 	public static final  String alipay_notify_uri = "api/mobi/payment/alipay/callback";
 
-	public static final  String unionpay_mchId = "802290049000180";
+	public static final  String unionpay_mchId = "898320148160286";
 	public static final  String unionpay_request_url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 	public static final  String unionpay_notify_uri_consume = "api/mobi/payment/unionpay/consume/callback";
 	public static final  String unionpay_notify_uri_delegate = "api/mobi/payment/unionpay/delegate/callback";

@@ -164,7 +164,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		 * 在java main 方式运行时必须每次都执行加载
 		 * 如果是在web应用开发里,这个方写在可使用监听的方式写入缓存,无须在这出现
 		 */
-		SDKConfig.getConfig().loadPropertiesFromSrc();// 从classpath加载acp_sdk.properties文件
+//		SDKConfig.getConfig().loadPropertiesFromSrc();// 从classpath加载acp_sdk.properties文件
 		/**
 		 * 交易请求url 从配置文件读取
 		 */
@@ -293,7 +293,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		 * 在java main 方式运行时必须每次都执行加载
 		 * 如果是在web应用开发里,这个方写在可使用监听的方式写入缓存,无须在这出现
 		 */
-		SDKConfig.getConfig().loadPropertiesFromSrc();// 从classpath加载acp_sdk.properties文件
+//		SDKConfig.getConfig().loadPropertiesFromSrc();// 从classpath加载acp_sdk.properties文件
 
 		/**
 		 * 组装请求报文
@@ -398,7 +398,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		 * 在java main 方式运行时必须每次都执行加载
 		 * 如果是在web应用开发里,这个方写在可使用监听的方式写入缓存,无须在这出现
 		 */
-		SDKConfig.getConfig().loadPropertiesFromSrc();// 从classpath加载acp_sdk.properties文件
+//		SDKConfig.getConfig().loadPropertiesFromSrc();// 从classpath加载acp_sdk.properties文件
 		/**
 		 * 交易请求url 从配置文件读取
 		 */
@@ -567,9 +567,9 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 
 		Map<String, String> submitFromData = signData(contentData);
 
-		String requestBackUrl = SDKConfig.getConfig()
+		String requestUrl = SDKConfig.getConfig()
 				.getBackRequestUrl();
-		Map<String, String> resMap = submitUrl(submitFromData, requestBackUrl, "后付费查询");
+		Map<String, String> resMap = submitUrl(submitFromData, requestUrl, "后付费查询");
 		return resMap;
 	}
 	
