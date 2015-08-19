@@ -125,9 +125,9 @@ public class PushUtil {
 		try {
 //			android.sendAndroidBroadcastMsg("[喔来智能停车]您已成功支付%AMOUNT%元停车费，车牌号%LINCENST%。");
 //			android.sendAndroidUnicastMsg("XXX", "[喔来智能停车]您已成功支付%AMOUNT%元停车费，车牌号%LINCENST%。");
-
+//
 //			ios.sendIosBroadcast("[喔来智能停车]您已成功支付%AMOUNT%元停车费，车牌号%LINCENST%。");
-			ios.sendIosUnicast("87589e545fba5eb2f42531536209dd3c6a99e02b63b0d4cd0f6d6f7962636b77", "[喔来智能停车]您已成功支付%AMOUNT%元停车费，车牌号%LINCENST%。");
+//			ios.sendIosUnicast("87589e545fba5eb2f42531536209dd3c6a99e02b63b0d4cd0f6d6f7962636b77", "[喔来智能停车]您已成功支付%AMOUNT%元停车费，车牌号%LINCENST%。");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
