@@ -123,11 +123,11 @@ public class PushUtil {
 		PushUtil android = new PushUtil(APP_KEY_ANDROID, APP_SECRET_ANDROID);
 		PushUtil ios = new PushUtil(APP_KEY_IOS, APP_SECRET_IOS);
 		try {
-			android.sendAndroidBroadcastMsg("消息");
-//			android.sendAndroidUnicastMsg("XXX", "消息");
+//			android.sendAndroidBroadcastMsg("[喔来智能停车]您已成功支付%AMOUNT%元停车费，车牌号%LINCENST%。");
+//			android.sendAndroidUnicastMsg("XXX", "[喔来智能停车]您已成功支付%AMOUNT%元停车费，车牌号%LINCENST%。");
 
-			ios.sendIosBroadcast("消息");
-//			ios.sendIOSUnicast("XXX", "消息");
+//			ios.sendIosBroadcast("[喔来智能停车]您已成功支付%AMOUNT%元停车费，车牌号%LINCENST%。");
+			ios.sendIosUnicast("87589e545fba5eb2f42531536209dd3c6a99e02b63b0d4cd0f6d6f7962636b77", "[喔来智能停车]您已成功支付%AMOUNT%元停车费，车牌号%LINCENST%。");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
