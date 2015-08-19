@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolai.platform.config.SystemConfig;
 import com.wolai.platform.entity.SysMessage;
+import com.wolai.platform.service.MsgService;
 import com.wolai.platform.service.SysMessageService;
 import com.wolai.platform.util.PushUtil;
 
@@ -32,13 +33,13 @@ import com.wolai.platform.util.PushUtil;
 public class SysMessageController extends BaseController {
 
 	@Autowired
-	private SysMessageService sysMessageService;
+	private MsgService msgService;
 	
 	@ModelAttribute
 	public SysMessage get(@RequestParam(required=false) String id) {
 		SysMessage entity = null;
 		if (StringUtils.isNotBlank(id)){
-			entity = (SysMessage) sysMessageService.get(SysMessage.class, id);
+			entity = (SysMessage) msgService.get(SysMessage.class, id);
 		}
 		if (entity == null){
 			entity = new SysMessage();
@@ -62,7 +63,7 @@ public class SysMessageController extends BaseController {
             dc.add(Restrictions.like("title", sysMessage.getTitle() , MatchMode.ANYWHERE).ignoreCase());
         }
         dc.add(Restrictions.eq("published", sysMessage.getPublished()));
-        page = sysMessageService.findPage(dc,  (pageNo-1)*pageSize, pageSize);
+        page = msgService.findPage(dc,  (pageNo-1)*pageSize, pageSize);
 		model.addAttribute("page", page);
 		model.addAttribute("sysMessage", sysMessage);
 		return "sys/sysMessage/sysMessageList";
@@ -79,20 +80,18 @@ public class SysMessageController extends BaseController {
 		if (!beanValidator(model, sysMessage)){
 			return form(sysMessage, model);
 		}
-		PushUtil androidPush = new PushUtil(PushUtil.APP_KEY_ANDROID, PushUtil.APP_SECRET_ANDROID);
-		androidPush.sendAndroidBroadcast("message", sysMessage.getTitle(), sysMessage.getTitle() , sysMessage.getContent(),
-                "go_app", null, null);
+		msgService.sendAppMsg(sysMessage.getTitle());
 		PushUtil iosPush = new PushUtil(PushUtil.APP_KEY_IOS, PushUtil.APP_SECRET_IOS);
 		iosPush.sendIOSBroadcast(sysMessage.getContent());
 		sysMessage.setPublished(true);
-		sysMessageService.saveOrUpdate(sysMessage);
+		msgService.saveOrUpdate(sysMessage);
 		addMessage(redirectAttributes, "保存推送消息成功");
 		return "redirect:"+SystemConfig.getAdminPath()+"/sysMessage/?repage";
 	}
 	
 	@RequestMapping(value = "delete")
 	public String delete(SysMessage sysMessage, RedirectAttributes redirectAttributes) {
-		sysMessageService.delete(sysMessage);
+		msgService.delete(sysMessage);
 		addMessage(redirectAttributes, "删除推送消息成功");
 		return "redirect:"+SystemConfig.getAdminPath()+"/sysMessage/?repage";
 	}

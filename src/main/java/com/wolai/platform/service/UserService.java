@@ -12,7 +12,7 @@ public interface UserService extends CommonService {
 
 	Map registerPers(String phone, String password);
 	SysUser loginWithToken(String token);
-	SysUser loginPers(String phone, String password);
+	SysUser loginPers(String phone, String password,String deviceType, String deviceToken);
 	SysUser logoutPers(String token);
 	Map<String, Object> updatePassword(String phone, String password, String newPassword);
 

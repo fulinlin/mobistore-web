@@ -62,7 +62,7 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 	}
 
 	
-	private SysUser loginPers(String phone, String password, boolean updateToken) {
+	private SysUser loginPers(String phone, String password, boolean updateToken, String deviceType, String deviceToken) {
 		String newToken = null;
 		List<SysUser> users;	
 
@@ -80,14 +80,19 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 			if (updateToken || StringUtils.isEmpty(user.getAuthToken())) {
 				user.setAuthToken(newToken);
 			}
+			
+			user.setDeviceType(deviceType);
+			if (deviceToken != null) {
+				user.setDeviceToken(deviceToken);
+			}
 			user.setLastLoginTime(new Date());
 			saveOrUpdate(user);
 		} 
 		return user;
 	}
 	@Override
-	public SysUser loginPers(String phone, String password) {
-		return loginPers(phone, password, true);
+	public SysUser loginPers(String phone, String password, String deviceType, String deviceToken) {
+		return loginPers(phone, password, true, deviceType, deviceToken);
 	}
 	
 	@Override

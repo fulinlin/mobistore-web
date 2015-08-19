@@ -132,6 +132,15 @@ public class SysUser extends IdEntity {
      * 电话
      */
     private String tel;
+    
+    /**
+     * 当前登录的设备类型
+     */
+    String deviceType;
+    /**
+     * 友盟设备Token
+     */
+    String deviceToken;
    
     /**
      * 是否企业
@@ -227,6 +236,22 @@ public class SysUser extends IdEntity {
 
 	public void setLastLoginTime(Date lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
+	}
+
+	public String getDeviceToken() {
+		return deviceToken;
+	}
+
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
+	}
+
+	public String getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
 	}
 
 }

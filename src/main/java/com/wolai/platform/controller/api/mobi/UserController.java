@@ -103,13 +103,18 @@ public class UserController extends BaseController{
 		
 		String phone = json.get("phone");
 		String password = json.get("password");
-		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password)) {
+		String deviceType = json.get("deviceType");
+		String deviceToken = json.get("deviceToken");
+		
+		if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) || StringUtils.isEmpty(deviceToken)
+				 || StringUtils.isEmpty(deviceType) 
+				 || (!Constant.DEVICE_TYPE_IOS.equals(deviceType.trim().toLowerCase()) && !Constant.DEVICE_TYPE_ANDROID.equals(deviceType.trim().toLowerCase()))) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
 
-		SysUser user = userService.loginPers(phone, password);
+		SysUser user = userService.loginPers(phone, password, deviceType.trim().toLowerCase(), deviceToken);
 		if (user != null) {
 			ret.put("token", user.getAuthToken());
 			

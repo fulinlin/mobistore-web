@@ -93,6 +93,12 @@ public final class Constant {
     public static final String REQUEST_PARINGLOTID = "parkingLotId";
     
     /**
+     * 设备类型
+     */
+    public static final String DEVICE_TYPE_IOS="ios";
+    public static final String DEVICE_TYPE_ANDROID="android";
+    
+    /**
      * 排序方向-升序
      */
     public static final String ORDER_BY_ASC = "asc"; 
