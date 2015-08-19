@@ -21,12 +21,10 @@ public class PushUtil {
 
 	private String appkey = null;
 	private String appMasterSecret = null;
-	private String timestamp = null;
 
 	public PushUtil(String key, String secret) {
 		appkey = key;
 		appMasterSecret = secret;
-		timestamp = Integer.toString((int) (System.currentTimeMillis() / 1000));
 	}
 
 	/**
@@ -39,7 +37,7 @@ public class PushUtil {
 			AndroidBroadcast broadcast = new AndroidBroadcast();
 			broadcast.setAppMasterSecret(appMasterSecret);
 			broadcast.setPredefinedKeyValue("appkey", this.appkey);
-			broadcast.setPredefinedKeyValue("timestamp", this.timestamp);
+			broadcast.setPredefinedKeyValue("timestamp", Integer.toString((int) (System.currentTimeMillis() / 1000)));
 			
 			broadcast.setPredefinedKeyValue("display_type", "message");
 			broadcast.setPredefinedKeyValue("custom", msg);
@@ -63,7 +61,7 @@ public class PushUtil {
 		try {
 			unicast.setAppMasterSecret(appMasterSecret);
 			unicast.setPredefinedKeyValue("appkey", this.appkey);
-			unicast.setPredefinedKeyValue("timestamp", this.timestamp);
+			unicast.setPredefinedKeyValue("timestamp", Integer.toString((int) (System.currentTimeMillis() / 1000)));
 	
 			unicast.setPredefinedKeyValue("device_tokens", deviceTokens);
 			unicast.setPredefinedKeyValue("display_type", "message");
@@ -76,54 +74,43 @@ public class PushUtil {
 		}
 	}
 
-	/**
-	 * 发送iOS广播消息
-	 * 
-	 * @param deviceTokens	必填 友盟设备编号
-	 * @param alert 提示消息
-	 * @throws Exception
-	 */
-	public void sendIOSBroadcast(String alert) {
+	public void sendIosBroadcast(String msg) {
 		IOSBroadcast broadcast = new IOSBroadcast();
-		
+
 		try {
 			broadcast.setAppMasterSecret(appMasterSecret);
 			broadcast.setPredefinedKeyValue("appkey", this.appkey);
-			broadcast.setPredefinedKeyValue("timestamp", this.timestamp);
+			broadcast.setPredefinedKeyValue("timestamp", Integer.toString((int) (System.currentTimeMillis() / 1000)));
 	
-			broadcast.setPredefinedKeyValue("alert", alert);
-			broadcast.setPredefinedKeyValue("badge", 1);
-			broadcast.setPredefinedKeyValue("sound", "default");
-			
+			broadcast.setPredefinedKeyValue("alert", msg);
+			broadcast.setPredefinedKeyValue("badge", 0);
+			broadcast.setPredefinedKeyValue("sound", "chime");
+			// TODO set 'production_mode' to 'true' if your app is under production mode
 			broadcast.setPredefinedKeyValue("production_mode", "true");
-			
+			// Set customized fields
+			broadcast.setCustomizedField("test", "helloworld");
 			broadcast.send();
 		} catch (Exception e) {
 			log.error(e.getStackTrace());
 		}
 	}
-
-	/**
-	 * 发送iOS单播消息
-	 * 
-	 * @param deviceTokens	必填 友盟设备编号
-	 * @param alert 提示消息
-	 * @throws Exception
-	 */
-	public void sendIOSUnicast(String deviceTokens, String msg) {
+	
+	public void sendIosUnicast(String deviceTokens, String msg) {
 		IOSUnicast unicast = new IOSUnicast();
 		
 		try {
 			unicast.setAppMasterSecret(appMasterSecret);
 			unicast.setPredefinedKeyValue("appkey", this.appkey);
-			unicast.setPredefinedKeyValue("timestamp", this.timestamp);
-			
+			unicast.setPredefinedKeyValue("timestamp", Integer.toString((int) (System.currentTimeMillis() / 1000)));
+			// TODO Set your device token
 			unicast.setPredefinedKeyValue("device_tokens", deviceTokens);
 			unicast.setPredefinedKeyValue("alert", msg);
-			unicast.setPredefinedKeyValue("badge", 1);
-			unicast.setPredefinedKeyValue("sound", "default");
+			unicast.setPredefinedKeyValue("badge", 0);
+			unicast.setPredefinedKeyValue("sound", "chime");
+			// TODO set 'production_mode' to 'true' if your app is under production mode
 			unicast.setPredefinedKeyValue("production_mode", "true");
-
+			// Set customized fields
+			unicast.setCustomizedField("test", "helloworld");
 			unicast.send();
 		} catch (Exception e) {
 			log.error(e.getStackTrace());
@@ -137,13 +124,14 @@ public class PushUtil {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) {
-		PushUtil demo = new PushUtil(APP_KEY_ANDROID, APP_SECRET_ANDROID);
+		PushUtil android = new PushUtil(APP_KEY_ANDROID, APP_SECRET_ANDROID);
+		PushUtil ios = new PushUtil(APP_KEY_IOS, APP_SECRET_IOS);
 		try {
-			demo.sendAndroidBroadcastMsg("消息");
-			demo.sendAndroidUnicastMsg("XXX", "消息");
+			android.sendAndroidBroadcastMsg("消息");
+//			android.sendAndroidUnicastMsg("XXX", "消息");
 
-			demo.sendIOSBroadcast("消息");
-			demo.sendIOSUnicast("XXX", "消息");
+			ios.sendIosBroadcast("消息");
+//			ios.sendIOSUnicast("XXX", "消息");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

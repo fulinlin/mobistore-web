@@ -82,7 +82,7 @@ public class SysMessageController extends BaseController {
 		}
 		msgService.sendAppMsg(sysMessage.getTitle());
 		PushUtil iosPush = new PushUtil(PushUtil.APP_KEY_IOS, PushUtil.APP_SECRET_IOS);
-		iosPush.sendIOSBroadcast(sysMessage.getContent());
+		iosPush.sendIosBroadcast(sysMessage.getContent());
 		sysMessage.setPublished(true);
 		msgService.saveOrUpdate(sysMessage);
 		addMessage(redirectAttributes, "保存推送消息成功");
