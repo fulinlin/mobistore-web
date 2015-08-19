@@ -85,9 +85,7 @@ public class PushUtil {
 			broadcast.setPredefinedKeyValue("alert", msg);
 			broadcast.setPredefinedKeyValue("badge", 0);
 			broadcast.setPredefinedKeyValue("sound", "chime");
-			// TODO set 'production_mode' to 'true' if your app is under production mode
 			broadcast.setPredefinedKeyValue("production_mode", "true");
-			// Set customized fields
 			broadcast.setCustomizedField("test", "helloworld");
 			broadcast.send();
 		} catch (Exception e) {
@@ -102,14 +100,12 @@ public class PushUtil {
 			unicast.setAppMasterSecret(appMasterSecret);
 			unicast.setPredefinedKeyValue("appkey", this.appkey);
 			unicast.setPredefinedKeyValue("timestamp", Integer.toString((int) (System.currentTimeMillis() / 1000)));
-			// TODO Set your device token
 			unicast.setPredefinedKeyValue("device_tokens", deviceTokens);
 			unicast.setPredefinedKeyValue("alert", msg);
 			unicast.setPredefinedKeyValue("badge", 0);
 			unicast.setPredefinedKeyValue("sound", "chime");
-			// TODO set 'production_mode' to 'true' if your app is under production mode
 			unicast.setPredefinedKeyValue("production_mode", "true");
-			// Set customized fields
+
 			unicast.setCustomizedField("test", "helloworld");
 			unicast.send();
 		} catch (Exception e) {

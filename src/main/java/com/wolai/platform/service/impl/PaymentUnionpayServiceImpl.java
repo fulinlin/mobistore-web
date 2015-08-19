@@ -36,6 +36,7 @@ import com.wolai.platform.entity.Coupon;
 import com.wolai.platform.entity.Coupon.CouponStatus;
 import com.wolai.platform.entity.UnionpayCardBound;
 import com.wolai.platform.service.CouponService;
+import com.wolai.platform.service.MsgService;
 import com.wolai.platform.service.PaymentUnionpayService;
 
 @Service
@@ -48,6 +49,9 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	
 	@Autowired
 	private CouponService couponService;
+	
+	@Autowired
+	private MsgService msgService;
 	
 	@Override
 	public UnionpayCardBound boundQueryByCard(String accNo) {
@@ -786,13 +790,21 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		Bill bill = (Bill) get(Bill.class, orderId.trim());
 		if (bill != null) {
 			bill.setTradeStatus(respCode);
+			String msg = "";
 			if ("00".equals(respCode)) {
 				bill.setPayStatus(Bill.PayStatus.SUCCESSED);
-				bill.setTradeAmount(new BigDecimal(settleAmt).divide(new BigDecimal(100)));
+				BigDecimal amount = new BigDecimal(settleAmt).divide(new BigDecimal(100));
+				bill.setTradeAmount(amount);
 				
+				msg = Constant.payment_paySuccess.replaceAll("%AMOUNT%", String.valueOf(amount.intValue()))
+						.replace("%LINCENST%", bill.getCarNo());
 			} else {
 				bill.setPayStatus(Bill.PayStatus.FEATURE);
+				msg = Constant.payment_payFail.replaceAll("%AMOUNT%", String.valueOf(bill.getPayAmount().intValue()))
+						.replace("%LINCENST%", bill.getCarNo());
 			}
+			msgService.sendAppMsg(bill.getParkingRecord().getUser(), msg);
+			
 			bill.setTradeResponseTime(new Date());
 			bill.setTradeStatus(respCode);
 			saveOrUpdate(bill);
