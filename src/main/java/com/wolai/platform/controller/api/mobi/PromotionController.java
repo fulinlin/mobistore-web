@@ -38,7 +38,7 @@ public class PromotionController extends BaseController {
 
 	@RequestMapping(value="list")
 	@ResponseBody
-	public Map<String,Object> list(HttpServletRequest request, @RequestParam String token, @RequestBody Map<String, String> json){
+	public Map<String,Object> list(HttpServletRequest request, @RequestBody Map<String, String> json){
 		if (pagingParamError(json)) {
 			return pagingParamError();
 		}

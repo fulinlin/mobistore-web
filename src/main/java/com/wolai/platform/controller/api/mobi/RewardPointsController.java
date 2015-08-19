@@ -37,7 +37,7 @@ public class RewardPointsController extends BaseController {
 		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		String userId = user.getId();
 
-		RewardPoints rewardPoints = rewardPointsService.getByUser(userId);
+		RewardPoints rewardPoints = rewardPointsService.getByUserPers(userId);
 		
 		if (rewardPoints == null) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());

@@ -51,7 +51,7 @@ public class AssetController extends BaseController {
 		long moneyCount = couponService.countMoneyByUser(userId);
 		long timeCount = couponService.countTimeByUser(userId);
 		
-		RewardPoints rewardPoints = rewardPointsService.getByUser(userId);
+		RewardPoints rewardPoints = rewardPointsService.getByUserPers(userId);
 
 		RewardPointsVo rewardPointsVo = new RewardPointsVo();
 		BeanUtilEx.copyProperties(rewardPointsVo, rewardPoints);

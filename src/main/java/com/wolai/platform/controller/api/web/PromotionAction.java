@@ -89,7 +89,7 @@ public class PromotionAction extends BaseController {
 		}
 		promotionVo.setExchangePlanList(vols);
 		
-		RewardPoints rewardPoints = rewardPointsService.getByUser(user.getId());
+		RewardPoints rewardPoints = rewardPointsService.getByUserPers(user.getId());
 		date.put("rewardPoints", rewardPoints.getBalance());
 
 		ret.put("code", RespCode.SUCCESS.Code());
@@ -151,7 +151,7 @@ public class PromotionAction extends BaseController {
 			return ret;
 		}
 		
-		RewardPoints rewardPoints = rewardPointsService.getByUser(user.getId());
+		RewardPoints rewardPoints = rewardPointsService.getByUserPers(user.getId());
 		if (rewardPoints.getBalance() <  exchangePlan.getPrice() * number) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "balance not enough");

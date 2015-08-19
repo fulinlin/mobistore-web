@@ -13,7 +13,7 @@ import com.wolai.platform.service.RewardPointsService;
 public class RewardPointsServiceImpl extends CommonServiceImpl implements RewardPointsService {
 
 	@Override
-	public RewardPoints getByUser(String userId) {
+	public RewardPoints getByUserPers(String userId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(RewardPoints.class);
 		dc.add(Restrictions.eq("userId", userId));
 		List<RewardPoints> ls = (List<RewardPoints>) findAllByCriteria(dc);
