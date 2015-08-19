@@ -1,15 +1,7 @@
 package com.wolai.platform.service.impl;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,9 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.unionpay.acp.sdk.LogUtil;
-import com.unionpay.acp.sdk.SDKConstants;
-import com.unionpay.acp.sdk.SDKUtil;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.HttpServerConstants;
 import com.wolai.platform.entity.Bill;
@@ -34,6 +23,7 @@ import com.wolai.platform.entity.SysAPIKey;
 import com.wolai.platform.service.ApiKeyService;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.CouponService;
+import com.wolai.platform.service.MsgService;
 import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.util.Encodes;
 import com.wolai.platform.util.StringUtil;
@@ -53,6 +43,9 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	
 	@Autowired
 	CouponService couponService;
+	
+	@Autowired
+	private MsgService msgService;
 	
 	@Override
 	public Bill createBillIfNeededPersAndUpdateCouponPers(ParkingRecord parking, String couponId, boolean isPostPay, PayType payType) {
@@ -126,12 +119,20 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		bill.setPaytype(payType);
 		bill.setTradeStatus(trade_status);
 		bill.setTradeAmount(new BigDecimal(alipayTotal));
+		
+		String msg = "";
 		if ("TRADE_SUCCESS".equals(trade_status)) {
 			bill.setPayStatus(PayStatus.SUCCESSED);
 			
+			msg = Constant.payment_paySuccess.replaceAll("%AMOUNT%", alipayTotal)
+					.replace("%LINCENST%", bill.getCarNo());
 		} else {
 			bill.setPayStatus(PayStatus.FEATURE);
+			msg = Constant.payment_payFail.replaceAll("%AMOUNT%", String.valueOf(bill.getPayAmount().intValue()))
+					.replace("%LINCENST%", bill.getCarNo());
 		}
+		msgService.sendAppMsg(bill.getParkingRecord().getUser(), msg);
+		
 		bill.setTradeResponseTime(new Date());
 		
 		saveOrUpdate(bill);
