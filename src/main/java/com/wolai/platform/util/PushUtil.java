@@ -27,53 +27,6 @@ public class PushUtil {
 		appkey = key;
 		appMasterSecret = secret;
 	}
-
-//	/**
-//	 * 发送Android广播消息
-//	 * 
-//	 * @param msg	消息内容
-//	 */
-//	public void sendAndroidBroadcastMsg(String msg) {
-//		try {
-//			AndroidBroadcast broadcast = new AndroidBroadcast();
-//			broadcast.setAppMasterSecret(appMasterSecret);
-//			broadcast.setPredefinedKeyValue("appkey", this.appkey);
-//			broadcast.setPredefinedKeyValue("timestamp", Integer.toString((int) (System.currentTimeMillis() / 1000)));
-//			
-//			broadcast.setPredefinedKeyValue("display_type", "message");
-//			broadcast.setPredefinedKeyValue("custom", msg);
-//
-//			broadcast.setPredefinedKeyValue("production_mode", "true");
-//			
-//			broadcast.send();
-//		} catch (Exception e) {
-//			log.error(e.getStackTrace());
-//		}
-//	}
-//	
-//	/**
-//	 * 发送Android单播消息
-//	 * @param deviceTokens 设备tokens
-//	 * @param msg	消息内容
-//	 */
-//	public void sendAndroidUnicastMsg(String msg, String deviceTokens) {
-//		AndroidUnicast unicast = new AndroidUnicast();
-//		
-//		try {
-//			unicast.setAppMasterSecret(appMasterSecret);
-//			unicast.setPredefinedKeyValue("appkey", this.appkey);
-//			unicast.setPredefinedKeyValue("timestamp", Integer.toString((int) (System.currentTimeMillis() / 1000)));
-//	
-//			unicast.setPredefinedKeyValue("device_tokens", deviceTokens);
-//			unicast.setPredefinedKeyValue("display_type", "message");
-//			
-//			unicast.setPredefinedKeyValue("production_mode", "true");
-//
-//			unicast.send();
-//		} catch (Exception e) {
-//			log.error(e.getStackTrace());
-//		}
-//	}
 	
 	/**
 	 * 发送Android广播消息
@@ -122,7 +75,7 @@ public class PushUtil {
 	 * @param activity	可选 当"after_open"为"go_activity"时，必填。 通知栏点击后打开的Activity
 	 * @throws Exception
 	 */
-	public void sendAndroidUnicastMsg(String title, String msg, String deviceTokens) {
+	public void sendAndroidUnicastMsg(String deviceTokens, String title, String msg) {
 		try {
 			AndroidUnicast unicast = new AndroidUnicast();
 			unicast.setAppMasterSecret(appMasterSecret);
@@ -195,7 +148,7 @@ public class PushUtil {
 		PushUtil android = new PushUtil(APP_KEY_ANDROID, APP_SECRET_ANDROID);
 		PushUtil ios = new PushUtil(APP_KEY_IOS, APP_SECRET_IOS);
 		try {
-//			android.sendAndroidBroadcastMsg(Constant.payment_paySuccess_title, Constant.payment_paySuccess_msg);
+//			android.sendAndroidBroadcastMsg(Constant.payment_paySuccess_title, Constant.payment_paySuccess_msg_short);
 			android.sendAndroidUnicastMsg("Ao4_4KaT40Rj_sfLHA8AIX0u8_Wr6CmcfoQi33M-qO8A", 
 					Constant.payment_paySuccess_title, Constant.payment_paySuccess_msg_short);
 
