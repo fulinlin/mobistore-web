@@ -39,8 +39,14 @@ public final class Constant {
 	
 	public static final  String payment_productionName = "停车费";
 	public static final  String payment_productionDesrcription = "喔来停车费";
-	public static final  String payment_paySuccess = "[喔来智能停车]您已成功支付%AMOUNT%元停车费，车牌号%LINCENST%。";
-	public static final  String payment_payFail = "[喔来智能停车]%AMOUNT%元停车费支付失败，车牌号%LINCENST%。";
+	
+	public static final  String payment_paySuccess_title = "[喔来智能停车]支付成功";
+	public static final  String payment_paySuccess_msg_short = "您已成功支付%AMOUNT%元停车费，车牌号%LINCENST%。";
+	public static final  String payment_payFail_title = "[喔来智能停车]支付失败";
+	public static final  String payment_payFail_msg_short = "%AMOUNT%元停车费支付失败，车牌号%LINCENST%。";
+	
+	public static final  String payment_paySuccess_full = "[喔来智能停车]" + Constant.payment_paySuccess_msg_short;
+	public static final  String payment_payFail_full = "[喔来智能停车]" + Constant.payment_payFail_msg_short;
 	
 	public static final  String alipay_partnerId = "2088021183682236";
 	public static final  String alipay_partnerPrivKey = "MIICWwIBAAKBgQC2QclvVe6hggoS/O0zkExy8VWqc+xCKl89OhU68Lf12ZJErxZXAX98G/vkmXQi7tgD7F77eXxQNRqkzcMIxdPCoZFoF77idC2l4L0jo6nX7LiibaDkEOrn41zH1hO+PuoTOYGs4cie6mdkVivakn1FLQU1BspYq0l6qZjIZ3PRHQIDAQABAoGAbtEBUZjGR51x0qnG8BtE4H6sv79MX86zqd6vGe9Ta0CnFuv+gVh/006QkiZb3wGqhngqKG1tkLc5RAt4EtV2M1Jn8qdUmCaFvKtjUKKDaDgUzLZtyMx0LOsAQQ3h8W2Ov6XPnT7u2GistXaTeGNEt8QK9zAbK1Uv84UHUbf7+mECQQDiA6wBwGVazrmXqSQlH3W+KByRV8P99lC6UKWqfv66LoFlQQVHh0wCRhsRfZGa6WGzTpa57v/K+xhKyGBnbip3AkEAzm/xv0uIl3UAoXpnLC3n49rccNp55g4tMELKwkC4on1L5vcWoDDUh18GH/qCy3/GBWNje/ie0qpTbwlpZGlyCwJAHlS10apbL7uMZpD5W84EBBfn9Y1crQlQPiCyitXuI1g4XzlBlx7OEYQM/+TlFG/7f4+tZJhxVXErCmYnodnD8wJALsoEmvz9uoZUXEUn+UV2V5iVeiaqllAEQfoBhsGwl3OaroC2ahxnLz+EXd8joggV08bRF5okNU9RlcsmThHwPQJANDEP8MbzBT6u5+lFpBaaiye7BtJEcsmQRNgJmtPyvGAJlRFk3ghsW1U/Tgz/5YevkZujao0yHYCwPUgfaaV+yQ==";	

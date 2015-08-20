@@ -80,7 +80,7 @@ public class SysMessageController extends BaseController {
 		if (!beanValidator(model, sysMessage)){
 			return form(sysMessage, model);
 		}
-		msgService.sendAppMsg(sysMessage.getTitle());
+		msgService.sendAppMsg(sysMessage.getTitle(), "-", sysMessage.getTitle());
 		PushUtil iosPush = new PushUtil(PushUtil.APP_KEY_IOS, PushUtil.APP_SECRET_IOS);
 		iosPush.sendIosBroadcast(sysMessage.getContent());
 		sysMessage.setPublished(true);

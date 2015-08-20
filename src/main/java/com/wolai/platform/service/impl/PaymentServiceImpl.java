@@ -120,18 +120,27 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		bill.setTradeStatus(trade_status);
 		bill.setTradeAmount(new BigDecimal(alipayTotal));
 		
-		String msg = "";
+		String title = "";
+		String msgShort = "";
+		String msgFull = "";
 		if ("TRADE_SUCCESS".equals(trade_status)) {
 			bill.setPayStatus(PayStatus.SUCCESSED);
 			
-			msg = Constant.payment_paySuccess.replaceAll("%AMOUNT%", alipayTotal)
+			title = Constant.payment_paySuccess_title;
+			msgShort = Constant.payment_paySuccess_msg_short.replaceAll("%AMOUNT%", alipayTotal)
+					.replace("%LINCENST%", bill.getCarNo());
+			msgFull = Constant.payment_paySuccess_full.replaceAll("%AMOUNT%", alipayTotal)
 					.replace("%LINCENST%", bill.getCarNo());
 		} else {
 			bill.setPayStatus(PayStatus.FEATURE);
-			msg = Constant.payment_payFail.replaceAll("%AMOUNT%", String.valueOf(bill.getPayAmount().intValue()))
+			
+			title = Constant.payment_payFail_title;
+			msgShort = Constant.payment_payFail_msg_short.replaceAll("%AMOUNT%", String.valueOf(bill.getPayAmount().intValue()))
+					.replace("%LINCENST%", bill.getCarNo());
+			msgFull = Constant.payment_payFail_full.replaceAll("%AMOUNT%", String.valueOf(bill.getPayAmount().intValue()))
 					.replace("%LINCENST%", bill.getCarNo());
 		}
-		msgService.sendAppMsg(bill.getParkingRecord().getUser(), msg);
+		msgService.sendAppMsg(bill.getParkingRecord().getUser(), title, msgShort, msgFull);
 		
 		bill.setTradeResponseTime(new Date());
 		

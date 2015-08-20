@@ -37,17 +37,17 @@ public class MsgServiceImpl extends CommonServiceImpl implements MsgService {
 	}
 	
 	@Override
-	public void sendAppMsg(SysUser user, String msg) {
+	public void sendAppMsg(SysUser user, String title, String msgShort, String msgFull) {
 		if (Constant.DEVICE_TYPE_ANDROID.equals(user.getDeviceType())) {
-			getAndroidSendor().sendAndroidUnicastMsg(user.getDeviceToken(), msg);
+			getAndroidSendor().sendAndroidUnicastMsg(user.getDeviceToken(), title, msgShort);
 		} else if (Constant.DEVICE_TYPE_IOS.equals(user.getDeviceType())) {
-			getIosSendor().sendIosUnicast(user.getDeviceToken(), msg);
+			getIosSendor().sendIosUnicast(user.getDeviceToken(), msgFull);
 		}		
 	}
 	@Override
-	public void sendAppMsg(String msg) {
-		getAndroidSendor().sendAndroidBroadcastMsg(msg);
-		getIosSendor().sendIosBroadcast(msg);
+	public void sendAppMsg(String title, String msgShort, String msgFull) {
+		getAndroidSendor().sendAndroidBroadcastMsg(title, msgShort);
+		getIosSendor().sendIosBroadcast(msgFull);
 	}
 
 	private PushUtil getAndroidSendor() {

@@ -790,20 +790,30 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 		Bill bill = (Bill) get(Bill.class, orderId.trim());
 		if (bill != null) {
 			bill.setTradeStatus(respCode);
-			String msg = "";
+			
+			String title = "";
+			String msgShort = "";
+			String msgFull = "";
 			if ("00".equals(respCode)) {
 				bill.setPayStatus(Bill.PayStatus.SUCCESSED);
 				BigDecimal amount = new BigDecimal(settleAmt).divide(new BigDecimal(100));
 				bill.setTradeAmount(amount);
 				
-				msg = Constant.payment_paySuccess.replaceAll("%AMOUNT%", String.valueOf(amount.intValue()))
+				title = Constant.payment_paySuccess_title;
+				msgShort = Constant.payment_paySuccess_msg_short.replaceAll("%AMOUNT%", String.valueOf(amount.intValue()))
+						.replace("%LINCENST%", bill.getCarNo());
+				msgFull = Constant.payment_paySuccess_full.replaceAll("%AMOUNT%", String.valueOf(amount.intValue()))
 						.replace("%LINCENST%", bill.getCarNo());
 			} else {
 				bill.setPayStatus(Bill.PayStatus.FEATURE);
-				msg = Constant.payment_payFail.replaceAll("%AMOUNT%", String.valueOf(bill.getPayAmount().intValue()))
+				
+				title = Constant.payment_payFail_title;
+				msgShort = Constant.payment_payFail_msg_short.replaceAll("%AMOUNT%", String.valueOf(bill.getPayAmount().intValue()))
+						.replace("%LINCENST%", bill.getCarNo());
+				msgFull = Constant.payment_payFail_full.replaceAll("%AMOUNT%", String.valueOf(bill.getPayAmount().intValue()))
 						.replace("%LINCENST%", bill.getCarNo());
 			}
-			msgService.sendAppMsg(bill.getParkingRecord().getUser(), msg);
+			msgService.sendAppMsg(bill.getParkingRecord().getUser(), title, msgShort, msgFull);
 			
 			bill.setTradeResponseTime(new Date());
 			bill.setTradeStatus(respCode);
