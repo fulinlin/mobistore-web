@@ -33,8 +33,10 @@ public class SysListener extends HttpServlet implements ServletContextListener {
 			
 			String webRoot = prop.getProperty("web.root");
 			String webUri = prop.getProperty("web.uri");
+			String clientRoot = prop.getProperty("client.root");
 			Constant.WEB_ROOT = webRoot;
 			Constant.WEB_PATH = Constant.WEB_ROOT + webUri;
+			Constant.CLIENT_ROOT = clientRoot;
         } catch (IOException e) {
 			e.printStackTrace();
 		}

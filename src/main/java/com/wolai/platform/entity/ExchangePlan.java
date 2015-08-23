@@ -148,7 +148,7 @@ public class ExchangePlan extends IdEntity {
 	/**
 	 * 限制次数
 	 */
-	private Integer timesLimit;
+	private Integer timesLimit = 1;
 	
 	/**
 	 * 获奖概率

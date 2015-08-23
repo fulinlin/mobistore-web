@@ -212,7 +212,7 @@ public class WebUtils {
     public static HttpServletResponse AddCorsSupport(ServletResponse response) {
     	HttpServletResponse res = (HttpServletResponse) response;
     	
-    	res.addHeader("Access-Control-Allow-Origin", Constant.WEB_ROOT);
+    	res.addHeader("Access-Control-Allow-Origin", Constant.CLIENT_ROOT);
     	res.addHeader("Access-Control-Allow-Credentials", "true");
         
     	res.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");

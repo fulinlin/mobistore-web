@@ -14,6 +14,7 @@ package com.wolai.platform.constant;
 public final class Constant {
 	public static String WEB_ROOT = "__UNKNOW__";
 	public static String WEB_PATH = "__UNKNOW__";
+	public static String CLIENT_ROOT = "__UNKNOW__"; // 促销WebApp地址
 	
 	public static String THIRD_PART_SERVER = "__UNKNOW__";
 	
