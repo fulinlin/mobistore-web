@@ -79,11 +79,16 @@ angular.module('wolaiMobiApp')
 		
 	$scope.change = function() {
 		if ($scope.exNumber > $scope.max) {
-			$scope.exNumber = $scope.max;
+			// $scope.exNumber = $scope.max;
 		}
 	}
 	$scope.submit = function() {
 		if (!$scope.exNumber) {
+			alert('请输入兑换数量！');
+			return;
+		}
+		if ($scope.exNumber > $scope.max) {
+			alert('积分不足！');
 			return;
 		}
 		$http({
@@ -116,6 +121,7 @@ angular.module('wolaiMobiApp')
 	.controller('SnapupCtrl', ['$rootScope', '$scope', '$http', 'Constant', 'UrlUtil', 
 	            function ($rootScope, $scope, $http, Constant, UrlUtil) {
 		$scope.complete = false;
+		$scope.alreadSnapup = false;
 		
 		$scope.initData = function() {
 			$scope.exchangePlan = $rootScope.promotion.exchangePlanList[0];
@@ -134,16 +140,19 @@ angular.module('wolaiMobiApp')
 				},
 				data:  {id:$rootScope.promotionId}
 			}).success(function(json) {
-				console.log(json.data);
-			    $rootScope.promotion = json.data.promotion;
+				console.log(json);
+				$rootScope.promotion = json.data.promotion;
 			    $rootScope.rewardPoints = json.data.rewardPoints;
 			    
 			    $scope.initData();
+			    
+				if (json.code < 0) {
+					$scope.alreadSnapup = true;
+				}
 			});
 		} else {
 			$scope.initData();
 		}
-		
 
 		$scope.submit = function() {
 			$http({
@@ -156,7 +165,6 @@ angular.module('wolaiMobiApp')
 					exchangePlanId: $scope.exchangePlan.id
 				}
 			}).success(function(json) {
-				
 				if (json.code < 0) {
 					alert('每人只有' + json.timeLimit + '次领取机会！');
 					return;
@@ -165,6 +173,7 @@ angular.module('wolaiMobiApp')
 					$scope.remain = json.remain;
 				}
 				$scope.complete = true;
+				$scope.alreadSnapup = true;
 		    });
 		}
 }]);

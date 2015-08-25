@@ -76,11 +76,10 @@ public class PromotionAction extends BaseController {
 		}
 
 		List<ExchangePlan> exchanges = exchangePlanService.listByPromotion(promotion.getId());
-
 		PromotionVo promotionVo = new PromotionVo();
 		BeanUtilEx.copyProperties(promotionVo, promotion);
 		date.put("promotion", promotionVo);
-
+		
 		List<ExchangePlanVo> vols = new ArrayList<ExchangePlanVo>();
 		for (ExchangePlan po : exchanges) {
 			ExchangePlanVo vo = new ExchangePlanVo();
@@ -91,7 +90,22 @@ public class PromotionAction extends BaseController {
 		
 		RewardPoints rewardPoints = rewardPointsService.getByUserPers(user.getId());
 		date.put("rewardPoints", rewardPoints.getBalance());
-
+		
+		// 检查是否已经领取
+		ExchangeHistory exchangePlanHistory = exchangeHistoryService.getHistoryPers(user.getId(), exchanges.get(0).getId());
+		Integer timesLimit = exchanges.get(0).getTimesLimit();
+		if (timesLimit == null) {
+			timesLimit = 1;
+		}
+		if (exchangePlanHistory.getTimes() >= timesLimit) {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("timeLimit", timesLimit);
+			ret.put("msg", "only " + timesLimit + " times allow");
+			
+			date.put("promotion", promotionVo);
+			return ret;
+		}
+		
 		ret.put("code", RespCode.SUCCESS.Code());
 
 		return ret;
@@ -219,7 +233,7 @@ public class PromotionAction extends BaseController {
 			timesLimit = 1;
 		}
 		if (exchangePlanHistory.getTimes() >= timesLimit) {
-			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("code", RespCode.BIZ_FAIL.Code());
 			ret.put("timeLimit", timesLimit);
 			ret.put("msg", "only " + timesLimit + " times allow");
 			return ret;

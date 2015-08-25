@@ -10,7 +10,7 @@
 			<div class="carinfos">
 				<div ng-hide="!complete">
 					<p>您已获得1张{{faceValue}}元代金券</p>
-					<p>赶紧去享受吧！</p>
+					<p>赶紧去享用吧！</p>
 				</div>
 				<div ng-hide="complete">
 					<p>服务超级棒的喔来停车</p>
@@ -20,8 +20,13 @@
 		</li>
 		<li class="middle">
 			<form>
-				<p class="pt10"><input ng-click="submit()" class="btn btn-shadow" value="领取代金券" readonly="readonly"></p>
-				<p class="pt10">仅剩余{{remain}}张</p>
+				<p ng-hide="alreadSnapup" class="pt10">
+					<input ng-click="submit()" class="btn btn-shadow" value="领取代金券" readonly="readonly">
+				</p>
+				<p ng-hide="!alreadSnapup" class="pt10">
+					<input class="btn btn-shadow" value="代金券已领取" readonly="readonly">
+				</p>
+				<p class="pt10">剩余{{remain}}张</p>
 			</form>
 		</li>
 		<li class="bottom">
