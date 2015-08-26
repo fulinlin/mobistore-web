@@ -61,8 +61,19 @@ public class EncodeUtils {
     }
     
     public static void main(String args[]){
-    	// 请将银联卡绑定的请求JSON对象参数设置为: {"sign": "I6ImFjYy1ubyIsICJjZXJ0aWZJZCI6ImNlcnRpZi1pZCIsICJjdm4iOiJjdm4iLCJl..."}
-    	// 服务器端会取出sign键对应的值，进行解密
+    	// 银联卡绑定请求
+    	//   App客户端加密规则为：
+    	//     1. 对JSON字符串"{"accNo":"acc-no", "certifId":"certif-id", "cvn":"cvn","expired":"expired"}"进行BASE64编码
+    	//     2. 对BASE64编码的字符串进行简单移位，前10位和11位开始的后面所有位，进行位置调换
+    	//     Android直接调用sign方法，iOS请自己实现
+    	//
+    	//   App客户端JSON对象参数格式为: 
+    	//     {"sign": "I6ImFjYy1ubyIsICJjZXJ0aWZJZCI6ImNlcnRpZi1pZCIsICJjdm4iOiJjdm4iLCJl..."}
+    	//     服务器端会取出sign键对应的值，进行解密。
+    	
+    	// AliPay接口响应
+    	//   App客户端对partnerPrivKey字段进行解密
+    	//     Android直接调用unSign方法，iOS请自己实现
     	
     	String params = "{\"accNo\":\"acc-no\", \"certifId\":\"certif-id\", \"cvn\":\"cvn\",\"expired\":\"expired\"}";
     	System.out.println("原文:"+params);
