@@ -2,8 +2,12 @@ package com.wolai.platform.util;
 
 import java.io.IOException;
 
+import com.alibaba.fastjson.JSONObject;
+
 
 public class EncodeUtils {
+	public static int OFFSET = 10;
+	
 	/**
 	 * Base64解码.
 	 */
@@ -24,12 +28,13 @@ public class EncodeUtils {
 		return new sun.misc.BASE64Encoder().encode(bstr);  
 	} 
 	
-    public static String Confuse(String str){
-    	str = str.substring(10, str.length()) + str.substring(0,10);
+	// 前十位和后面所有位调换位置
+    private static String Confuse(String str){
+    	str = str.substring(OFFSET, str.length()) + str.substring(0,OFFSET);
     	return str;
     }
-    public static String UnConfuse(String str){
-    	str = str.substring(str.length()-10, str.length()) + str.substring(0, str.length() - 10);
+    private static String UnConfuse(String str){
+    	str = str.substring(str.length()-OFFSET, str.length()) + str.substring(0, str.length() - OFFSET);
     	return str;
     }
     
@@ -50,17 +55,27 @@ public class EncodeUtils {
      * @param source
      * @return
      */
-    public static String getJsonString(String source){
+    public static String unSign(String source){
     	String base64 = EncodeUtils.UnConfuse(source);
     	return new String(decodeBase64(base64));
     }
     
     public static void main(String args[]){
-    	String params = "{\"id\":\"123456\"}";
+    	// 请将银联卡绑定的请求JSON对象参数设置为: {"sign": "I6ImFjYy1ubyIsICJjZXJ0aWZJZCI6ImNlcnRpZi1pZCIsICJjdm4iOiJjdm4iLCJl..."}
+    	// 服务器端会取出sign键对应的值，进行解密
+    	
+    	String params = "{\"accNo\":\"acc-no\", \"certifId\":\"certif-id\", \"cvn\":\"cvn\",\"expired\":\"expired\"}";
     	System.out.println("原文:"+params);
     	String encodes = EncodeUtils.sign(params);
     	System.out.println("加密后:"+encodes);
     	
-    	System.out.println("解密:"+EncodeUtils.getJsonString(encodes));
+    	String str = EncodeUtils.unSign(encodes);
+    	System.out.println("解密后:" + str);
+    	
+    	JSONObject jsonObj = JSONObject.parseObject(str);
+    	System.out.println("转换后:" + jsonObj.getString("accNo"));
+    	System.out.println("转换后:" + jsonObj.getString("certifId"));
+    	System.out.println("转换后:" + jsonObj.getString("cvn"));
+    	System.out.println("转换后:" + jsonObj.getString("expired"));
     }
 }

@@ -28,6 +28,7 @@ import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.ParkingService;
 import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.service.UserService;
+import com.wolai.platform.util.EncodeUtils;
 import com.wolai.platform.util.StringUtil;
 import com.wolai.platform.vo.AlipayVo;
 
@@ -88,7 +89,7 @@ public class PaymentAlipayController extends BaseController {
 		if (clientType != null && "ios".equals(clientType.toLowerCase())) {
 			key = Constant.alipay_partnerPrivKey_pkcs8;
 		}
-//		key = StringUtil.Confuse(key);
+		key = EncodeUtils.sign(key);
 		alipayVo.setPartnerPrivKey(key);
 		
 		ret.put("code", RespCode.SUCCESS.Code());

@@ -43,6 +43,7 @@ import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.service.PaymentUnionpayService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
+import com.wolai.platform.util.EncodeUtils;
 import com.wolai.platform.util.Encodes;
 import com.wolai.platform.util.FileUtils;
 import com.wolai.platform.util.IdGen;
@@ -111,13 +112,13 @@ public class PaymentUnionpayDelegateController extends BaseController {
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
 		String sign = json.get("sign");
+		String unSign = EncodeUtils.unSign(sign);
+		JSONObject jsonObj = JSONObject.parseObject(unSign);
 		
-		JSONObject jsonObject = Encodes.getObject(sign);
-		String accNo = jsonObject.getString("accNo");
-		String certifId = jsonObject.getString("certifId");
-		String cvn = jsonObject.getString("cvn");
-		String expired = jsonObject.getString("expired");
-		
+		String accNo = jsonObj.getString("accNo");
+		String certifId = jsonObj.getString("certifId");
+		String cvn = jsonObj.getString("cvn");
+		String expired = jsonObj.getString("expired");
 		
 		if (StringUtils.isEmpty(accNo) || StringUtils.isEmpty(certifId) || StringUtils.isEmpty(cvn) || StringUtils.isEmpty(expired)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
