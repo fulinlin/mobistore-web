@@ -19,9 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.wolai.platform.vo.EntranceNoticeVo;
 
 /**
  * 封装各种格式的编码解码工具类.

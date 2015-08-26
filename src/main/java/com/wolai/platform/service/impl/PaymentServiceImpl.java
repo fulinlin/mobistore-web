@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.HttpServerConstants;
 import com.wolai.platform.entity.Bill;
@@ -210,7 +211,8 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 			log.info("===请求新利泊计费服务===");
 			log.info(vo.toString());
 			String result = WebClientUtil.post(Constant.THIRD_PART_SERVER + HttpServerConstants.POST_PAY_QUERY, JSON.toJSONString(vo));
-			response = Encodes.getRequestParameter(PayQueryResponseVo.class, result);
+			JSONObject json = JSONObject.parseObject(result);
+			response =JSON.parseObject(Encodes.getObject(json.getString("sign")).toJSONString(), PayQueryResponseVo.class);
 			log.info(response.toString());
 		} catch(Exception e){
 			log.info(e.getStackTrace().toString());
