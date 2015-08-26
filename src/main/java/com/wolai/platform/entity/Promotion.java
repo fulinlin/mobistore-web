@@ -35,12 +35,12 @@ public class Promotion extends IdEntity {
   		/**
   		 * 领券
   		 */
-  		SNAPUP_FREE("SNAPUP_FREE","领券"),
+  		SNAPUP_FREE("SNAPUP_FREE","领券");
   		
   		/**
   		 * 抽奖luck draw
   		 */
-  		LUCK_DRAW("LUCK_DRAW","抽奖");
+//  		LUCK_DRAW("LUCK_DRAW","抽奖");
   		
   		
   		private ExchangeCode(String textVal,String textLable){

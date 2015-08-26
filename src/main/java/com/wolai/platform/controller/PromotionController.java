@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolai.platform.config.SystemConfig;
+import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.Promotion;
 import com.wolai.platform.entity.Promotion.ExchangeCode;
 import com.wolai.platform.entity.Promotion.PromotionLimitType;
@@ -79,6 +80,17 @@ public class PromotionController extends BaseController {
 		if (!beanValidator(model, promotion)){
 			return form(promotion, model);
 		}
+		
+		String path = "";
+		ExchangeCode promotionCode = promotion.getCode();
+	    if (ExchangeCode.POINTS_EXCHANGE.equals(promotionCode)) {
+	    	path = "points";
+	    } else if (ExchangeCode.SNAPUP_FREE.equals(promotionCode)) {
+	    	path = "snapup";
+	    }
+		// http://101.200.189.57:9090/wolai-web/wolai-mobi/dist/#/promotion/points
+		String url = Constant.WEB_PATH + "wolai-mobi/dist/#/promotion/" + path;
+		promotion.setUrl(url);
 		promotionService.saveOrUpdate(promotion);
 		addMessage(redirectAttributes, "保存优惠活动成功");
 		return "redirect:"+SystemConfig.getAdminPath()+"/promotion/?repage";
