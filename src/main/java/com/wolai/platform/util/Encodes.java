@@ -143,23 +143,6 @@ public class Encodes {
 		}
 	}
 	
-	public static String encodeAES(byte[] source,String key){
-		try {
-			Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_CBC);
-			Key secretKey =getAESKeyForPKCS7Padding(key);
-			//使用加密模式初始化 密钥
-			cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(IV.getBytes()));
-			byte[] encrypt = cipher.doFinal(source); //按单部分操作加密或解密数据，或者结束一个多部分操作。
-			
-			return  Base64.encodeBase64String(encrypt);
-		} catch (Exception e) {
-			if(log.isErrorEnabled()){
-				log.error(e.getMessage());
-			}
-		}
-		return "";
-	}
-	
 	public static byte[]  decodeAES(String dest,String key){
 		try {
 			Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_CBC);
@@ -197,22 +180,37 @@ public class Encodes {
 	}
 	
 	public static void main(String args[]){
-		String a = "{\"sign\":\"d7912479dddd40ffecb59b5c6cce4865a+XXT1LqrsVCbXEFX8RI0W0H6j+U0jpzzevcajKpGUS9QHy8N4QHp33SWapJ1F62ayuGQrNL18eUc+78CXuClSAojHsqGSV6f/HZox9mfmSMUmyI6mEab3/Hp0For1ppo9Sr4pk8z1u++M+pQISKcbEf+7H0yEMUDvDgmX/5Op4=\"}";
+		String a = "d7912479dddd40ffecb59b5c6cce4865a+XXT1LqrsVCbXEFX8RI0W0H6j+U0jpzzevcajKpGUS9QHy8N4QHp33SWapJ1F62ayuGQrNL18eUc+78CXuClSAojHsqGSV6f/HZox9mfmSMUmyI6mEab3/Hp0For1ppo9Sr4pk8z1u++M+pQISKcbEf+7H0yEMUDvDgmX/5Op4=";
 		Date d = new Date();
 		for(int i=0;i<10000;i++){
-			getRequestParameter(EntranceNoticeVo.class,a);
+			getObject(a);
 		}
 		Date d1 = new Date();
 		System.out.println((d1.getTime()-d.getTime()));
 	}
 	
-	public static <E> E  getRequestParameter(Class<E> voClass,String sign){
-		sign = (String) JSONObject.parseObject(sign).get("sign");
+	public static String encodeAES(byte[] source,String key){
+		try {
+			Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_CBC);
+			Key secretKey =getAESKeyForPKCS7Padding(key);
+			//使用加密模式初始化 密钥
+			cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(IV.getBytes()));
+			byte[] encrypt = cipher.doFinal(source); //按单部分操作加密或解密数据，或者结束一个多部分操作。
+			
+			return  Base64.encodeBase64String(encrypt);
+		} catch (Exception e) {
+			if(log.isErrorEnabled()){
+				log.error(e.getMessage());
+			}
+		}
+		return "";
+	}
+	public static JSONObject  getObject(String sign){
 		if(StringUtils.isNotBlank(sign)){
 			String MD5key = sign.substring(0, 32);
 			String aesKey  = MD5key.substring(0,3)+MD5key.substring(8,11)+MD5key.substring(19, 22);// 1-3,9-11,20-22
 			String jsonString=new String(Encodes.decodeAES(sign.substring(32),aesKey));
-				return JSON.parseObject(jsonString,voClass);
+				return JSONObject.parseObject(jsonString);
 		}
 		return null;
 	}

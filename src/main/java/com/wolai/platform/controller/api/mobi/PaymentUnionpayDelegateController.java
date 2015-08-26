@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.unionpay.acp.sdk.LogUtil;
 import com.unionpay.acp.sdk.SDKConstants;
 import com.unionpay.acp.sdk.SDKUtil;
@@ -42,6 +43,7 @@ import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.service.PaymentUnionpayService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.BeanUtilEx;
+import com.wolai.platform.util.Encodes;
 import com.wolai.platform.util.FileUtils;
 import com.wolai.platform.util.IdGen;
 import com.wolai.platform.vo.AlipayVo;
@@ -108,10 +110,13 @@ public class PaymentUnionpayDelegateController extends BaseController {
 	public Map<String,Object> bound(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
-		String accNo = json.get("accNo");
-		String certifId = json.get("certifId");
-		String cvn = json.get("cvn");
-		String expired = json.get("expired");
+		String sign = json.get("sign");
+		
+		JSONObject jsonObject = Encodes.getObject(sign);
+		String accNo = jsonObject.getString("accNo");
+		String certifId = jsonObject.getString("certifId");
+		String cvn = jsonObject.getString("cvn");
+		String expired = jsonObject.getString("expired");
 		
 		
 		if (StringUtils.isEmpty(accNo) || StringUtils.isEmpty(certifId) || StringUtils.isEmpty(cvn) || StringUtils.isEmpty(expired)) {
