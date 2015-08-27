@@ -87,7 +87,7 @@ body {
 			}
 			.carinfos {
 				text-align: center;
-				font-size: 18px;
+				font-size: 16px;
 				color: #fff;
 				padding-top: 4%;
 				p {
@@ -99,15 +99,18 @@ body {
 			}
 		}
 		.middle {
-			padding-top: 8%;
+			padding-top: 10px;
 			p {
 				color: #bf8a49;
 				font-size: 15px;
-				padding-top: 10px;
+				padding-top: 5px;
+				&.remain {
+					padding-top: 0px;
+				}
 				.btn {
 					width: 70%;
-					font-size: 18px;
-					height: 44px;
+					font-size: 16px;
+					height: 40px;
 					line-height: 28px;
 					padding: 1px;
 					background: #f2c980;
@@ -131,7 +134,7 @@ body {
 		.bottom {
 			padding-top: 5%;
 			p {
-				padding-top: 10px;
+				padding-top: 5px;
 				font-size: 15px;
 				a {
 					text-decoration: underline;
