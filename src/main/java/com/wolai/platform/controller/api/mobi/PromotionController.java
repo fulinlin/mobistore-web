@@ -63,7 +63,7 @@ public class PromotionController extends BaseController {
 		}
 		
 		List ls = promotionService.listRecommended();
-		for (Object obj : page.getItems()) {
+		for (Object obj : ls) {
 			Promotion promotion = (Promotion)obj;
 			PromotionVo vo = new PromotionVo();
 			BeanUtilEx.copyProperties(vo, promotion);
