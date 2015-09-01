@@ -95,7 +95,7 @@ public class PaymentWechatController extends BaseController {
 //		payVo.setPayAmount(payAmount);
 		payVo.setTotalAmount(new BigDecimal(2));
 		payVo.setPayAmount(new BigDecimal(1));
-		
+	
 		Map<String, Object> resMap;
 		try {
 			resMap = paymentWechatService.preparePay(wolaiTradeNo, payVo.getPayAmount().multiply(new BigDecimal(100)).intValue());
