@@ -96,7 +96,7 @@ public class PaymentUnionpayConsumeController extends BaseController {
 		payVo.setTotalAmount(new BigDecimal(0.02));
 		payVo.setPayAmount(new BigDecimal(0.01));
 		
-		Map<String, String> resMap = paymentUnionpayService.prepareTrans(wolaiTradeNo, payAmount.multiply(new BigDecimal(100)).intValue());
+		Map<String, String> resMap = paymentUnionpayService.prepareTrans(wolaiTradeNo, payVo.getPayAmount().multiply(new BigDecimal(100)).intValue());
 		payVo.setPayTradeNo(resMap.get("tn"));
 		
 		if ("00".equals(resMap.get("respCode"))) {

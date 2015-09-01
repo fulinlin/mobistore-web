@@ -10,8 +10,6 @@ import com.wolai.platform.entity.Bill.PayType;
 
 
 public interface PaymentService extends CommonService {
-
-	void alipayCallbackPers(Bill bill, String alipayTradeNo, String alipayTradeStatus, String alipayTotal, Bill.PayType payType);
 	Bill createBillIfNeededPersAndUpdateCouponPers(ParkingRecord parking, String couponId, boolean isPostPay, PayType payType);
 	Bill createBillIfNeededWithoutUpdateCouponPers(ParkingRecord parking, boolean isPostPay);
 	Bill releaseCashPaidCouponsPers(String billId);

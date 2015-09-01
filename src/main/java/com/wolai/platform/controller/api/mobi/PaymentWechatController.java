@@ -26,18 +26,20 @@ import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.ParkingLotService;
 import com.wolai.platform.service.ParkingService;
-import com.wolai.platform.service.PaymentAlipayService;
 import com.wolai.platform.service.PaymentService;
+import com.wolai.platform.service.PaymentWechatService;
 import com.wolai.platform.service.UserService;
 import com.wolai.platform.util.EncodeUtils;
 import com.wolai.platform.util.StringUtil;
 import com.wolai.platform.vo.AlipayVo;
+import com.wolai.platform.vo.UnionpayVo;
+import com.wolai.platform.vo.WechatVo;
 
 @Controller
-@RequestMapping(Constant.API_MOBI + "payment/alipay/")
-public class PaymentAlipayController extends BaseController {
+@RequestMapping(Constant.API_MOBI + "payment/wechcat/")
+public class PaymentWechatController extends BaseController {
 	
-	private static Log log = LogFactory.getLog(PaymentAlipayController.class);
+	private static Log log = LogFactory.getLog(PaymentWechatController.class);
 	
 	@Autowired
 	UserService userService;
@@ -46,7 +48,7 @@ public class PaymentAlipayController extends BaseController {
 	PaymentService paymentService;
 	
 	@Autowired
-	PaymentAlipayService paymentAlipayService;
+	PaymentWechatService paymentWechatService;
 	
 	@Autowired
 	ParkingService parkingService;
@@ -64,7 +66,6 @@ public class PaymentAlipayController extends BaseController {
 		
 		String parkingId = json.get("parkingId");
 		String couponId = json.get("couponId");
-		String clientType = json.get("clientType");
 		
 		if (StringUtils.isEmpty(parkingId)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
@@ -81,24 +82,39 @@ public class PaymentAlipayController extends BaseController {
 		
 		ParkingRecord park = (ParkingRecord) obj;
 		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, false, PayType.ALIPAY);
-		AlipayVo alipayVo = new AlipayVo();
-		alipayVo.setWolaiTradeNo(bill.getId());
+		
+		String wolaiTradeNo = bill.getId();
+		BigDecimal totalAmount = bill.getTotalAmount();
+		BigDecimal payAmount = bill.getPayAmount();
+		WechatVo payVo = new WechatVo();
+		payVo.setWolaiTradeNo(wolaiTradeNo);
 		
 		// TODO: 测试数据
-//		alipayVo.setTotalAmount(bill.getTotalAmount());
-//		alipayVo.setPayAmount(bill.getPayAmount());
-		alipayVo.setTotalAmount(new BigDecimal(0.02));
-		alipayVo.setPayAmount(new BigDecimal(0.01));
+//		payVo.setTotalAmount(totalAmount);
+//		payVo.setPayAmount(payAmount);
+		payVo.setTotalAmount(new BigDecimal(2));
+		payVo.setPayAmount(new BigDecimal(1));
 		
-		String key = Constant.alipay_partnerPrivKey;
-		if (clientType != null && "ios".equals(clientType.toLowerCase())) {
-			key = Constant.alipay_partnerPrivKey_pkcs8;
+		Map<String, Object> resMap;
+		try {
+			resMap = paymentWechatService.preparePay(wolaiTradeNo, payVo.getPayAmount().multiply(new BigDecimal(100)).intValue());
+			if (Boolean.valueOf(resMap.get("success").toString())) {
+				payVo.setSign(resMap.get("sign").toString());
+				payVo.setPrepayId(resMap.get("prepayId").toString());
+				
+				
+				
+				ret.put("code", RespCode.SUCCESS.Code());
+			} else {
+				ret.put("code", RespCode.BIZ_FAIL.Code());
+				ret.put("msg", "微信支付服务不可用");
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "微信支付服务不可用");
 		}
-		key = EncodeUtils.sign(key);
-		alipayVo.setPartnerPrivKey(key);
-		
-		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("data", alipayVo);
+		ret.put("data", payVo);
 		return ret;
 	}
 
@@ -106,38 +122,32 @@ public class PaymentAlipayController extends BaseController {
 	@RequestMapping(value="callback")
 	@ResponseBody
 	public String callback(HttpServletRequest request){
-		Map<String, String[]> params = request.getParameterMap(); 
+		String returnCode = request.getParameter("return_code"); // 请求返回码
+		String returnMsg = request.getParameter("return_msg"); // 消息
+		String tradeStatus = request.getParameter("result_code"); // 交易状态
+		String totalFee = request.getParameter("total_fee"); // 交易金额
+		String wolaiTradeNo = request.getParameter("out_trade_no"); // 喔来交易号
 		
-		String[] wolaiTradeNo = params.get("out_trade_no"); // 订单交易号
-		String[] alipayTradeNo = params.get("trade_no"); // 支付宝交易号
-		String[] alipayTradeStatus = params.get("trade_status"); // 支付宝交易状态
-		String[] alipayTotal = params.get("total_fee"); // 支付宝交易金额
-		
-		if (wolaiTradeNo ==null || alipayTradeNo ==null || alipayTradeStatus ==null || alipayTotal == null ||
-				wolaiTradeNo.length == 0 || alipayTradeNo.length == 0 || alipayTradeStatus.length == 0 || alipayTotal.length == 0) {
-			log.info("支付宝异步接口参数错误");
+		if (StringUtil.IsEmpty(returnCode) || StringUtil.IsEmpty(returnMsg) || StringUtil.IsEmpty(tradeStatus)
+				|| StringUtil.IsEmpty(totalFee) || StringUtil.IsEmpty(wolaiTradeNo)) {
+			log.info("微信异步通知接口参数错误");
 			return "error";
 		}
 		
-		if (!"TRADE_SUCCESS".equals(alipayTradeStatus[0]) && !"TRADE_FINISHED".equals(alipayTradeStatus[0])) {
-			log.info("收到支付宝异步接口'" + alipayTradeStatus[0] + "'类型的请求，不处理！");
+		if (!"SUCCESS".equals(returnCode)) {
+			log.info("收到微信异步通知接口'" + returnCode + "'类型的请求，不处理！");
 			return "success";
 		}
 		
-		Object obj = billService.get(Bill.class, wolaiTradeNo[0]);
+		Object obj = billService.get(Bill.class, wolaiTradeNo);
 		if (obj == null) {
-			log.info("未找到out_trade_no对应的Bill对象");
+			log.info("微信通知接口-未找到out_trade_no对应的Bill对象");
 			return "error";
 		}
 		
 		Bill bill = (Bill) obj;
-		if (alipayTradeNo[0].equals(bill.getTradeNo())) {
-			log.info("trade_no参数跟Bill对象的TradeNo不匹配");
-			return "error";
-		}
-		
-		paymentAlipayService.callbackPers(bill, alipayTradeNo[0], alipayTradeStatus[0], alipayTotal[0], Bill.PayType.ALIPAY);
-		log.info("支付宝交易返回：" + alipayTradeNo[0] + "-" + alipayTradeStatus[0]);
+		paymentWechatService.callbackPers(bill, returnCode, returnMsg, tradeStatus, totalFee, wolaiTradeNo);
+		log.info("微信通知接口返回：" +wolaiTradeNo + "-" + tradeStatus);
 		
 		return "success";
 	}

@@ -115,43 +115,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		return bill;
 	}
 
-	@Override
-	public void alipayCallbackPers(Bill bill, String trade_no, String trade_status, String alipayTotal, Bill.PayType payType) {
-		bill.setPaytype(payType);
-		bill.setTradeStatus(trade_status);
-		bill.setTradeAmount(new BigDecimal(alipayTotal));
-		
-		String title = "";
-		String msgShort = "";
-		String msgFull = "";
-		if ("TRADE_SUCCESS".equals(trade_status)) {
-			bill.setPayStatus(PayStatus.SUCCESSED);
-			
-			title = Constant.payment_paySuccess_title;
-			msgShort = Constant.payment_paySuccess_msg_short.replaceAll("%AMOUNT%", alipayTotal)
-					.replace("%LINCENST%", bill.getCarNo());
-			msgFull = Constant.payment_paySuccess_full.replaceAll("%AMOUNT%", alipayTotal)
-					.replace("%LINCENST%", bill.getCarNo());
-		} else {
-			bill.setPayStatus(PayStatus.FEATURE);
-			
-			title = Constant.payment_payFail_title;
-			msgShort = Constant.payment_payFail_msg_short.replaceAll("%AMOUNT%", String.valueOf(bill.getPayAmount().intValue()))
-					.replace("%LINCENST%", bill.getCarNo());
-			msgFull = Constant.payment_payFail_full.replaceAll("%AMOUNT%", String.valueOf(bill.getPayAmount().intValue()))
-					.replace("%LINCENST%", bill.getCarNo());
-		}
-		msgService.sendAppMsg(bill.getParkingRecord().getUser(), title, msgShort, msgFull);
-		
-		bill.setTradeResponseTime(new Date());
-		
-		saveOrUpdate(bill);
-		
-		ParkingRecord park = (ParkingRecord) billService.get(ParkingRecord.class, bill.getParkingRecordId());
-		park.setIsPaid(true);
-		saveOrUpdate(park);
-	}
-	
+
 	@Override
 	public void payNonePers(Bill bill, String couponId) {
 		bill.setPaytype(Bill.PayType.CASH);
