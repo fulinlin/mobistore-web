@@ -238,13 +238,15 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
                 	String msg = "查询到订单支付成功";
                 	log.info(msg);
                 	ret.put("success", true);
+                	ret.put("paySuccess", true);
                 	ret.put("msg", msg);
                     return ret;
                 } else {
                     //支付不成功
                 	String msg = ("查询到订单支付不成功");
                 	log.error(msg);
-                	ret.put("success", false);
+                	ret.put("success", true);
+                	ret.put("paySuccess", false);
                 	ret.put("msg", msg);
                     return ret;
                 }

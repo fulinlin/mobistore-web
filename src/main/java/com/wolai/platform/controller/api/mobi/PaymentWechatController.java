@@ -20,6 +20,7 @@ import com.wolai.platform.constant.Constant;
 import com.wolai.platform.constant.Constant.RespCode;
 import com.wolai.platform.controller.api.BaseController;
 import com.wolai.platform.entity.Bill;
+import com.wolai.platform.entity.Bill.PayStatus;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.SysUser;
 import com.wolai.platform.entity.Bill.PayType;
@@ -36,7 +37,7 @@ import com.wolai.platform.vo.UnionpayVo;
 import com.wolai.platform.vo.WechatVo;
 
 @Controller
-@RequestMapping(Constant.API_MOBI + "payment/wechcat/")
+@RequestMapping(Constant.API_MOBI + "payment/wechat/")
 public class PaymentWechatController extends BaseController {
 	
 	private static Log log = LogFactory.getLog(PaymentWechatController.class);
@@ -116,6 +117,58 @@ public class PaymentWechatController extends BaseController {
 		}
 		ret.put("data", payVo);
 		return ret;
+	}
+	
+	@RequestMapping(value="query")
+	@ResponseBody
+	public Map<String,Object> query(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret = new HashMap<String, Object>();
+		
+		String wolaiTradeNo = json.get("wolaiTradeNo");
+		
+		if (StringUtils.isEmpty(wolaiTradeNo)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		Object obj = billService.get(Bill.class, wolaiTradeNo);
+		if (obj == null) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "not found");
+			return ret;
+		}
+		
+		Bill bill = (Bill) obj;
+		PayStatus payStatus = bill.getPayStatus();
+		if (PayStatus.SUCCESSED.equals(payStatus)) {
+			ret.put("code", RespCode.SUCCESS.Code());
+			ret.put("paySuccess", "true");
+			return ret;
+		} else if (PayStatus.FEATURE.equals(payStatus)){
+			ret.put("code", RespCode.SUCCESS.Code());
+			ret.put("paySuccess", "false");
+			return ret;
+		}
+		
+		Map<String, Object> resMap;
+		try {
+			resMap = paymentWechatService.query(wolaiTradeNo);
+			if ( Boolean.valueOf(resMap.get("success").toString()) && Boolean.valueOf(resMap.get("paySuccess").toString()) ) {
+				ret.put("code", RespCode.SUCCESS.Code());
+				ret.put("paySuccess", "true");
+				return ret;
+			} else {
+				ret.put("code", RespCode.SUCCESS.Code());
+				ret.put("paySuccess", "false");
+				return ret;
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			ret.put("code", RespCode.SUCCESS.Code());
+			ret.put("paySuccess", "false");
+			return ret;
+		}
 	}
 
 	@AuthPassport(validate=false)
