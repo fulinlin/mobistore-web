@@ -1,10 +1,20 @@
 package com.wolai.platform.vo;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
+import com.wolai.platform.constant.Constant;
+import com.wolai.platform.entity.Bill.PayType;
+import com.wolai.platform.util.IdGen;
 import com.wolai.platform.wechat.WechatConfigure;
 
 public class WechatVo {
+	
+	public WechatVo() {
+		this.nonce_str = IdGen.uuid();
+		this.notifyUrl = Constant.WEB_PATH + Constant.wechat_pay_notify_uri;
+		this.timestamp = String.valueOf(new Date().getTime() / 1000);
+	}
 	
 	private String appid = WechatConfigure.appId;
 	private String partnerid = WechatConfigure.mchId;
@@ -17,6 +27,12 @@ public class WechatVo {
 	private BigDecimal totalAmount;
 	private BigDecimal payAmount;
 	private String payType;
+	
+	private String packagee = "Sign=WXPay";
+	private String nonce_str;
+	private String timestamp;
+	private String notifyUrl;
+	private String tradeType = WechatConfigure.tradeType;
 	
 	public String getWolaiTradeNo() {
 		return wolaiTradeNo;
@@ -67,6 +83,36 @@ public class WechatVo {
 	}
 	public void setPartnerid(String partnerid) {
 		this.partnerid = partnerid;
+	}
+	public String getPackagee() {
+		return packagee;
+	}
+	public void setPackagee(String packagee) {
+		this.packagee = packagee;
+	}
+	public String getNonce_str() {
+		return nonce_str;
+	}
+	public void setNonce_str(String nonce_str) {
+		this.nonce_str = nonce_str;
+	}
+	public String getTimestamp() {
+		return timestamp;
+	}
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+	public String getNotifyUrl() {
+		return notifyUrl;
+	}
+	public void setNotifyUrl(String notifyUrl) {
+		this.notifyUrl = notifyUrl;
+	}
+	public String getTradeType() {
+		return tradeType;
+	}
+	public void setTradeType(String tradeType) {
+		this.tradeType = tradeType;
 	}
 	
 
