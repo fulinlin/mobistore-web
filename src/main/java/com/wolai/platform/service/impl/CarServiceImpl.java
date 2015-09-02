@@ -28,7 +28,7 @@ public class CarServiceImpl extends CommonServiceImpl implements CarService {
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
 		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
 		
-		dc.addOrder(Order.desc("name"));
+		dc.addOrder(Order.asc("name"));
 		List<SysCarBrand> ls = (List<SysCarBrand>) findAllByCriteria(dc);
 		
 		return ls;
@@ -42,7 +42,7 @@ public class CarServiceImpl extends CommonServiceImpl implements CarService {
 		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
 		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
 		
-		dc.addOrder(Order.desc("name"));
+		dc.addOrder(Order.asc("name"));
 		List<SysCarModel> ls = (List<SysCarModel>) findAllByCriteria(dc);
 		
 		return ls;
@@ -84,7 +84,7 @@ public class CarServiceImpl extends CommonServiceImpl implements CarService {
 	        		DetachedCriteria dc2 = DetachedCriteria.forClass(SysCarModel.class);
 	        		dc2.add(Restrictions.eq("brandId",brand.getId()));
 	        		dc2.add(Restrictions.eq("name",brandStr));
-	        		List ls2 = getDao().findAllByCriteria(dc);
+	        		List ls2 = getDao().findAllByCriteria(dc2);
 	        		if (ls2.size() == 0) {
 	        			SysCarModel model = new SysCarModel();
 		                model.setBrandId(brand.getId());
