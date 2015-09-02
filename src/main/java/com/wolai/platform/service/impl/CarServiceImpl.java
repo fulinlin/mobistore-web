@@ -51,7 +51,7 @@ public class CarServiceImpl extends CommonServiceImpl implements CarService {
 	@Override
 	public void impPers() {
 		String encoding="UTF-8";
-        File file=new File("/Users/aaron/tinypace/outsourcing/project/wolai/model.csv");
+        File file=new File("/home/aaron/model.csv");
         if(file.isFile() && file.exists()){
             InputStreamReader read;
 			try {
