@@ -157,18 +157,24 @@ public class PaymentWechatController extends BaseController {
 			if ( Boolean.valueOf(resMap.get("success").toString()) && Boolean.valueOf(resMap.get("paySuccess").toString()) ) {
 				ret.put("code", RespCode.SUCCESS.Code());
 				ret.put("paySuccess", "true");
-				return ret;
 			} else {
 				ret.put("code", RespCode.SUCCESS.Code());
 				ret.put("paySuccess", "false");
-				return ret;
 			}
+			
+			String returnCode = resMap.get("return_code").toString(); // 请求返回码
+			String returnMsg = resMap.get("return_msg").toString(); // 消息
+			String resultCode = resMap.get("result_code").toString(); // 交易状态
+			String tradeState = resMap.get("trade_state").toString(); // 交易状态
+			
+			paymentWechatService.callbackPers(bill, returnCode, returnMsg, resultCode + "-" + tradeState, bill.getPayAmount().toString(), wolaiTradeNo);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.toString());
 			ret.put("code", RespCode.SUCCESS.Code());
 			ret.put("paySuccess", "false");
-			return ret;
 		}
+
+		return ret;
 	}
 
 	@AuthPassport(validate=false)
@@ -199,7 +205,8 @@ public class PaymentWechatController extends BaseController {
 		}
 		
 		Bill bill = (Bill) obj;
-		paymentWechatService.callbackPers(bill, returnCode, returnMsg, tradeStatus, totalFee, wolaiTradeNo);
+		BigDecimal amount = new BigDecimal(totalFee).divide(new BigDecimal(100));
+		paymentWechatService.callbackPers(bill, returnCode, returnMsg, tradeStatus, amount.toString(), wolaiTradeNo);
 		log.info("微信通知接口返回：" +wolaiTradeNo + "-" + tradeStatus);
 		
 		return "success";

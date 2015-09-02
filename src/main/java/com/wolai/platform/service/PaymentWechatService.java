@@ -13,7 +13,7 @@ public interface PaymentWechatService extends CommonService {
 
 	Map<String, Object> preparePay(String wolaiTradeNo, int totalFee) throws Exception;
 	Map<String, Object> query(String wolaiTradeNo) throws Exception;
-	void callbackPers(Bill bill, String returnCode, String returnMsg, String tradeStatus, String totalFee, String wolaiTradeNo);
+	void callbackPers(Bill bill, String returnCode, String returnMsg, String tradeStatus, String tradeAmount, String wolaiTradeNo);
 	
 	
 }

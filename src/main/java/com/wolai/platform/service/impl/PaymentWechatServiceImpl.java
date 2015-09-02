@@ -118,7 +118,6 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
         	log.error(msg);
         	ret.put("success", false);
         	ret.put("msg", msg);
-            return ret;
         } else {
             log.info("支付API系统成功返回数据");
             //--------------------------------------------------------------------
@@ -127,9 +126,8 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
             if (!Signature.checkIsSignValidFromResponseString(payServiceResponseString)) {
             	String msg = "【支付失败】支付请求API返回的数据签名验证失败，有可能数据被篡改了";
             	log.error(msg);
-            	ret.put("success", false);
             	ret.put("msg", msg);
-                return ret;
+            	ret.put("success", false);
             }
             
             Map<String,Object> map = XMLParser.getMapFromXML(payServiceResponseString);
@@ -145,26 +143,22 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
                 //1)直接扣款成功
                 //--------------------------------------------------------------------
 
-                log.info("【一次性支付成功】");
+            	String msg = "【一次性支付成功】";
+            	log.info(msg);
+            	ret.put("msg", msg);
 
         		String sign = map.get("sign").toString();
         		String prepayId = map.get("prepay_id").toString();
-                
             	ret.put("sign", sign);
             	ret.put("prepayId", prepayId);
             	
             	ret.put("success", true);
-                return ret;
             }else{
-
                 //出现业务错误
-                log.info("业务返回失败");
-                log.info("err_code:" + errorCode);
-                log.info("err_code_des:" + errorCodeDes);
+            	String msg = "业务返回失败：" + "err_code:" + errorCode + "，err_code_des:" + errorCodeDes;
 
                 //业务错误时错误码有好几种，商户重点提示以下几种
                 if (errorCode.equals("AUTHCODEEXPIRE") || errorCode.equals("AUTH_CODE_INVALID") || errorCode.equals("NOTENOUGH")) {
-
                     //--------------------------------------------------------------------
                     //2)扣款明确失败
                     //--------------------------------------------------------------------
@@ -175,19 +169,24 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
                     //以下几种情况建议明确提示用户，指导接下来的工作
                     if (errorCode.equals("AUTHCODEEXPIRE")) {
                         //表示用户用来支付的二维码已经过期，提示收银员重新扫一下用户微信“刷卡”里面的二维码
-                        log.warn("【支付扣款明确失败】原因是：" + errorCodeDes);
+                        msg += "，【支付扣款明确失败】原因是：" + errorCodeDes;
                     } else if (errorCode.equals("AUTH_CODE_INVALID")) {
                         //授权码无效，提示用户刷新一维码/二维码，之后重新扫码支付
-                    	log.warn("【支付扣款明确失败】原因是：" + errorCodeDes);
+                    	msg += "，【支付扣款明确失败】原因是：" + errorCodeDes;
                     } else if (errorCode.equals("NOTENOUGH")) {
                         //提示用户余额不足，换其他卡支付或是用现金支付
-                    	log.warn("【支付扣款明确失败】原因是：" + errorCodeDes);
+                    	msg += "，【支付扣款明确失败】原因是：" + errorCodeDes;
                     }
                 }
+               
+            	log.error(msg);
+            	ret.put("msg", msg);
+                ret.put("success", false);
+                ret.put("msg", msg);
             }
         }
 
-		return null;
+        return ret;
 	}
 
 	@Override
@@ -217,47 +216,54 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
             //注意：一般这里返回FAIL是出现系统级参数错误，请检测Post给API的数据是否规范合法
         	String msg = "支付订单查询API系统返回失败，失败信息为：" + queryResData.getReturn_msg();
         	log.error(msg);
+
         	ret.put("success", false);
         	ret.put("msg", msg);
-            return ret;
         } else {
 
             if (!Signature.checkIsSignValidFromResponseString(payQueryServiceResponseString)) {
             	String msg = "【支付失败】支付请求API返回的数据签名验证失败，有可能数据被篡改了";
             	log.error(msg);
+            	ret.put("tradeState", queryResData.getTrade_state());
             	ret.put("success", false);
             	ret.put("msg", msg);
                 return ret;
             }
 
             if (queryResData.getResult_code().equals("SUCCESS")) {//业务层成功
-                String transId = queryResData.getTransaction_id();
-            	ret.put("transId", transId);
+                
                 if (queryResData.getTrade_state().equals("SUCCESS")) {
                     //表示查单结果为“支付成功”
                 	String msg = "查询到订单支付成功";
                 	log.info(msg);
+
                 	ret.put("success", true);
                 	ret.put("paySuccess", true);
                 	ret.put("msg", msg);
-                    return ret;
                 } else {
                     //支付不成功
                 	String msg = ("查询到订单支付不成功");
                 	log.error(msg);
+                	
                 	ret.put("success", true);
                 	ret.put("paySuccess", false);
                 	ret.put("msg", msg);
-                    return ret;
                 }
             } else {
             	String msg = "查询出错，错误码：" + queryResData.getErr_code() + "     错误信息：" + queryResData.getErr_code_des();
             	log.error(msg);
+
             	ret.put("success", false);
             	ret.put("msg", msg);
-                return ret;
             }
         }
+        ret.put("return_code", queryResData.getReturn_code());
+        ret.put("return_msg", queryResData.getReturn_msg());
+        ret.put("result_code", queryResData.getResult_code());
+        ret.put("trade_state", queryResData.getTrade_state());
+        ret.put("total_fee", queryResData.getTotal_fee());
+        
+        return ret;
 	}
 
 	@Override
