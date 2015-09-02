@@ -10,5 +10,7 @@ public interface CarService extends CommonService {
 
 	List<SysCarModel> listModelByBrand(String brandId);
 
+	void impPers();
+
 	
 }

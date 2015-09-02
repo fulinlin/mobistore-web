@@ -271,4 +271,16 @@ public class LicenseController extends BaseController {
 		ret.put("data", vols);
 		return ret;
 	}
+	
+	@AuthPassport(validate=false)
+	@RequestMapping(value="imp")
+	@ResponseBody
+	public Map<String,Object> imp(HttpServletRequest request){
+		Map<String,Object> ret =new HashMap<String, Object>();
+		
+		carService.impPers();
+
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
 }
