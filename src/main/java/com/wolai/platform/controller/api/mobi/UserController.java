@@ -35,7 +35,7 @@ import com.wolai.platform.vo.UserVo;
 @RequestMapping(Constant.API_MOBI + "user/")
 public class UserController extends BaseController{
 	private static Logger log = LoggerFactory.getLogger(UserController.class);
-	public static String MSG = "【喔来智能停车系统】您正在注册我们的应用，验证码是%CODE%，请在10分钟内提交改验证码，切勿将该验证码泄露于他人。";
+	public static String MSG = "【喔来智能停车系统】您正在注册我们的应用，验证码是%CODE%，请在10分钟内提交该验证码，切勿将该验证码泄露于他人。";
 	
 	@Autowired
 	UserService userService;
