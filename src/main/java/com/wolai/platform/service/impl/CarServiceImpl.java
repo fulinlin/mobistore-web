@@ -52,6 +52,7 @@ public class CarServiceImpl extends CommonServiceImpl implements CarService {
 	public void impPers() {
 		String encoding="UTF-8";
         File file=new File("/home/aaron/model.csv");
+//		File file=new File("/Users/aaron/tinypace/outsourcing/project/wolai/model.csv");
         if(file.isFile() && file.exists()){
             InputStreamReader read;
 			try {
@@ -59,8 +60,10 @@ public class CarServiceImpl extends CommonServiceImpl implements CarService {
 				new FileInputStream(file),encoding);
 			
 	            BufferedReader bufferedReader = new BufferedReader(read);
+	            int i = 0;
 	            String lineTxt = null;
 	            while((lineTxt = bufferedReader.readLine()) != null){
+
 	                //System.out.println(lineTxt);
 	                
 	                String[] arr = lineTxt.trim().split(";");
