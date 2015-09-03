@@ -5,8 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-@Entity(name = "sys_car_model")
+@Entity
+@Table(name="sys_car_model")
 public class SysCarModel extends IdEntity {
 	private static final long serialVersionUID = 2730992929545975344L;
 	

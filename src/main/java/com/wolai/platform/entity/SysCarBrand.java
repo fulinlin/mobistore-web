@@ -1,8 +1,10 @@
 package com.wolai.platform.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@Entity(name = "sys_car_brand")
+@Entity
+@Table(name="sys_car_brand")
 public class SysCarBrand extends IdEntity {
 	private static final long serialVersionUID = 3513674139851385415L;
 	

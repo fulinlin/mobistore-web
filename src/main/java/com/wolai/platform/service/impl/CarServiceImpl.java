@@ -24,26 +24,17 @@ public class CarServiceImpl extends CommonServiceImpl implements CarService {
 	@Override
 	public List<SysCarBrand> listBrand() {
 		
-		DetachedCriteria dc = DetachedCriteria.forClass(SysCarBrand.class);
-		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
-		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
-		
-		dc.addOrder(Order.asc("name"));
-		List<SysCarBrand> ls = (List<SysCarBrand>) findAllByCriteria(dc);
+		String hql = "from SysCarBrand b order by convert_gbk(b.name) asc"; 
+		List ls = getListByHQL(hql);
 		
 		return ls;
 	}
 	
 	@Override
 	public List<SysCarModel> listModelByBrand(String brandId) {
-		
-		DetachedCriteria dc = DetachedCriteria.forClass(SysCarModel.class);
-		dc.add(Restrictions.eq("brandId", brandId));
-		dc.add(Restrictions.eq("isDelete", Boolean.FALSE));
-		dc.add(Restrictions.eq("isDisable", Boolean.FALSE));
-		
-		dc.addOrder(Order.asc("name"));
-		List<SysCarModel> ls = (List<SysCarModel>) findAllByCriteria(dc);
+
+		String hql = "from SysCarModel m where m.brandId = ? order by convert_gbk(m.name) asc"; 
+		List ls = getListByHQL(hql, brandId);
 		
 		return ls;
 	}
