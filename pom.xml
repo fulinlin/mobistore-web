@@ -423,11 +423,6 @@
             <artifactId>xpp3</artifactId>
             <version>1.1.4c</version>
         </dependency>
-        <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>1.4.7</version>
-        </dependency>
 	</dependencies>
 
 	<build>
