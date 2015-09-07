@@ -5,7 +5,6 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.Key;
 import java.util.Arrays;
-import java.util.Date;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -14,6 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -177,16 +177,6 @@ public class Encodes {
 		return new SecretKeySpec(keyBytes, KEY_ALGORITHM);
 	}
 	
-	public static void main(String args[]){
-		String a = "d7912479dddd40ffecb59b5c6cce4865a+XXT1LqrsVCbXEFX8RI0W0H6j+U0jpzzevcajKpGUS9QHy8N4QHp33SWapJ1F62ayuGQrNL18eUc+78CXuClSAojHsqGSV6f/HZox9mfmSMUmyI6mEab3/Hp0For1ppo9Sr4pk8z1u++M+pQISKcbEf+7H0yEMUDvDgmX/5Op4=";
-		Date d = new Date();
-		for(int i=0;i<10000;i++){
-			getObject(a);
-		}
-		Date d1 = new Date();
-		System.out.println((d1.getTime()-d.getTime()));
-	}
-	
 	public static String encodeAES(byte[] source,String key){
 		try {
 			Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_CBC);
@@ -211,5 +201,14 @@ public class Encodes {
 				return JSONObject.parseObject(jsonString);
 		}
 		return null;
+	}
+	
+	public static String sign(String jsonString){
+		String MD5key = DigestUtils.md5Hex(jsonString).toLowerCase();
+		String AESKey =  MD5key.substring(0,3)+MD5key.substring(8,11)+MD5key.substring(19, 22);// 1-3,9-11,20-22
+		String sign = Encodes.encodeAES(jsonString.getBytes(), AESKey);
+		JSONObject obj = new JSONObject();
+		obj.put("sign", MD5key+sign);
+		return obj.toJSONString();
 	}
 }
