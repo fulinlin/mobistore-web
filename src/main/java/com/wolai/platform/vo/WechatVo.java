@@ -11,7 +11,6 @@ import com.wolai.platform.wechat.WechatConfigure;
 public class WechatVo {
 	
 	public WechatVo() {
-		this.nonce_str = IdGen.uuid();
 		this.notifyUrl = Constant.WEB_PATH + Constant.wechat_pay_notify_uri;
 		this.timestamp = String.valueOf(new Date().getTime() / 1000);
 	}

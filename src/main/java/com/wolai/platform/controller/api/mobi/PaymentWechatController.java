@@ -102,8 +102,7 @@ public class PaymentWechatController extends BaseController {
 			if (Boolean.valueOf(resMap.get("success").toString())) {
 				payVo.setSign(resMap.get("sign").toString());
 				payVo.setPrepayId(resMap.get("prepayId").toString());
-				
-				
+				payVo.setNonce_str(resMap.get("nonce_str").toString());
 				
 				ret.put("code", RespCode.SUCCESS.Code());
 			} else {
