@@ -58,7 +58,7 @@ public class Signature {
     	return getSign(map, null);
     }
 
-    public static String getSign(Map<String,Object> map, String signStr){
+    public static String getSign(Map<String,Object> map, StringBuffer signStr){
         ArrayList<String> list = new ArrayList<String>();
         for(Map.Entry<String,Object> entry:map.entrySet()){
             if(entry.getValue()!=""){
@@ -75,7 +75,7 @@ public class Signature {
         String result = sb.toString();
         result += "key=" + WechatConfigure.key;
         if (signStr != null) {
-        	signStr = result;
+        	signStr.append(result);
         }
         
         log.info("Sign Before MD5:" + result);
