@@ -112,6 +112,7 @@ public class PaymentWechatController extends BaseController {
 
 				payVo.setSign(resMap.get("sign").toString());
 				payVo.setPrepayId(resMap.get("prepayId").toString());
+				payVo.setSignStr(resMap.get("signStr").toString());
 				
 				ret.put("code", RespCode.SUCCESS.Code());
 			} else {

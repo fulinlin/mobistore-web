@@ -18,6 +18,7 @@ public class WechatVo {
 	
 	private String appid = WechatConfigure.appId;
 	private String partnerid = WechatConfigure.mchId;
+	private String signStr;
 	
 	private String wolaiTradeNo;
 
@@ -113,6 +114,12 @@ public class WechatVo {
 	}
 	public void setTradeType(String tradeType) {
 		this.tradeType = tradeType;
+	}
+	public String getSignStr() {
+		return signStr;
+	}
+	public void setSignStr(String signStr) {
+		this.signStr = signStr;
 	}
 	
 
