@@ -11,7 +11,7 @@ import com.wolai.platform.wechat.WechatConfigure;
 public class WechatVo {
 	
 	public WechatVo() {
-		this.notifyUrl = Constant.WEB_PATH + Constant.wechat_pay_notify_uri;
+		
 	}
 	
 	private String appid = WechatConfigure.appId;
@@ -30,7 +30,7 @@ public class WechatVo {
 	private String packagee = WechatConfigure.packagee;
 	private String nonce_str;
 	private String timestamp;
-	private String notifyUrl;
+	private String notifyUrl = Constant.WEB_PATH + Constant.wechat_pay_notify_uri;
 	private String tradeType = WechatConfigure.tradeType;
 	
 	public String getWolaiTradeNo() {

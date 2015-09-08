@@ -1,5 +1,7 @@
 package com.wolai.platform.wechat;
 
+import com.wolai.platform.constant.Constant;
+
 /**
  * User: rizenguo
  * Date: 2014/10/29
@@ -28,7 +30,7 @@ public class WechatConfigure {
 	
 	public static String packagee = "Sign=WXPay";
 	public static String tradeType = "APP";
-	public static String notifyUrl = "http://101.200.189.57:9090/";
+	public static String notifyUrl = Constant.WEB_PATH + Constant.wechat_pay_notify_uri;
 	
 
 	//HTTPS证书的本地路径
