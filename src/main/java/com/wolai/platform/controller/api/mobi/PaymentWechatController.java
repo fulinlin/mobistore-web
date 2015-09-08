@@ -65,6 +65,12 @@ public class PaymentWechatController extends BaseController {
 	public Map<String,Object> prepare(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret = new HashMap<String, Object>();
 		
+	   String ip = request.getHeader("x-forwarded-for");
+	   if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+	            ip = request.getRemoteAddr();
+	   }
+	   log.info(ip);
+		
 		String parkingId = json.get("parkingId");
 		String couponId = json.get("couponId");
 		
@@ -98,7 +104,7 @@ public class PaymentWechatController extends BaseController {
 	
 		Map<String, Object> resMap;
 		try {
-			resMap = paymentWechatService.preparePay(wolaiTradeNo, payVo.getPayAmount().multiply(new BigDecimal(100)).intValue());
+			resMap = paymentWechatService.preparePay(wolaiTradeNo, payVo.getPayAmount().multiply(new BigDecimal(100)).intValue(), ip);
 			if (Boolean.valueOf(resMap.get("success").toString())) {
 				payVo.setSign(resMap.get("sign").toString());
 				payVo.setPrepayId(resMap.get("prepayId").toString());

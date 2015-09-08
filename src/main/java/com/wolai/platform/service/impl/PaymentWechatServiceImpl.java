@@ -62,7 +62,7 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
 		 * @throws UnrecoverableKeyException 
 	*/
 	@Override
-	public Map<String, Object> preparePay(String wolaiTradeNo, int totalFee) throws Exception {
+	public Map<String, Object> preparePay(String wolaiTradeNo, int totalFee, String ip) throws Exception {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
     	Date now = new Date();
@@ -79,7 +79,7 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
 			wolaiTradeNo,
 			totalFee,
 			null,
-			WechatConfigure.SpBillCreateIP,
+			ip,
 			timeStart,
 			timeExpire,
 			"tag"

@@ -60,13 +60,6 @@ public final class Constant {
 	public static final  String unionpay_notify_uri_consume = "api/mobi/payment/unionpay/consume/callback";
 	public static final  String unionpay_notify_uri_delegate = "api/mobi/payment/unionpay/delegate/callback";
 	
-	public static final  String wechat_pay_appId = "";
-	public static final  String wechat_pay_mchId = "";
-	public static final  String wechat_pay_key = "";
-	public static final  String wechat_pay_certLocalPath = "";
-	public static final  String wechat_pay_certPassword = "";
-	public static final  String wechat_pay_cert_local_path = "";
-	public static final  String wechat_pay_request_url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 	public static final  String wechat_pay_notify_uri = "api/mobi/payment/wechat/callback";
 	
     /**

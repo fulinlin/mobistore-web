@@ -11,7 +11,7 @@ import com.wolai.platform.entity.UnionpayCardBound;
 
 public interface PaymentWechatService extends CommonService {
 
-	Map<String, Object> preparePay(String wolaiTradeNo, int totalFee) throws Exception;
+	Map<String, Object> preparePay(String wolaiTradeNo, int totalFee, String ip) throws Exception;
 	Map<String, Object> query(String wolaiTradeNo) throws Exception;
 	void callbackPers(Bill bill, String returnCode, String returnMsg, String tradeStatus, String tradeAmount, String wolaiTradeNo);
 	

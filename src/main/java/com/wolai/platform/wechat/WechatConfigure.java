@@ -29,7 +29,6 @@ public class WechatConfigure {
 	public static String tradeType = "APP";
 	public static String notifyUrl = "http://101.200.189.57:9090/";
 	
-	public static String SpBillCreateIP = "101.200.189.57";
 
 	//HTTPS证书的本地路径
 	public static String certLocalPath = "/wechat_certs/apiclient_cert.p12";
