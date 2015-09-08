@@ -100,6 +100,8 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
 
         //打印回包数据
         log.info(payServiceResponseString);
+        
+        
 
         //将从API返回的XML数据映射到Java对象
         OrderResData orderResData = (OrderResData) WechatUtil.getObjectFromXML(payServiceResponseString, OrderResData.class);
@@ -147,9 +149,8 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
             	log.info(msg);
             	ret.put("msg", msg);
 
-        		String sign = map.get("sign").toString();
+            	String sign = Signature.getSignFromResponseString(payServiceResponseString);
         		String prepayId = map.get("prepay_id").toString();
-        		String nonceStr = map.get("nonce_str").toString();
             	ret.put("sign", sign);
             	ret.put("prepayId", prepayId);
             	
