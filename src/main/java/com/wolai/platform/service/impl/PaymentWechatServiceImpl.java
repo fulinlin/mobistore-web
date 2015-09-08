@@ -145,7 +145,7 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
                 //1)直接扣款成功
                 //--------------------------------------------------------------------
 
-            	String msg = "【一次性支付成功】";
+            	String msg = "【预支付请求成功】";
             	log.info(msg);
             	ret.put("msg", msg);
 
