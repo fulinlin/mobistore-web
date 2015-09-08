@@ -70,9 +70,9 @@ public class Signature {
         }
         String result = sb.toString();
         result += "key=" + WechatConfigure.key;
-        //log.info("Sign Before MD5:" + result);
+        log.info("Sign Before MD5:" + result);
         result = MD5.MD5Encode(result).toUpperCase();
-        //log.info("Sign Result:" + result);
+        log.info("Sign Result:" + result);
         return result;
     }
 
