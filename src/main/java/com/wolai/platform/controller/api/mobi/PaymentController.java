@@ -85,11 +85,8 @@ public class PaymentController extends BaseController {
 		Bill bill = paymentService.createBillIfNeededPersAndUpdateCouponPers(park, couponId, false, null);
 		PayVo payVo = new PayVo();
 
-		// TODO: 测试数据
-//		payVo.setTotalAmount(bill.getTotalAmount());
-//		payVo.setPayAmount(bill.getPayAmount());
-		payVo.setTotalAmount(new BigDecimal(0.2));
-		payVo.setPayAmount(new BigDecimal(0.1));
+		payVo.setTotalAmount(bill.getTotalAmount());
+		payVo.setPayAmount(bill.getPayAmount());
 		
 		payVo.setIsPaid(Bill.PayStatus.SUCCESSED.equals(bill.getPayStatus()) || Bill.PayStatus.IN_PROGRESS.equals(bill.getPayStatus()));
 		payVo.setCanPay(Bill.PayStatus.INIT.equals(bill.getPayStatus()) 
