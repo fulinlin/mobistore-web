@@ -167,7 +167,7 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
             	ret.put("sign", sign);
             	ret.put("timestamp", timestamp);
             	ret.put("nonce_str", nonce_str);
-            	ret.put("signStr", signStr);
+            	ret.put("signStr", signStr.toString().split("&key=")[0]);
             	
             	ret.put("success", true);
             }else{
