@@ -26,6 +26,7 @@ public class WechatConfigure {
 	//受理模式下给子商户分配的子商户号
 	public static String subMchID = "";
 	
+	public static String packagee = "Sign=WXPay";
 	public static String tradeType = "APP";
 	public static String notifyUrl = "http://101.200.189.57:9090/";
 	

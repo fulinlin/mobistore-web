@@ -26,6 +26,7 @@ import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.MsgService;
 import com.wolai.platform.service.PaymentWechatService;
 import com.wolai.platform.util.DateUtils;
+import com.wolai.platform.util.IdGen;
 import com.wolai.platform.util.TimeUtils;
 import com.wolai.platform.wechat.WechatConfigure;
 import com.wolai.platform.wechat.OrderReqData;
@@ -148,12 +149,20 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
             	String msg = "【预支付请求成功】";
             	log.info(msg);
             	ret.put("msg", msg);
+            	
+				Map<String, String> mapSign = new HashMap<String, String>();
+				mapSign.put("prepayid", map.get("prepay_id").toString());
+				mapSign.put("appid", WechatConfigure.appId);
+				mapSign.put("noncestr", IdGen.uuid());
+				mapSign.put("package", WechatConfigure.packagee);
+				mapSign.put("partnerid", WechatConfigure.mchId);
+				mapSign.put("timestamp", String.valueOf(new Date().getTime() / 1000));
 
-            	String sign = Signature.getSignFromResponseString(payServiceResponseString);
-            	log.info("新生成的签名是：" + sign);
+            	String sign = Signature.getSign(mapSign);
         		String prepayId = map.get("prepay_id").toString();
+        		ret.put("prepayId", prepayId);
+            	ret.put("appPayReuqestSample", mapSign.toString());
             	ret.put("sign", sign);
-            	ret.put("prepayId", prepayId);
             	
             	ret.put("success", true);
             }else{

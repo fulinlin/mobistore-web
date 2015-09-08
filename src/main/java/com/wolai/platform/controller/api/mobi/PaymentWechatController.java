@@ -69,6 +69,9 @@ public class PaymentWechatController extends BaseController {
 	   if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
 	            ip = request.getRemoteAddr();
 	   }
+	   if (ip.indexOf(":") > -1) {
+		   ip = "127.0.0.1";
+	   }
 	   log.info(ip);
 		
 		String parkingId = json.get("parkingId");
@@ -106,8 +109,10 @@ public class PaymentWechatController extends BaseController {
 		try {
 			resMap = paymentWechatService.preparePay(wolaiTradeNo, payVo.getPayAmount().multiply(new BigDecimal(100)).intValue(), ip);
 			if (Boolean.valueOf(resMap.get("success").toString())) {
+
 				payVo.setSign(resMap.get("sign").toString());
 				payVo.setPrepayId(resMap.get("prepayId").toString());
+				payVo.setAppPayReuqestSample(resMap.get("appPayReuqestSample").toString());
 				
 				ret.put("code", RespCode.SUCCESS.Code());
 			} else {
