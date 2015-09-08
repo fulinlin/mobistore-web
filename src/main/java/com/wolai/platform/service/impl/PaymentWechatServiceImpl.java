@@ -153,7 +153,8 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
 				Map<String, Object> mapSign = new HashMap<String, Object>();
 				mapSign.put("prepayid", map.get("prepay_id"));
 				mapSign.put("appid", WechatConfigure.appId);
-				mapSign.put("noncestr", IdGen.uuid());
+				String nonce_str = IdGen.uuid();
+				mapSign.put("noncestr", nonce_str);
 				mapSign.put("package", WechatConfigure.packagee);
 				mapSign.put("partnerid", WechatConfigure.mchId);
 				String timestamp = String.valueOf(new Date().getTime() / 1000);
@@ -165,6 +166,7 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
         		ret.put("prepayId", prepayId);
             	ret.put("sign", sign);
             	ret.put("timestamp", timestamp);
+            	ret.put("nonce_str", nonce_str);
             	ret.put("signStr", signStr);
             	
             	ret.put("success", true);

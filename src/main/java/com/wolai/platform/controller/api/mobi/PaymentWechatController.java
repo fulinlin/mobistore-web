@@ -114,6 +114,9 @@ public class PaymentWechatController extends BaseController {
 				payVo.setPrepayId(resMap.get("prepayId").toString());
 				payVo.setSignStr(resMap.get("signStr").toString());
 				
+				payVo.setNonce_str(resMap.get("nonce_str").toString());
+				payVo.setTimestamp(resMap.get("timestamp").toString());
+				
 				ret.put("code", RespCode.SUCCESS.Code());
 			} else {
 				ret.put("code", RespCode.BIZ_FAIL.Code());
