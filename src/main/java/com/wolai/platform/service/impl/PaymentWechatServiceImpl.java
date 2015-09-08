@@ -150,8 +150,8 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
             	log.info(msg);
             	ret.put("msg", msg);
             	
-				Map<String, String> mapSign = new HashMap<String, String>();
-				mapSign.put("prepayid", map.get("prepay_id").toString());
+				Map<String, Object> mapSign = new HashMap<String, Object>();
+				mapSign.put("prepayid", map.get("prepay_id"));
 				mapSign.put("appid", WechatConfigure.appId);
 				mapSign.put("noncestr", IdGen.uuid());
 				mapSign.put("package", WechatConfigure.packagee);
