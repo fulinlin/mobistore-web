@@ -30,7 +30,6 @@ public class WechatConfigure {
 	
 	public static String packagee = "Sign=WXPay";
 	public static String tradeType = "APP";
-	public static String notifyUrl = Constant.WEB_PATH + Constant.wechat_pay_notify_uri;
 	
 
 	//HTTPS证书的本地路径

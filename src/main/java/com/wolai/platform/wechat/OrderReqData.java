@@ -10,6 +10,8 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.wolai.platform.constant.Constant;
+
 /**
  * 请求被扫支付API需要提交的数据
  */
@@ -50,7 +52,7 @@ public class OrderReqData {
 
 //        setSdk_version(Configure.getSdkVersion());
     	setTrade_type(WechatConfigure.tradeType);
-    	setNotify_url(WechatConfigure.notifyUrl);
+    	setNotify_url(Constant.WEB_PATH + Constant.wechat_pay_notify_uri);
 
         //微信分配的公众号ID（开通公众号之后可以获取到）
         setAppid(WechatConfigure.appId);
