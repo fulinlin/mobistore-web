@@ -53,8 +53,12 @@ public class Signature {
         log.info("Sign Result:" + result);
         return result;
     }
-
+    
     public static String getSign(Map<String,Object> map){
+    	return getSign(map, null);
+    }
+
+    public static String getSign(Map<String,Object> map, String signStr){
         ArrayList<String> list = new ArrayList<String>();
         for(Map.Entry<String,Object> entry:map.entrySet()){
             if(entry.getValue()!=""){
@@ -70,6 +74,10 @@ public class Signature {
         }
         String result = sb.toString();
         result += "key=" + WechatConfigure.key;
+        if (signStr != null) {
+        	signStr = result;
+        }
+        
         log.info("Sign Before MD5:" + result);
         result = MD5.MD5Encode(result).toUpperCase();
         log.info("Sign Result:" + result);

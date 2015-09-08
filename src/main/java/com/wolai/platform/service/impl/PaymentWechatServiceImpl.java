@@ -156,12 +156,16 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
 				mapSign.put("noncestr", IdGen.uuid());
 				mapSign.put("package", WechatConfigure.packagee);
 				mapSign.put("partnerid", WechatConfigure.mchId);
-				mapSign.put("timestamp", String.valueOf(new Date().getTime() / 1000));
+				String timestamp = String.valueOf(new Date().getTime() / 1000);
+				mapSign.put("timestamp", timestamp);
 
-            	String sign = Signature.getSign(mapSign);
+				String signStr = "";
+            	String sign = Signature.getSign(mapSign, signStr);
         		String prepayId = map.get("prepay_id").toString();
         		ret.put("prepayId", prepayId);
             	ret.put("sign", sign);
+            	ret.put("timestamp", timestamp);
+            	ret.put("signStr", signStr);
             	
             	ret.put("success", true);
             }else{
