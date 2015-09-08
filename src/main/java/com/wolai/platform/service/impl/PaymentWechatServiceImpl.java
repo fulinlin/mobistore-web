@@ -161,7 +161,6 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
             	String sign = Signature.getSign(mapSign);
         		String prepayId = map.get("prepay_id").toString();
         		ret.put("prepayId", prepayId);
-            	ret.put("appPayReuqestSample", mapSign.toString());
             	ret.put("sign", sign);
             	
             	ret.put("success", true);

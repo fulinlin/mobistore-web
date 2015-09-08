@@ -34,8 +34,6 @@ public class WechatVo {
 	private String notifyUrl;
 	private String tradeType = WechatConfigure.tradeType;
 	
-	private String appPayReuqestSample;
-	
 	public String getWolaiTradeNo() {
 		return wolaiTradeNo;
 	}
@@ -115,12 +113,6 @@ public class WechatVo {
 	}
 	public void setTradeType(String tradeType) {
 		this.tradeType = tradeType;
-	}
-	public String getAppPayReuqestSample() {
-		return appPayReuqestSample;
-	}
-	public void setAppPayReuqestSample(String appPayReuqestSample) {
-		this.appPayReuqestSample = appPayReuqestSample;
 	}
 	
 
