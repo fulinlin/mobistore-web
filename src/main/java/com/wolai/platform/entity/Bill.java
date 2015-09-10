@@ -187,6 +187,11 @@ public class Bill extends IdEntity {
 	private Date tradeSendTime;
 	
 	/**
+	 * 计费时间点
+	 */
+	private Date chargeTime;
+	
+	/**
 	 * 支付完成时间
 	 */
 	private Date tradeResponseTime;
@@ -394,6 +399,14 @@ public class Bill extends IdEntity {
 
 	public void setTradeMsg(String tradeMsg) {
 		this.tradeMsg = tradeMsg;
+	}
+
+	public Date getChargeTime() {
+		return chargeTime;
+	}
+
+	public void setChargeTime(Date chargeTime) {
+		this.chargeTime = chargeTime;
 	}
 	
 }

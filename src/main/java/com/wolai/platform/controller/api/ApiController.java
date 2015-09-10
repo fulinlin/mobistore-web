@@ -37,6 +37,7 @@ import com.wolai.platform.util.StringUtil;
 import com.wolai.platform.vo.EntranceNoticeVo;
 import com.wolai.platform.vo.PaycheckVo;
 import com.wolai.platform.vo.PaychekResponseVo;
+import com.wolai.platform.vo.SureLeaveRequestVo;
 
 @Controller
 @RequestMapping(Constant.API_EX)
@@ -59,6 +60,10 @@ public class ApiController extends BaseController {
 	
 	private static Integer NOT_WOLAI_USER=2;
 	private static Integer IS_WOLAI_USER=1;
+	
+	private static String LEAVE_TYPE_SURE="sure";
+	
+	private static String LEAVE_TYPE_CANCEL="cancel";
 	
 	private static Log log = LogFactory.getLog(ApiController.class);
 	
@@ -155,7 +160,7 @@ public class ApiController extends BaseController {
 		}else{
 			/* 根据外部接口修正停车记录相关信息*/
 			
-			//  出库时间
+			// 出库时间
 			Calendar ca = Calendar.getInstance();
 			ca.setTimeInMillis(vo.getExitTime());
 			record.setDriveOutTime(ca.getTime());
@@ -199,29 +204,35 @@ public class ApiController extends BaseController {
 			 * 1.手动付费账单，检查是否已付费，以及付费金额是否足额
 			 * 2.后付费用户，新建待扣费账单，直接返回已付费
 			 */
-			if(bill.getIsPostPay()){
-				// 后付费账单直接放行
+			// 账单检查是否已缴费成功
+			if(PayStatus.SUCCESSED.equals(bill.getPayStatus())){
 				responseVo.setIsPaid(true);
-				// 调用一次扣费接口
-				try{
-					paymentUnionpayService.postPayBillSattlement(bill.getId(),record.getUserId());
-				}catch(Exception e){
-					if(log.isWarnEnabled()){
-						log.warn(Exceptions.getStackTraceAsString(e));
-					}
-				}
 			}else{
-				// 预付费账单检查是否已缴费成功
-				if(PayStatus.SUCCESSED.equals(bill.getPayStatus())){
+				// 是否后付费
+				if(bill.getIsPostPay()){
+					// 后付费账单直接放行
 					responseVo.setIsPaid(true);
+					// 调用一次扣费接口
+					try{
+						paymentUnionpayService.postPayBillSattlement(bill.getId(),record.getUserId());
+					}catch(Exception e){
+						if(log.isWarnEnabled()){
+							log.warn(Exceptions.getStackTraceAsString(e));
+						}
+					}
 				}else{
 					// 未缴费成功的账单，更改缴费方式为现金缴费，同时释放曾经选择的优惠券
 					responseVo.setIsPaid(false);
 					bill = paymentService.releaseCashPaidCouponsPers(bill.getId());
 				}
 			}
-			// 更新记录为离场
-			record.setParkStatus(ParkStatus.OUT);
+			
+			
+			// 非后付费用户由于一次性出场没有确认，所以在这个时候置为出厂
+			if(!bill.getIsPostPay()){
+				record.setParkStatus(ParkStatus.OUT);
+			}
+			
 			parkingService.saveOrUpdate(record);
 			
 			/* 
@@ -246,6 +257,51 @@ public class ApiController extends BaseController {
 		}
 		return responseVo;
 	}
+	
+	@RequestMapping("sureLeave")
+	@ResponseBody
+	public  Map<String,Object> sureLeave(@RequestBody String sign, HttpServletRequest request){
+		
+		Map<String,Object> result = Maps.newHashMap();
+		SureLeaveRequestVo vo =getRequestParameter(SureLeaveRequestVo.class,sign);
+		
+		// 参数有消息验证
+		if (vo==null || !beanValidator(result, vo)) {
+			result.put("code", -100);
+			return result;
+		}
+		
+		String parkingLotId = getParkingLotId(request);
+		// 获取请求停车记录
+		ParkingRecord record = parkingService.getParkingRecordbyExNo(vo.getExNo(), parkingLotId);
+
+		// 出口编号
+		record.setExportNo(vo.getExportNo());
+		
+		if(LEAVE_TYPE_SURE.equals(vo.getType())){
+			// 出库时间
+			Calendar ca = Calendar.getInstance();
+			ca.setTimeInMillis(vo.getExitTime());
+			record.setDriveOutTime(ca.getTime());
+			
+			record.setParkStatus(ParkStatus.OUT);
+		}else if(LEAVE_TYPE_CANCEL.equals(vo.getType())){
+			record.setParkStatus(ParkStatus.IN);
+			record.setDriveOutTime(null);
+		}else{
+			result.put("code", -100);
+			result.put("msg", "type only can be \""+LEAVE_TYPE_SURE+"\" or \""+LEAVE_TYPE_CANCEL+"\"");
+			return result;
+		}
+		
+		parkingService.saveOrUpdate(record);
+		
+		result.put("code", 1);
+		result.put("msg", "success");
+		
+		return result;
+	}
+	
 	private String getParkingLotId(HttpServletRequest request) {
 		return request.getAttribute(Constant.REQUEST_PARINGLOTID).toString();
 	}
