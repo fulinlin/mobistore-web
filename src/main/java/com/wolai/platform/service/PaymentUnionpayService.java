@@ -27,7 +27,7 @@ public interface PaymentUnionpayService extends CommonService {
 	boolean postPayBillSattlement(String billId,String userId);
 
 	Map<String, String> getUnionpayResp(HttpServletRequest request);
-	void unionpayCallbackPers(Map<String, String> resp);
+	void callbackPers(Map<String, String> resp);
 
 	Map<String, String> postPayQuery(String orderId, String queryId);
 	

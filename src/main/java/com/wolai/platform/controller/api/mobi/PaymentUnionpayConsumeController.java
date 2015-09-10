@@ -113,14 +113,14 @@ public class PaymentUnionpayConsumeController extends BaseController {
 	@AuthPassport(validate=false)
 	@RequestMapping(value="callback")
 	@ResponseBody
-	public String unionpayConsumeCallback(HttpServletRequest request){
+	public String callback(HttpServletRequest request){
 		log.info("银联消费回调===");
 		
 		Map<String, String> resp = paymentUnionpayService.getUnionpayResp(request);
 		
 		log.info(resp.toString());
 		
-		paymentUnionpayService.unionpayCallbackPers(resp);
+		paymentUnionpayService.callbackPers(resp);
 		
 		return "success";
 	}

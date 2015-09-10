@@ -784,7 +784,7 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	}
 
 	@Override
-	public void unionpayCallbackPers(Map<String, String> resp) {
+	public void callbackPers(Map<String, String> resp) {
 		String respCode = resp.get("respCode");
 		String orderId = resp.get("orderId");
 		String queryId = resp.get("queryId");
