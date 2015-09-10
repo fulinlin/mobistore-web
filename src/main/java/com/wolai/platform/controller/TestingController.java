@@ -175,13 +175,14 @@ public class TestingController extends BaseController{
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
 		String carNo = json.get("carNo");
-		if (StringUtils.isEmpty(carNo)) {
+		String action = json.get("action");
+		if (StringUtils.isEmpty(carNo) || StringUtils.isEmpty(action)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
 			return ret;
 		}
 		
-		String res = testService.payCheck(carNo);
+		String res = testService.leave(carNo, action);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("msg", res);

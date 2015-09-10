@@ -24,7 +24,7 @@ public interface TestService extends CommonService {
 
 	String enter(String carNo);
 	String payCheck(String carNo);
-	String leave(String carNo);
+	String leave(String carNo, String action);
 
 	String bound(String url, String token, HttpServletRequest request);
 	void initRemoteUrl(HttpServletRequest request);

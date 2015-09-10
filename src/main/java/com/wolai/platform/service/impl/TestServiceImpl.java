@@ -159,14 +159,12 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("carNo", carNo);
-		
-		map.put("sureExit", "true");
 		String ret = WebClientUtil.post(Constant.THIRD_PART_SERVER + "simu_paycheck", JSON.toJSONString(map));
 		return ret;
 	}
 	
 	@Override
-	public String leave(String carNo) {
+	public String leave(String carNo, String action) {
 		DetachedCriteria dc2 = DetachedCriteria.forClass(ParkingRecord.class);
 		dc2.add(Restrictions.eq("isDelete", false));
 		dc2.add(Restrictions.eq("isDisable", false));
@@ -176,7 +174,7 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("carNo", carNo);
-		map.put("sureExit", "true");
+		map.put("sureExit", action);
 		String ret = WebClientUtil.post(Constant.THIRD_PART_SERVER + "simu_sureLeave", JSON.toJSONString(map));
 		return ret;
 	}

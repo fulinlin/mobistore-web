@@ -90,7 +90,8 @@
 						</c:forEach>
 					</select>
 					<button id="payCheck" type="submit" class="btn">支付检查</button>
-					<button id="leave" type="submit" class="btn">模拟出库</button>
+					<button id="leaveConfirm" type="submit" class="btn leave">确认出库</button>
+					<button id="leaveCancel" type="submit" class="btn leave">放弃出库</button>
 				</div>
 			</div>
 	</form>
@@ -233,11 +234,18 @@
 			return false;
 		});
 		
-		$("#leave").click(function(){
+		$(".leave").click(function(){
+			var action;
+			if ( $(this).attr('id') == 'leaveConfirm') {
+				action = 'sure';
+			} else {
+				action = 'cancel';
+			}
+			
 			var carToOut = $("#carToOut").val();
 			
 			var now = new Date().getTime();
-			var data3 = {"carNo": carToOut};
+			var data3 = {"carNo": carToOut, "action": action};
 			
 			$.ajax({
 	             type: "POST",
