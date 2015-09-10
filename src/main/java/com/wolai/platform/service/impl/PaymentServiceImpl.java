@@ -29,6 +29,7 @@ import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.util.Encodes;
 import com.wolai.platform.util.StringUtil;
 import com.wolai.platform.util.WebClientUtil;
+import com.wolai.platform.vo.PayNoticeVo;
 import com.wolai.platform.vo.PayQueryResponseVo;
 import com.wolai.platform.vo.PayQueryVo;
 
@@ -182,6 +183,52 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 			log.info(e.getStackTrace().toString());
 		}
 		return response;
+	}
+	
+	@Override
+	public void payNotice(String billId) {
+		Bill bill =(Bill) get(Bill.class, billId);
+		ParkingRecord record = bill.getParkingRecord();
+		Coupon coupon = bill.getCoupon();
+		SysAPIKey key = apiKeyService.getKeyByParinglotId(record.getParkingLotId());
+		
+		String url=  key.getUrl()+":"+key.getPort()+key.getRootPath();
+		
+		PayNoticeVo noticeVo = new PayNoticeVo();
+		noticeVo.setCarNo(bill.getCarNo());
+
+		if(coupon != null){
+			noticeVo.setCouponSn(coupon.getId());
+			if ( CouponType.TIME.equals(coupon.getType())) {
+				noticeVo.setCouponType(PayNoticeVo.COUPON_TYPE_TIME);
+				noticeVo.setCouponTime(coupon.getTime());
+			} else  {
+				noticeVo.setCouponType(PayNoticeVo.COUPON_TYPE_AMOUNT);
+				noticeVo.setCouponAmount(coupon.getMoney().longValue());
+			}
+		}else{
+			noticeVo.setCouponType(null);
+		}
+		
+		noticeVo.setEnterTime(record.getDriveInTime().getTime());
+		noticeVo.setIsPaid(true);
+		noticeVo.setExitTime(record.getDriveOutTime().getTime());
+		noticeVo.setExNo(record.getExNo());
+		noticeVo.setExportNo(record.getExportNo());
+		noticeVo.setOrderCreateTime(bill.getCreateTime().getTime());
+		noticeVo.setOrderId(bill.getId());
+		noticeVo.setPayAmount(bill.getPayAmount());
+		noticeVo.setPayTime(bill.getTradeResponseTime().getTime());
+		noticeVo.setTimestamp(new Date().getTime());
+		
+		try{
+			log.info("===通知新利泊已缴费===");
+			log.info(JSON.toJSONString(noticeVo));
+			String result = WebClientUtil.post(url+ HttpServerConstants.POST_PAY_NOTICE+"?token="+key.getToken(),Encodes.sign(JSON.toJSONString(noticeVo)));
+			log.info(result);
+		} catch(Exception e){
+			log.info(e.getStackTrace().toString());
+		}
 	}
 
 }

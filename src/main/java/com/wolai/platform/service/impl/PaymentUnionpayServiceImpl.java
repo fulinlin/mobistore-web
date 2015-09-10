@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.unionpay.acp.sdk.HttpClient;
-import com.unionpay.acp.sdk.LogUtil;
 import com.unionpay.acp.sdk.SDKConfig;
 import com.unionpay.acp.sdk.SDKConstants;
 import com.unionpay.acp.sdk.SDKUtil;
@@ -37,6 +36,7 @@ import com.wolai.platform.entity.Coupon.CouponStatus;
 import com.wolai.platform.entity.UnionpayCardBound;
 import com.wolai.platform.service.CouponService;
 import com.wolai.platform.service.MsgService;
+import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.service.PaymentUnionpayService;
 
 @Service
@@ -52,6 +52,9 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 	
 	@Autowired
 	private MsgService msgService;
+	
+	@Autowired
+	private PaymentService paymentService;
 	
 	@Override
 	public UnionpayCardBound boundQueryByCard(String accNo) {
@@ -804,6 +807,8 @@ public class PaymentUnionpayServiceImpl extends CommonServiceImpl implements Pay
 						.replace("%LINCENST%", bill.getCarNo());
 				msgFull = Constant.payment_paySuccess_full.replaceAll("%AMOUNT%", String.valueOf(amount.intValue()))
 						.replace("%LINCENST%", bill.getCarNo());
+				
+				paymentService.payNotice(bill.getId());
 			} else {
 				bill.setPayStatus(Bill.PayStatus.FEATURE);
 				

@@ -10,30 +10,28 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.xml.sax.SAXException;
 
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.Bill;
-import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.Bill.PayStatus;
+import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.MsgService;
+import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.service.PaymentWechatService;
 import com.wolai.platform.util.DateUtils;
 import com.wolai.platform.util.IdGen;
 import com.wolai.platform.util.TimeUtils;
-import com.wolai.platform.wechat.WechatConfigure;
 import com.wolai.platform.wechat.OrderReqData;
 import com.wolai.platform.wechat.OrderResData;
 import com.wolai.platform.wechat.QueryReqData;
 import com.wolai.platform.wechat.QueryResData;
 import com.wolai.platform.wechat.Signature;
+import com.wolai.platform.wechat.WechatConfigure;
 import com.wolai.platform.wechat.WechatUtil;
 import com.wolai.platform.wechat.XMLParser;
 
@@ -49,6 +47,9 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
 	
 	@Autowired
 	PaymentWechatHttpsRequestImpl wechatHttpsRequest;
+	
+	@Autowired
+	PaymentService paymentService;
 
 	/**
 		* @param wolaiTradeNo  商户系统内部的订单号,32个字符内可包含字母, 确保在商户系统唯一
@@ -300,6 +301,8 @@ public class PaymentWechatServiceImpl extends CommonServiceImpl implements Payme
 					.replace("%LINCENST%", bill.getCarNo());
 			msgFull = Constant.payment_paySuccess_full.replaceAll("%AMOUNT%", totalFee)
 					.replace("%LINCENST%", bill.getCarNo());
+			
+			paymentService.payNotice(bill.getId());
 		} else {
 			bill.setPayStatus(PayStatus.FEATURE);
 			

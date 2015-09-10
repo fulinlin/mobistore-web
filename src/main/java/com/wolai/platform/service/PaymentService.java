@@ -1,12 +1,8 @@
 package com.wolai.platform.service;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.wolai.platform.entity.Bill;
-import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.entity.Bill.PayType;
+import com.wolai.platform.entity.ParkingRecord;
 
 
 public interface PaymentService extends CommonService {
@@ -15,4 +11,5 @@ public interface PaymentService extends CommonService {
 	Bill releaseCashPaidCouponsPers(String billId);
 	void payNonePers(Bill bill, String couponId);
 
+	void payNotice(String billId);
 }

@@ -9,13 +9,11 @@ import org.springframework.stereotype.Service;
 import com.wolai.platform.constant.Constant;
 import com.wolai.platform.entity.Bill;
 import com.wolai.platform.entity.Bill.PayStatus;
-import com.wolai.platform.entity.Bill.PayType;
 import com.wolai.platform.entity.ParkingRecord;
 import com.wolai.platform.service.BillService;
 import com.wolai.platform.service.MsgService;
 import com.wolai.platform.service.PaymentAlipayService;
 import com.wolai.platform.service.PaymentService;
-import com.wolai.platform.util.StringUtil;
 
 @Service
 public class PaymentAlipayServiceImpl extends CommonServiceImpl implements PaymentAlipayService {
@@ -25,6 +23,9 @@ public class PaymentAlipayServiceImpl extends CommonServiceImpl implements Payme
 	
 	@Autowired
 	MsgService msgService;
+	
+	@Autowired
+	PaymentService paymentService;
 	
 	@Override
 	public void callbackPers(Bill bill, String trade_no, String trade_status, String alipayTotal, Bill.PayType payType) {
@@ -43,6 +44,9 @@ public class PaymentAlipayServiceImpl extends CommonServiceImpl implements Payme
 					.replace("%LINCENST%", bill.getCarNo());
 			msgFull = Constant.payment_paySuccess_full.replaceAll("%AMOUNT%", alipayTotal)
 					.replace("%LINCENST%", bill.getCarNo());
+			
+			paymentService.payNotice(bill.getId());
+			
 		} else {
 			bill.setPayStatus(PayStatus.FEATURE);
 			

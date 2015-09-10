@@ -10,21 +10,85 @@ public class PayNoticeVo implements Serializable {
 	 */
 	private static final long serialVersionUID = 162231396868408688L;
 
+	public static final String COUPON_TYPE_TIME="time";
 	
+	public static final String COUPON_TYPE_AMOUNT="amount";
+	
+	/**
+	 * 新利泊外部系统编号
+	 */
 	private String exNo;
+	
+	/**
+	 * 是否已支付
+	 */
 	private Boolean isPaid=Boolean.TRUE;
+	
+	/**
+	 * 订单id
+	 */
 	private String orderId;
+	
+	/**
+	 * 喔来订单生成时间
+	 */
 	private Long orderCreateTime;
+	
+	/**
+	 * 付款时间
+	 */
 	private Long payTime;
+	
+	/**
+	 * 已付金额
+	 */
 	private BigDecimal payAmount;
+	
+	/**
+	 * 优惠券类型
+	 */
+	private String couponType;
+	
+	/**
+	 * 抵时券时长
+	 */
 	private Long couponTime;
+	
+	/**
+	 * 代金券金额
+	 */
 	private Long couponAmount;
+	
+	/**
+	 * 抵时券或代金券编号
+	 */
 	private String couponSn;
+	
+	/**
+	 * 出口编号
+	 */
 	private String exportNo;
+	
+	/**
+	 * 车牌号
+	 */
 	private String carNo;
+	
+	/**
+	 * 入库时间
+	 */
 	private Long enterTime;
+	
+	/**
+	 * 出库时间
+	 */
 	private Long exitTime;
+	
+	/**
+	 * 时间戳
+	 */
 	private Long timestamp;
+	
 	public String getExNo() {
 		return exNo;
 	}
@@ -108,6 +172,12 @@ public class PayNoticeVo implements Serializable {
 	}
 	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
+	}
+	public String getCouponType() {
+		return couponType;
+	}
+	public void setCouponType(String couponType) {
+		this.couponType = couponType;
 	}
 
 }
