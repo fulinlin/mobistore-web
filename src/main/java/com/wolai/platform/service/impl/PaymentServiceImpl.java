@@ -154,8 +154,8 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 	}
 	
 	private PayQueryResponseVo getPayAmountFromThirdPartServer (ParkingRecord parking, Bill bill, Coupon coupon) {
+		SysAPIKey key = apiKeyService.getKeyByParinglotId(parking.getParkingLotId());
 		if (Constant.THIRD_PART_SERVER == null) {
-			SysAPIKey key = apiKeyService.getKeyByParinglotId(parking.getParkingLotId());
 			Constant.THIRD_PART_SERVER = key.getUrl()+":"+key.getPort()+key.getRootPath();
 		}
 		
@@ -175,7 +175,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		try{
 			log.info("===请求新利泊计费服务===");
 			log.info(vo.toString());
-			String result = WebClientUtil.post(Constant.THIRD_PART_SERVER + HttpServerConstants.POST_PAY_QUERY, JSON.toJSONString(vo));
+			String result = WebClientUtil.post(Constant.THIRD_PART_SERVER + HttpServerConstants.POST_PAY_QUERY+"?token="+key.getToken(), Encodes.sign(JSON.toJSONString(vo)));
 			JSONObject json = JSONObject.parseObject(result);
 			response =JSON.parseObject(Encodes.getObject(json.getString("sign")).toJSONString(), PayQueryResponseVo.class);
 			log.info(response.toString());
@@ -192,7 +192,9 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		Coupon coupon = bill.getCoupon();
 		SysAPIKey key = apiKeyService.getKeyByParinglotId(record.getParkingLotId());
 		
-		String url=  key.getUrl()+":"+key.getPort()+key.getRootPath();
+		if (Constant.THIRD_PART_SERVER == null) {
+			Constant.THIRD_PART_SERVER = key.getUrl()+":"+key.getPort()+key.getRootPath();
+		}
 		
 		PayNoticeVo noticeVo = new PayNoticeVo();
 		noticeVo.setCarNo(bill.getCarNo());
@@ -224,7 +226,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 		try{
 			log.info("===通知新利泊已缴费===");
 			log.info(JSON.toJSONString(noticeVo));
-			String result = WebClientUtil.post(url+ HttpServerConstants.POST_PAY_NOTICE+"?token="+key.getToken(),Encodes.sign(JSON.toJSONString(noticeVo)));
+			String result = WebClientUtil.post(Constant.THIRD_PART_SERVER + HttpServerConstants.POST_PAY_NOTICE+"?token="+key.getToken(),Encodes.sign(JSON.toJSONString(noticeVo)));
 			log.info(result);
 		} catch(Exception e){
 			log.info(e.getStackTrace().toString());
