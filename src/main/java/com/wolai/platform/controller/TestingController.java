@@ -128,7 +128,6 @@ public class TestingController extends BaseController{
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
 		String carNo = json.get("carNo");
-		
 		if (StringUtils.isEmpty(carNo)) {
 			ret.put("code", RespCode.INTERFACE_FAIL.Code());
 			ret.put("msg", "parameters error");
@@ -149,9 +148,9 @@ public class TestingController extends BaseController{
 	}
 	
 	@AuthPassport(validate=false)
-	@RequestMapping(value="exit")
+	@RequestMapping(value="payCheck")
 	@ResponseBody
-	public Map<String,Object> exit(HttpServletRequest request, @RequestBody Map<String, String> json){
+	public Map<String,Object> payCheck(HttpServletRequest request, @RequestBody Map<String, String> json){
 		Map<String,Object> ret =new HashMap<String, Object>(); 
 		
 		String carNo = json.get("carNo");
@@ -161,7 +160,28 @@ public class TestingController extends BaseController{
 			return ret;
 		}
 		
-		String res = testService.exit(carNo);
+		String res = testService.payCheck(carNo);
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("msg", res);
+		
+		return ret;
+	}
+	
+	@AuthPassport(validate=false)
+	@RequestMapping(value="leave")
+	@ResponseBody
+	public Map<String,Object> leave(HttpServletRequest request, @RequestBody Map<String, String> json){
+		Map<String,Object> ret =new HashMap<String, Object>(); 
+		
+		String carNo = json.get("carNo");
+		if (StringUtils.isEmpty(carNo)) {
+			ret.put("code", RespCode.INTERFACE_FAIL.Code());
+			ret.put("msg", "parameters error");
+			return ret;
+		}
+		
+		String res = testService.payCheck(carNo);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("msg", res);

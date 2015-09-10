@@ -93,7 +93,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 			validCoupon = (Coupon)validObj;
 		}
 		
-		// TODO: 用validCoupon调用新利泊计费接口，更新费用数据
+		// 用validCoupon调用新利泊计费接口，更新费用数据
 		PayQueryResponseVo payQueryResponseVo = getPayAmountFromThirdPartServer(parking, bill, validCoupon);
 		BigDecimal totalAmount = payQueryResponseVo.getExpenses();
 		BigDecimal payAmount = payQueryResponseVo.getAccruedExpenses();
@@ -104,7 +104,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 				payAmount = new BigDecimal(0);
 			}
 		}
-		
+		bill.setChargeTime(new Date(payQueryResponseVo.getChargeTime()));
 		bill.setTotalAmount(totalAmount);
 		bill.setPayAmount(payAmount);
 		if (payType != null) {

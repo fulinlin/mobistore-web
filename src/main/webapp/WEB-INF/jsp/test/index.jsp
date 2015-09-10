@@ -9,8 +9,11 @@
 	<title>喔来停车系统测试</title>
 	
 	 <style type="text/css">
-		.controls select, .controls input {
+		.controls select {
 			width: 400px;
+		}
+		.controls input {
+			width: 395px;
 		}
 	</style>
 </head>
@@ -55,7 +58,7 @@
 				<!-- <label class="control-label"></label> -->
 				<div class="controls" >
 					<input id="carToInTemp" />
-					<button id="tempEnter" type="submit" class="btn">入库</button>
+					<button id="tempEnter" type="submit" class="btn">模拟入库</button>
 				</div>
 			</div>
 		
@@ -69,7 +72,7 @@
 							<option value ="${car.carNo}">${car.carNo}</option>
 						</c:forEach>
 					</select>
-					<button id="enter" type="submit" class="btn">入库</button>
+					<button id="enter" type="submit" class="btn">模拟入库</button>
 				</div>
 			</div>
 
@@ -86,7 +89,8 @@
 							</option>
 						</c:forEach>
 					</select>
-					<button id="exit" type="submit" class="btn">出库</button>
+					<button id="payCheck" type="submit" class="btn">支付检查</button>
+					<button id="leave" type="submit" class="btn">模拟出库</button>
 				</div>
 			</div>
 	</form>
@@ -205,7 +209,7 @@
 			return false;
 		});
 		
-		$("#exit").click(function(){
+		$("#payCheck").click(function(){
 			var carToOut = $("#carToOut").val();
 			
 			var now = new Date().getTime();
@@ -213,7 +217,31 @@
 			
 			$.ajax({
 	             type: "POST",
-	             url: "/wolai-web/test/exit",
+	             url: "/wolai-web/test/payCheck",
+	             data: JSON.stringify(data3),
+				 contentType: "application/json",
+	             dataType: "json",
+	             success: function(json){
+	            	if (json.code == '-1') {
+	            		alert("错误 " + json.msg);
+					} else {
+						refresh(); 
+					}
+	            	
+	            }
+	         });
+			return false;
+		});
+		
+		$("#leave").click(function(){
+			var carToOut = $("#carToOut").val();
+			
+			var now = new Date().getTime();
+			var data3 = {"carNo": carToOut};
+			
+			$.ajax({
+	             type: "POST",
+	             url: "/wolai-web/test/leave",
 	             data: JSON.stringify(data3),
 				 contentType: "application/json",
 	             dataType: "json",

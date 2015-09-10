@@ -18,6 +18,9 @@ public class PayQueryResponseVo implements Serializable {
 	/** 应付费用，考虑抵时券 */
 	private BigDecimal accruedExpenses;
 	
+	// 计费时间
+	private Long chargeTime;
+	
 	/** 限定离场时间 */
 	private Long  remainingTime;
 	
@@ -52,6 +55,12 @@ public class PayQueryResponseVo implements Serializable {
 	}
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+	public Long getChargeTime() {
+		return chargeTime;
+	}
+	public void setChargeTime(Long chargeTime) {
+		this.chargeTime = chargeTime;
 	}
 
 }

@@ -141,37 +141,43 @@ public class TestServiceImpl extends CommonServiceImpl implements TestService {
 	
 	@Override
 	public String enter(String carNo) {
-		// {"carNo":"","exNo":"","entranceNo":""} 
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("carNo", carNo);
-		map.put("exNo", IdGen.uuid());
-		map.put("entranceNo", "11");
 		
-		String ret = WebClientUtil.post(Constant.THIRD_PART_SERVER + "simucarenter", JSON.toJSONString(map));
+		String ret = WebClientUtil.post(Constant.THIRD_PART_SERVER + "simu_enter", JSON.toJSONString(map));
 		return ret;
 	}
 	
 	@Override
-	public String exit(String carNo) {
+	public String payCheck(String carNo) {
 		DetachedCriteria dc2 = DetachedCriteria.forClass(ParkingRecord.class);
 		dc2.add(Restrictions.eq("isDelete", false));
 		dc2.add(Restrictions.eq("isDisable", false));
 		dc2.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
 		dc2.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.UNKONW));
 		dc2.addOrder(Order.desc("id"));
-		List<ParkingRecord> parks = (List<ParkingRecord>) findAllByCriteria(dc2);
-		ParkingRecord park = parks.get(0);
-		String exNo = park.getExNo();
-		Date intime = park.getDriveInTime();
 		
-		// {"carNo":"苏E11111","exNo":"1","exportNo":"A1","enterTime":"1438936610000"}
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("carNo", carNo);
-		map.put("exNo", exNo);
-		map.put("entranceNo", "11");
-		map.put("enterTime", String.valueOf(intime.getTime()));
 		
-		String ret = WebClientUtil.post(Constant.THIRD_PART_SERVER + "simucarleave", JSON.toJSONString(map));
+		map.put("sureExit", "true");
+		String ret = WebClientUtil.post(Constant.THIRD_PART_SERVER + "simu_paycheck", JSON.toJSONString(map));
+		return ret;
+	}
+	
+	@Override
+	public String leave(String carNo) {
+		DetachedCriteria dc2 = DetachedCriteria.forClass(ParkingRecord.class);
+		dc2.add(Restrictions.eq("isDelete", false));
+		dc2.add(Restrictions.eq("isDisable", false));
+		dc2.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.OUT));
+		dc2.add(Restrictions.ne("parkStatus", ParkingRecord.ParkStatus.UNKONW));
+		dc2.addOrder(Order.desc("id"));
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("carNo", carNo);
+		map.put("sureExit", "true");
+		String ret = WebClientUtil.post(Constant.THIRD_PART_SERVER + "simu_sureLeave", JSON.toJSONString(map));
 		return ret;
 	}
 	

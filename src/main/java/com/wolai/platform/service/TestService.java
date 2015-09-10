@@ -23,8 +23,8 @@ public interface TestService extends CommonService {
 	List<ParkingLot> listParkingLot();
 
 	String enter(String carNo);
-
-	String exit(String carNo);
+	String payCheck(String carNo);
+	String leave(String carNo);
 
 	String bound(String url, String token, HttpServletRequest request);
 	void initRemoteUrl(HttpServletRequest request);
