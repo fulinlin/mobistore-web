@@ -58,7 +58,7 @@ public class PushUtil {
 
 			broadcast.send();
 		} catch (Exception e) {
-			log.error(e.getStackTrace());
+			log.error(Exceptions.getStackTraceAsString(e));
 		}
 	}
 
@@ -114,7 +114,7 @@ public class PushUtil {
 			broadcast.setCustomizedField("test", "helloworld");
 			broadcast.send();
 		} catch (Exception e) {
-			log.error(e.getStackTrace());
+			log.error(Exceptions.getStackTraceAsString(e));
 		}
 	}
 	
@@ -134,7 +134,7 @@ public class PushUtil {
 			unicast.setCustomizedField("test", "helloworld");
 			unicast.send();
 		} catch (Exception e) {
-			log.error(e.getStackTrace());
+			log.error(Exceptions.getStackTraceAsString(e));
 		}
 	}
 

@@ -27,6 +27,7 @@ import com.wolai.platform.service.CouponService;
 import com.wolai.platform.service.MsgService;
 import com.wolai.platform.service.PaymentService;
 import com.wolai.platform.util.Encodes;
+import com.wolai.platform.util.Exceptions;
 import com.wolai.platform.util.StringUtil;
 import com.wolai.platform.util.WebClientUtil;
 import com.wolai.platform.vo.PayNoticeVo;
@@ -177,10 +178,10 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 			log.info(vo.toString());
 			String result = WebClientUtil.post(Constant.THIRD_PART_SERVER + HttpServerConstants.POST_PAY_QUERY+"?token="+key.getToken(), Encodes.sign(JSON.toJSONString(vo)));
 			JSONObject json = JSONObject.parseObject(result);
-			response =JSON.parseObject(Encodes.getObject(json.getString("sign")).toJSONString(), PayQueryResponseVo.class);
+			response =JSON.parseObject(json.toJSONString(), PayQueryResponseVo.class);
 			log.info(response.toString());
 		} catch(Exception e){
-			log.info(e.getStackTrace().toString());
+			log.info(Exceptions.getStackTraceAsString(e));
 		}
 		return response;
 	}
@@ -229,7 +230,7 @@ public class PaymentServiceImpl extends CommonServiceImpl implements PaymentServ
 			String result = WebClientUtil.post(Constant.THIRD_PART_SERVER + HttpServerConstants.POST_PAY_NOTICE+"?token="+key.getToken(),Encodes.sign(JSON.toJSONString(noticeVo)));
 			log.info(result);
 		} catch(Exception e){
-			log.info(e.getStackTrace().toString());
+			log.info(Exceptions.getStackTraceAsString(e));
 		}
 	}
 
