@@ -7,6 +7,7 @@ package com.tinypace.mobistore.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -20,6 +21,35 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	
 	private static String[] parsePatterns = { "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", 
 		"yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm" };
+	
+	
+	/** 
+     * 得到几天前的时间 
+     *  
+     * @param d 
+     * @param day 
+     * @return 
+     */  
+    public static Date getDateBefore(Date d, int day) {  
+        Calendar cal = Calendar.getInstance();  
+        cal.setTime(d);  
+        cal.set(Calendar.DATE, cal.get(Calendar.DATE) - day);
+        return cal.getTime();  
+    }
+    
+    /** 
+     * 得到几天后的时间 
+     *  
+     * @param d 
+     * @param day
+     * @return 
+     */  
+    public static Date getDateAfter(Date d, int day) {  
+        Calendar cal = Calendar.getInstance();  
+        cal.setTime(d);  
+        cal.set(Calendar.DATE, cal.get(Calendar.DATE) + day);  
+        return cal.getTime();  
+    }
 
 	/**
 	 * 得到当前日期字符串 格式（yyyy-MM-dd）

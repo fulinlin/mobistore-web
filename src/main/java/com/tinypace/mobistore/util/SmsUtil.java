@@ -3,10 +3,8 @@ package com.tinypace.mobistore.util;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
@@ -19,19 +17,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import push.android.AndroidBroadcast;
-import push.android.AndroidCustomizedcast;
-import push.android.AndroidFilecast;
-import push.android.AndroidGroupcast;
-import push.android.AndroidUnicast;
-import push.ios.IOSBroadcast;
-import push.ios.IOSCustomizedcast;
-import push.ios.IOSFilecast;
-import push.ios.IOSGroupcast;
-import push.ios.IOSUnicast;
 
 public class SmsUtil {
 	private static Log log = LogFactory.getLog(SmsUtil.class);  

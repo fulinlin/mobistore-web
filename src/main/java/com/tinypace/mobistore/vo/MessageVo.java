@@ -2,8 +2,6 @@ package com.tinypace.mobistore.vo;
 
 import java.util.Date;
 
-import com.tinypace.mobistore.entity.SysMessage.MsgType;
-
 public class MessageVo {
 	private String id;
 	private String title;

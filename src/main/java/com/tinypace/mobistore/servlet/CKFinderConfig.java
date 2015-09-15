@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
-
 import com.ckfinder.connector.ServletContextFactory;
 import com.ckfinder.connector.configuration.Configuration;
 import com.ckfinder.connector.data.AccessControlLevel;
