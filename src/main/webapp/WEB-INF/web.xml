@@ -92,7 +92,7 @@
     </filter>
     <filter-mapping>
         <filter-name>CorsFilter</filter-name>
-        <url-pattern>/api/web/*</url-pattern>
+        <url-pattern>/api/*</url-pattern>
     </filter-mapping>
     
      <!-- Character Encoding filter -->

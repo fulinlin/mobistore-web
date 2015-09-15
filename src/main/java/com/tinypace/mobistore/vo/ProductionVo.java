@@ -6,6 +6,7 @@ public class ProductionVo {
 	private String id;
 	private String name;
 	private String capacity;
+	private String image;
 	
 	public String getId() {
 		return id;
@@ -24,5 +25,11 @@ public class ProductionVo {
 	}
 	public void setCapacity(String capacity) {
 		this.capacity = capacity;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

@@ -4,14 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="sys_message")
+@Table(name="ms_production")
 public class MsProduction extends IdEntity {
 	private static final long serialVersionUID = 5462783088930984388L;
 
 	private String name;
-
 	private String capacity;
-
+	private String image;
 
 	public String getName() {
 		return name;
@@ -30,6 +29,16 @@ public class MsProduction extends IdEntity {
 
 	public void setCapacity(String capacity) {
 		this.capacity = capacity;
+	}
+
+
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 

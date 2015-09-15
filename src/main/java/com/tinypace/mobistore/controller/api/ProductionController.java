@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tinypace.mobistore.bean.Page;
@@ -22,14 +24,15 @@ import com.tinypace.mobistore.util.BeanUtilEx;
 import com.tinypace.mobistore.vo.ProductionVo;
 
 @Controller
-@RequestMapping(Constant.API + "production/")
+@RequestMapping(Constant.API)
 public class ProductionController extends BaseController {
 	@Autowired
 	ProductionService productService;
 
-	@RequestMapping(value = "list")
+	@RequestMapping(value = "production", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> list(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> list(HttpServletRequest request, 
+			@RequestParam String startIndex, @RequestParam String pageSize) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 //		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		
@@ -41,12 +44,9 @@ public class ProductionController extends BaseController {
 			MsProduction po = (MsProduction) obj;
 			ProductionVo vo = new ProductionVo();
 			BeanUtilEx.copyProperties(vo, po);
+			
+			ls.add(vo);
 		}
-
-//		{"id":"001","name": "如实无添加发酵乳", "capacity": "135 G"},
-//		{"id":"002","name": "嘟嘟儿童高品质牛奶", "capacity": "200 ML"},
-//		{"id":"003","name": "新鲜杯优倍", "capacity": "200 ML"},
-//		{"id":"004","name": "白雪风味酸牛奶（低脂）", "capacity": "200 G"},
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", ls);
