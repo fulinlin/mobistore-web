@@ -40,14 +40,6 @@
 	
 	<!-- 定义无Controller的path<->view直接映射 -->
 	<mvc:view-controller path="/" view-name="redirect:${app.index}"/>
-	
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/" />
-			<bean class="com.tinypace.mobistore.interceptor.SystemInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
 
 </beans>
 

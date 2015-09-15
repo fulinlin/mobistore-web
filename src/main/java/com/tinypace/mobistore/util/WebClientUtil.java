@@ -14,7 +14,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tinypace.mobistore.constant.HttpServerConstants;
 
 /**
  * 远程访问工具
@@ -22,8 +21,11 @@ import com.tinypace.mobistore.constant.HttpServerConstants;
  *
  */
 public class WebClientUtil {
-	
 		public static	Log logger = LogFactory.getLog(WebClientUtil.class);
+		
+		public static final String ContentType = "application/json";
+		
+		public static final String Encoding = "UTF-8";
 	
 	   public  static String post(String url, String json) {
 	    	String resultJson = "";
@@ -39,13 +41,13 @@ public class WebClientUtil {
 	        
 	        CloseableHttpResponse response = null;
 	        try {
-	        	StringEntity entity = new StringEntity(json, HttpServerConstants.Encoding);
-	        	entity.setContentEncoding(HttpServerConstants.Encoding);
-	        	entity.setContentType(HttpServerConstants.ContentType);
+	        	StringEntity entity = new StringEntity(json, WebClientUtil.Encoding);
+	        	entity.setContentEncoding(WebClientUtil.Encoding);
+	        	entity.setContentType(WebClientUtil.ContentType);
 	        	httppost.setEntity(entity);
 	        	response = httpclient.execute(httppost);
 	    		HttpEntity result = response.getEntity();
-	    		resultJson = EntityUtils.toString(result, HttpServerConstants.Encoding);
+	    		resultJson = EntityUtils.toString(result, WebClientUtil.Encoding);
 	        } catch (Exception e) {
 	        		if(logger.isErrorEnabled()){
 		        		logger.error(Exceptions.getStackTraceAsString(e));

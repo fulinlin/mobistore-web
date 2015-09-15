@@ -4,7 +4,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.stereotype.Service;
 
 import com.tinypace.mobistore.bean.Page;
-import com.tinypace.mobistore.entity.SysMessageSend;
+import com.tinypace.mobistore.entity.MsProduction;
 import com.tinypace.mobistore.service.ProductionService;
 
 @Service
@@ -12,7 +12,7 @@ public class ProductionServiceImpl extends CommonServiceImpl implements Producti
 	@Override
 	public Page list(int startIndex, int pageSize) {
 		
-		DetachedCriteria dc = DetachedCriteria.forClass(SysMessageSend.class);
+		DetachedCriteria dc = DetachedCriteria.forClass(MsProduction.class);
 //		dc.setFetchMode("message", FetchMode.JOIN);
 //		dc.add(Restrictions.eq("userId", userId));
 //		dc.addOrder(Order.desc("sendTime"));

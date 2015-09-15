@@ -152,11 +152,6 @@
 		<property name="location" value="classpath:config.properties" />
 	</bean>
 
-	<!-- 缓存配置 -->
-	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:${ehcache.configFile}" />
-	</bean>
-
 	<!--Bean Validator 定义 -->
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 

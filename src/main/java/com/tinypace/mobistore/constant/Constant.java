@@ -19,19 +19,9 @@ public final class Constant {
 	public static String THIRD_PART_SERVER = "__UNKNOW__";
 	
 	/**
-	 * appClient访问接口前缀
-	 */
-	public static final String API_MOBI = "api/mobi/";
-	
-	/**
 	 * webClint访问接口前缀
 	 */
-	public static final String API_WEB = "api/web/";
-	
-	/**
-	 * 外部接口访问接口前缀
-	 */
-	public static final String API_EX= "api/ex/";
+	public static final String API = "/api/v1/";
 	
 	/**
 	 * 
