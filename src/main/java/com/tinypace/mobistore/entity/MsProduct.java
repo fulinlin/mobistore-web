@@ -4,8 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ms_production")
-public class MsProduction extends IdEntity {
+@Table(name="ms_product")
+public class MsProduct extends IdEntity {
 	private static final long serialVersionUID = 5462783088930984388L;
 
 	private String name;

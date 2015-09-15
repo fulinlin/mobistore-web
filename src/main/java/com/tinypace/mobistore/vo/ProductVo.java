@@ -2,7 +2,7 @@ package com.tinypace.mobistore.vo;
 
 import java.util.Date;
 
-public class ProductionVo {
+public class ProductVo {
 	private String id;
 	private String name;
 	private String capacity;
