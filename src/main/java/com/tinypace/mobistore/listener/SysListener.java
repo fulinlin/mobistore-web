@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import org.apache.log4j.Logger;
 
 import com.tinypace.mobistore.constant.Constant;
-import com.unionpay.acp.sdk.SDKConfig;
 
 public class SysListener extends HttpServlet implements ServletContextListener {
 
@@ -34,9 +33,6 @@ public class SysListener extends HttpServlet implements ServletContextListener {
         } catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-        // 加载银联配置信息
-		SDKConfig.getConfig().loadPropertiesFromSrc();
 	}
 
 	public void contextDestroyed(ServletContextEvent servletcontextevent) {
