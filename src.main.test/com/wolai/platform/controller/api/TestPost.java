@@ -1,4 +1,4 @@
-package com.wolai.platform.controller.api;
+package com.tinypace.mobistore.controller.api;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -24,8 +24,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import com.wolai.platform.util.Encodes;
-import com.wolai.platform.util.WebClientUtil;
+import com.tinypace.mobistore.util.Encodes;
+import com.tinypace.mobistore.util.WebClientUtil;
 
 public class TestPost{
 	public static void main(String[] args){

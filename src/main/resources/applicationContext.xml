@@ -14,13 +14,13 @@
 
 	<context:property-placeholder location="classpath:config.properties" />
 	<context:annotation-config />
-	<context:component-scan base-package="com.wolai.platform.config"></context:component-scan>
-	<context:component-scan base-package="com.wolai.platform.entity"></context:component-scan>
-	<context:component-scan base-package="com.wolai.platform.service"></context:component-scan>
-	<context:component-scan base-package="com.wolai.platform.service.impl"></context:component-scan>
-	<context:component-scan base-package="com.wolai.platform.dao"></context:component-scan>
-	<context:component-scan base-package="com.wolai.platform.util"></context:component-scan>
-	<context:component-scan base-package="com.wolai.platform.job"></context:component-scan>
+	<context:component-scan base-package="com.tinypace.mobistore.config"></context:component-scan>
+	<context:component-scan base-package="com.tinypace.mobistore.entity"></context:component-scan>
+	<context:component-scan base-package="com.tinypace.mobistore.service"></context:component-scan>
+	<context:component-scan base-package="com.tinypace.mobistore.service.impl"></context:component-scan>
+	<context:component-scan base-package="com.tinypace.mobistore.dao"></context:component-scan>
+	<context:component-scan base-package="com.tinypace.mobistore.util"></context:component-scan>
+	<context:component-scan base-package="com.tinypace.mobistore.job"></context:component-scan>
 
 
 
@@ -143,12 +143,12 @@
 	</tx:advice>
 
 	<aop:config proxy-target-class="true">
-		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.wolai.platform.service..*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.tinypace.mobistore.service..*.*(..))" />
 	</aop:config>
 
-	<bean class="com.wolai.platform.util.SpringContextHolder" lazy-init="false" />
+	<bean class="com.tinypace.mobistore.util.SpringContextHolder" lazy-init="false" />
 
-	<bean id="configBean" class="com.wolai.platform.util.CustomizedPropertyConfigurer">
+	<bean id="configBean" class="com.tinypace.mobistore.util.CustomizedPropertyConfigurer">
 		<property name="location" value="classpath:config.properties" />
 	</bean>
 

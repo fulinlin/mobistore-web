@@ -12,7 +12,7 @@
      <!-- 加载配置属性文件 -->
 	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/config.properties" />
 	
-	<context:component-scan base-package="com.wolai.platform.controller"></context:component-scan>
+	<context:component-scan base-package="com.tinypace.mobistore.controller"></context:component-scan>
 	<mvc:annotation-driven />
 	
 	
@@ -45,7 +45,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/" />
-			<bean class="com.wolai.platform.interceptor.SystemInterceptor" />
+			<bean class="com.tinypace.mobistore.interceptor.SystemInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 

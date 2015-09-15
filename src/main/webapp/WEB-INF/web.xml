@@ -73,7 +73,7 @@
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
     <listener>
-		<listener-class>com.wolai.platform.listener.SysListener</listener-class>
+		<listener-class>com.tinypace.mobistore.listener.SysListener</listener-class>
 	</listener>
    
      <!--Hibernate Open Session in View Filter-->
@@ -88,7 +88,7 @@
     
     <filter>
         <filter-name>CorsFilter</filter-name>
-        <filter-class>com.wolai.platform.filter.CorsFilter</filter-class>
+        <filter-class>com.tinypace.mobistore.filter.CorsFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CorsFilter</filter-name>
@@ -141,7 +141,7 @@
     <!-- CKFinder -->
   <servlet>
     <servlet-name>CKFinderConnectorServlet</servlet-name>
-    <servlet-class>com.wolai.platform.servlet.CKFinderConnectorServlet</servlet-class>
+    <servlet-class>com.tinypace.mobistore.servlet.CKFinderConnectorServlet</servlet-class>
     <init-param>
       <param-name>XMLConfig</param-name>
       <param-value>/WEB-INF/ckfinder.xml</param-value>
@@ -152,7 +152,7 @@
     </init-param>
     <init-param>
       <param-name>configuration</param-name>
-      <param-value>com.wolai.platform.servlet.CKFinderConfig</param-value>
+      <param-value>com.tinypace.mobistore.servlet.CKFinderConfig</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -190,7 +190,7 @@
   <!-- 随机验证码 -->
   <servlet>
     <servlet-name>ValidateCodeServlet</servlet-name>
-    <servlet-class>com.wolai.platform.servlet.ValidateCodeServlet</servlet-class>
+    <servlet-class>com.tinypace.mobistore.servlet.ValidateCodeServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ValidateCodeServlet</servlet-name>

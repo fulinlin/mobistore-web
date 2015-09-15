@@ -8,22 +8,22 @@
 	<defaultCache maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600" 
 		overflowToDisk="true" maxEntriesLocalDisk="100000" />
     
-    <cache name="com.wolai.platform.entity.SysDict" maxEntriesLocalHeap="200" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+    <cache name="com.tinypace.mobistore.entity.SysDict" maxEntriesLocalHeap="200" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
     
-    <cache name="com.wolai.platform.entity.SysUser" maxEntriesLocalHeap="200" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+    <cache name="com.tinypace.mobistore.entity.SysUser" maxEntriesLocalHeap="200" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
 		
-    <cache name="com.wolai.platform.entity.License" maxEntriesLocalHeap="200" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+    <cache name="com.tinypace.mobistore.entity.License" maxEntriesLocalHeap="200" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
 	
-    <cache name="com.wolai.platform.entity.SysLoginAccount" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+    <cache name="com.tinypace.mobistore.entity.SysLoginAccount" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
         
-    <cache name="com.wolai.platform.entity.SysRole" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+    <cache name="com.tinypace.mobistore.entity.SysRole" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
         
-    <cache name="com.wolai.platform.entity.SysRLoginAccountRole" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+    <cache name="com.tinypace.mobistore.entity.SysRLoginAccountRole" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
     
-     <cache name="com.wolai.platform.entity.ParkingLot" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+     <cache name="com.tinypace.mobistore.entity.ParkingLot" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
      
-     <cache name="com.wolai.platform.entity.ParkingRecord" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+     <cache name="com.tinypace.mobistore.entity.ParkingRecord" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
      
-     <cache name="com.wolai.platform.entity.Bill" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+     <cache name="com.tinypace.mobistore.entity.Bill" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000"/>
     
 </ehcache>
