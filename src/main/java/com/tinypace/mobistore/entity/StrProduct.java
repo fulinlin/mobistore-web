@@ -147,5 +147,53 @@ public class StrProduct extends IdEntity {
 		this.endTime = endTime;
 	}
 
+	public String getDescr() {
+		return descr;
+	}
+
+	public void setDescr(String descr) {
+		this.descr = descr;
+	}
+
+	public Integer getMass() {
+		return mass;
+	}
+
+	public void setMass(Integer mass) {
+		this.mass = mass;
+	}
+
+	public Integer getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(Integer capacity) {
+		this.capacity = capacity;
+	}
+
+	public String getBatchNumb() {
+		return batchNumb;
+	}
+
+	public void setBatchNumb(String batchNumb) {
+		this.batchNumb = batchNumb;
+	}
+
+	public Date getProductionDate() {
+		return productionDate;
+	}
+
+	public void setProductionDate(Date productionDate) {
+		this.productionDate = productionDate;
+	}
+
+	public Integer getShelfLife() {
+		return shelfLife;
+	}
+
+	public void setShelfLife(Integer shelfLife) {
+		this.shelfLife = shelfLife;
+	}
+
 
 }
