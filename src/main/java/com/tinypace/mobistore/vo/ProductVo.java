@@ -1,6 +1,5 @@
 package com.tinypace.mobistore.vo;
 
-import java.util.Date;
 
 public class ProductVo {
 	private String id;

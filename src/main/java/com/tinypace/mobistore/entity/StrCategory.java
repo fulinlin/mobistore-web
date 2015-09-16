@@ -1,22 +1,15 @@
 package com.tinypace.mobistore.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="str_series")
-public class StrSeries extends IdEntity {
+@Table(name="str_category")
+public class StrCategory extends IdEntity {
 	private static final long serialVersionUID = 5462783088930984388L;
 
 	private String name;
 	private String descr;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "brand_id")
-	private StrBrand brand;
 
 	public String getName() {
 		return name;
@@ -33,12 +26,5 @@ public class StrSeries extends IdEntity {
 	public void setDescr(String descr) {
 		this.descr = descr;
 	}
-
-	public StrBrand getBrand() {
-		return brand;
-	}
-
-	public void setBrand(StrBrand brand) {
-		this.brand = brand;
-	}
+	
 }

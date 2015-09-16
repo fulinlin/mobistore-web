@@ -1,7 +1,6 @@
 package com.tinypace.mobistore.entity;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,22 +15,28 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Table(name="sys_user")
+@Table(name="str_client")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SysUser extends IdEntity {
+public class StrClient extends IdEntity {
 	private static final long serialVersionUID = 5857362761727915396L;
-	private String email;
+	private String mobile;
     private String password;
     private String nickName;
+    private String email;
+    private String authToken;
     private Date lastLoginTime;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "r_user_role", joinColumns = { 
-			@JoinColumn(name = "user_id", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "role_id", 
-					nullable = false, updatable = false) })
-    private Set<SysRole> roleSet = new HashSet<SysRole>(0);
-
+    // 当前登录的设备类型
+    private String deviceType;
+    // 友盟设备Token
+    private String deviceToken;
+    
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -50,17 +55,28 @@ public class SysUser extends IdEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getAuthToken() {
+		return authToken;
+	}
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
+	}
 	public Date getLastLoginTime() {
 		return lastLoginTime;
 	}
 	public void setLastLoginTime(Date lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
 	}
-
-	public Set<SysRole> getRoleSet() {
-		return roleSet;
+	public String getDeviceType() {
+		return deviceType;
 	}
-	public void setRoleSet(Set<SysRole> roleSet) {
-		this.roleSet = roleSet;
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+	}
+	public String getDeviceToken() {
+		return deviceToken;
+	}
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
 	}
 }

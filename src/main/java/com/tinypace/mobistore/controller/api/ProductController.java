@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.constant.Constant;
-import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.service.ProductService;
 import com.tinypace.mobistore.util.BeanUtilEx;
