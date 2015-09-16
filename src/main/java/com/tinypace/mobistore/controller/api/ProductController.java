@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.constant.Constant;
 import com.tinypace.mobistore.constant.Constant.RespCode;
-import com.tinypace.mobistore.entity.MsProduct;
+import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.service.ProductService;
 import com.tinypace.mobistore.util.BeanUtilEx;
 import com.tinypace.mobistore.vo.ProductVo;
@@ -42,7 +42,7 @@ public class ProductController extends BaseController {
 		List<ProductVo> ls = new ArrayList<ProductVo>();
 		
 		for (Object obj : page.getItems()) {
-			MsProduct po = (MsProduct) obj;
+			StrProduct po = (StrProduct) obj;
 			ProductVo vo = new ProductVo();
 			BeanUtilEx.copyProperties(vo, po);
 			
@@ -54,16 +54,16 @@ public class ProductController extends BaseController {
 	
 	@RequestMapping(value = "model/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public MsProduct get(@PathVariable String id, HttpServletRequest request) {
-		MsProduct po = (MsProduct) productService.get(MsProduct.class, id);
+	public StrProduct get(@PathVariable String id, HttpServletRequest request) {
+		StrProduct po = (StrProduct) productService.get(StrProduct.class, id);
 		
 		return po;
 	}
 	
 	@RequestMapping(value = "model", method = RequestMethod.POST)
 	@ResponseBody
-	public MsProduct save(HttpServletRequest request, @RequestBody ProductVo vo) {
-		MsProduct po = new MsProduct();
+	public StrProduct save(HttpServletRequest request, @RequestBody ProductVo vo) {
+		StrProduct po = new StrProduct();
 		BeanUtilEx.copyProperties(po, vo);
 		productService.saveOrUpdate(po);
 		return po;
@@ -71,8 +71,8 @@ public class ProductController extends BaseController {
 	
 	@RequestMapping(value = "model/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public MsProduct update(HttpServletRequest request, @PathVariable String id, @RequestBody ProductVo vo) {
-		MsProduct po = new MsProduct();
+	public StrProduct update(HttpServletRequest request, @PathVariable String id, @RequestBody ProductVo vo) {
+		StrProduct po = new StrProduct();
 		BeanUtilEx.copyProperties(po, vo);
 		productService.saveOrUpdate(po);
 		return po;
@@ -81,7 +81,7 @@ public class ProductController extends BaseController {
 	@RequestMapping(value = "model/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public Map<String, Object> remove(HttpServletRequest request, @PathVariable String id, @RequestBody ProductVo vo) {
-		MsProduct po = (MsProduct) productService.get(MsProduct.class, id);
+		StrProduct po = (StrProduct) productService.get(StrProduct.class, id);
 		productService.delete(po);
 		return null;
 	}
