@@ -1,8 +1,11 @@
 package com.tinypace.mobistore.entity;
 
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -16,11 +19,18 @@ public class StrOrderItem extends IdEntity {
 	private BigDecimal amount;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id", insertable = false, updatable = false)
 	private StrProduct product;
 	
+	@Column(name="product_id")
+	private String productId;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "order_id", insertable = false, updatable = false)
 	private StrOrder strOrder;
-
+	
+	@Column(name="order_id")
+	private String orderId;
 
 	public BigDecimal getUnitPrice() {
 		return unitPrice;
@@ -68,6 +78,22 @@ public class StrOrderItem extends IdEntity {
 
 	public void setStrOrder(StrOrder strOrder) {
 		this.strOrder = strOrder;
+	}
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 }

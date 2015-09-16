@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,7 +35,11 @@ public class StrOrder extends IdEntity {
     private Date shipTime;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "client_id", insertable = false, updatable = false)
 	private StrClient client;
+	
+	@Column(name="client_id")
+	private String clientId;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "strOrder")
 	@Where(clause = "isDelete = false and isDisable = false")
@@ -177,6 +183,14 @@ public class StrOrder extends IdEntity {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
 	}
 
 	

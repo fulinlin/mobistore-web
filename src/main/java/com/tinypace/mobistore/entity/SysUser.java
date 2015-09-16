@@ -24,6 +24,7 @@ public class SysUser extends IdEntity {
     private String password;
     private String nickName;
     private Date lastLoginTime;
+    private Integer rewardPoints;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "r_user_role", joinColumns = { 
@@ -62,5 +63,11 @@ public class SysUser extends IdEntity {
 	}
 	public void setRoleSet(Set<SysRole> roleSet) {
 		this.roleSet = roleSet;
+	}
+	public Integer getRewardPoints() {
+		return rewardPoints;
+	}
+	public void setRewardPoints(Integer rewardPoints) {
+		this.rewardPoints = rewardPoints;
 	}
 }

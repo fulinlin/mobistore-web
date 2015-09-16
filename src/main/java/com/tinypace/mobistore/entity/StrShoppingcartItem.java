@@ -1,8 +1,11 @@
 package com.tinypace.mobistore.entity;
 
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -16,11 +19,18 @@ public class StrShoppingcartItem extends IdEntity {
 	private BigDecimal amount;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id", insertable = false, updatable = false)
 	private StrProduct product;
 	
+	@Column(name="product_id")
+	private String productId;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "shoppingcart_id", insertable = false, updatable = false)
 	private StrShoppingcart shoppingcart;
 
+	@Column(name="shoppingcart_id")
+	private String shoppingcartId;
 
 	public BigDecimal getUnitPrice() {
 		return unitPrice;
@@ -68,6 +78,22 @@ public class StrShoppingcartItem extends IdEntity {
 
 	public void setShoppingcart(StrShoppingcart shoppingcart) {
 		this.shoppingcart = shoppingcart;
+	}
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	public String getShoppingcartId() {
+		return shoppingcartId;
+	}
+
+	public void setShoppingcartId(String shoppingcartId) {
+		this.shoppingcartId = shoppingcartId;
 	}
 
 }

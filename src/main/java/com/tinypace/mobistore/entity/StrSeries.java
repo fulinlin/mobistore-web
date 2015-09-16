@@ -1,5 +1,6 @@
 package com.tinypace.mobistore.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -15,8 +16,11 @@ public class StrSeries extends IdEntity {
 	private String descr;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "brand_id")
+    @JoinColumn(name = "brand_id", insertable = false, updatable = false)
 	private StrBrand brand;
+	
+	@Column(name="brand_id")
+	private String brandId;
 
 	public String getName() {
 		return name;
@@ -40,5 +44,13 @@ public class StrSeries extends IdEntity {
 
 	public void setBrand(StrBrand brand) {
 		this.brand = brand;
+	}
+
+	public String getBrandId() {
+		return brandId;
+	}
+
+	public void setBrandId(String brandId) {
+		this.brandId = brandId;
 	}
 }
