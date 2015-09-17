@@ -6,6 +6,8 @@ public class CategoryVo {
 	private String code;
 	private String name;
 	private String descr;
+	private String image;
+	
 	public String getId() {
 		return id;
 	}
@@ -29,5 +31,11 @@ public class CategoryVo {
 	}
 	public void setDescr(String descr) {
 		this.descr = descr;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

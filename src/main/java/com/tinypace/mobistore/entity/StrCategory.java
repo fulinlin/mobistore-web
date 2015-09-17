@@ -11,6 +11,7 @@ public class StrCategory extends IdEntity {
 	private String code;
 	private String name;
 	private String descr;
+	private String image;
 
 	public String getName() {
 		return name;
@@ -34,6 +35,14 @@ public class StrCategory extends IdEntity {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 }
