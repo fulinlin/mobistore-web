@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.tinypace.mobistore.entity.SysUser;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/user/")
 public class UserController extends BaseController {
 	
-	@RequestMapping("index")
-	public String index(HttpServletRequest request,SysUser user,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,Model model){
+	@RequestMapping("list")
+	public String list(HttpServletRequest request,SysUser user,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,Model model){
 //		if(pageNo==null){
 //			pageNo=1;
 //		}
@@ -28,6 +28,6 @@ public class UserController extends BaseController {
 //		page = userService.findAllByPage(user, (pageNo-1)*pageSize, pageSize);
 //		model.addAttribute("page", page);
 //		model.addAttribute("user", user);
-		return "index";
+		return "user/list";
 	}
 }
