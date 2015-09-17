@@ -25,6 +25,7 @@ public class StrClient extends IdEntity {
     private String email;
     private String authToken;
     private Date lastLoginTime;
+    private Integer rewardPoints;
 
     // 当前登录的设备类型
     private String deviceType;
@@ -78,5 +79,11 @@ public class StrClient extends IdEntity {
 	}
 	public void setDeviceToken(String deviceToken) {
 		this.deviceToken = deviceToken;
+	}
+	public Integer getRewardPoints() {
+		return rewardPoints;
+	}
+	public void setRewardPoints(Integer rewardPoints) {
+		this.rewardPoints = rewardPoints;
 	}
 }
