@@ -1,6 +1,7 @@
 package com.tinypace.mobistore.action;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,22 +15,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tinypace.mobistore.constant.Constant;
 import com.tinypace.mobistore.controller.BaseController;
+import com.tinypace.mobistore.entity.StrCategory;
+import com.tinypace.mobistore.service.CategoryService;
 import com.tinypace.mobistore.service.ProductService;
 
 @Controller
 @RequestMapping(Constant.API + "home/")
 public class HomeAction extends BaseController {
+	@Autowired
+	CategoryService categoryService;
 	
 	@Autowired
 	ProductService productService;
 	
-	@RequestMapping(value = "opt/doSomething", method = RequestMethod.POST)
+	@RequestMapping(value = "opt/index", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doSomething(HttpServletRequest request, @RequestBody Object json) {
+	public Map<String, Object> index(HttpServletRequest request, @RequestBody Object json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
+		List<StrCategory> ls = categoryService.listAll();
+		
 		ret.put("code", 1);
-		ret.put("msg", "成功");
+		ret.put("data", ls);
 		return ret;
 	}
 }

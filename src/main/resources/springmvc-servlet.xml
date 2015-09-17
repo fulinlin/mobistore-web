@@ -13,6 +13,7 @@
 	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/config.properties" />
 	
 	<context:component-scan base-package="com.tinypace.mobistore.controller"></context:component-scan>
+	<context:component-scan base-package="com.tinypace.mobistore.action"></context:component-scan>
 	<mvc:annotation-driven />
 	
 	
