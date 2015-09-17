@@ -1,4 +1,4 @@
-package com.tinypace.mobistore.controller.api;
+package com.tinypace.mobistore.action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.constant.Constant;
+import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.service.ProductService;
 import com.tinypace.mobistore.util.BeanUtilEx;
@@ -25,7 +26,7 @@ import com.tinypace.mobistore.vo.ProductVo;
 
 @Controller
 @RequestMapping(Constant.API + "product/")
-public class SearchController extends BaseController {
+public class ShoppingcartAction extends BaseController {
 	@Autowired
 	ProductService productService;
 

@@ -1,4 +1,4 @@
-package com.tinypace.mobistore.controller.api;
+package com.tinypace.mobistore.controller;
 
 
 import java.util.HashMap;

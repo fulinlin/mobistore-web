@@ -1,4 +1,4 @@
-package com.tinypace.mobistore.controller.api;
+package com.tinypace.mobistore.action;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,12 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tinypace.mobistore.controller.api.BaseController;
+import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.SysUser;
 
-@Controller("indexController")
+@Controller
 @RequestMapping("/")
-public class HomeController extends BaseController {
+public class RoleAction extends BaseController {
 	
 	@RequestMapping("index")
 	public String index(HttpServletRequest request,SysUser user,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,Model model){
