@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.entity.StrProduct;
-import com.tinypace.mobistore.service.ProductService;
 import com.tinypace.mobistore.service.SearchService;
 
 @Service

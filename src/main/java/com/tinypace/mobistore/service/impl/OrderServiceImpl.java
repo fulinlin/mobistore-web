@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.service.OrderService;
-import com.tinypace.mobistore.service.ProductService;
 
 @Service
 public class OrderServiceImpl extends CommonServiceImpl implements OrderService {
