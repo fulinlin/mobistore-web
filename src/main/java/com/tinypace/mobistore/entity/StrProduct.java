@@ -29,6 +29,9 @@ public class StrProduct extends IdEntity {
 
 	private Integer mass;
 	private Integer capacity;
+	private String color;
+	private String size;
+	
 	private String batchNumb;
 	private Date productionDate;
 	private Integer shelfLife;
@@ -202,6 +205,22 @@ public class StrProduct extends IdEntity {
 
 	public void setShelfLife(Integer shelfLife) {
 		this.shelfLife = shelfLife;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
 	}
 
 
