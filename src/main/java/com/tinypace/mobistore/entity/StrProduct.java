@@ -18,8 +18,7 @@ public class StrProduct extends IdEntity {
 	private String name;
 	private String descr;
 	private String image;
-	private BigDecimal retailPrice;
-	private BigDecimal discountPrice;
+
 	private BigDecimal freight;
 	private BigDecimal freightFreeIfTotalAmount;
 	private Integer orderPeriod;
@@ -39,6 +38,9 @@ public class StrProduct extends IdEntity {
 	private Boolean recommend;
 	private Boolean hot;
 	private Boolean promotion;
+	
+	private BigDecimal retailPrice;
+	private BigDecimal discountPrice;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id", insertable = false, updatable = false)
@@ -93,22 +95,6 @@ public class StrProduct extends IdEntity {
 
 	public void setPromotion(Boolean promotion) {
 		this.promotion = promotion;
-	}
-
-	public BigDecimal getRetailPrice() {
-		return retailPrice;
-	}
-
-	public void setRetailPrice(BigDecimal retailPrice) {
-		this.retailPrice = retailPrice;
-	}
-
-	public BigDecimal getDiscountPrice() {
-		return discountPrice;
-	}
-
-	public void setDiscountPrice(BigDecimal discountPrice) {
-		this.discountPrice = discountPrice;
 	}
 
 	public BigDecimal getFreight() {
@@ -221,6 +207,38 @@ public class StrProduct extends IdEntity {
 
 	public void setSize(String size) {
 		this.size = size;
+	}
+
+	public BigDecimal getRetailPrice() {
+		return retailPrice;
+	}
+
+	public void setRetailPrice(BigDecimal retailPrice) {
+		this.retailPrice = retailPrice;
+	}
+
+	public BigDecimal getDiscountPrice() {
+		return discountPrice;
+	}
+
+	public void setDiscountPrice(BigDecimal discountPrice) {
+		this.discountPrice = discountPrice;
+	}
+
+	public StrCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(StrCategory category) {
+		this.category = category;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 
