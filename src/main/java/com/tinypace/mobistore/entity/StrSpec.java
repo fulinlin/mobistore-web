@@ -1,6 +1,10 @@
 package com.tinypace.mobistore.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -15,32 +19,20 @@ import javax.persistence.Table;
 public class StrSpec extends IdEntity {
 	private static final long serialVersionUID = 1464076849604026152L;
 	
-	public static enum SpecType{
-		COLOR("颜色"), 
-		SIZE("尺寸");
-		
-		private SpecType(String textVal){
-  			this.textVal=textVal;
-  		}
-  		private String textVal;
-  		
-  		public String value(){
-  			return textVal;
-  		}
-  		
-  		public String toString(){
-  			return textVal;
-  		}
-	}
-	
-	private SpecType type;
 	private String name;
 	private String descr;
 	
-	public SpecType getType() {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "type_id", insertable = false, updatable = false)
+	private StrSpecType type;
+	
+	@Column(name="type_id")
+	private String typeId;
+	
+	public StrSpecType getType() {
 		return type;
 	}
-	public void setType(SpecType type) {
+	public void setType(StrSpecType type) {
 		this.type = type;
 	}
 	public String getName() {
