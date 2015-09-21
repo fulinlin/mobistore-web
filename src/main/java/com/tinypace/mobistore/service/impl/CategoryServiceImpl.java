@@ -25,4 +25,15 @@ public class CategoryServiceImpl extends CommonServiceImpl implements CategorySe
 		
 		return ls;
 	}
+	
+	@Override
+	public Page listProudct(String categoryId, int startIndex, int pageSize) {
+		DetachedCriteria dc = DetachedCriteria.forClass(StrProduct.class);
+
+		dc.add(Restrictions.eq("categoryId", categoryId));
+		dc.addOrder(Order.desc("promotion"));
+		Page page = findPage(dc, startIndex, pageSize);
+		
+		return page;
+	}
 }

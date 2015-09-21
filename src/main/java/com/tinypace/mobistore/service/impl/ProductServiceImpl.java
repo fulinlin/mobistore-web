@@ -1,6 +1,8 @@
 package com.tinypace.mobistore.service.impl;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.tinypace.mobistore.bean.Page;
@@ -14,8 +16,7 @@ public class ProductServiceImpl extends CommonServiceImpl implements ProductServ
 		
 		DetachedCriteria dc = DetachedCriteria.forClass(StrProduct.class);
 //		dc.setFetchMode("message", FetchMode.JOIN);
-//		dc.add(Restrictions.eq("userId", userId));
-//		dc.addOrder(Order.desc("sendTime"));
+		dc.addOrder(Order.desc("promotion"));
 		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;

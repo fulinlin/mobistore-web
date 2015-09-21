@@ -42,16 +42,8 @@ public class HomeAction extends BaseController {
 	
 	@RequestMapping(value = "opt/index", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> index(HttpServletRequest request, @RequestBody Object json) {
+	public Map<String, Object> index(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
-		
-		List<StrCategory> pos = categoryService.listAll();
-		List<CategoryVo> categories = new ArrayList<CategoryVo>();
-		for (StrCategory po : pos) {
-			CategoryVo vo = new CategoryVo();
-			BeanUtilEx.copyProperties(vo, po);
-			categories.add(vo);
-		}
 		
 		Page page1 = advertService.list(0, 5);
 		List<AdvertVo> adverts = new ArrayList<AdvertVo>();
@@ -71,10 +63,18 @@ public class HomeAction extends BaseController {
 			products.add(vo);
 		}
 		
+		List<StrCategory> pos = categoryService.listAll();
+		List<CategoryVo> categories = new ArrayList<CategoryVo>();
+		for (StrCategory po : pos) {
+			CategoryVo vo = new CategoryVo();
+			BeanUtilEx.copyProperties(vo, po);
+			categories.add(vo);
+		}
+		
 		ret.put("code", 1);
-		ret.put("categories", categories);
 		ret.put("adverts", adverts);
 		ret.put("products", products);
+		ret.put("categories", categories);
 		
 		return ret;
 	}
