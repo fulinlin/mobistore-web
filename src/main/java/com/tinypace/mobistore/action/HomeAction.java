@@ -20,6 +20,7 @@ import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrAdvert;
 import com.tinypace.mobistore.entity.StrCategory;
+import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.service.AdvertService;
 import com.tinypace.mobistore.service.CategoryService;
@@ -45,6 +46,8 @@ public class HomeAction extends BaseController {
 	@ResponseBody
 	public Map<String, Object> index(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		//StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
 		
 		Page page1 = advertService.list(0, 5);
 		List<AdvertVo> adverts = new ArrayList<AdvertVo>();

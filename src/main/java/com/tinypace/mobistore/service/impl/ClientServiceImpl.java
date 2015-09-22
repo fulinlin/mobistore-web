@@ -35,8 +35,8 @@ public class ClientServiceImpl extends CommonServiceImpl implements ClientServic
 		DetachedCriteria dc = DetachedCriteria.forClass(StrClient.class);
 		dc.add(Restrictions.eq("mobile", mobile));
 		dc.add(Restrictions.eq("password", password));
-		dc.add(Restrictions.eq("isDelete", false));
-		dc.add(Restrictions.eq("isDisable", false));
+		dc.add(Restrictions.ne("isDelete", true));
+		dc.add(Restrictions.ne("isDisable", true));
 		List<StrClient> ls = (List<StrClient>) findAllByCriteria(dc);
 		
 		StrClient client = null;

@@ -36,7 +36,6 @@ public class ProductAction extends BaseController {
 	public List<ProductVo> query(@RequestParam String startIndex, @RequestParam String pageSize, 
 			HttpServletRequest request) {
 		Map<String, Object> ret = new HashMap<String, Object>();
-//		SysUser user = (SysUser) request.getAttribute(Constant.REQUEST_USER);
 		
 		Page page = productService.list(0, 10);
 		
