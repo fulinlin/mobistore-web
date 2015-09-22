@@ -1,9 +1,8 @@
 package com.tinypace.mobistore.service;
 
-
-import com.tinypace.mobistore.bean.Page;
+import com.tinypace.mobistore.entity.StrClient;
 
 public interface ClientService extends CommonService {
 
-	Page list(int startIndex, int pageSize);
+	StrClient getClientByToken(String token);
 }

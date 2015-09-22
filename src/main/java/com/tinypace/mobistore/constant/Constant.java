@@ -26,7 +26,7 @@ public final class Constant {
 	/**
 	 * 
 	 */
-	public static final String API_OUT_PACKAGE_CLIENT="com.tinypace.mobistore.controller.api";
+	public static final String API_PACKAGE_FOR_CLIENT="com.tinypace.mobistore.action";
 	
 	public static final  String payment_productionName = "停车费";
 	public static final  String payment_productionDesrcription = "喔来停车费";

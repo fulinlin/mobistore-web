@@ -1,23 +1,27 @@
 package com.tinypace.mobistore.service.impl;
 
-import org.hibernate.criterion.DetachedCriteria;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import com.tinypace.mobistore.bean.Page;
-import com.tinypace.mobistore.entity.StrProduct;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Service;
+import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.service.ClientService;
 
 @Service
 public class ClientServiceImpl extends CommonServiceImpl implements ClientService {
 	@Override
-	public Page list(int startIndex, int pageSize) {
+	public StrClient getClientByToken(String token) {
+		DetachedCriteria dc = DetachedCriteria.forClass(StrClient.class);
+		dc.add(Restrictions.eq("authToken", token));
+		dc.add(Restrictions.ne("isDelete", true));
+		dc.add(Restrictions.ne("isDisable", true));
 		
-		DetachedCriteria dc = DetachedCriteria.forClass(StrProduct.class);
-//		dc.setFetchMode("message", FetchMode.JOIN);
-//		dc.add(Restrictions.eq("userId", userId));
-//		dc.addOrder(Order.desc("sendTime"));
-		Page page = findPage(dc, startIndex, pageSize);
-		
-		return page;
+		List ls = findAllByCriteria(dc);
+		if (ls.size() > 0) {
+			return (StrClient) ls.get(0);
+		} else {
+			return null;
+		}
 	}
 }

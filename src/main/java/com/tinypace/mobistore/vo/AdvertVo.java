@@ -6,6 +6,7 @@ public class AdvertVo {
 	private String title;
 	private String descr;
 	private String image;
+	private String productId;
 	
 	public String getId() {
 		return id;
@@ -30,6 +31,12 @@ public class AdvertVo {
 	}
 	public void setDescr(String descr) {
 		this.descr = descr;
+	}
+	public String getProductId() {
+		return productId;
+	}
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 	
 	

@@ -1,9 +1,8 @@
 package com.tinypace.mobistore.service;
 
-
-import com.tinypace.mobistore.bean.Page;
+import com.tinypace.mobistore.entity.StrShoppingcart;
 
 public interface ShoppingcartService extends CommonService {
 
-	Page list(int startIndex, int pageSize);
+	public StrShoppingcart getByClient(String clientId);
 }
