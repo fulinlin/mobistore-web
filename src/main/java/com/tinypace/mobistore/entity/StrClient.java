@@ -22,9 +22,48 @@ public class StrClient extends IdEntity {
     private Integer rewardPoints;
 
     // 当前登录的设备类型
-    private String deviceType;
+    private PlatformType clientPlatform;
+    // 当前登录的浏览器类型
+    private AgentType clientAgent;
+    
     // 友盟设备Token
     private String deviceToken;
+    
+	public static enum PlatformType{
+		IOS("IOS"), ANDROID("ANDROID"),WINDOWS("WINDOWS");
+		
+		private PlatformType(String textVal){
+  			this.textVal=textVal;
+  		}
+  		private String textVal;
+  		
+  		public String value(){
+  			return textVal;
+  		}
+  		
+  		public String toString(){
+  			return textVal;
+  		}
+  		
+	}
+	
+	// 支付状态
+	public static enum AgentType{
+		WEBVIEW("WEBVIEW"), BROWSER("BROWSER");
+		
+		private AgentType(String textVal){
+  			this.textVal=textVal;
+  		}
+  		private String textVal;
+  		
+  		public String value(){
+  			return textVal;
+  		}
+  		
+  		public String toString(){
+  			return textVal;
+  		}
+	}
     
 	public String getMobile() {
 		return mobile;
@@ -62,12 +101,6 @@ public class StrClient extends IdEntity {
 	public void setLastLoginTime(Date lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
 	}
-	public String getDeviceType() {
-		return deviceType;
-	}
-	public void setDeviceType(String deviceType) {
-		this.deviceType = deviceType;
-	}
 	public String getDeviceToken() {
 		return deviceToken;
 	}
@@ -79,5 +112,17 @@ public class StrClient extends IdEntity {
 	}
 	public void setRewardPoints(Integer rewardPoints) {
 		this.rewardPoints = rewardPoints;
+	}
+	public PlatformType getClientPlatform() {
+		return clientPlatform;
+	}
+	public void setClientPlatform(PlatformType clientPlatform) {
+		this.clientPlatform = clientPlatform;
+	}
+	public AgentType getClientAgent() {
+		return clientAgent;
+	}
+	public void setClientAgent(AgentType clientAgent) {
+		this.clientAgent = clientAgent;
 	}
 }

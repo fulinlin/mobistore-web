@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.constant.Constant;
+import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.service.ProductService;
@@ -94,7 +95,7 @@ public class ProductAction extends BaseController {
 	public Map<String, Object> doSomething(HttpServletRequest request, @RequestBody Object json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
-		ret.put("code", 1);
+		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("msg", "成功");
 		return ret;
 	}

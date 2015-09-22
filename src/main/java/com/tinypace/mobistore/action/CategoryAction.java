@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.constant.Constant;
+import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.service.CategoryService;
@@ -46,7 +47,7 @@ public class CategoryAction extends BaseController {
 		}
 		
 		ret.put("data", cates);
-		ret.put("code", 1);
+		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("msg", "成功");
 		return ret;
 	}

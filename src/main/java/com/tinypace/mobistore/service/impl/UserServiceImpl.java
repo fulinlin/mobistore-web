@@ -6,6 +6,7 @@ import com.tinypace.mobistore.service.UserService;
 
 @Service
 public class UserServiceImpl extends CommonServiceImpl implements UserService {
+	
 
 
 }

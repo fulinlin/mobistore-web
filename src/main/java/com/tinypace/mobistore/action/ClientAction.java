@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,9 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tinypace.mobistore.annotation.AuthPassport;
 import com.tinypace.mobistore.constant.Constant;
+import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
+import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.service.ClientService;
+import com.tinypace.mobistore.util.BeanUtilEx;
+import com.tinypace.mobistore.vo.ClientVo;
 
 @Controller
 @RequestMapping(Constant.API + "client/")
@@ -23,13 +29,31 @@ public class ClientAction extends BaseController {
 	@Autowired
 	ClientService clientService;
 	
-	@RequestMapping(value = "opt/doSomething", method = RequestMethod.POST)
+	@AuthPassport(validate=false)
+	@RequestMapping(value = "opt/signon", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doSomething(HttpServletRequest request, @RequestBody Object json) {
+	public Map<String, Object> doSomething(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
-		ret.put("code", 1);
-		ret.put("msg", "成功");
+		String mobile = json.get("mobile");
+		String password = json.get("password");
+		String platform = json.get("platform");
+		String agent = json.get("agent");
+		String deviceToken = json.get("deviceToken");
+
+		StrClient client = clientService.signonPers(mobile, password, platform, agent, deviceToken);
+		if (client != null) {
+			ret.put("token", client.getAuthToken());
+			
+			ClientVo vo = new ClientVo();
+			BeanUtilEx.copyProperties(vo, client);
+			ret.put("data", vo);
+			ret.put("code", RespCode.SUCCESS.Code());
+		} else {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "登录失败");
+		}
+		
 		return ret;
 	}
 }

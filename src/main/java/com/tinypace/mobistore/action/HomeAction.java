@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.constant.Constant;
+import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrAdvert;
 import com.tinypace.mobistore.entity.StrCategory;
@@ -71,7 +72,7 @@ public class HomeAction extends BaseController {
 			categories.add(vo);
 		}
 		
-		ret.put("code", 1);
+		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("adverts", adverts);
 		ret.put("products", products);
 		ret.put("categories", categories);
