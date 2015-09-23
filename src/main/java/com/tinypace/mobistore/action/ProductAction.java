@@ -20,8 +20,11 @@ import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.constant.Constant;
 import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
+import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.entity.StrProduct;
+import com.tinypace.mobistore.entity.StrShoppingcart;
 import com.tinypace.mobistore.service.ProductService;
+import com.tinypace.mobistore.service.ShoppingcartService;
 import com.tinypace.mobistore.util.BeanUtilEx;
 import com.tinypace.mobistore.vo.ProductVo;
 
@@ -30,6 +33,9 @@ import com.tinypace.mobistore.vo.ProductVo;
 public class ProductAction extends BaseController {
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	ShoppingcartService shoppingcartService;
 	
 	@RequestMapping(value = "model", method = RequestMethod.GET)
 	@ResponseBody
@@ -89,13 +95,25 @@ public class ProductAction extends BaseController {
 		return null;
 	}
 
-	@RequestMapping(value = "opt/doSomething", method = RequestMethod.POST)
+	@RequestMapping(value = "opt/get", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doSomething(HttpServletRequest request, @RequestBody Object json) {
+	public Map<String, Object> doSomething(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
+		StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		StrShoppingcart cart = shoppingcartService.getByClient(user.getId());
+		
+		String productId = json.get("productId");
+		
+		StrProduct po = (StrProduct) productService.get(StrProduct.class, productId);
+		
+		ProductVo vo = new ProductVo();
+		BeanUtilEx.copyProperties(vo, po);
+		
 		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("msg", "成功");
+		ret.put("data", vo);
+		ret.put("shoppingcartItemNumb", cart.getItemSet().size());
+		
 		return ret;
 	}
 }
