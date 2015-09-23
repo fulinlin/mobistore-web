@@ -1,6 +1,11 @@
 package com.tinypace.mobistore.service.impl;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -12,7 +17,11 @@ import org.springframework.stereotype.Service;
 import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.entity.StrShoppingcart;
+import com.tinypace.mobistore.entity.StrShoppingcartItem;
 import com.tinypace.mobistore.service.ShoppingcartService;
+import com.tinypace.mobistore.util.BeanUtilEx;
+import com.tinypace.mobistore.vo.ShoppingcartItemVo;
+import com.tinypace.mobistore.vo.ShoppingcartVo;
 
 @Service
 public class ShoppingcartServiceImpl extends CommonServiceImpl implements ShoppingcartService {
@@ -24,13 +33,24 @@ public class ShoppingcartServiceImpl extends CommonServiceImpl implements Shoppi
 		DetachedCriteria dc = DetachedCriteria.forClass(StrShoppingcart.class);
 		dc.add(Restrictions.eq("clientId", clientId));
 		dc.setFetchMode("itemSet", FetchMode.JOIN);
+		dc.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
 		List<StrShoppingcart> ls = (List<StrShoppingcart>) findAllByCriteria(dc);
 		
-		if (ls.size() > 1) {
+		StrShoppingcart cart = null;
+		if (ls.size() == 1) {
+			cart = ls.get(0);
+		} else if (ls.size() == 0) {
+			cart = new StrShoppingcart();
+			cart.setClientId(clientId);
+			saveOrUpdate(cart);
+		} else {
 			log.error("One client should not have more than one shoppingcart.");
 		}
-		StrShoppingcart cart = ls.get(0);
-		
 		return cart;
+	}
+	
+	@Override
+	public BigDecimal computerShoopingcartPrice(StrShoppingcart cart) {
+		return new BigDecimal(1);
 	}
 }

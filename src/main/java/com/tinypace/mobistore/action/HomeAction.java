@@ -22,9 +22,11 @@ import com.tinypace.mobistore.entity.StrAdvert;
 import com.tinypace.mobistore.entity.StrCategory;
 import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.entity.StrProduct;
+import com.tinypace.mobistore.entity.StrShoppingcart;
 import com.tinypace.mobistore.service.AdvertService;
 import com.tinypace.mobistore.service.CategoryService;
 import com.tinypace.mobistore.service.ProductService;
+import com.tinypace.mobistore.service.ShoppingcartService;
 import com.tinypace.mobistore.util.BeanUtilEx;
 import com.tinypace.mobistore.vo.AdvertVo;
 import com.tinypace.mobistore.vo.CategoryVo;
@@ -42,12 +44,16 @@ public class HomeAction extends BaseController {
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
+	ShoppingcartService shoppingcartService;
+	
 	@RequestMapping(value = "opt/index", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> index(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
-		//StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		StrShoppingcart cart = shoppingcartService.getByClient(user.getId());
 		
 		Page page1 = advertService.list(0, 5);
 		List<AdvertVo> adverts = new ArrayList<AdvertVo>();
@@ -79,6 +85,7 @@ public class HomeAction extends BaseController {
 		ret.put("adverts", adverts);
 		ret.put("products", products);
 		ret.put("categories", categories);
+		ret.put("shoppingcartItemNumb", cart.getItemSet().size());
 		
 		return ret;
 	}

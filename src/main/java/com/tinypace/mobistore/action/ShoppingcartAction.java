@@ -1,9 +1,8 @@
 package com.tinypace.mobistore.action;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,14 +17,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tinypace.mobistore.annotation.AuthPassport;
 import com.tinypace.mobistore.constant.Constant;
+import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.entity.StrShoppingcart;
 import com.tinypace.mobistore.entity.StrShoppingcartItem;
+import com.tinypace.mobistore.service.ProductService;
 import com.tinypace.mobistore.service.ShoppingcartService;
 import com.tinypace.mobistore.util.BeanUtilEx;
-import com.tinypace.mobistore.vo.ProductVo;
 import com.tinypace.mobistore.vo.ShoppingcartItemVo;
 import com.tinypace.mobistore.vo.ShoppingcartVo;
 
@@ -33,17 +33,56 @@ import com.tinypace.mobistore.vo.ShoppingcartVo;
 @RequestMapping(Constant.API + "shoppingcart/")
 public class ShoppingcartAction extends BaseController {
 	@Autowired
+	ProductService productService;
+	
+	@Autowired
 	ShoppingcartService shoppingcartService;
 
 	@AuthPassport(validate=true)
 	@RequestMapping(value = "opt/info", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doSomething(HttpServletRequest request, @RequestBody Object json) {
+	public Map<String, Object> doSomething(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
 		
 		StrShoppingcart cart = shoppingcartService.getByClient(user.getId());
+		
+		ShoppingcartVo carVo = genShoppingcartVo(cart);
+		ret.put("data", carVo);
+		ret.put("code", 1);
+		return ret;
+	}
+	
+	@AuthPassport(validate=true)
+	@RequestMapping(value = "opt/addto", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> addto(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		String productId = json.get("productId");
+		String qty = json.get("qty");
+
+		StrProduct proudct = (StrProduct) productService.get(StrProduct.class, productId);
+		StrShoppingcart cart = shoppingcartService.getByClient(user.getId());
+		BigDecimal price = shoppingcartService.computerShoopingcartPrice(cart);
+		StrShoppingcartItem item = new StrShoppingcartItem();
+		item.setProductId(productId);
+		item.setQty(Integer.valueOf(qty));
+		item.setShoppingcartId(cart.getId());
+		shoppingcartService.saveOrUpdate(item);
+		
+		cart.setAmount(price);
+		productService.saveOrUpdate(cart);
+		
+		ShoppingcartVo carVo = genShoppingcartVo(cart);
+		ret.put("data", carVo);
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
+	
+	private ShoppingcartVo genShoppingcartVo(StrShoppingcart cart) {
 		
 		ShoppingcartVo carVo = new ShoppingcartVo();
 		BeanUtilEx.copyProperties(carVo, cart);
@@ -56,8 +95,6 @@ public class ShoppingcartAction extends BaseController {
 			
 			itemVos.add(vo);
 		}
-		ret.put("data", carVo);
-		ret.put("code", 1);
-		return ret;
+		return carVo;
 	}
 }
