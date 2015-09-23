@@ -40,5 +40,17 @@ public class StrAdvert extends IdEntity {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	public StrProduct getProduct() {
+		return product;
+	}
+	public void setProduct(StrProduct product) {
+		this.product = product;
+	}
+	public String getProductId() {
+		return productId;
+	}
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
 	
 }
