@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class StrShoppingcartItem extends IdEntity {
 	private static final long serialVersionUID = 478005474396003310L;
 	private BigDecimal unitPrice;
-	private Integer qty;
+	private Integer qty = 0;
 	private BigDecimal freight;
 	private BigDecimal amount;
 	

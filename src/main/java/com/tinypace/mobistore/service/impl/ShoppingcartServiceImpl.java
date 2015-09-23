@@ -51,6 +51,43 @@ public class ShoppingcartServiceImpl extends CommonServiceImpl implements Shoppi
 	
 	@Override
 	public BigDecimal computerShoopingcartPrice(StrShoppingcart cart) {
-		return new BigDecimal(1);
+		BigDecimal amount = new BigDecimal(0);
+		for (StrShoppingcartItem i : cart.getItemSet()) {
+			amount = amount.add(i.getAmount()) ;
+		}
+		return amount;
+	}
+
+	@Override
+	public StrShoppingcart addto(String userId, String productId, String qty) {
+		StrShoppingcart cart = getByClient(userId);
+		StrProduct product = (StrProduct) get(StrProduct.class, productId);
+		
+		StrShoppingcartItem item = null;
+		for (StrShoppingcartItem i : cart.getItemSet()) {
+			if (i.getProductId().equals(productId)) {
+				item = i;
+				break;
+			}
+		}
+		
+		if (item == null) {
+			item = new StrShoppingcartItem();
+			cart.getItemSet().add(item);
+		}
+		
+		item.setProductId(productId);
+		BigDecimal price = product.getDiscountPrice() != null? product.getDiscountPrice(): product.getRetailPrice();
+		item.setUnitPrice(price);
+		item.setQty(item.getQty() + Integer.valueOf(qty));
+		item.setShoppingcartId(cart.getId());
+		item.setAmount(item.getUnitPrice().multiply(new BigDecimal(item.getQty())));
+		saveOrUpdate(item);
+		
+		BigDecimal amount = computerShoopingcartPrice(cart);
+		cart.setAmount(amount);
+		saveOrUpdate(cart);
+		
+		return cart;
 	}
 }

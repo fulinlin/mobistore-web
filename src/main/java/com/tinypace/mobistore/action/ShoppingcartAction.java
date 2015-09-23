@@ -63,18 +63,8 @@ public class ShoppingcartAction extends BaseController {
 		StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
 		String productId = json.get("productId");
 		String qty = json.get("qty");
-
-		StrProduct proudct = (StrProduct) productService.get(StrProduct.class, productId);
-		StrShoppingcart cart = shoppingcartService.getByClient(user.getId());
-		BigDecimal price = shoppingcartService.computerShoopingcartPrice(cart);
-		StrShoppingcartItem item = new StrShoppingcartItem();
-		item.setProductId(productId);
-		item.setQty(Integer.valueOf(qty));
-		item.setShoppingcartId(cart.getId());
-		shoppingcartService.saveOrUpdate(item);
 		
-		cart.setAmount(price);
-		productService.saveOrUpdate(cart);
+		StrShoppingcart cart = shoppingcartService.addto(user.getId(), productId, qty);
 		
 		ShoppingcartVo carVo = genShoppingcartVo(cart);
 		ret.put("data", carVo);

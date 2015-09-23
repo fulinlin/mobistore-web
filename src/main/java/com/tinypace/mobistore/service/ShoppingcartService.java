@@ -10,4 +10,6 @@ public interface ShoppingcartService extends CommonService {
 	public StrShoppingcart getByClient(String clientId);
 
 	public BigDecimal computerShoopingcartPrice(StrShoppingcart cart);
+
+	public StrShoppingcart addto(String id, String productId, String qty);
 }
