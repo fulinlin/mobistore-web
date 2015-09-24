@@ -9,7 +9,7 @@ public interface ClientService extends CommonService {
 	StrClient signonPers(String mobile, String password, String platform,
 			String agent, String deviceToken);
 
-	boolean riseIfNeedPers(String clientId, String productId);
+	boolean collectIfNeedPers(String clientId, String productId);
 
-	boolean isRised(String userId, String productId);
+	boolean isCollected(String userId, String productId);
 }

@@ -108,24 +108,24 @@ public class ProductAction extends BaseController {
 		ProductVo vo = new ProductVo();
 		BeanUtilEx.copyProperties(vo, po);
 		
-		boolean isRised = clientService.isRised(user.getId(), productId);
+		boolean isCollected = clientService.isCollected(user.getId(), productId);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", vo);
-		ret.put("isRised", isRised);
+		ret.put("isCollected", isCollected);
 		ret.put("shoppingcartItemNumb", cart.getItemSet().size());
 		
 		return ret;
 	}
 	
-	@RequestMapping(value = "opt/rise", method = RequestMethod.POST)
+	@RequestMapping(value = "opt/collect", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> rise(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> collect(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		String productId = json.get("productId");
 		
 		StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
-		boolean justRised = clientService.riseIfNeedPers(user.getId(), productId);
+		boolean justCollected = clientService.collectIfNeedPers(user.getId(), productId);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		

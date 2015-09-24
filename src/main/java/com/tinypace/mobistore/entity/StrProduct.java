@@ -39,7 +39,7 @@ public class StrProduct extends IdEntity {
 	private Boolean hot;
 	private Boolean promotion;
 	
-	private Integer rise = 0;
+	private Integer collect = 0;
 	
 	private BigDecimal retailPrice;
 	private BigDecimal discountPrice;
@@ -243,12 +243,12 @@ public class StrProduct extends IdEntity {
 		this.categoryId = categoryId;
 	}
 
-	public Integer getRise() {
-		return rise;
+	public Integer getCollect() {
+		return collect;
 	}
 
-	public void setRise(Integer rise) {
-		this.rise = rise;
+	public void setCollect(Integer collect) {
+		this.collect = collect;
 	}
 
 

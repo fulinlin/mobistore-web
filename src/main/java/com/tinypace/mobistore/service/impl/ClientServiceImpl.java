@@ -10,8 +10,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.tinypace.mobistore.entity.StrClient;
+import com.tinypace.mobistore.entity.StrCollection;
 import com.tinypace.mobistore.entity.StrProduct;
-import com.tinypace.mobistore.entity.StrRiseHistory;
 import com.tinypace.mobistore.service.ClientService;
 
 @Service
@@ -65,32 +65,32 @@ public class ClientServiceImpl extends CommonServiceImpl implements ClientServic
 	}
 	
 	@Override
-	public boolean riseIfNeedPers(String clientId, String productId) {
-		boolean needRise = !isRised(clientId, productId);
+	public boolean collectIfNeedPers(String clientId, String productId) {
+		boolean needCollect = !isCollected(clientId, productId);
 		
-		if (needRise) {
+		if (needCollect) {
 			StrProduct prodcut = (StrProduct) get(StrProduct.class, productId);
-			prodcut.setRise(prodcut.getRise() + 1);
+			prodcut.setCollect(prodcut.getCollect() + 1);
 			saveOrUpdate(prodcut);
 			
-			StrRiseHistory his = new StrRiseHistory();
+			StrCollection his = new StrCollection();
 			his.setClientId(clientId);
 			his.setProductId(productId);
-			his.setRiseTime(new Date());
+			his.setCollectTime(new Date());
 			saveOrUpdate(his);
 		}
 		
-		return needRise;
+		return needCollect;
 	}
 
 	@Override
-	public boolean isRised(String clientId, String productId) {
-		DetachedCriteria dc = DetachedCriteria.forClass(StrRiseHistory.class);
+	public boolean isCollected(String clientId, String productId) {
+		DetachedCriteria dc = DetachedCriteria.forClass(StrCollection.class);
 		dc.add(Restrictions.eq("productId", productId));
 		dc.add(Restrictions.eq("clientId", clientId));
 		List ls = findAllByCriteria(dc);
-		boolean isRise = ls.size() > 0;
+		boolean isCollect = ls.size() > 0;
 		
-		return isRise;
+		return isCollect;
 	}
 }
