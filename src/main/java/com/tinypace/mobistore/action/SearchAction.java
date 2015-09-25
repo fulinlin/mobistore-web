@@ -1,5 +1,6 @@
 package com.tinypace.mobistore.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tinypace.mobistore.constant.Constant;
 import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrClient;
-import com.tinypace.mobistore.entity.StrSearchHistory;
+import com.tinypace.mobistore.entity.StrProduct;
+import com.tinypace.mobistore.entity.StrSearchHot;
 import com.tinypace.mobistore.service.SearchService;
+import com.tinypace.mobistore.util.BeanUtilEx;
+import com.tinypace.mobistore.vo.ProductVo;
+import com.tinypace.mobistore.vo.SearchHotVo;
 
 @Controller
 @RequestMapping(Constant.API + "search/")
@@ -27,7 +32,7 @@ public class SearchAction extends BaseController {
 
 	@RequestMapping(value = "opt/history", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doSomething(HttpServletRequest request, @RequestBody Object json) {
+	public Map<String, Object> history(HttpServletRequest request, @RequestBody Object json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
@@ -35,10 +40,53 @@ public class SearchAction extends BaseController {
 		List<String> hots = searchService.getHot();
 		List<String> histories = searchService.getHistory(client.getId());
 		
-		
 		ret.put("code", 1);
 		ret.put("hots", hots);
 		ret.put("histories", histories);
+		return ret;
+	}
+	
+	@RequestMapping(value = "opt/getMatchedKeywords", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getMatchedKeywords(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String keywords = json.get("keywords");
+		List<StrSearchHot> pos = searchService.getMatchedKeywords(keywords);
+		
+		List<SearchHotVo> vos = new ArrayList<SearchHotVo>();
+		
+		for (StrSearchHot po : pos) {
+			SearchHotVo vo = new SearchHotVo();
+			BeanUtilEx.copyProperties(vo, po);
+			
+			vos.add(vo);
+		}
+		
+		ret.put("code", 1);
+		ret.put("data", vos);
+		return ret;
+	}
+	
+	@RequestMapping(value = "opt/search", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> search(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String keywords = json.get("keywords");
+		List<StrProduct> pos = searchService.search(keywords);
+		
+		List<ProductVo> vos = new ArrayList<ProductVo>();
+		
+		for (StrProduct po : pos) {
+			ProductVo vo = new ProductVo();
+			BeanUtilEx.copyProperties(vo, po);
+			
+			vos.add(vo);
+		}
+		
+		ret.put("code", 1);
+		ret.put("data", vos);
 		return ret;
 	}
 }

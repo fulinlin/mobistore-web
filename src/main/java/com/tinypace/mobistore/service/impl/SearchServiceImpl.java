@@ -9,9 +9,11 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.tinypace.mobistore.bean.Page;
+import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.entity.StrSearchHistory;
 import com.tinypace.mobistore.entity.StrSearchHot;
 import com.tinypace.mobistore.service.SearchService;
+import com.tinypace.mobistore.util.StringUtil;
 
 @Service
 public class SearchServiceImpl extends CommonServiceImpl implements SearchService {
@@ -49,5 +51,29 @@ public class SearchServiceImpl extends CommonServiceImpl implements SearchServic
 		}
 		
 		return histories;
+	}
+
+	@Override
+	public List<StrProduct> search(String keywords) {
+		DetachedCriteria dc = DetachedCriteria.forClass(StrProduct.class);
+		
+		if (!StringUtil.IsEmpty(keywords)) {
+			dc.add(Restrictions.like("name", "%" + keywords + "%"));
+		}
+		
+		dc.addOrder(Order.desc("name"));
+		Page page = findPage(dc, 0, 20);
+		
+		return page.getItems();
+	}
+
+	@Override
+	public List<StrSearchHot> getMatchedKeywords(String keywords) {
+		DetachedCriteria dc = DetachedCriteria.forClass(StrSearchHot.class);
+		dc.add(Restrictions.like("keywords", "%" + keywords + "%"));
+		dc.addOrder(Order.desc("times"));
+		Page page = findPage(dc, 0, 20);
+		
+		return page.getItems();
 	}
 }
