@@ -58,7 +58,10 @@ public class SearchServiceImpl extends CommonServiceImpl implements SearchServic
 		DetachedCriteria dc = DetachedCriteria.forClass(StrProduct.class);
 		
 		if (!StringUtil.IsEmpty(keywords)) {
-			dc.add(Restrictions.like("name", "%" + keywords + "%"));
+			dc.add(Restrictions.or(
+					Restrictions.like("name", "%" + keywords + "%"),
+					Restrictions.like("tags", "%" + keywords + "%")
+				));
 		}
 		
 		dc.addOrder(Order.desc("name"));

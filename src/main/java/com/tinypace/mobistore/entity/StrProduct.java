@@ -44,6 +44,8 @@ public class StrProduct extends IdEntity {
 	private BigDecimal retailPrice;
 	private BigDecimal discountPrice;
 	
+	private String tags;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id", insertable = false, updatable = false)
 	private StrCategory category;
@@ -249,6 +251,14 @@ public class StrProduct extends IdEntity {
 
 	public void setCollect(Integer collect) {
 		this.collect = collect;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 
 
