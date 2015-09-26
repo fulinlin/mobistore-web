@@ -14,9 +14,10 @@ import javax.persistence.Table;
 public class StrShoppingcartItem extends IdEntity {
 	private static final long serialVersionUID = 478005474396003310L;
 	private BigDecimal unitPrice;
-	private Integer qty = 0;
 	private BigDecimal freight;
-	private BigDecimal amount;
+	private BigDecimal freightFreeIfTotalAmount;
+	private String name;
+	private Integer qty = 0;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id", insertable = false, updatable = false)
@@ -48,28 +49,12 @@ public class StrShoppingcartItem extends IdEntity {
 		this.qty = qty;
 	}
 
-	public BigDecimal getFreight() {
-		return freight;
-	}
-
-	public void setFreight(BigDecimal freight) {
-		this.freight = freight;
-	}
-
 	public StrProduct getProduct() {
 		return product;
 	}
 
 	public void setProduct(StrProduct product) {
 		this.product = product;
-	}
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
 	}
 
 	public StrShoppingcart getShoppingcart() {
@@ -94,6 +79,30 @@ public class StrShoppingcartItem extends IdEntity {
 
 	public void setShoppingcartId(String shoppingcartId) {
 		this.shoppingcartId = shoppingcartId;
+	}
+
+	public BigDecimal getFreight() {
+		return freight;
+	}
+
+	public void setFreight(BigDecimal freight) {
+		this.freight = freight;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public BigDecimal getFreightFreeIfTotalAmount() {
+		return freightFreeIfTotalAmount;
+	}
+
+	public void setFreightFreeIfTotalAmount(BigDecimal freightFreeIfTotalAmount) {
+		this.freightFreeIfTotalAmount = freightFreeIfTotalAmount;
 	}
 
 }

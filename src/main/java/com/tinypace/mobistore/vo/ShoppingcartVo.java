@@ -11,6 +11,8 @@ public class ShoppingcartVo {
 
     private Date createTime;
     private BigDecimal amount;
+    private BigDecimal freight;
+    private BigDecimal totalAmount;
 	
 	private Set<ShoppingcartItemVo> items = new HashSet<ShoppingcartItemVo>(0);
 
@@ -44,6 +46,22 @@ public class ShoppingcartVo {
 
 	public void setItems(Set<ShoppingcartItemVo> items) {
 		this.items = items;
+	}
+
+	public BigDecimal getFreight() {
+		return freight;
+	}
+
+	public void setFreight(BigDecimal freight) {
+		this.freight = freight;
+	}
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 	
 }

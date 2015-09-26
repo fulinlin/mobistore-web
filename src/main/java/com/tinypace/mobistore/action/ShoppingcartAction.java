@@ -72,6 +72,25 @@ public class ShoppingcartAction extends BaseController {
 		return ret;
 	}
 	
+	@AuthPassport(validate=true)
+	@RequestMapping(value = "opt/changeQty", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> changeQty(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		
+		String itemId = json.get("itemId");
+		String itemQty = json.get("itemQty");
+		
+		StrShoppingcart cart = shoppingcartService.changeQtyPers(client.getId(), itemId, Integer.valueOf(itemQty));
+		
+		ShoppingcartVo carVo = genShoppingcartVo(cart);
+		ret.put("data", carVo);
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
+	
 	private ShoppingcartVo genShoppingcartVo(StrShoppingcart cart) {
 		
 		ShoppingcartVo carVo = new ShoppingcartVo();
@@ -81,6 +100,8 @@ public class ShoppingcartAction extends BaseController {
 		
 		for (StrShoppingcartItem po : cart.getItemSet()) {
 			ShoppingcartItemVo vo = new ShoppingcartItemVo();
+			vo.setName(po.getProduct().getName());
+			vo.setImage(po.getProduct().getImage());
 			BeanUtilEx.copyProperties(vo, po);
 			
 			itemVos.add(vo);

@@ -13,11 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.Filters;
-import org.hibernate.annotations.Where;
-
-
 @Entity
 @Table(name = "str_shoppingcart")
 public class StrShoppingcart extends IdEntity {
@@ -25,6 +20,8 @@ public class StrShoppingcart extends IdEntity {
     
     private Date createTime;
     private BigDecimal amount;
+    private BigDecimal freight;
+    private BigDecimal totalAmount;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "client_id", insertable = false, updatable = false)
@@ -75,6 +72,22 @@ public class StrShoppingcart extends IdEntity {
 
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
+	}
+
+	public BigDecimal getFreight() {
+		return freight;
+	}
+
+	public void setFreight(BigDecimal freight) {
+		this.freight = freight;
+	}
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 

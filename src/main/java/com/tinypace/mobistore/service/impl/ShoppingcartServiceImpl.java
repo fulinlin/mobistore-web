@@ -50,12 +50,32 @@ public class ShoppingcartServiceImpl extends CommonServiceImpl implements Shoppi
 	}
 	
 	@Override
-	public BigDecimal computerShoopingcartPrice(StrShoppingcart cart) {
-		BigDecimal amount = new BigDecimal(0);
+	public StrShoppingcart computerShoopingcartPrice(StrShoppingcart cart) {
+		BigDecimal totalAmount = new BigDecimal(0);
+		BigDecimal totalFreight = new BigDecimal(0);
+		
+		// 算商品
 		for (StrShoppingcartItem i : cart.getItemSet()) {
-			amount = amount.add(i.getAmount()) ;
+			totalAmount = totalAmount.add(i.getUnitPrice().multiply(new BigDecimal(i.getQty()))) ;
 		}
-		return amount;
+		cart.setAmount(totalAmount);
+		
+		// 算运费
+		for (StrShoppingcartItem i : cart.getItemSet()) {
+			BigDecimal freeIf = i.getFreightFreeIfTotalAmount();
+			BigDecimal freight = i.getFreight();
+			if (freeIf != null && totalAmount.subtract(freeIf).doubleValue() > 0 ) { // 减免运费
+				freight = new BigDecimal(0);
+			}
+			totalFreight = totalFreight.add(freight) ;
+		}
+		totalAmount = totalAmount.add(totalFreight);
+		
+		cart.setFreight(totalFreight);
+		cart.setTotalAmount(totalAmount);
+		saveOrUpdate(cart);
+		
+		return cart;
 	}
 
 	@Override
@@ -77,17 +97,30 @@ public class ShoppingcartServiceImpl extends CommonServiceImpl implements Shoppi
 		}
 		
 		item.setProductId(productId);
-		BigDecimal price = product.getDiscountPrice() != null? product.getDiscountPrice(): product.getRetailPrice();
-		item.setUnitPrice(price);
+		item.setProduct(product);
 		item.setQty(item.getQty() + Integer.valueOf(qty));
+		BigDecimal unitPrice = product.getDiscountPrice() != null? product.getDiscountPrice(): product.getRetailPrice();
+		
+		item.setName(product.getName());
+		item.setFreight(product.getFreight());
+		item.setFreightFreeIfTotalAmount(product.getFreightFreeIfTotalAmount());
+		item.setUnitPrice(unitPrice);
 		item.setShoppingcartId(cart.getId());
-		item.setAmount(item.getUnitPrice().multiply(new BigDecimal(item.getQty())));
 		saveOrUpdate(item);
 		
-		BigDecimal amount = computerShoopingcartPrice(cart);
-		cart.setAmount(amount);
+		cart = computerShoopingcartPrice(cart);
 		saveOrUpdate(cart);
 		
 		return cart;
+	}
+
+	@Override
+	public StrShoppingcart changeQtyPers(String userId, String itemId, Integer itemQty) {
+		StrShoppingcart cart = getByClient(userId);
+		StrShoppingcartItem item = (StrShoppingcartItem) get(StrShoppingcartItem.class, itemId);
+		item.setQty(itemQty);
+		saveOrUpdate(item);
+		
+		return computerShoopingcartPrice(cart);
 	}
 }

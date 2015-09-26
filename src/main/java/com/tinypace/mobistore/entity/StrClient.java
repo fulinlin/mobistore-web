@@ -1,12 +1,17 @@
 package com.tinypace.mobistore.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name="str_client")
@@ -28,6 +33,10 @@ public class StrClient extends IdEntity {
     
     // 友盟设备Token
     private String deviceToken;
+    
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+	@Where(clause = "isDelete = false and isDisable = false")
+	private Set<StrShippingAddress> addressSet = new HashSet<StrShippingAddress>(0);
     
 	public static enum PlatformType{
 		IOS("IOS"), ANDROID("ANDROID"),WINDOWS("WINDOWS");
@@ -124,5 +133,11 @@ public class StrClient extends IdEntity {
 	}
 	public void setClientAgent(AgentType clientAgent) {
 		this.clientAgent = clientAgent;
+	}
+	public Set<StrShippingAddress> getAddressSet() {
+		return addressSet;
+	}
+	public void setAddressSet(Set<StrShippingAddress> addressSet) {
+		this.addressSet = addressSet;
 	}
 }
