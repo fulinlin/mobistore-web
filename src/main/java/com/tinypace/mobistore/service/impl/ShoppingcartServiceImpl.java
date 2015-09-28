@@ -1,6 +1,7 @@
 package com.tinypace.mobistore.service.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.tinypace.mobistore.bean.Page;
+import com.tinypace.mobistore.entity.StrOrder;
+import com.tinypace.mobistore.entity.StrOrderItem;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.entity.StrShoppingcart;
 import com.tinypace.mobistore.entity.StrShoppingcartItem;
@@ -102,10 +105,12 @@ public class ShoppingcartServiceImpl extends CommonServiceImpl implements Shoppi
 		BigDecimal unitPrice = product.getDiscountPrice() != null? product.getDiscountPrice(): product.getRetailPrice();
 		
 		item.setName(product.getName());
+		item.setImage(product.getImage());
 		item.setFreight(product.getFreight());
 		item.setFreightFreeIfTotalAmount(product.getFreightFreeIfTotalAmount());
 		item.setUnitPrice(unitPrice);
 		item.setShoppingcartId(cart.getId());
+		item.setAmount(item.getUnitPrice().multiply(new BigDecimal(item.getQty())));
 		saveOrUpdate(item);
 		
 		cart = computerShoopingcartPrice(cart);
@@ -119,8 +124,21 @@ public class ShoppingcartServiceImpl extends CommonServiceImpl implements Shoppi
 		StrShoppingcart cart = getByClient(userId);
 		StrShoppingcartItem item = (StrShoppingcartItem) get(StrShoppingcartItem.class, itemId);
 		item.setQty(itemQty);
+		item.setAmount(item.getUnitPrice().multiply(new BigDecimal(item.getQty())));
 		saveOrUpdate(item);
 		
 		return computerShoopingcartPrice(cart);
 	}
+
+	@Override
+	public StrShoppingcart clearPers(String clientId) {
+		StrShoppingcart cart = getByClient(clientId);
+		
+		for (StrShoppingcartItem i : cart.getItemSet()) {
+			delete(i);
+		}
+		return computerShoopingcartPrice(cart);
+	}
+
+
 }

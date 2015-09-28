@@ -1,6 +1,8 @@
 package com.tinypace.mobistore.vo;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ClientVo {
 	private String id;
@@ -15,6 +17,8 @@ public class ClientVo {
     private String clientPlatform;
     private String clientAgent;
     private String deviceToken;
+    
+    private Set<RecipientVo> addresses = new HashSet<RecipientVo>(0);
     
 	public String getId() {
 		return id;
@@ -81,5 +85,11 @@ public class ClientVo {
 	}
 	public void setDeviceToken(String deviceToken) {
 		this.deviceToken = deviceToken;
+	}
+	public Set<RecipientVo> getAddresses() {
+		return addresses;
+	}
+	public void setAddresses(Set<RecipientVo> addresses) {
+		this.addresses = addresses;
 	}
 }

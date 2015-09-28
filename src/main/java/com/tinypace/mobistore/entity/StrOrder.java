@@ -24,11 +24,16 @@ public class StrOrder extends IdEntity {
 	private Integer payChannel;
 	private BigDecimal amount;
 	private BigDecimal freight;
+	private BigDecimal totalAmount;
 	private BigDecimal payAmount;
-	private PayStatus payStatus;
+	private PayStatus payStatus = PayStatus.INIT;
 	
-	private String shipAddress;
-    private ShipStatus shipStatus;
+	private String recipientProvince;
+	private String recipientCity;
+	private String recipientAddress;
+	private String recipientName;
+	private String recipientPhone;
+    private ShipStatus shipStatus = ShipStatus.INIT;
     
     private Date createTime;
     private Date payTime;
@@ -121,14 +126,6 @@ public class StrOrder extends IdEntity {
 		this.payStatus = payStatus;
 	}
 
-	public String getShipAddress() {
-		return shipAddress;
-	}
-
-	public void setShipAddress(String shipAddress) {
-		this.shipAddress = shipAddress;
-	}
-
 	public ShipStatus getShipStatus() {
 		return shipStatus;
 	}
@@ -193,10 +190,52 @@ public class StrOrder extends IdEntity {
 		this.clientId = clientId;
 	}
 
-	
-	
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
 
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
 
-    
+	public String getRecipientProvince() {
+		return recipientProvince;
+	}
+
+	public void setRecipientProvince(String recipientProvince) {
+		this.recipientProvince = recipientProvince;
+	}
+
+	public String getRecipientCity() {
+		return recipientCity;
+	}
+
+	public void setRecipientCity(String recipientCity) {
+		this.recipientCity = recipientCity;
+	}
+
+	public String getRecipientAddress() {
+		return recipientAddress;
+	}
+
+	public void setRecipientAddress(String recipientAddress) {
+		this.recipientAddress = recipientAddress;
+	}
+
+	public String getRecipientName() {
+		return recipientName;
+	}
+
+	public void setRecipientName(String recipientName) {
+		this.recipientName = recipientName;
+	}
+
+	public String getRecipientPhone() {
+		return recipientPhone;
+	}
+
+	public void setRecipientPhone(String recipientPhone) {
+		this.recipientPhone = recipientPhone;
+	}
 
 }

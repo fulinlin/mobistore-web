@@ -20,12 +20,15 @@ import com.tinypace.mobistore.constant.Constant;
 import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrClient;
+import com.tinypace.mobistore.entity.StrOrder;
 import com.tinypace.mobistore.entity.StrProduct;
+import com.tinypace.mobistore.entity.StrRecipient;
 import com.tinypace.mobistore.entity.StrShoppingcart;
 import com.tinypace.mobistore.entity.StrShoppingcartItem;
 import com.tinypace.mobistore.service.ProductService;
 import com.tinypace.mobistore.service.ShoppingcartService;
 import com.tinypace.mobistore.util.BeanUtilEx;
+import com.tinypace.mobistore.vo.RecipientVo;
 import com.tinypace.mobistore.vo.ShoppingcartItemVo;
 import com.tinypace.mobistore.vo.ShoppingcartVo;
 
@@ -41,14 +44,14 @@ public class ShoppingcartAction extends BaseController {
 	@AuthPassport(validate=true)
 	@RequestMapping(value = "opt/info", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doSomething(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> info(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
-		StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
 		
-		StrShoppingcart cart = shoppingcartService.getByClient(user.getId());
+		StrShoppingcart cart = shoppingcartService.getByClient(client.getId());
 		
-		ShoppingcartVo carVo = genShoppingcartVo(cart);
+		ShoppingcartVo carVo = genShoppingcartVo(cart, client);
 		ret.put("data", carVo);
 		ret.put("code", 1);
 		return ret;
@@ -60,13 +63,13 @@ public class ShoppingcartAction extends BaseController {
 	public Map<String, Object> addto(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
-		StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
 		String productId = json.get("productId");
 		String qty = json.get("qty");
 		
-		StrShoppingcart cart = shoppingcartService.addto(user.getId(), productId, qty);
+		StrShoppingcart cart = shoppingcartService.addto(client.getId(), productId, qty);
 		
-		ShoppingcartVo carVo = genShoppingcartVo(cart);
+		ShoppingcartVo carVo = genShoppingcartVo(cart, client);
 		ret.put("data", carVo);
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
@@ -85,27 +88,51 @@ public class ShoppingcartAction extends BaseController {
 		
 		StrShoppingcart cart = shoppingcartService.changeQtyPers(client.getId(), itemId, Integer.valueOf(itemQty));
 		
-		ShoppingcartVo carVo = genShoppingcartVo(cart);
+		ShoppingcartVo carVo = genShoppingcartVo(cart, client);
 		ret.put("data", carVo);
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
 	}
 	
-	private ShoppingcartVo genShoppingcartVo(StrShoppingcart cart) {
+	@AuthPassport(validate=true)
+	@RequestMapping(value = "opt/clear", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> clear(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
 		
-		ShoppingcartVo carVo = new ShoppingcartVo();
-		BeanUtilEx.copyProperties(carVo, cart);
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		
+		StrShoppingcart cart = shoppingcartService.clearPers(client.getId());
+		
+		ShoppingcartVo carVo = genShoppingcartVo(cart, client);
+		ret.put("data", carVo);
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
+	
+	private ShoppingcartVo genShoppingcartVo(StrShoppingcart cart, StrClient client) {
+		
+		ShoppingcartVo cartVo = new ShoppingcartVo();
+		BeanUtilEx.copyProperties(cartVo, cart);
+		
 		Set<ShoppingcartItemVo> itemVos = new HashSet<ShoppingcartItemVo>();
-		carVo.setItems(itemVos);
-		
+		cartVo.setItems(itemVos);
 		for (StrShoppingcartItem po : cart.getItemSet()) {
 			ShoppingcartItemVo vo = new ShoppingcartItemVo();
-			vo.setName(po.getProduct().getName());
-			vo.setImage(po.getProduct().getImage());
 			BeanUtilEx.copyProperties(vo, po);
 			
 			itemVos.add(vo);
 		}
-		return carVo;
+		
+		Set<RecipientVo> addressVos = new HashSet<RecipientVo>();
+		cartVo.setAddresses(addressVos);
+		for (StrRecipient po : client.getAddressSet()) {
+			RecipientVo vo = new RecipientVo();
+			BeanUtilEx.copyProperties(vo, po);
+			
+			addressVos.add(vo);
+		}
+		
+		return cartVo;
 	}
 }

@@ -15,6 +15,7 @@ public class ShoppingcartVo {
     private BigDecimal totalAmount;
 	
 	private Set<ShoppingcartItemVo> items = new HashSet<ShoppingcartItemVo>(0);
+	private Set<RecipientVo> addresses = new HashSet<RecipientVo>(0);
 
 	public String getId() {
 		return id;
@@ -62,6 +63,14 @@ public class ShoppingcartVo {
 
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+
+	public Set<RecipientVo> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Set<RecipientVo> addresses) {
+		this.addresses = addresses;
 	}
 	
 }

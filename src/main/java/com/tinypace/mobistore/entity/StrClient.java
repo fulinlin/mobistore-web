@@ -35,8 +35,8 @@ public class StrClient extends IdEntity {
     private String deviceToken;
     
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-	@Where(clause = "isDelete = false and isDisable = false")
-	private Set<StrShippingAddress> addressSet = new HashSet<StrShippingAddress>(0);
+//	@Where(clause = "isDelete = false and isDisable = false")
+	private Set<StrRecipient> addressSet = new HashSet<StrRecipient>(0);
     
 	public static enum PlatformType{
 		IOS("IOS"), ANDROID("ANDROID"),WINDOWS("WINDOWS");
@@ -134,10 +134,10 @@ public class StrClient extends IdEntity {
 	public void setClientAgent(AgentType clientAgent) {
 		this.clientAgent = clientAgent;
 	}
-	public Set<StrShippingAddress> getAddressSet() {
+	public Set<StrRecipient> getAddressSet() {
 		return addressSet;
 	}
-	public void setAddressSet(Set<StrShippingAddress> addressSet) {
+	public void setAddressSet(Set<StrRecipient> addressSet) {
 		this.addressSet = addressSet;
 	}
 }

@@ -13,14 +13,15 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Table(name="str_shipping_address")
+@Table(name="str_recipient")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class StrShippingAddress extends IdEntity {
-	
-	private String province;
-	private String city;
+public class StrRecipient extends IdEntity {
+	private String name;
+	private String phone;
+	private String area;
+	private String street;
     private String address;
-    private String postcode;
+    private Boolean defaultt;
     
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "client_id", insertable = false, updatable = false)
@@ -28,41 +29,69 @@ public class StrShippingAddress extends IdEntity {
 	
 	@Column(name="client_id")
 	private String clientId;
-    
-	public String getProvince() {
-		return province;
+
+	public String getArea() {
+		return area;
 	}
-	public void setProvince(String province) {
-		this.province = province;
+
+	public void setArea(String area) {
+		this.area = area;
 	}
-	public String getCity() {
-		return city;
+
+	public String getStreet() {
+		return street;
 	}
-	public void setCity(String city) {
-		this.city = city;
+
+	public void setStreet(String street) {
+		this.street = street;
 	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getPostcode() {
-		return postcode;
+
+	public Boolean getDefaultt() {
+		return defaultt;
 	}
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
+
+	public void setDefaultt(Boolean defaultt) {
+		this.defaultt = defaultt;
 	}
+
 	public StrClient getClient() {
 		return client;
 	}
+
 	public void setClient(StrClient client) {
 		this.client = client;
 	}
+
 	public String getClientId() {
 		return clientId;
 	}
+
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+  
 }

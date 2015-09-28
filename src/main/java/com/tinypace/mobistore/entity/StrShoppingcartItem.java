@@ -14,10 +14,12 @@ import javax.persistence.Table;
 public class StrShoppingcartItem extends IdEntity {
 	private static final long serialVersionUID = 478005474396003310L;
 	private BigDecimal unitPrice;
+	private Integer qty = 0;
+	private BigDecimal amount;
 	private BigDecimal freight;
 	private BigDecimal freightFreeIfTotalAmount;
 	private String name;
-	private Integer qty = 0;
+	private String image;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id", insertable = false, updatable = false)
@@ -103,6 +105,22 @@ public class StrShoppingcartItem extends IdEntity {
 
 	public void setFreightFreeIfTotalAmount(BigDecimal freightFreeIfTotalAmount) {
 		this.freightFreeIfTotalAmount = freightFreeIfTotalAmount;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }

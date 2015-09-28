@@ -15,8 +15,9 @@ public class StrOrderItem extends IdEntity {
 	private static final long serialVersionUID = -2853759481621344176L;
 	private BigDecimal unitPrice;
 	private Integer qty;
-	private BigDecimal freight;
 	private BigDecimal amount;
+	private String name;
+	private String image;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id", insertable = false, updatable = false)
@@ -46,14 +47,6 @@ public class StrOrderItem extends IdEntity {
 
 	public void setQty(Integer qty) {
 		this.qty = qty;
-	}
-
-	public BigDecimal getFreight() {
-		return freight;
-	}
-
-	public void setFreight(BigDecimal freight) {
-		this.freight = freight;
 	}
 
 	public StrProduct getProduct() {
@@ -94,6 +87,22 @@ public class StrOrderItem extends IdEntity {
 
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }
