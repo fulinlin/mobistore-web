@@ -45,25 +45,38 @@ public class OrderAction extends BaseController {
 	OrderService orderService;
 	
 	@AuthPassport(validate=true)
-	@RequestMapping(value = "opt/checkout", method = RequestMethod.POST)
+	@RequestMapping(value = "opt/info", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> checkout(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> info(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
-		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		String orderId = json.get("orderId");
+		StrOrder order = (StrOrder) orderService.get(StrOrder.class, orderId);
 		
+		OrderVo orderVo = genOrderVo(order);
+		ret.put("data", orderVo);
+		ret.put("code", 1);
+		return ret;
+	}
+	
+	@AuthPassport(validate=true)
+	@RequestMapping(value = "opt/make", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> make(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String orderId = json.get("orderId");
 		String recipientName = json.get("name");
 		String recipientPhone = json.get("phone");
-		String recipientProvince = json.get("province");
-		String recipientCity = json.get("city");
+		String recipientArea = json.get("area");
+		String recipientStreet = json.get("street");
 		String recipientAddress = json.get("address");
-		StrOrder order = orderService.checkoutPers(client.getId(), recipientName, 
-				recipientPhone, recipientProvince, recipientCity, recipientAddress);
 		
-		OrderVo vo = genOrderVo(order);
+		StrOrder order = (StrOrder) orderService.get(StrOrder.class, orderId);
 		
-		ret.put("data", vo);
-		ret.put("code", RespCode.SUCCESS.Code());
+		OrderVo orderVo = genOrderVo(order);
+		ret.put("data", orderVo);
+		ret.put("code", 1);
 		return ret;
 	}
 	
@@ -74,7 +87,8 @@ public class OrderAction extends BaseController {
 		Set<OrderItemVo> itemVos = new HashSet<OrderItemVo>();
 		orderVo.setItems(itemVos);
 		
-		for (StrOrderItem po : order.getItemSet()) {
+		List<StrOrderItem> items = orderService.getItems(order.getId());
+		for (StrOrderItem po : items) {
 			OrderItemVo vo = new OrderItemVo();
 			BeanUtilEx.copyProperties(vo, po);
 			

@@ -391,6 +391,14 @@ public class HibernateDao {
         this.getSession().doWork(jdbcWork);
         return list;
     }
+    
+    /**
+     * <flush>
+     */
+ 
+    public void flush() {
+        this.getSession().flush();
+    }
  
     /**
      * <refresh>

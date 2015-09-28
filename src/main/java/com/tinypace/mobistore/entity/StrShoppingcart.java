@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(name = "str_shoppingcart")
 public class StrShoppingcart extends IdEntity {
@@ -30,8 +32,8 @@ public class StrShoppingcart extends IdEntity {
 	@Column(name="client_id")
 	private String clientId;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "shoppingcart")
-//	@Where(clause = "'isDelete' = false and 'is_disable' = false")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "shoppingcart")
+	@Where(clause = "is_delete = 0 and is_disable = 0")
 	private Set<StrShoppingcartItem> itemSet = new HashSet<StrShoppingcartItem>(0);
 
 	public Date getCreateTime() {

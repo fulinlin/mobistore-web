@@ -35,7 +35,7 @@ public class StrClient extends IdEntity {
     private String deviceToken;
     
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-//	@Where(clause = "isDelete = false and isDisable = false")
+	@Where(clause = "is_delete = 0 and is_disable = 0")
 	private Set<StrRecipient> addressSet = new HashSet<StrRecipient>(0);
     
 	public static enum PlatformType{

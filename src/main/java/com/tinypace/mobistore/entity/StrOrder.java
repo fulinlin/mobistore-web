@@ -28,8 +28,8 @@ public class StrOrder extends IdEntity {
 	private BigDecimal payAmount;
 	private PayStatus payStatus = PayStatus.INIT;
 	
-	private String recipientProvince;
-	private String recipientCity;
+	private String recipientArea;
+	private String recipientStreet;
 	private String recipientAddress;
 	private String recipientName;
 	private String recipientPhone;
@@ -47,7 +47,7 @@ public class StrOrder extends IdEntity {
 	private String clientId;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "strOrder")
-	@Where(clause = "isDelete = false and isDisable = false")
+	@Where(clause = "is_delete = 0 and is_disable = 0")
 	private Set<StrOrderItem> itemSet = new HashSet<StrOrderItem>(0);
 	
 	// 支付状态
@@ -198,21 +198,7 @@ public class StrOrder extends IdEntity {
 		this.totalAmount = totalAmount;
 	}
 
-	public String getRecipientProvince() {
-		return recipientProvince;
-	}
 
-	public void setRecipientProvince(String recipientProvince) {
-		this.recipientProvince = recipientProvince;
-	}
-
-	public String getRecipientCity() {
-		return recipientCity;
-	}
-
-	public void setRecipientCity(String recipientCity) {
-		this.recipientCity = recipientCity;
-	}
 
 	public String getRecipientAddress() {
 		return recipientAddress;
@@ -236,6 +222,22 @@ public class StrOrder extends IdEntity {
 
 	public void setRecipientPhone(String recipientPhone) {
 		this.recipientPhone = recipientPhone;
+	}
+
+	public String getRecipientArea() {
+		return recipientArea;
+	}
+
+	public void setRecipientArea(String recipientArea) {
+		this.recipientArea = recipientArea;
+	}
+
+	public String getRecipientStreet() {
+		return recipientStreet;
+	}
+
+	public void setRecipientStreet(String recipientStreet) {
+		this.recipientStreet = recipientStreet;
 	}
 
 }

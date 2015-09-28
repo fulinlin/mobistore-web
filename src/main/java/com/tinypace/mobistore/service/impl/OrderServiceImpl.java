@@ -1,8 +1,10 @@
 package com.tinypace.mobistore.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,39 +35,25 @@ public class OrderServiceImpl extends CommonServiceImpl implements OrderService 
 	}
 	
 	@Override
-	public StrOrder checkoutPers(String clientId, String recipientName, String recipientPhone, String recipientProvince, String recipientCity, String shipAddress) {
-		StrOrder order = new StrOrder();
-		
-		StrShoppingcart cart = shoppingcartService.getByClient(clientId);
-		shoppingcartService.computerShoopingcartPrice(cart);
-		order.setClientId(clientId);
-		order.setAmount(cart.getAmount());
-		order.setFreight(cart.getFreight());
-		order.setTotalAmount(cart.getTotalAmount());
-		order.setCreateTime(new Date());
-		
-		order.setRecipientName(recipientName);
-		order.setRecipientPhone(recipientPhone);
-		order.setRecipientProvince(recipientProvince);
-		order.setRecipientCity(recipientCity);
-		order.setRecipientAddress(shipAddress);
-		order.setCreateTime(new Date());
-		saveOrUpdate(order);
-		
-		for (StrShoppingcartItem i : cart.getItemSet()) {
-			StrOrderItem orderItem = new StrOrderItem();
-			orderItem.setName(i.getName());
-			orderItem.setImage(i.getImage());
-			
-			orderItem.setUnitPrice(i.getUnitPrice());
-			orderItem.setQty(i.getQty());
-			orderItem.setAmount(i.getAmount());
-			orderItem.setOrderId(order.getId());
-			
-			order.getItemSet().add(orderItem);
-			saveOrUpdate(orderItem);
-		}
+	public StrOrder make(String orderId, String recipientName, String recipientPhone, String recipientArea, String recipientStreet, String shipAddress) {
+//		order.setRecipientName(recipientName);
+//		order.setRecipientPhone(recipientPhone);
+//		order.setRecipientArea(recipientArea);
+//		order.setRecipientStreet(recipientStreet);
+//		order.setRecipientAddress(shipAddress);
 		
 		return null;
+	}
+	
+	@Override
+	public List<StrOrderItem> getItems(String orderId) {
+		DetachedCriteria dc = DetachedCriteria.forClass(StrOrderItem.class);
+		dc.add(Restrictions.eq("orderId", orderId));
+		dc.add(Restrictions.ne("isDelete", true));
+		dc.add(Restrictions.ne("isDisable", true));
+		
+		List ls = findAllByCriteria(dc);
+		
+		return ls;
 	}
 }

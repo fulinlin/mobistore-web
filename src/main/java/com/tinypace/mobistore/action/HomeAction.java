@@ -23,6 +23,7 @@ import com.tinypace.mobistore.entity.StrCategory;
 import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.entity.StrShoppingcart;
+import com.tinypace.mobistore.entity.StrShoppingcartItem;
 import com.tinypace.mobistore.service.AdvertService;
 import com.tinypace.mobistore.service.CategoryService;
 import com.tinypace.mobistore.service.ProductService;
@@ -85,7 +86,9 @@ public class HomeAction extends BaseController {
 		ret.put("adverts", adverts);
 		ret.put("products", products);
 		ret.put("categories", categories);
-		ret.put("shoppingcartItemNumb", cart.getItemSet().size());
+		
+		List<StrShoppingcartItem> items = shoppingcartService.getItems(cart.getId());
+		ret.put("shoppingcartItemNumb", items.size());
 		
 		return ret;
 	}

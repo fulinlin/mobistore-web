@@ -99,7 +99,6 @@ public class ProductAction extends BaseController {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
-		StrShoppingcart cart = shoppingcartService.getByClient(user.getId());
 		
 		String productId = json.get("productId");
 		
@@ -113,7 +112,6 @@ public class ProductAction extends BaseController {
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", vo);
 		ret.put("isCollected", isCollected);
-		ret.put("shoppingcartItemNumb", cart.getItemSet().size());
 		
 		return ret;
 	}

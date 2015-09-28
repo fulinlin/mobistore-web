@@ -19,7 +19,7 @@ public class StrBrand extends IdEntity {
 	private String descr;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "brand")
-	@Where(clause = "isDelete = false and isDisable = false")
+	@Where(clause = "is_delete = 0 and is_disable = 0")
 	private Set<StrSeries> seriesSet = new HashSet<StrSeries>(0);
 
 	public String getName() {

@@ -3,6 +3,7 @@ package com.tinypace.mobistore.action;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +29,7 @@ import com.tinypace.mobistore.entity.StrShoppingcartItem;
 import com.tinypace.mobistore.service.ProductService;
 import com.tinypace.mobistore.service.ShoppingcartService;
 import com.tinypace.mobistore.util.BeanUtilEx;
+import com.tinypace.mobistore.vo.OrderVo;
 import com.tinypace.mobistore.vo.RecipientVo;
 import com.tinypace.mobistore.vo.ShoppingcartItemVo;
 import com.tinypace.mobistore.vo.ShoppingcartVo;
@@ -68,6 +70,7 @@ public class ShoppingcartAction extends BaseController {
 		String qty = json.get("qty");
 		
 		StrShoppingcart cart = shoppingcartService.addto(client.getId(), productId, qty);
+		StrShoppingcart cart1 = (StrShoppingcart) shoppingcartService.get(StrShoppingcart.class, cart.getId());
 		
 		ShoppingcartVo carVo = genShoppingcartVo(cart, client);
 		ret.put("data", carVo);
@@ -110,6 +113,21 @@ public class ShoppingcartAction extends BaseController {
 		return ret;
 	}
 	
+	@AuthPassport(validate=true)
+	@RequestMapping(value = "opt/checkout", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> checkout(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+
+		StrOrder order = shoppingcartService.checkoutPers(client.getId());
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("orderId", order.getId());
+		return ret;
+	}
+	
 	private ShoppingcartVo genShoppingcartVo(StrShoppingcart cart, StrClient client) {
 		
 		ShoppingcartVo cartVo = new ShoppingcartVo();
@@ -117,7 +135,9 @@ public class ShoppingcartAction extends BaseController {
 		
 		Set<ShoppingcartItemVo> itemVos = new HashSet<ShoppingcartItemVo>();
 		cartVo.setItems(itemVos);
-		for (StrShoppingcartItem po : cart.getItemSet()) {
+		
+		List<StrShoppingcartItem> items = shoppingcartService.getItems(cart.getId());
+		for (StrShoppingcartItem po : items) {
 			ShoppingcartItemVo vo = new ShoppingcartItemVo();
 			BeanUtilEx.copyProperties(vo, po);
 			
