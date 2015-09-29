@@ -16,14 +16,14 @@ public class OrderVo {
 	private BigDecimal freight;
 	private BigDecimal totalAmount;
 	private BigDecimal payAmount;
-	private PayStatus payStatus = PayStatus.INIT;
+	private String payStatus;
 	
 	private String recipientArea;
 	private String recipientStreet;
 	private String recipientAddress;
 	private String recipientName;
 	private String recipientPhone;
-    private ShipStatus shipStatus = ShipStatus.INIT;
+    private String shipStatus;
     
     private Date createTime;
     private Date payTime;
@@ -87,11 +87,11 @@ public class OrderVo {
 		this.payAmount = payAmount;
 	}
 
-	public PayStatus getPayStatus() {
+	public String getPayStatus() {
 		return payStatus;
 	}
 
-	public void setPayStatus(PayStatus payStatus) {
+	public void setPayStatus(String payStatus) {
 		this.payStatus = payStatus;
 	}
 
@@ -135,11 +135,11 @@ public class OrderVo {
 		this.recipientPhone = recipientPhone;
 	}
 
-	public ShipStatus getShipStatus() {
+	public String getShipStatus() {
 		return shipStatus;
 	}
 
-	public void setShipStatus(ShipStatus shipStatus) {
+	public void setShipStatus(String shipStatus) {
 		this.shipStatus = shipStatus;
 	}
 

@@ -45,6 +45,29 @@ public class OrderAction extends BaseController {
 	OrderService orderService;
 	
 	@AuthPassport(validate=true)
+	@RequestMapping(value = "opt/list", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> list(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		
+		Page page = orderService.list(client.getId(), 0, 10);
+		
+		List<OrderVo> ls = new ArrayList<OrderVo>();
+		
+		for (Object obj : page.getItems()) {
+			StrOrder po = (StrOrder) obj;
+			OrderVo vo = genOrderVo(po);
+			
+			ls.add(vo);
+		}
+		
+		ret.put("data", ls);
+		ret.put("code", 1);
+		return ret;
+	}
+	
+	@AuthPassport(validate=true)
 	@RequestMapping(value = "opt/info", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> info(HttpServletRequest request, @RequestBody Map<String, String> json) {

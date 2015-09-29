@@ -3,7 +3,9 @@ package com.tinypace.mobistore.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +25,12 @@ public class OrderServiceImpl extends CommonServiceImpl implements OrderService 
 	ShoppingcartService shoppingcartService;
 	
 	@Override
-	public Page list(int startIndex, int pageSize) {
+	public Page list(String clientId, int startIndex, int pageSize) {
 		
-		DetachedCriteria dc = DetachedCriteria.forClass(StrProduct.class);
-//		dc.setFetchMode("message", FetchMode.JOIN);
-//		dc.add(Restrictions.eq("userId", userId));
-//		dc.addOrder(Order.desc("sendTime"));
+		DetachedCriteria dc = DetachedCriteria.forClass(StrOrder.class);
+		dc.setFetchMode("message", FetchMode.JOIN);
+		dc.add(Restrictions.eq("clientId", clientId));
+		dc.addOrder(Order.desc("createTime"));
 		Page page = findPage(dc, startIndex, pageSize);
 		
 		return page;
