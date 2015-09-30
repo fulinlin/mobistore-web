@@ -5,7 +5,7 @@
 	<artifactId>mobi-store-web</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>移动商店</name>
+	<name>mobistore</name>
 	<url>http://www.tinypace.com</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
