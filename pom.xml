@@ -452,9 +452,9 @@
 				<configuration>
 					<url>http://101.200.189.57:9090/manager/text</url>
 					<server>tomcat7</server>
-					<username>admin</username>
+					<username>text</username>
 					<password>P2ssw0rd</password>
-					<path>/wolai-web</path>
+					<path>/mobi-store</path>
 					<update>true</update>
 				</configuration>
 			</plugin>
