@@ -458,7 +458,7 @@
 					<update>true</update>
 				</configuration>
 			</plugin>
-		</plugins>  
+		</plugins>
 	</build>
 	 
 </project>
