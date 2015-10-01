@@ -66,9 +66,9 @@ public class ClientServiceImpl extends CommonServiceImpl implements ClientServic
 	
 	@Override
 	public boolean collectIfNeedPers(String clientId, String productId) {
-		boolean needCollect = !isCollected(clientId, productId);
+		StrCollection collect = isCollected(clientId, productId);
 		
-		if (needCollect) {
+		if (collect == null) {
 			StrProduct prodcut = (StrProduct) get(StrProduct.class, productId);
 			prodcut.setCollect(prodcut.getCollect() + 1);
 			saveOrUpdate(prodcut);
@@ -78,19 +78,32 @@ public class ClientServiceImpl extends CommonServiceImpl implements ClientServic
 			his.setProductId(productId);
 			his.setCollectTime(new Date());
 			saveOrUpdate(his);
+			
+			return true;
+		} else {
+			StrProduct prodcut = (StrProduct) get(StrProduct.class, productId);
+			prodcut.setCollect(prodcut.getCollect() - 1);
+			saveOrUpdate(prodcut);
+			
+			collect.setIsDelete(true);
+			saveOrUpdate(collect);
+			
+			return false;
 		}
-		
-		return needCollect;
 	}
 
 	@Override
-	public boolean isCollected(String clientId, String productId) {
+	public StrCollection isCollected(String clientId, String productId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(StrCollection.class);
 		dc.add(Restrictions.eq("productId", productId));
 		dc.add(Restrictions.eq("clientId", clientId));
-		List ls = findAllByCriteria(dc);
-		boolean isCollect = ls.size() > 0;
-		
-		return isCollect;
+		dc.add(Restrictions.ne("isDelete", true));
+		dc.add(Restrictions.ne("isDisable", true));
+		List<StrCollection> ls = (List<StrCollection>) findAllByCriteria(dc);
+		if (ls.size() > 0) {
+			return ls.get(0);
+		} else {
+			return null;
+		}
 	}
 }

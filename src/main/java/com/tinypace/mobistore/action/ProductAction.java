@@ -107,7 +107,7 @@ public class ProductAction extends BaseController {
 		ProductVo vo = new ProductVo();
 		BeanUtilEx.copyProperties(vo, po);
 		
-		boolean isCollected = clientService.isCollected(user.getId(), productId);
+		boolean isCollected = clientService.isCollected(user.getId(), productId) != null;
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", vo);
@@ -126,6 +126,7 @@ public class ProductAction extends BaseController {
 		boolean justCollected = clientService.collectIfNeedPers(user.getId(), productId);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
+		ret.put("data", justCollected);
 		
 		return ret;
 	}
