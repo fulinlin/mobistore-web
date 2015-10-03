@@ -209,11 +209,13 @@ public class WebUtils {
     }
     
     
-    public static HttpServletResponse AddCorsSupport(ServletResponse response) {
+    public static HttpServletResponse AddCorsSupport(ServletResponse response, boolean isProduction) {
     	HttpServletResponse res = (HttpServletResponse) response;
     	
-    	if (!StringUtil.IsEmpty(Constant.CLIENT_ROOT)) {
-    		res.addHeader("Access-Control-Allow-Origin", Constant.CLIENT_ROOT);
+    	if (isProduction) {
+    		res.addHeader("Access-Control-Allow-Origin", Constant.CLIENT_PATH_PRODUCTION);
+    	} else {
+    		res.addHeader("Access-Control-Allow-Origin", Constant.CLIENT_PATH_DEVELOPMENT);
     	}
     	
     	res.addHeader("Access-Control-Allow-Credentials", "true");

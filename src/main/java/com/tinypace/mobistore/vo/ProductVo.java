@@ -17,6 +17,7 @@ public class ProductVo {
 	private Integer qty;
 	private Date startTime;
 	private Date endTime;
+	private Boolean isCollected;
 
 	private Integer mass;
 	private Integer capacity;
@@ -162,5 +163,11 @@ public class ProductVo {
 	}
 	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
+	}
+	public Boolean getIsCollected() {
+		return isCollected;
+	}
+	public void setIsCollected(Boolean isCollected) {
+		this.isCollected = isCollected;
 	}
 }
