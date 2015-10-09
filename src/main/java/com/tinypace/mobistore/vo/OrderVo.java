@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.tinypace.mobistore.entity.StrOrder.PayStatus;
-import com.tinypace.mobistore.entity.StrOrder.ShipStatus;
-
 public class OrderVo {
 	private String id;
 	private String currency;
@@ -16,14 +13,13 @@ public class OrderVo {
 	private BigDecimal freight;
 	private BigDecimal totalAmount;
 	private BigDecimal payAmount;
-	private String payStatus;
 	
 	private String recipientArea;
 	private String recipientStreet;
 	private String recipientAddress;
 	private String recipientName;
 	private String recipientPhone;
-    private String shipStatus;
+    private String status;
     
     private Date createTime;
     private Date payTime;
@@ -87,14 +83,6 @@ public class OrderVo {
 		this.payAmount = payAmount;
 	}
 
-	public String getPayStatus() {
-		return payStatus;
-	}
-
-	public void setPayStatus(String payStatus) {
-		this.payStatus = payStatus;
-	}
-
 	public String getRecipientArea() {
 		return recipientArea;
 	}
@@ -135,14 +123,6 @@ public class OrderVo {
 		this.recipientPhone = recipientPhone;
 	}
 
-	public String getShipStatus() {
-		return shipStatus;
-	}
-
-	public void setShipStatus(String shipStatus) {
-		this.shipStatus = shipStatus;
-	}
-
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -173,6 +153,14 @@ public class OrderVo {
 
 	public void setItems(Set<OrderItemVo> items) {
 		this.items = items;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
     
 }

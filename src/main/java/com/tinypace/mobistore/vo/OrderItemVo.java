@@ -1,12 +1,6 @@
 package com.tinypace.mobistore.vo;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.tinypace.mobistore.entity.StrOrder.PayStatus;
-import com.tinypace.mobistore.entity.StrOrder.ShipStatus;
 
 public class OrderItemVo {
 	private String id;

@@ -1,7 +1,9 @@
 package com.tinypace.mobistore.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.entity.StrCollection;
+import com.tinypace.mobistore.entity.StrMsg;
+import com.tinypace.mobistore.entity.StrOrder.Status;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.service.ClientService;
 
@@ -105,5 +109,57 @@ public class ClientServiceImpl extends CommonServiceImpl implements ClientServic
 		} else {
 			return null;
 		}
+	}
+	
+	@Override
+	public Map<String, Long> count(String clientId) {
+		Map<String, Long> ret = new HashMap<String, Long>();
+		
+		DetachedCriteria dc1 = DetachedCriteria.forClass(StrCollection.class);
+		dc1.add(Restrictions.eq("clientId", clientId));
+		dc1.add(Restrictions.ne("isDelete", true));
+		dc1.add(Restrictions.ne("isDisable", true));
+		long collectionCount = getDao().count(dc1);
+		
+		DetachedCriteria dc2 = DetachedCriteria.forClass(StrMsg.class);
+		dc2.add(Restrictions.eq("clientId", clientId));
+		dc2.add(Restrictions.ne("isDelete", true));
+		dc2.add(Restrictions.ne("isDisable", true));
+		long msgCount = getDao().count(dc2);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("waitPay", 0);
+		map.put("waitShip", 0);
+		map.put("waitReceive", 0);
+		map.put("waitRate", 0);
+		String hql = "select count(o.status) from StrOrder o where o.clientId = ? group by o.status";
+		Map<String, Long> countMap = getDao().findMapByHQL(hql, clientId).get(0);
+		for (String str : countMap.keySet()) {
+			int key = Integer.valueOf(str);
+			if (key < 0) {
+				continue;
+			}
+			
+			int val = countMap.get(str).intValue();
+			if (key < Status.PAYING.value().longValue()) {
+				map.put("waitPay", map.get("waitPay") + val);
+			} else if (key < Status.SHIPPING.value().longValue())  {
+				map.put("waitShip", map.get("waitShip") + val);
+			} else if (key < Status.RECEIVED.value().longValue())  {
+				map.put("waitReceive", map.get("waitReceive") + val);
+			} else if (key < Status.RATED.value().longValue())  {
+				map.put("waitRate", map.get("waitRate") + val);
+			}
+		}
+		
+		ret.put("collectionCount", collectionCount);
+		ret.put("msgCount", msgCount);
+		
+		ret.put("waitPayCount", map.get("waitPay").longValue());
+		ret.put("waitShip", map.get("waitShip").longValue());
+		ret.put("waitReceive", map.get("waitReceive").longValue());
+		ret.put("waitRate", map.get("waitRate").longValue());
+		
+		return ret;
 	}
 }

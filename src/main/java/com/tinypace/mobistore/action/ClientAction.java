@@ -21,6 +21,7 @@ import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.service.ClientService;
 import com.tinypace.mobistore.util.BeanUtilEx;
 import com.tinypace.mobistore.vo.ClientVo;
+import com.tinypace.mobistore.vo.SearchHotVo;
 
 @Controller
 @RequestMapping(Constant.API + "client/")
@@ -56,5 +57,30 @@ public class ClientAction extends BaseController {
 		
 		return ret;
 	}
-}
+	
+	@RequestMapping(value = "opt/info", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> info(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		
+		ClientVo clientVo = new ClientVo();
+		BeanUtilEx.copyProperties(clientVo, client);
+		
+		Map<String, Long> counts = clientService.count(client.getId());
 
+		ret.put("collectionCount", counts.get("collectionCount"));
+		ret.put("msgCount", counts.get("msgCount"));
+		
+		ret.put("waitPayCount", counts.get("waitPayCount"));
+		ret.put("waitShip", counts.get("waitShip"));
+		ret.put("waitReceive", counts.get("waitReceive"));
+		ret.put("waitRate", counts.get("waitRate"));
+		
+		ret.put("client", clientVo);
+		ret.put("code", RespCode.SUCCESS.Code());
+		
+		return ret;
+	}
+}

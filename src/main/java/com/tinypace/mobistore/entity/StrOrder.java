@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Where;
 
@@ -26,14 +27,14 @@ public class StrOrder extends IdEntity {
 	private BigDecimal freight;
 	private BigDecimal totalAmount;
 	private BigDecimal payAmount;
-	private PayStatus payStatus = PayStatus.INIT;
 	
 	private String recipientArea;
 	private String recipientStreet;
 	private String recipientAddress;
 	private String recipientName;
 	private String recipientPhone;
-    private ShipStatus shipStatus = ShipStatus.INIT;
+     
+    private Status status = Status.INIT;
     
     private Date createTime;
     private Date payTime;
@@ -50,39 +51,19 @@ public class StrOrder extends IdEntity {
 	@Where(clause = "is_delete = 0 and is_disable = 0")
 	private Set<StrOrderItem> itemSet = new HashSet<StrOrderItem>(0);
 	
-	// 支付状态
-	public static enum PayStatus{
-		FEATURE("FEATURE"), INIT("INIT"),IN_PROGRESS("IN_PROGRESS"),SUCCESSED("SUCCESS");
+	// 流程状态
+	public static enum Status{
+		PAY_FEATURE(-10), SHIPPING_FEATURE(-20), 
+		INIT(0), PAYING(10), PADED(20), 
+		SHIPPING(30), RECEIVED(40), RATED(50);
 		
-		private PayStatus(String textVal){
-  			this.textVal=textVal;
+		private Status(Integer val){
+  			this.val=val;
   		}
-  		private String textVal;
+  		private Integer val;
   		
-  		public String value(){
-  			return textVal;
-  		}
-  		
-  		public String toString(){
-  			return textVal;
-  		}
-	}
-	
-	// 送货状态
-	public static enum ShipStatus{
-		FEATURE("BACK"), INIT("INIT"),IN_PROGRESS("IN_PROGRESS"),SUCCESSED("SUCCESS");
-		
-		private ShipStatus(String textVal){
-  			this.textVal=textVal;
-  		}
-  		private String textVal;
-  		
-  		public String value(){
-  			return textVal;
-  		}
-  		
-  		public String toString(){
-  			return textVal;
+  		public Integer value(){
+  			return val;
   		}
 	}
 
@@ -116,22 +97,6 @@ public class StrOrder extends IdEntity {
 
 	public void setPayAmount(BigDecimal payAmount) {
 		this.payAmount = payAmount;
-	}
-
-	public PayStatus getPayStatus() {
-		return payStatus;
-	}
-
-	public void setPayStatus(PayStatus payStatus) {
-		this.payStatus = payStatus;
-	}
-
-	public ShipStatus getShipStatus() {
-		return shipStatus;
-	}
-
-	public void setShipStatus(ShipStatus shipStatus) {
-		this.shipStatus = shipStatus;
 	}
 
 	public Date getCreateTime() {
@@ -238,6 +203,14 @@ public class StrOrder extends IdEntity {
 
 	public void setRecipientStreet(String recipientStreet) {
 		this.recipientStreet = recipientStreet;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 }

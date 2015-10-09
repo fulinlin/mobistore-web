@@ -24,7 +24,7 @@ public class StrClient extends IdEntity {
     private String email;
     private String authToken;
     private Date lastLoginTime;
-    private Integer rewardPoints;
+    private Integer rewardPoints = 0;
 
     // 当前登录的设备类型
     private PlatformType clientPlatform;

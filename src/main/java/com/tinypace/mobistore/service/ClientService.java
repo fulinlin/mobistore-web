@@ -1,5 +1,7 @@
 package com.tinypace.mobistore.service;
 
+import java.util.Map;
+
 import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.entity.StrCollection;
 
@@ -13,4 +15,6 @@ public interface ClientService extends CommonService {
 	boolean collectIfNeedPers(String clientId, String productId);
 
 	StrCollection isCollected(String userId, String productId);
+
+	Map<String, Long> count(String clientId);
 }
