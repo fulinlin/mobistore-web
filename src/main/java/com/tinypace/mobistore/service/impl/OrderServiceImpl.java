@@ -16,6 +16,7 @@ import com.tinypace.mobistore.entity.StrOrderItem;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.entity.StrShoppingcart;
 import com.tinypace.mobistore.entity.StrShoppingcartItem;
+import com.tinypace.mobistore.entity.StrOrder.Status;
 import com.tinypace.mobistore.service.OrderService;
 import com.tinypace.mobistore.service.ShoppingcartService;
 
@@ -25,11 +26,22 @@ public class OrderServiceImpl extends CommonServiceImpl implements OrderService 
 	ShoppingcartService shoppingcartService;
 	
 	@Override
-	public Page list(String clientId, int startIndex, int pageSize) {
+	public Page list(String filter, String clientId, int startIndex, int pageSize) {
 		
 		DetachedCriteria dc = DetachedCriteria.forClass(StrOrder.class);
 		dc.setFetchMode("message", FetchMode.JOIN);
 		dc.add(Restrictions.eq("clientId", clientId));
+		
+		if ("waitPay".equals(filter)) {
+			dc.add(Restrictions.eq("status", Status.INIT));
+		} else if ("waitShip".equals(filter)) {
+			dc.add(Restrictions.eq("status", Status.PAID));
+		} else if ("waitReceive".equals(filter)) {
+			dc.add(Restrictions.eq("status", Status.SHIPPING));
+		} else if ("waitRate".equals(filter)) {
+			dc.add(Restrictions.eq("status", Status.RECEIVED));
+		} 
+		
 		dc.addOrder(Order.desc("createTime"));
 		Page page = findPage(dc, startIndex, pageSize);
 		

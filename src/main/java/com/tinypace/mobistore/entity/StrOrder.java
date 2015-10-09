@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -34,6 +36,7 @@ public class StrOrder extends IdEntity {
 	private String recipientName;
 	private String recipientPhone;
      
+	@Enumerated(EnumType.ORDINAL)
     private Status status = Status.INIT;
     
     private Date createTime;
@@ -53,9 +56,9 @@ public class StrOrder extends IdEntity {
 	
 	// 流程状态
 	public static enum Status{
-		PAY_FEATURE(-10), SHIPPING_FEATURE(-20), 
-		INIT(0), PAYING(10), PADED(20), 
-		SHIPPING(30), RECEIVED(40), RATED(50);
+		INIT(0), PAYING(1), PAID(2), 
+		SHIPPING(3), RECEIVED(4), RATED(5),
+		PAY_FEATURE(-10), SHIPPING_FEATURE(-20),;
 		
 		private Status(Integer val){
   			this.val=val;

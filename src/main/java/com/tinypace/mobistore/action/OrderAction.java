@@ -49,9 +49,13 @@ public class OrderAction extends BaseController {
 	@ResponseBody
 	public Map<String, Object> list(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String filter = json.get("filter");
+		
+		
 		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
 		
-		Page page = orderService.list(client.getId(), 0, 10);
+		Page page = orderService.list(filter, client.getId(), 0, 10);
 		
 		List<OrderVo> ls = new ArrayList<OrderVo>();
 		

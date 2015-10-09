@@ -141,13 +141,13 @@ public class ClientServiceImpl extends CommonServiceImpl implements ClientServic
 			}
 			
 			int val = countMap.get(str).intValue();
-			if (key < Status.PAYING.value().longValue()) {
+			if (key == Status.INIT.value().longValue()) {
 				map.put("waitPay", map.get("waitPay") + val);
-			} else if (key < Status.SHIPPING.value().longValue())  {
+			} else if (key == Status.PAID.value().longValue())  {
 				map.put("waitShip", map.get("waitShip") + val);
-			} else if (key < Status.RECEIVED.value().longValue())  {
+			} else if (key == Status.SHIPPING.value().longValue())  {
 				map.put("waitReceive", map.get("waitReceive") + val);
-			} else if (key < Status.RATED.value().longValue())  {
+			} else if (key == Status.RECEIVED.value().longValue())  {
 				map.put("waitRate", map.get("waitRate") + val);
 			}
 		}
