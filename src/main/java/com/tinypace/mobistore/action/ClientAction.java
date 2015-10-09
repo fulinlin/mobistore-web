@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,10 +17,11 @@ import com.tinypace.mobistore.constant.Constant;
 import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrClient;
+import com.tinypace.mobistore.entity.SysConfig;
 import com.tinypace.mobistore.service.ClientService;
+import com.tinypace.mobistore.service.SysConfigService;
 import com.tinypace.mobistore.util.BeanUtilEx;
 import com.tinypace.mobistore.vo.ClientVo;
-import com.tinypace.mobistore.vo.SearchHotVo;
 
 @Controller
 @RequestMapping(Constant.API + "client/")
@@ -29,6 +29,8 @@ public class ClientAction extends BaseController {
 	
 	@Autowired
 	ClientService clientService;
+	@Autowired
+	SysConfigService configService;
 	
 	@AuthPassport(validate=false)
 	@RequestMapping(value = "opt/signon", method = RequestMethod.POST)
@@ -69,6 +71,9 @@ public class ClientAction extends BaseController {
 		BeanUtilEx.copyProperties(clientVo, client);
 		
 		Map<String, Long> counts = clientService.count(client.getId());
+		
+		SysConfig config = configService.getConfig();
+		String rateUrl = "ios".equals(json.get("platform"))? config.getIosMkt(): config.getAndroidMkt();
 
 		ret.put("collectionCount", counts.get("collectionCount"));
 		ret.put("msgCount", counts.get("msgCount"));
@@ -77,8 +82,27 @@ public class ClientAction extends BaseController {
 		ret.put("waitShip", counts.get("waitShip"));
 		ret.put("waitReceive", counts.get("waitReceive"));
 		ret.put("waitRate", counts.get("waitRate"));
+		ret.put("rateUrl", rateUrl);
 		
 		ret.put("client", clientVo);
+		ret.put("code", RespCode.SUCCESS.Code());
+		
+		return ret;
+	}
+	
+	@RequestMapping(value = "opt/save", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> save(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String mobile = json.get("mobile");
+		String nickName = json.get("nickName");
+		
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		client.setMobile(mobile);
+		client.setNickName(nickName);
+		clientService.saveOrUpdate(client);
+		
 		ret.put("code", RespCode.SUCCESS.Code());
 		
 		return ret;
