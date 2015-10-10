@@ -4,7 +4,9 @@ public class RecipientVo {
 	private String id;
 	private String name;
 	private String phone;
-	private String area;
+	private String provice;
+	private String city;
+	private String region;
 	private String street;
     private String address;
     private Boolean defaultt;
@@ -15,12 +17,7 @@ public class RecipientVo {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getArea() {
-		return area;
-	}
-	public void setArea(String area) {
-		this.area = area;
-	}
+
 	public String getStreet() {
 		return street;
 	}
@@ -50,6 +47,24 @@ public class RecipientVo {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public String getProvice() {
+		return provice;
+	}
+	public void setProvice(String provice) {
+		this.provice = provice;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getRegion() {
+		return region;
+	}
+	public void setRegion(String region) {
+		this.region = region;
 	}
     
 }

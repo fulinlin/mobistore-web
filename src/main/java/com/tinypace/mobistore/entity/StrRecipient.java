@@ -18,7 +18,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class StrRecipient extends IdEntity {
 	private String name;
 	private String phone;
-	private String area;
+	private String provice;
+	private String city;
+	private String region;
 	private String street;
     private String address;
     private Boolean defaultt;
@@ -29,14 +31,6 @@ public class StrRecipient extends IdEntity {
 	
 	@Column(name="client_id")
 	private String clientId;
-
-	public String getArea() {
-		return area;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
-	}
 
 	public String getStreet() {
 		return street;
@@ -92,6 +86,30 @@ public class StrRecipient extends IdEntity {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getProvice() {
+		return provice;
+	}
+
+	public void setProvice(String provice) {
+		this.provice = provice;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
 	}
   
 }

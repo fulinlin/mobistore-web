@@ -58,7 +58,7 @@ public class StrOrder extends IdEntity {
 	public static enum Status{
 		INIT(0), PAYING(1), PAID(2), 
 		SHIPPING(3), RECEIVED(4), RATED(5),
-		PAY_FEATURE(-10), SHIPPING_FEATURE(-20),;
+		PAY_FEATURE(6), SHIPPING_FEATURE(7);
 		
 		private Status(Integer val){
   			this.val=val;
