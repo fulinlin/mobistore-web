@@ -15,8 +15,6 @@ public class AreaServiceImpl extends CommonServiceImpl implements AreaService {
 	@Override
 	public List<SysArea> list(String type, String proviceId, String cityId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SysArea.class);
-		dc.add(Restrictions.ne("isDelete", true));
-		dc.add(Restrictions.ne("isDisable", true));
 		
 		if("region".equals(type)) {
 			dc.add(Restrictions.eq("level", 3));
