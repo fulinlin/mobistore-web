@@ -93,6 +93,9 @@ public class AddressAction extends BaseController {
 		String provice = json.get("provice");
 		String city = json.get("city");
 		String region = json.get("region");
+		String proviceId = json.get("proviceId");
+		String cityId = json.get("cityId");
+		String regionId = json.get("regionId");
 		String street = json.get("street");
 		String address = json.get("address");
 		String isDefault = json.get("defaultt");
@@ -109,7 +112,16 @@ public class AddressAction extends BaseController {
 		rec.setPhone(phone);
 		rec.setProvice(provice);
 		rec.setCity(city);
-		rec.setRegion(region);
+		
+		if (!StringUtil.IsEmpty(region)) {
+			rec.setRegion(region);
+		}
+		rec.setProviceId(Integer.valueOf(proviceId));
+		rec.setCityId(Integer.valueOf(cityId));
+		if (!StringUtil.IsEmpty(regionId)) {
+			rec.setRegionId(Integer.valueOf(regionId));
+		}
+		
 		rec.setStreet(street);
 		rec.setAddress(address);
 		rec.setDefaultt(Boolean.valueOf(isDefault));
@@ -127,7 +139,7 @@ public class AddressAction extends BaseController {
 		
 		String addressId = json.get("addressId");
 		StrRecipient rec = (StrRecipient) areaService.get(StrRecipient.class, addressId);
-		areaService.delete(rec);
+		areaService.remove(rec);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		

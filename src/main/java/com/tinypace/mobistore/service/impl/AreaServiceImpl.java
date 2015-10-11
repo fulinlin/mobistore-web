@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
+
+import com.tinypace.mobistore.entity.StrRecipient;
 import com.tinypace.mobistore.entity.SysArea;
 import com.tinypace.mobistore.service.AreaService;
 
@@ -13,6 +15,8 @@ public class AreaServiceImpl extends CommonServiceImpl implements AreaService {
 	@Override
 	public List<SysArea> list(String type, String proviceId, String cityId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SysArea.class);
+		dc.add(Restrictions.ne("isDelete", true));
+		dc.add(Restrictions.ne("isDisable", true));
 		
 		if("region".equals(type)) {
 			dc.add(Restrictions.eq("level", 3));
@@ -27,5 +31,11 @@ public class AreaServiceImpl extends CommonServiceImpl implements AreaService {
 
 		List ls = findAllByCriteria(dc);
 		return ls;
+	}
+
+	@Override
+	public void remove(StrRecipient rec) {
+		rec.setIsDelete(true);
+		saveOrUpdate(rec);
 	}
 }
