@@ -93,7 +93,7 @@ public class AddressAction extends BaseController {
 		String region = json.get("region");
 		String street = json.get("street");
 		String address = json.get("address");
-		String isDefault = json.get("isDefault");
+		String isDefault = json.get("defaultt");
 		
 		StrRecipient rec = null;
 		if (StringUtil.IsEmpty(id)) {
