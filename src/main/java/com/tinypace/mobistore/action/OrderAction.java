@@ -52,7 +52,6 @@ public class OrderAction extends BaseController {
 		
 		String filter = json.get("filter");
 		
-		
 		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
 		
 		Page page = orderService.list(filter, client.getId(), 0, 10);

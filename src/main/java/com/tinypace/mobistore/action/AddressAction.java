@@ -85,6 +85,8 @@ public class AddressAction extends BaseController {
 	public Map<String, Object> save(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		
 		String id = json.get("id");
 		String name = json.get("name");
 		String phone = json.get("phone");
@@ -98,6 +100,7 @@ public class AddressAction extends BaseController {
 		StrRecipient rec = null;
 		if (StringUtil.IsEmpty(id)) {
 			rec = new StrRecipient(); 
+			rec.setClientId(client.getId());
 		} else {
 			rec = (StrRecipient) recipientService.get(StrRecipient.class, id);
 		}
@@ -111,6 +114,20 @@ public class AddressAction extends BaseController {
 		rec.setAddress(address);
 		rec.setDefaultt(Boolean.valueOf(isDefault));
 		recipientService.saveOrUpdate(rec);
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		
+		return ret;
+	}
+	
+	@RequestMapping(value = "opt/remove", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> remove(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String addressId = json.get("addressId");
+		StrRecipient rec = (StrRecipient) areaService.get(StrRecipient.class, addressId);
+		areaService.delete(rec);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
 		
