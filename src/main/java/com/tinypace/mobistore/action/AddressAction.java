@@ -123,8 +123,10 @@ public class AddressAction extends BaseController {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		String type = json.get("type");
+		String proviceId = json.get("proviceId");
+		String cityId = json.get("cityId");
 
-		List<SysArea> ls = areaService.list(type);
+		List<SysArea> ls = areaService.list(type, proviceId, cityId);
 		List<AreaVo> vos = new ArrayList<AreaVo>();
 		
 		for (SysArea po : ls) {

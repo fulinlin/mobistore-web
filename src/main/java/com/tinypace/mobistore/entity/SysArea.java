@@ -2,6 +2,7 @@ package com.tinypace.mobistore.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -69,4 +70,15 @@ public class SysArea extends IdEntity {
 		this.sort = sort;
 	}
 
+	public String getLevelname() {
+		String name = "";
+		if (this.getLevel() == 1) {
+			name = "provice";
+		} else if (this.getLevel() == 2) {
+			name = "city";
+		} else if (this.getLevel() == 3) {
+			name = "region";
+		}
+		return name;
+	}
 }

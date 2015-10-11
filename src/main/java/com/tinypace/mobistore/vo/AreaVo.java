@@ -8,6 +8,7 @@ public class AreaVo {
 	private String lng;
 	private String lat;
 	private Integer level;
+	private String levelname;
     private String position;
     private Integer sort;
     
@@ -64,6 +65,12 @@ public class AreaVo {
 	}
 	public void setSort(Integer sort) {
 		this.sort = sort;
+	}
+	public String getLevelname() {
+		return levelname;
+	}
+	public void setLevelname(String levelname) {
+		this.levelname = levelname;
 	}
     
 }

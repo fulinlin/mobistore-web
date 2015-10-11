@@ -7,6 +7,9 @@ public class RecipientVo {
 	private String provice;
 	private String city;
 	private String region;
+	private Integer proviceId;
+	private Integer cityId;
+	private Integer regionId;
 	private String street;
     private String address;
     private Boolean defaultt;
@@ -65,6 +68,24 @@ public class RecipientVo {
 	}
 	public void setRegion(String region) {
 		this.region = region;
+	}
+	public Integer getProviceId() {
+		return proviceId;
+	}
+	public void setProviceId(Integer proviceId) {
+		this.proviceId = proviceId;
+	}
+	public Integer getCityId() {
+		return cityId;
+	}
+	public void setCityId(Integer cityId) {
+		this.cityId = cityId;
+	}
+	public Integer getRegionId() {
+		return regionId;
+	}
+	public void setRegionId(Integer regionId) {
+		this.regionId = regionId;
 	}
     
 }

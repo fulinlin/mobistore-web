@@ -19,8 +19,11 @@ public class StrRecipient extends IdEntity {
 	private String name;
 	private String phone;
 	private String provice;
+	private Integer proviceId;
 	private String city;
+	private Integer cityId;
 	private String region;
+	private Integer regionId;
 	private String street;
     private String address;
     private Boolean defaultt;
@@ -110,6 +113,30 @@ public class StrRecipient extends IdEntity {
 
 	public void setRegion(String region) {
 		this.region = region;
+	}
+
+	public Integer getProviceId() {
+		return proviceId;
+	}
+
+	public void setProviceId(Integer proviceId) {
+		this.proviceId = proviceId;
+	}
+
+	public Integer getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Integer cityId) {
+		this.cityId = cityId;
+	}
+
+	public Integer getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(Integer regionId) {
+		this.regionId = regionId;
 	}
   
 }
