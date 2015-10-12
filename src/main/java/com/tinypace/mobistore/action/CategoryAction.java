@@ -48,7 +48,6 @@ public class CategoryAction extends BaseController {
 		
 		ret.put("data", cates);
 		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("msg", "成功");
 		return ret;
 	}
 }

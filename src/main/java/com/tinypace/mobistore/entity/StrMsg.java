@@ -1,5 +1,7 @@
 package com.tinypace.mobistore.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "str_msg")
 public class StrMsg extends IdEntity {
 	private static final long serialVersionUID = -7404422286952704677L;
-	
+	private Date collectTime;
 	private String title;
 	private String descr;
 
@@ -44,6 +46,22 @@ public class StrMsg extends IdEntity {
 
 	public void setClient(StrClient client) {
 		this.client = client;
+	}
+
+	public Date getCollectTime() {
+		return collectTime;
+	}
+
+	public void setCollectTime(Date collectTime) {
+		this.collectTime = collectTime;
+	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
 	}
 
 

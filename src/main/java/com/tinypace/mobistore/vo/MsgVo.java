@@ -1,10 +1,13 @@
 package com.tinypace.mobistore.vo;
 
+import java.util.Date;
+
 
 public class MsgVo {
 	private String id;
 	private String title;
 	private String descr;
+	private Date collectTime;
 	
 	public String getId() {
 		return id;
@@ -23,6 +26,12 @@ public class MsgVo {
 	}
 	public void setDescr(String descr) {
 		this.descr = descr;
+	}
+	public Date getCollectTime() {
+		return collectTime;
+	}
+	public void setCollectTime(Date collectTime) {
+		this.collectTime = collectTime;
 	}
 	
 	

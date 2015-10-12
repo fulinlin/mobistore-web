@@ -19,21 +19,20 @@ import com.tinypace.mobistore.constant.Constant;
 import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrClient;
-import com.tinypace.mobistore.entity.StrCollection;
 import com.tinypace.mobistore.entity.StrMsg;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.service.CollectionService;
+import com.tinypace.mobistore.service.MsgService;
 import com.tinypace.mobistore.util.BeanUtilEx;
-import com.tinypace.mobistore.vo.CollectionVo;
 import com.tinypace.mobistore.vo.MsgVo;
 import com.tinypace.mobistore.vo.ProductVo;
 
 @Controller
-@RequestMapping(Constant.API + "collection/")
-public class CollectionAction extends BaseController {
+@RequestMapping(Constant.API + "msg/")
+public class MsgAction extends BaseController {
 	
 	@Autowired
-	CollectionService collectionService;
+	MsgService msgService;
 	
 	@RequestMapping(value = "opt/list", method = RequestMethod.POST)
 	@ResponseBody
@@ -42,13 +41,12 @@ public class CollectionAction extends BaseController {
 		
 		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
 		
-		Page page = collectionService.list(client.getId(), 0, 10);
-		List<CollectionVo> vos = new ArrayList<CollectionVo>();
+		Page page = msgService.list(client.getId(), 0, 10);
+		List<MsgVo> vos = new ArrayList<MsgVo>();
 		for (Object obj : page.getItems()) {
-			StrCollection po = (StrCollection) obj;
-			CollectionVo vo = new CollectionVo();
+			StrMsg po = (StrMsg) obj;
+			MsgVo vo = new MsgVo();
 			BeanUtilEx.copyProperties(vo, po);
-			BeanUtilEx.copyProperties(vo, po.getProduct());
 			vos.add(vo);
 		}
 		
@@ -64,9 +62,9 @@ public class CollectionAction extends BaseController {
 		
 		String msgId = json.get("msgId");
 		
-		StrCollection po = (StrCollection) collectionService.get(StrCollection.class, msgId);
+		StrMsg po = (StrMsg) msgService.get(StrMsg.class, msgId);
 		
-		CollectionVo vo = new CollectionVo();
+		MsgVo vo = new MsgVo();
 		BeanUtilEx.copyProperties(vo, po);
 		
 		ret.put("code", RespCode.SUCCESS.Code());
