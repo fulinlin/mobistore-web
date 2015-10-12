@@ -13,10 +13,8 @@ import org.springframework.stereotype.Service;
 import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.entity.StrOrder;
 import com.tinypace.mobistore.entity.StrOrderItem;
-import com.tinypace.mobistore.entity.StrProduct;
-import com.tinypace.mobistore.entity.StrShoppingcart;
-import com.tinypace.mobistore.entity.StrShoppingcartItem;
 import com.tinypace.mobistore.entity.StrOrder.Status;
+import com.tinypace.mobistore.entity.StrRecipient;
 import com.tinypace.mobistore.service.OrderService;
 import com.tinypace.mobistore.service.ShoppingcartService;
 
@@ -49,7 +47,8 @@ public class OrderServiceImpl extends CommonServiceImpl implements OrderService 
 	}
 	
 	@Override
-	public StrOrder make(String orderId, String recipientName, String recipientPhone, String recipientArea, String recipientStreet, String shipAddress) {
+	public StrOrder payPers(String orderId, String recipientName, String recipientPhone, String recipientArea, String recipientStreet, String shipAddress) {
+
 //		order.setRecipientName(recipientName);
 //		order.setRecipientPhone(recipientPhone);
 //		order.setRecipientArea(recipientArea);
@@ -67,7 +66,30 @@ public class OrderServiceImpl extends CommonServiceImpl implements OrderService 
 		dc.add(Restrictions.ne("isDisable", true));
 		
 		List ls = findAllByCriteria(dc);
-		
 		return ls;
+	}
+
+	@Override
+	public void cancelPers(String orderId) {
+		StrOrder order = (StrOrder) get(StrOrder.class, orderId);
+		order.setStatus(Status.CANCEL);
+		saveOrUpdate(order);
+	}
+
+	@Override
+	public StrOrder changeRecipientPers(String orderId, String recipientId) {
+		StrOrder order = (StrOrder) get(StrOrder.class, orderId);
+		StrRecipient recipient = (StrRecipient) get(StrRecipient.class, recipientId);
+		
+		order.setRecipientName(recipient.getName());
+		order.setRecipientPhone(recipient.getPhone());
+		order.setRecipientArea(recipient.getProvice() + recipient.getCity() + recipient.getRegion());
+		order.setRecipientStreet(recipient.getStreet());
+		order.setRecipientAddress(recipient.getAddress());
+		order.setCreateTime(new Date());
+		
+		saveOrUpdate(order);
+		
+		return order;
 	}
 }

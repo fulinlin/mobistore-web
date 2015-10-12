@@ -44,7 +44,6 @@ public class OrderAction extends BaseController {
 	@Autowired
 	OrderService orderService;
 	
-	@AuthPassport(validate=true)
 	@RequestMapping(value = "opt/list", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> list(HttpServletRequest request, @RequestBody Map<String, String> json) {
@@ -70,7 +69,6 @@ public class OrderAction extends BaseController {
 		return ret;
 	}
 	
-	@AuthPassport(validate=true)
 	@RequestMapping(value = "opt/info", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> info(HttpServletRequest request, @RequestBody Map<String, String> json) {
@@ -81,28 +79,48 @@ public class OrderAction extends BaseController {
 		
 		OrderVo orderVo = genOrderVo(order);
 		ret.put("data", orderVo);
-		ret.put("code", 1);
+		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
 	}
 	
-	@AuthPassport(validate=true)
-	@RequestMapping(value = "opt/make", method = RequestMethod.POST)
+	@RequestMapping(value = "opt/pay", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> make(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> pay(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		String orderId = json.get("orderId");
-		String recipientName = json.get("name");
-		String recipientPhone = json.get("phone");
-		String recipientArea = json.get("area");
-		String recipientStreet = json.get("street");
-		String recipientAddress = json.get("address");
+		String recipientId = json.get("recipientId");
 		
 		StrOrder order = (StrOrder) orderService.get(StrOrder.class, orderId);
 		
 		OrderVo orderVo = genOrderVo(order);
 		ret.put("data", orderVo);
-		ret.put("code", 1);
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
+	
+	@RequestMapping(value = "opt/changeRecipient", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> changeRecipient(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		String orderId = json.get("orderId");
+		String recipientId = json.get("recipientId");
+		StrOrder order = orderService.changeRecipientPers(orderId, recipientId);
+		
+		OrderVo orderVo = genOrderVo(order);
+		ret.put("data", orderVo);
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
+	
+	@RequestMapping(value = "opt/cancel", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> cancel(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String orderId = json.get("orderId");
+		orderService.cancelPers(orderId);
+		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
 	}
 	
