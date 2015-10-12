@@ -7,7 +7,7 @@ public class MsgVo {
 	private String id;
 	private String title;
 	private String descr;
-	private Date collectTime;
+	private Date sendTime;
 	
 	public String getId() {
 		return id;
@@ -27,12 +27,11 @@ public class MsgVo {
 	public void setDescr(String descr) {
 		this.descr = descr;
 	}
-	public Date getCollectTime() {
-		return collectTime;
+	public Date getSendTime() {
+		return sendTime;
 	}
-	public void setCollectTime(Date collectTime) {
-		this.collectTime = collectTime;
+	public void setSendTime(Date sendTime) {
+		this.sendTime = sendTime;
 	}
-	
-	
+
 }

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "str_msg")
 public class StrMsg extends IdEntity {
 	private static final long serialVersionUID = -7404422286952704677L;
-	private Date collectTime;
+	private Date sendTime;
 	private String title;
 	private String descr;
 
@@ -48,14 +48,6 @@ public class StrMsg extends IdEntity {
 		this.client = client;
 	}
 
-	public Date getCollectTime() {
-		return collectTime;
-	}
-
-	public void setCollectTime(Date collectTime) {
-		this.collectTime = collectTime;
-	}
-
 	public String getClientId() {
 		return clientId;
 	}
@@ -64,5 +56,12 @@ public class StrMsg extends IdEntity {
 		this.clientId = clientId;
 	}
 
+	public Date getSendTime() {
+		return sendTime;
+	}
+
+	public void setSendTime(Date sendTime) {
+		this.sendTime = sendTime;
+	}
 
 }
