@@ -17,8 +17,10 @@ import com.tinypace.mobistore.constant.Constant;
 import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrClient;
+import com.tinypace.mobistore.entity.StrClient.AgentType;
 import com.tinypace.mobistore.entity.StrSuggestion;
 import com.tinypace.mobistore.entity.SysConfig;
+import com.tinypace.mobistore.entity.SysVerifyCode;
 import com.tinypace.mobistore.service.ClientService;
 import com.tinypace.mobistore.service.SuggestionService;
 import com.tinypace.mobistore.service.SysConfigService;
@@ -39,16 +41,17 @@ public class ClientAction extends BaseController {
 	@AuthPassport(validate=false)
 	@RequestMapping(value = "opt/signon", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doSomething(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> signon(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		String mobile = json.get("mobile");
 		String password = json.get("password");
+		
 		String platform = json.get("platform");
-		String agent = json.get("agent");
+		String isWebView = json.get("isWebView");
 		String deviceToken = json.get("deviceToken");
 
-		StrClient client = clientService.signonPers(mobile, password, platform, agent, deviceToken);
+		StrClient client = clientService.signonPers(mobile, password, platform, isWebView, deviceToken);
 		if (client != null) {
 			ret.put("token", client.getAuthToken());
 			
@@ -59,6 +62,86 @@ public class ClientAction extends BaseController {
 		} else {
 			ret.put("code", RespCode.BIZ_FAIL.Code());
 			ret.put("msg", "登录失败");
+		}
+		
+		return ret;
+	}
+	
+	@AuthPassport(validate=false)
+	@RequestMapping(value = "opt/signup", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> signup(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String mobile = json.get("mobile");
+		String password = json.get("password");
+		String platform = json.get("platform");
+		String isWebView = json.get("isWebView");
+		String deviceToken = json.get("deviceToken");
+
+		StrClient client = clientService.signupPers(mobile, password, platform, isWebView, deviceToken);
+		
+		if (client != null) {
+			ret.put("token", client.getAuthToken());
+			
+			ClientVo vo = new ClientVo();
+			BeanUtilEx.copyProperties(vo, client);
+			ret.put("data", vo);
+			ret.put("code", RespCode.SUCCESS.Code());
+		} else {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "用户已存在");
+		}
+		
+		return ret;
+	}
+	
+	@AuthPassport(validate=false)
+	@RequestMapping(value = "opt/forget", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> forget(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String mobile = json.get("mobile");
+
+		SysVerifyCode verifyCode = clientService.forgetPaswordPers(mobile);
+		
+		if (verifyCode != null) {
+			ret.put("data", verifyCode);
+			ret.put("code", RespCode.SUCCESS.Code());
+		} else {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "用户不存在");
+		}
+		
+		return ret;
+	}
+	
+	@AuthPassport(validate=false)
+	@RequestMapping(value = "opt/resetPassword", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> resetPassword(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String verifyCode = json.get("verifyCode");
+		String mobile = json.get("mobile");
+		String password = json.get("password");
+		String platform = json.get("platform");
+		String isWebView = json.get("isWebView");
+		String deviceToken = json.get("deviceToken");
+
+		StrClient client = clientService.resetPasswordPers(verifyCode, mobile, password, platform, isWebView, deviceToken);
+		
+		if (client != null) {
+			ret.put("token", client.getAuthToken());
+			
+			ClientVo vo = new ClientVo();
+			BeanUtilEx.copyProperties(vo, client);
+			ret.put("data", vo);
+			ret.put("code", RespCode.SUCCESS.Code());
+		} else {
+			ret.put("code", RespCode.BIZ_FAIL.Code());
+			ret.put("msg", "重置密码失败");
 		}
 		
 		return ret;

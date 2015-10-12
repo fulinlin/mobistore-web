@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,12 +25,15 @@ public class StrClient extends IdEntity {
     private String nickName;
     private String email;
     private String authToken;
+    private String verifyCode;
     private Date lastLoginTime;
     private Integer rewardPoints = 0;
 
     // 当前登录的设备类型
+    @Enumerated(EnumType.STRING)
     private PlatformType clientPlatform;
     // 当前登录的浏览器类型
+    @Enumerated(EnumType.STRING)
     private AgentType clientAgent;
     
     // 友盟设备Token
@@ -139,5 +144,11 @@ public class StrClient extends IdEntity {
 	}
 	public void setAddressSet(Set<StrRecipient> addressSet) {
 		this.addressSet = addressSet;
+	}
+	public String getVerifyCode() {
+		return verifyCode;
+	}
+	public void setVerifyCode(String verifyCode) {
+		this.verifyCode = verifyCode;
 	}
 }
