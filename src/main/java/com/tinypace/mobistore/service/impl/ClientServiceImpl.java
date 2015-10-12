@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.entity.StrCollection;
 import com.tinypace.mobistore.entity.StrMsg;
+import com.tinypace.mobistore.entity.StrSuggestion;
 import com.tinypace.mobistore.entity.StrOrder.Status;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.service.ClientService;

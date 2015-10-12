@@ -17,8 +17,10 @@ import com.tinypace.mobistore.constant.Constant;
 import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
 import com.tinypace.mobistore.entity.StrClient;
+import com.tinypace.mobistore.entity.StrSuggestion;
 import com.tinypace.mobistore.entity.SysConfig;
 import com.tinypace.mobistore.service.ClientService;
+import com.tinypace.mobistore.service.SuggestionService;
 import com.tinypace.mobistore.service.SysConfigService;
 import com.tinypace.mobistore.util.BeanUtilEx;
 import com.tinypace.mobistore.vo.ClientVo;
@@ -31,6 +33,8 @@ public class ClientAction extends BaseController {
 	ClientService clientService;
 	@Autowired
 	SysConfigService configService;
+	@Autowired
+	SuggestionService suggestionService;
 	
 	@AuthPassport(validate=false)
 	@RequestMapping(value = "opt/signon", method = RequestMethod.POST)
@@ -107,4 +111,21 @@ public class ClientAction extends BaseController {
 		
 		return ret;
 	}
+	
+	@RequestMapping(value = "opt/suggest", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> suggest(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String content = json.get("content");
+		
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+
+		suggestionService.saveSuggestion(client.getId(), content);
+		
+		ret.put("code", RespCode.SUCCESS.Code());
+		
+		return ret;
+	}
+	
 }
