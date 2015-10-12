@@ -112,10 +112,8 @@ public class AddressAction extends BaseController {
 		rec.setPhone(phone);
 		rec.setProvice(provice);
 		rec.setCity(city);
-		
-		if (!StringUtil.IsEmpty(region)) {
-			rec.setRegion(region);
-		}
+		rec.setRegion(region);
+
 		rec.setProviceId(Integer.valueOf(proviceId));
 		rec.setCityId(Integer.valueOf(cityId));
 		if (!StringUtil.IsEmpty(regionId)) {
