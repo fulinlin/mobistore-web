@@ -5,7 +5,7 @@
 <html style="overflow-x:hidden;overflow-y:auto;">
 	<head>
 		<title><sitemesh:title/></title>
-		<%@include file="/WEB-INF/jsp/include/head1.jsp" %>
+		<%@include file="/WEB-INF/jsp/include/head.jsp" %>
 		<sitemesh:head/>
 	</head>
 	<body>

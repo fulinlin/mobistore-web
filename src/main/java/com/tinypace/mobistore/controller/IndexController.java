@@ -15,19 +15,13 @@ public class IndexController extends BaseController {
 	
 	@RequestMapping("index")
 	public String index(HttpServletRequest request,SysUser user,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,Model model){
-//		if(pageNo==null){
-//			pageNo=1;
-//		}
-//		
-//		if(pageSize==null){
-//			pageSize=limit;
-//		}
-//		
-//		user.setCustomerType(UserType.INDIVIDUAL);
-//		
-//		page = userService.findAllByPage(user, (pageNo-1)*pageSize, pageSize);
-//		model.addAttribute("page", page);
-//		model.addAttribute("user", user);
+
 		return "index";
+	}
+	
+	@RequestMapping("demo")
+	public String home(HttpServletRequest request,SysUser user,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,Model model){
+
+		return "demo";
 	}
 }

@@ -12,6 +12,6 @@
 	</script>
 </head>
 <body>
-	HOME
+	INDEX.JSP
 </body>
 </html>
