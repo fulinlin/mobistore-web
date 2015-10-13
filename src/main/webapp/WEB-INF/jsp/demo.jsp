@@ -24,6 +24,12 @@
 		
 		<div class="content">
 			<div class="left">
+				<div class="iframe-container">
+					<iframe id="iframepage" src="http://10.0.1.100:8100" 
+						frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+				</div>
+			</div>
+			<div class="right">
 				<h4>使用技术</h4>
 				<div>
 					<span class="my-col1">前端：</span>
@@ -47,13 +53,8 @@
 				<br />
 				
 				<h4>二维码</h4>
-				<img src="../static/img/bar.png">
-			</div>
-			<div class="right">
-				<div class="iframe-container">
-					<iframe id="iframepage" src="http://101.200.189.57" 
-						frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-				</div>
+				<img src="${ctx}/static/img/bar.png">
+			
 			</div>
 		</div>
 	</div>
