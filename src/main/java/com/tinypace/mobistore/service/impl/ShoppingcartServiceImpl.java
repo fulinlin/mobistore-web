@@ -102,14 +102,22 @@ public class ShoppingcartServiceImpl extends CommonServiceImpl implements Shoppi
 	}
 
 	@Override
-	public StrShoppingcart changeQtyPers(String userId, String itemId, Integer itemQty) {
-		StrShoppingcart cart = getByClient(userId);
+	public StrShoppingcart changeQtyPers(String itemId, Integer itemQty) {
 		StrShoppingcartItem item = (StrShoppingcartItem) get(StrShoppingcartItem.class, itemId);
 		item.setQty(itemQty);
 		item.setAmount(item.getUnitPrice().multiply(new BigDecimal(item.getQty())));
 		saveOrUpdate(item);
 		
-		return computerShoopingcartPricePers(cart.getId());
+		return computerShoopingcartPricePers(item.getShoppingcartId());
+	}
+	@Override
+	public StrShoppingcart removePers(String id, String itemId) {
+		StrShoppingcartItem item = (StrShoppingcartItem) get(StrShoppingcartItem.class, itemId);
+
+		item.setIsDelete(true);
+		saveOrUpdate(item);
+		
+		return computerShoopingcartPricePers(item.getShoppingcartId());
 	}
 
 	@Override

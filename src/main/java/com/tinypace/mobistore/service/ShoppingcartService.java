@@ -12,7 +12,7 @@ public interface ShoppingcartService extends CommonService {
 
 	public StrShoppingcart addto(String id, String productId, String qty);
 
-	public StrShoppingcart changeQtyPers(String userId, String itemId, Integer itemQty);
+	public StrShoppingcart changeQtyPers(String itemId, Integer itemQty);
 
 	public StrShoppingcart clearPers(String clientId);
 	
@@ -21,5 +21,7 @@ public interface ShoppingcartService extends CommonService {
 	List<StrShoppingcartItem> getItems(String cartId);
 
 	StrShoppingcart computerShoopingcartPricePers(String cartId);
+
+	public StrShoppingcart removePers(String id, String itemId);
 
 }

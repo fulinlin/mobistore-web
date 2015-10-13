@@ -89,7 +89,25 @@ public class ShoppingcartAction extends BaseController {
 		String itemId = json.get("itemId");
 		String itemQty = json.get("itemQty");
 		
-		StrShoppingcart cart = shoppingcartService.changeQtyPers(client.getId(), itemId, Integer.valueOf(itemQty));
+		StrShoppingcart cart = shoppingcartService.changeQtyPers(itemId, Integer.valueOf(itemQty));
+		
+		ShoppingcartVo carVo = genShoppingcartVo(cart, client);
+		ret.put("data", carVo);
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
+	
+	@AuthPassport(validate=true)
+	@RequestMapping(value = "opt/remove", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> remove(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		
+		String itemId = json.get("itemId");
+		
+		StrShoppingcart cart = shoppingcartService.removePers(client.getId(), itemId);
 		
 		ShoppingcartVo carVo = genShoppingcartVo(cart, client);
 		ret.put("data", carVo);
