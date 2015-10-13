@@ -1,0 +1,60 @@
+.main {
+	flex-flow: column;
+}
+
+.header {
+	height: 40px;
+	width: 100%;
+	background-color: #E86224;
+}
+
+.header .line {
+	padding: 8px;
+}
+
+.header .line .left {
+	font-size: 15px;
+	color: white;
+}
+
+.content {
+	flex: 1;
+	
+	display: -webkit-flex; /* Safari */
+  	display: flex;
+}
+
+.content .left {
+	flex: 1;
+	padding: 10px;
+}
+.content .left img {
+	width: 150px;
+	height: 150px;
+}
+.content .left div .my-col1 {
+	display: block;
+	float: left;
+	width: 50px;
+	text-align: right;
+}
+.content .left div .my-col2 {
+
+}
+
+.content .right {
+	padding: 10px;
+	width: 320px;
+}
+.content .right .iframe-container {
+	padding: 72px 17px 0 17px;
+	width: 300px;
+	height: 630px;
+	background: url(../img/iphone.png) no-repeat;
+	background-size: 300px 630px;
+}
+
+.iframe-container iframe {
+	width: 265px;
+	height: 485px;
+}
