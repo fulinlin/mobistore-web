@@ -44,7 +44,7 @@ public class StrClient extends IdEntity {
 	private Set<StrRecipient> addressSet = new HashSet<StrRecipient>(0);
     
 	public static enum PlatformType{
-		IOS("IOS"), ANDROID("ANDROID"),WINDOWS("WINDOWS");
+		IOS("IOS"), ANDROID("ANDROID"),WINDOWS("WINDOWS"), MACINTEL("MACINTEL"), OTHER("OTHER");
 		
 		private PlatformType(String textVal){
   			this.textVal=textVal;
@@ -53,6 +53,24 @@ public class StrClient extends IdEntity {
   		
   		public String value(){
   			return textVal;
+  		}
+  		
+  		public static PlatformType StringToEnum(String var){
+  			
+  			PlatformType type;
+  			if ("IOS".equals(var)) {
+  				type = IOS;
+  			} else if ("ANDROID".equals(var)) {
+  				type = ANDROID;
+  			} else if ("WINDOWS".equals(var)) {
+  				type = WINDOWS;
+  			}  else if ("MACINTEL".equals(var)) {
+  				type = MACINTEL;
+  			}  else {
+  				type = OTHER;
+  			}
+  			
+  			return type;
   		}
   		
   		public String toString(){

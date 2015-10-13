@@ -57,7 +57,7 @@ public class ClientServiceImpl extends CommonServiceImpl implements ClientServic
 			client.setAuthToken(newToken);
 			
 			if (StringUtils.isNotEmpty(platform)) {
-				client.setClientPlatform(StrClient.PlatformType.valueOf(platform.trim().toUpperCase()));
+				client.setClientPlatform(StrClient.PlatformType.StringToEnum(platform.trim().toUpperCase()));
 			}
 			
 			if (StringUtils.isNotEmpty(isWebview)) {
