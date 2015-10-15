@@ -48,7 +48,9 @@
 				</div>
 				<div>
 					<span class="my-col1">Email：</span>
-					<span class="my-col2">462826@qq.com</span>
+					<span class="my-col2">
+						<a href="mailto:462826@qq.com">462826@qq.com</a>
+					</span>
 				</div>
 				<br />
 				
