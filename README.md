@@ -1,6 +1,6 @@
 eCommerce Fashion Store
 
--- Ionic, AngularJS, SpringMVC, MySQL
+-- Ionic, AngularJS, SpringMVC, Hibernate, MySQL
 
 <a href="http://101.200.189.57:9090/mobistore/demo" target="_blank">Demo - Will opensource soon</a>
 
