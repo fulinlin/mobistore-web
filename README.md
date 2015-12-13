@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-#mobistore-web
-=======
 eCommerce Fashion Store
 
 -- Ionic, AngularJS, SpringMVC, Hibernate, MySQL
@@ -10,4 +7,3 @@ eCommerce Fashion Store
 ## Licenses
 
 All source code is licensed under the [GPL License](LICENSE.md).
->>>>>>> branch 'master' of git@github.com:aaronchen2k/mobistore-web.git
