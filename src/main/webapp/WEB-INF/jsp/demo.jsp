@@ -30,7 +30,7 @@
 				</div>
 			</div>
 			<div class="right">
-				<h4>使用技术</h4>
+				<h4>开发技术</h4>
 				<div>
 					<span class="my-col1">前端：</span>
 					<span class="my-col2">Ionic, AngularJS</span>
@@ -54,7 +54,7 @@
 				</div>
 				<br />
 				
-				<h4>二维码</h4>
+				<h4>微信扫二维码访问</h4>
 				<img src="${ctx}/static/img/bar.png">
 			
 			</div>
