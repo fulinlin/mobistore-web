@@ -1,8 +1,6 @@
 eCommerce Fashion Store
 
--- Ionic2.0, AngularJS2.0, SpringMVC, Hibernate, MySQL 
-
-&nbsp;&nbsp;&nbsp;(Old version for Ionic1.0 & AngularJS1.0, please refer to Branch 1.0)
+-- Ionic 2.0, AngularJS 2.0, SpringMVC, Hibernate, MySQL
 
 <a href="http://101.200.189.57/" target="_blank">Demo</a>
 
