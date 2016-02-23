@@ -35,6 +35,7 @@ public class SystemInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
 		if (handler.getClass().isAssignableFrom(HandlerMethod.class)) {
 			// 是否需要进行身份验证注解获取
 			AuthPassport authPassport = ((HandlerMethod) handler).getMethodAnnotation(AuthPassport.class);
@@ -48,7 +49,7 @@ public class SystemInterceptor implements HandlerInterceptor {
 			
 			// app鉴权管理
 			if (packageName.startsWith(Constant.API_PACKAGE_FOR_CLIENT)) {
-				String token = request.getParameter("token");
+				String token = request.getHeader("token");
 				if (StringUtils.isNotBlank(token)) {
 					// 登录验证
 					ClientService userService = SpringContextHolder.getBean(ClientService.class);

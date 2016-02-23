@@ -18,9 +18,11 @@ import com.tinypace.mobistore.bean.Page;
 import com.tinypace.mobistore.constant.Constant;
 import com.tinypace.mobistore.constant.Constant.RespCode;
 import com.tinypace.mobistore.controller.BaseController;
+import com.tinypace.mobistore.entity.StrCategory;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.service.CategoryService;
 import com.tinypace.mobistore.util.BeanUtilEx;
+import com.tinypace.mobistore.vo.CategoryVo;
 import com.tinypace.mobistore.vo.ProductVo;
 
 @Controller
@@ -30,7 +32,25 @@ public class CategoryAction extends BaseController {
 	@Autowired
 	CategoryService categoryService;
 	
-	@RequestMapping(value = "opt/listProduct", method = RequestMethod.POST)
+	@RequestMapping(value = "list", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> list(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		List<StrCategory> pos = categoryService.listAll();
+		List<CategoryVo> categories = new ArrayList<CategoryVo>();
+		for (StrCategory po : pos) {
+			CategoryVo vo = new CategoryVo();
+			BeanUtilEx.copyProperties(vo, po);
+			categories.add(vo);
+		}
+		
+		ret.put("data", categories);
+		ret.put("code", RespCode.SUCCESS.Code());
+		return ret;
+	}
+	
+	@RequestMapping(value = "listProduct", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> listByCatetory(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();

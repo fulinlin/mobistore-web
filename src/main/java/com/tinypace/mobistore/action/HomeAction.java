@@ -48,10 +48,12 @@ public class HomeAction extends BaseController {
 	@Autowired
 	ShoppingcartService shoppingcartService;
 	
-	@RequestMapping(value = "opt/index", method = RequestMethod.POST)
+	@RequestMapping(value = "index", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> index(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
+		Map<String, Object> data = new HashMap<String, Object>();
+		ret.put("data", data);
 		
 		StrClient user = (StrClient) request.getAttribute(Constant.REQUEST_USER);
 		StrShoppingcart cart = shoppingcartService.getByClient(user.getId());
@@ -83,12 +85,12 @@ public class HomeAction extends BaseController {
 		}
 		
 		ret.put("code", RespCode.SUCCESS.Code());
-		ret.put("adverts", adverts);
-		ret.put("products", products);
-		ret.put("categories", categories);
+		data.put("adverts", adverts);
+		data.put("products", products);
+		data.put("categories", categories);
 		
 		List<StrShoppingcartItem> items = shoppingcartService.getItems(cart.getId());
-		ret.put("shoppingcartItemNumb", items.size());
+		data.put("shoppingcartItemNumb", items.size());
 		
 		return ret;
 	}

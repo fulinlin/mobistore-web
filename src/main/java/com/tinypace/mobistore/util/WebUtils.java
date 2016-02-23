@@ -8,6 +8,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.protocol.HttpContext;
+
 import com.tinypace.mobistore.constant.Constant;
 
 /**
@@ -211,16 +213,17 @@ public class WebUtils {
     
     public static HttpServletResponse AddCorsSupport(ServletResponse response, boolean isProduction) {
     	HttpServletResponse res = (HttpServletResponse) response;
+    	res.addHeader("Access-Control-Allow-Origin", "*");
     	
-    	if (isProduction) {
-    		res.addHeader("Access-Control-Allow-Origin", Constant.CLIENT_PATH_PRODUCTION);
-    	} else {
-    		res.addHeader("Access-Control-Allow-Origin", Constant.CLIENT_PATH_DEVELOPMENT);
-    	}
+//    	if (isProduction) {
+//    		res.addHeader("Access-Control-Allow-Origin", Constant.CLIENT_PATH_PRODUCTION);
+//    	} else {
+//    		res.addHeader("Access-Control-Allow-Origin", Constant.CLIENT_PATH_DEVELOPMENT);
+//    	}
     	
     	res.addHeader("Access-Control-Allow-Credentials", "true");
-        
-    	res.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    	res.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, token, Accept");
+    	
         return res;
     }
 }
