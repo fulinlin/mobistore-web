@@ -67,7 +67,7 @@ public class HomeAction extends BaseController {
 			adverts.add(vo);
 		}
 		
-		Page page2 = productService.list(0, 10);
+		Page page2 = productService.find(0);
 		List<ProductVo> products = new ArrayList<ProductVo>();
 		for (Object obj : page2.getItems()) {
 			StrProduct po = (StrProduct) obj;

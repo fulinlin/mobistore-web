@@ -147,36 +147,6 @@ public class ClientAction extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(value = "opt/info", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> info(HttpServletRequest request, @RequestBody Map<String, String> json) {
-		Map<String, Object> ret = new HashMap<String, Object>();
-		
-		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
-		
-		ClientVo clientVo = new ClientVo();
-		BeanUtilEx.copyProperties(clientVo, client);
-		
-		Map<String, Long> counts = clientService.count(client.getId());
-		
-		SysConfig config = configService.getConfig();
-		String rateUrl = "ios".equals(json.get("platform"))? config.getIosMkt(): config.getAndroidMkt();
-
-		ret.put("collectionCount", counts.get("collectionCount"));
-		ret.put("msgCount", counts.get("msgCount"));
-		
-		ret.put("waitPayCount", counts.get("waitPayCount"));
-		ret.put("waitShip", counts.get("waitShip"));
-		ret.put("waitReceive", counts.get("waitReceive"));
-		ret.put("waitRate", counts.get("waitRate"));
-		ret.put("rateUrl", rateUrl);
-		
-		ret.put("client", clientVo);
-		ret.put("code", RespCode.SUCCESS.Code());
-		
-		return ret;
-	}
-	
 	@RequestMapping(value = "opt/save", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> save(HttpServletRequest request, @RequestBody Map<String, String> json) {

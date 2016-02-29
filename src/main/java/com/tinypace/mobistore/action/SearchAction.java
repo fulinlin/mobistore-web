@@ -29,46 +29,8 @@ import com.tinypace.mobistore.vo.SearchHotVo;
 public class SearchAction extends BaseController {
 	@Autowired
 	SearchService searchService;
-
-	@RequestMapping(value = "opt/history", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> history(HttpServletRequest request, @RequestBody Object json) {
-		Map<String, Object> ret = new HashMap<String, Object>();
-		
-		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
-		
-		List<String> hots = searchService.getHot();
-		List<String> histories = searchService.getHistory(client.getId());
-		
-		ret.put("code", 1);
-		ret.put("hots", hots);
-		ret.put("histories", histories);
-		return ret;
-	}
 	
-	@RequestMapping(value = "opt/getMatchedKeywords", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> getMatchedKeywords(HttpServletRequest request, @RequestBody Map<String, String> json) {
-		Map<String, Object> ret = new HashMap<String, Object>();
-		
-		String keywords = json.get("keywords");
-		List<StrSearchHot> pos = searchService.getMatchedKeywords(keywords);
-		
-		List<SearchHotVo> vos = new ArrayList<SearchHotVo>();
-		
-		for (StrSearchHot po : pos) {
-			SearchHotVo vo = new SearchHotVo();
-			BeanUtilEx.copyProperties(vo, po);
-			
-			vos.add(vo);
-		}
-		
-		ret.put("code", 1);
-		ret.put("data", vos);
-		return ret;
-	}
-	
-	@RequestMapping(value = "opt/search", method = RequestMethod.POST)
+	@RequestMapping(value = "search", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> search(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -89,4 +51,43 @@ public class SearchAction extends BaseController {
 		ret.put("data", vos);
 		return ret;
 	}
+
+	@RequestMapping(value = "getHistory", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getHistory(HttpServletRequest request, @RequestBody Object json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+		
+		List<String> hots = searchService.getHot();
+		List<String> histories = searchService.getHistory(client.getId());
+		
+		ret.put("code", 1);
+		ret.put("hots", hots);
+		ret.put("histories", histories);
+		return ret;
+	}
+	
+	@RequestMapping(value = "getMatchedKeywords", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getMatchedKeywords(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		String keywords = json.get("keywords");
+		List<StrSearchHot> pos = searchService.getMatchedKeywords(keywords.trim());
+		
+		List<SearchHotVo> vos = new ArrayList<SearchHotVo>();
+		
+		for (StrSearchHot po : pos) {
+			SearchHotVo vo = new SearchHotVo();
+			BeanUtilEx.copyProperties(vo, po);
+			
+			vos.add(vo);
+		}
+		
+		ret.put("code", 1);
+		ret.put("data", vos);
+		return ret;
+	}
+
 }

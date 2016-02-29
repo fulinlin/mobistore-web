@@ -5,5 +5,5 @@ import com.tinypace.mobistore.bean.Page;
 
 public interface ProductService extends CommonService {
 
-	Page list(int startIndex, int pageSize);
+	Page find(int pageNumb);
 }

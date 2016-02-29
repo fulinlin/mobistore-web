@@ -44,7 +44,7 @@ public class ShoppingcartAction extends BaseController {
 	ShoppingcartService shoppingcartService;
 
 	@AuthPassport(validate=true)
-	@RequestMapping(value = "opt/info", method = RequestMethod.POST)
+	@RequestMapping(value = "info", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> info(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -60,7 +60,7 @@ public class ShoppingcartAction extends BaseController {
 	}
 	
 	@AuthPassport(validate=true)
-	@RequestMapping(value = "opt/addto", method = RequestMethod.POST)
+	@RequestMapping(value = "addto", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> addto(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -79,7 +79,7 @@ public class ShoppingcartAction extends BaseController {
 	}
 	
 	@AuthPassport(validate=true)
-	@RequestMapping(value = "opt/changeQty", method = RequestMethod.POST)
+	@RequestMapping(value = "changeQty", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> changeQty(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -98,7 +98,7 @@ public class ShoppingcartAction extends BaseController {
 	}
 	
 	@AuthPassport(validate=true)
-	@RequestMapping(value = "opt/remove", method = RequestMethod.POST)
+	@RequestMapping(value = "remove", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> remove(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -116,7 +116,7 @@ public class ShoppingcartAction extends BaseController {
 	}
 	
 	@AuthPassport(validate=true)
-	@RequestMapping(value = "opt/clear", method = RequestMethod.POST)
+	@RequestMapping(value = "clear", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> clear(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -132,7 +132,7 @@ public class ShoppingcartAction extends BaseController {
 	}
 	
 	@AuthPassport(validate=true)
-	@RequestMapping(value = "opt/checkout", method = RequestMethod.POST)
+	@RequestMapping(value = "checkout", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> checkout(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
