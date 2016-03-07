@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tinypace.mobistore.constant.Constant;
 import com.tinypace.mobistore.controller.BaseController;
+import com.tinypace.mobistore.entity.StrCategory;
 import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.entity.StrProduct;
 import com.tinypace.mobistore.entity.StrSearchHot;
+import com.tinypace.mobistore.service.CategoryService;
 import com.tinypace.mobistore.service.SearchService;
 import com.tinypace.mobistore.util.BeanUtilEx;
+import com.tinypace.mobistore.vo.CategoryVo;
 import com.tinypace.mobistore.vo.ProductVo;
 import com.tinypace.mobistore.vo.SearchHotVo;
 
@@ -29,11 +32,15 @@ import com.tinypace.mobistore.vo.SearchHotVo;
 public class SearchAction extends BaseController {
 	@Autowired
 	SearchService searchService;
+	@Autowired
+	CategoryService categoryService;
 	
 	@RequestMapping(value = "search", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> search(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
+		Map<String, Object> data = new HashMap<String, Object>();
+		ret.put("data", data);
 		
 		String keywords = json.get("keywords");
 		String category = json.get("category");
@@ -48,8 +55,17 @@ public class SearchAction extends BaseController {
 			vos.add(vo);
 		}
 		
+		List<StrCategory> catePos = categoryService.listAll();
+		List<CategoryVo> categories = new ArrayList<CategoryVo>();
+		for (StrCategory po : catePos) {
+			CategoryVo vo = new CategoryVo();
+			BeanUtilEx.copyProperties(vo, po);
+			categories.add(vo);
+		}
+		
 		ret.put("code", 1);
-		ret.put("data", vos);
+		data.put("products", vos);
+		data.put("categories", categories);
 		return ret;
 	}
 
