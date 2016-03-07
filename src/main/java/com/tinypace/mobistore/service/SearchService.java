@@ -14,7 +14,7 @@ public interface SearchService extends CommonService {
 
 	List<String> getHistory(String id);
 
-	List<StrProduct> search(String keywords);
+	List<StrProduct> search(String keywords, String category);
 
 	List<StrSearchHot> getMatchedKeywords(String keywords);
 }

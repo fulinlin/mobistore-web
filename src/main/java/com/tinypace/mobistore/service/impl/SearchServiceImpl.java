@@ -54,9 +54,11 @@ public class SearchServiceImpl extends CommonServiceImpl implements SearchServic
 	}
 
 	@Override
-	public List<StrProduct> search(String keywords) {
+	public List<StrProduct> search(String keywords, String category) {
 		DetachedCriteria dc = DetachedCriteria.forClass(StrProduct.class);
-		
+		if (!StringUtil.IsEmpty(category)) {
+			dc.add(Restrictions.eq("categoryId", category));
+		}
 		if (!StringUtil.IsEmpty(keywords)) {
 			dc.add(Restrictions.or(
 					Restrictions.like("name", "%" + keywords + "%"),

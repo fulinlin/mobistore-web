@@ -36,7 +36,8 @@ public class SearchAction extends BaseController {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		String keywords = json.get("keywords");
-		List<StrProduct> pos = searchService.search(keywords);
+		String category = json.get("category");
+		List<StrProduct> pos = searchService.search(keywords, category);
 		
 		List<ProductVo> vos = new ArrayList<ProductVo>();
 		
