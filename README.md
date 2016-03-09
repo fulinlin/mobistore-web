@@ -2,7 +2,7 @@ eCommerce Fashion Store
 
 -- Ionic 2.0, AngularJS 2.0, SpringMVC, Hibernate, MySQL
 
-<a href="http://101.200.189.57/" target="_blank">Demo</a>
+<a href="http://101.200.189.57:18080/ms/c/" target="_blank">Demo</a>
 
 ## Licenses
 
