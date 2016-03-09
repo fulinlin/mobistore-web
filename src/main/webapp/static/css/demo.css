@@ -1,0 +1,73 @@
+body {
+	margin: 0;
+}
+.main {
+    flex-flow: column;
+}
+
+.header {
+    height: 40px;
+    width: 100%;
+    background-color: #E86224;
+}
+
+.header .line {
+    padding: 8px;
+}
+
+.header .line .left {
+    font-size: 15px;
+    line-height: 22px;
+    color: white;
+}
+
+.content {
+    flex: 1;
+    
+    display: -webkit-flex; /* Safari */
+    display: flex;
+}
+
+.content .right {
+    flex: 1;
+    padding: 10px;
+    padding-left: 100px;
+    
+}
+.content .right img {
+    width: 150px;
+    height: 150px;
+}
+
+.my-row {
+	display: flex;
+}
+.content .right .my-row .my-col1 {
+    width: 50px;
+    text-align: right;
+}
+.content .right .my-row .my-col2 {
+    flex: 1;
+    margin-left: 10px;
+}
+.content .right .my-row .my-col2 img {
+    height: 200px;
+    width: 200px;
+}
+
+.content .left {
+    padding: 10px;
+    width: 320px;
+}
+.content .left .iframe-container {
+    padding: 72px 17px 0 17px;
+    width: 360px;
+    height: 720px;
+    background: url(../img/iphone.png) no-repeat;
+    background-size: 360px 720px;
+}
+
+.iframe-container iframe {
+    width: 325px;
+    height: 560px;
+}

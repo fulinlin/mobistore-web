@@ -19,9 +19,9 @@ public class IndexController extends BaseController {
 		return "index";
 	}
 	
-	@RequestMapping("demo")
-	public String home(HttpServletRequest request,SysUser user,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,Model model){
-
-		return "demo";
-	}
+//	@RequestMapping("demo")
+//	public String home(HttpServletRequest request,SysUser user,@RequestParam(required=false)Integer pageNo,@RequestParam(required=false)Integer pageSize,Model model){
+//
+//		return "demo";
+//	}
 }

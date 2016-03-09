@@ -1,0 +1,16 @@
+<div class="bar bar-footer">
+    <div class="row bottom-buttons">
+        <div class="icons">
+            <a class="{{collectCls}} button button-icon icon" ng-click="collect(product)"> </a>
+            
+            <a class="button button-icon icon ion-ios-cart has-badge my-badge right" ng-click="toShoppingcart()">
+                <span class="badge badge-assertive" ng-if="shoppingcartItemNumb > 0">{{shoppingcartItemNumb}}</span>
+            </a>
+        </div>
+        <div class="buttons half">
+            <button class="button button-light left" ng-click="addToShoppingcart(product)">
+              加入购物车
+            </button>
+        </div>
+    </div>
+</div>
