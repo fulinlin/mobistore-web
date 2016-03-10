@@ -19,7 +19,8 @@
 	<div *ngIf="data">
 		<ion-slides [style.height.rem]="slideHeight" pager loop="true" autoplay="true">
 		  <ion-slide *ngFor="#item of data.adverts" (click)="onProductSelected(item.productId)">
-		        <div class="slide-image" style="background-image:url('{{item.image | imgPath}}');">
+		        <div class="slide-image">
+		         <img  src="{{ item.image | imgPath }}">
 		         <div class="slider-bar">
 		             <div class="slider-bar-inner">
 		                 <div class="text-ellipsis text-color-white">{{item.title}}</div>

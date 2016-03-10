@@ -8025,9 +8025,10 @@ ion-navbar.toolbar.my-navbar {
       .home ion-slides ion-slide .slide-zoom .slide-image {
         margin: auto;
         height: 100%;
-        width: 100%;
-        background: no-repeat top center;
-        background-size: 100% 100%; }
+        width: 100%; }
+        .home ion-slides ion-slide .slide-zoom .slide-image img {
+          width: 100%;
+          height: 100%; }
       .home ion-slides ion-slide .slide-zoom .slider-bar {
         position: absolute;
         bottom: 0;
