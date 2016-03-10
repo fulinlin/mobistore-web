@@ -7752,16 +7752,6 @@ body {
 body {
   font-size: 200%; }
 
-.text-ellipsis {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap; }
-
-.text-clip {
-  text-overflow: clip;
-  overflow: hidden;
-  white-space: nowrap; }
-
 .toolbar-background {
   display: none; }
 
@@ -7797,6 +7787,11 @@ ion-navbar.toolbar.my-navbar {
 
 .text-ellipsis {
   text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap; }
+
+.text-clip {
+  text-overflow: clip;
   overflow: hidden;
   white-space: nowrap; }
 
@@ -8080,6 +8075,7 @@ ion-navbar.toolbar.my-navbar {
     margin-top: 0.4rem;
     border: 0.07rem solid #ddd; }
     .shoppingcart .detail .list-with-price .cart-item .left {
+      min-width: 8.3rem;
       width: 8.3rem;
       height: 8.3rem; }
       .shoppingcart .detail .list-with-price .cart-item .left img {

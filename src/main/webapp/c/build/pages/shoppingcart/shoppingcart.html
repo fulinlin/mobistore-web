@@ -31,8 +31,8 @@
                         <img (click)="showProdcut(item.productId)" src="{{item.image | imgPath}}">
                   </div>
                   
-                  <div class="right">
-                      <h2 (click)="showProdcut(item.productId)" class="text-color-light-grey">{{item.name}}</h2>
+                  <div class="right text-ellipsis">
+                      <h2 (click)="showProdcut(item.productId)" class="text-color-light-grey text-ellipsis">{{item.name}}</h2>
 	                  <p class="text-thin text-color-light-grey">{{item.unitPrice | currency:'CNY' | cny}}</p>
 	                  <div class="clear-both"></div>
 	                  <div class="my-box text-thin text-color-light-grey">
