@@ -473,7 +473,7 @@
 					<url>http://101.200.189.57:18080/manager/text</url>
 					<server>tomcat7</server>
 					<username>admin</username>
-					<password></password>
+					<password>T1nyp2ce</password>
 					<path>/ms</path>
 					<update>true</update>
 				</configuration>

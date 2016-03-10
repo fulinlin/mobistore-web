@@ -3193,9 +3193,19 @@
 	};
 	var ionic_1 = __webpack_require__(5);
 	var tabs_1 = __webpack_require__(354);
+	var constant_1 = __webpack_require__(360);
 	var MyApp = (function () {
 	    function MyApp(platform) {
 	        this.rootPage = tabs_1.TabsPage;
+	        var host = window.location.host;
+	        if (!constant_1.CONSTANT.SERVICE_URL) {
+	            if (host.indexOf("localhost") > -1 || host.indexOf("127.0.0.1") > -1) {
+	                constant_1.CONSTANT.SERVICE_URL = constant_1.CONSTANT.SERVICE_URL_DEV;
+	            }
+	            else {
+	                constant_1.CONSTANT.SERVICE_URL = constant_1.CONSTANT.SERVICE_URL_PRODUCTION;
+	            }
+	        }
 	        platform.ready().then(function () {
 	            // The platform is now ready. Note: if this callback fails to fire, follow
 	            // the Troubleshooting guide for a number of possible solutions:
@@ -61942,7 +61952,7 @@
 	            external = true;
 	        }
 	        if (external) {
-	            url = constant_1.CONSTANT.SERVICE_URL_DEV + url;
+	            url = constant_1.CONSTANT.SERVICE_URL + url;
 	        }
 	        return url;
 	    };
@@ -62055,25 +62065,14 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(7);
-	var router_1 = __webpack_require__(118);
 	var http_1 = __webpack_require__(143);
 	var Observable_1 = __webpack_require__(56);
 	__webpack_require__(364);
 	__webpack_require__(368);
 	var constant_1 = __webpack_require__(360);
 	var PostService = (function () {
-	    function PostService(http, location) {
+	    function PostService(http) {
 	        this.http = http;
-	        this.location = location;
-	        var host = window.location.host;
-	        if (!constant_1.CONSTANT.SERVICE_URL) {
-	            if (host.indexOf("localhost") > -1 || host.indexOf("127.0.0.1") > -1) {
-	                constant_1.CONSTANT.SERVICE_URL = constant_1.CONSTANT.SERVICE_URL_DEV;
-	            }
-	            else {
-	                constant_1.CONSTANT.SERVICE_URL = constant_1.CONSTANT.SERVICE_URL_PRODUCTION;
-	            }
-	        }
 	    }
 	    PostService.prototype.post = function (apiPath, reqBody) {
 	        var me = this;
@@ -62101,7 +62100,7 @@
 	    };
 	    PostService = __decorate([
 	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [http_1.Http, router_1.Location])
+	        __metadata('design:paramtypes', [http_1.Http])
 	    ], PostService);
 	    return PostService;
 	})();
