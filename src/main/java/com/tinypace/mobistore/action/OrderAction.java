@@ -44,7 +44,7 @@ public class OrderAction extends BaseController {
 	@Autowired
 	OrderService orderService;
 	
-	@RequestMapping(value = "opt/list", method = RequestMethod.POST)
+	@RequestMapping(value = "list", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> list(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -69,7 +69,7 @@ public class OrderAction extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(value = "opt/info", method = RequestMethod.POST)
+	@RequestMapping(value = "detail", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> info(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -83,7 +83,7 @@ public class OrderAction extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(value = "opt/pay", method = RequestMethod.POST)
+	@RequestMapping(value = "pay", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> pay(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -99,7 +99,7 @@ public class OrderAction extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(value = "opt/changeRecipient", method = RequestMethod.POST)
+	@RequestMapping(value = "changeRecipient", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> changeRecipient(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -113,7 +113,7 @@ public class OrderAction extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(value = "opt/cancel", method = RequestMethod.POST)
+	@RequestMapping(value = "cancel", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> cancel(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();

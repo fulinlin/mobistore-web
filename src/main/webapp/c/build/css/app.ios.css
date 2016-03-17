@@ -7775,6 +7775,16 @@ ion-navbar.toolbar.my-navbar {
 .back-default {
   display: none; }
 
+.text-big {
+  font-size: 1.6rem !important;
+  font-family: Roboto, "Roboto Cn";
+  line-height: 2.5rem !important; }
+
+.text-thin {
+  font-size: 1.28rem !important;
+  font-family: "Roboto Lt";
+  line-height: 1.6rem !important; }
+
 .list-item-text-middle {
   font-size: 1.6rem !important;
   font-family: Roboto, "Roboto Cn";
@@ -8012,6 +8022,69 @@ ion-navbar.toolbar.my-navbar {
 #forget .virify-code button {
   color: black; }
 
+.list-with-price .list-item {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 0rem;
+  border: 0.07rem solid #ddd; }
+  .list-with-price .list-item .left {
+    min-width: 8.3rem;
+    width: 8.3rem;
+    height: 8.3rem; }
+    .list-with-price .list-item .left img {
+      top: 0;
+      left: 0;
+      width: 8.3rem;
+      height: 8.3rem; }
+  .list-with-price .list-item .right {
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1; }
+    .list-with-price .list-item .right h2 {
+      margin: 0;
+      padding-left: 0.7rem;
+      font-size: 1.6rem;
+      line-height: 3.5rem; }
+    .list-with-price .list-item .right p {
+      margin: 0;
+      padding-left: 0.7rem;
+      font-size: 1.4rem;
+      line-height: 1.4rem; }
+    .list-with-price .list-item .right .my-box {
+      position: absolute;
+      bottom: 0;
+      padding-left: 0.7rem;
+      width: 100%;
+      height: 2.6rem;
+      font-size: 1.14rem;
+      background-color: #EBEBEB; }
+      .list-with-price .list-item .right .my-box span.line-left {
+        float: left; }
+        .list-with-price .list-item .right .my-box span.line-left span {
+          float: left; }
+          .list-with-price .list-item .right .my-box span.line-left span.my-label {
+            width: 2.5rem;
+            line-height: 2.6rem; }
+          .list-with-price .list-item .right .my-box span.line-left span.my-input {
+            padding: 0.2rem;
+            text-align: center; }
+            .list-with-price .list-item .right .my-box span.line-left span.my-input input {
+              width: 3.6rem;
+              height: 2.2rem;
+              text-align: center; }
+      .list-with-price .list-item .right .my-box span.line-right {
+        float: right;
+        margin-right: 2rem;
+        padding: 0 0.7rem;
+        width: 2.14rem; }
+        .list-with-price .list-item .right .my-box span.line-right ion-icon {
+          line-height: 2.6rem;
+          font-size: 1.8rem; }
+
 .home .bar-header .search {
   height: 1.6rem; }
 
@@ -8046,6 +8119,9 @@ ion-navbar.toolbar.my-navbar {
 
 .shoppingcart {
   font-family: Roboto-Light; }
+  .shoppingcart .msg {
+    padding: 2rem 1.5rem;
+    text-align: center; }
   .shoppingcart .summary {
     padding: 0.8rem;
     font-size: 1.6rem; }
@@ -8068,68 +8144,6 @@ ion-navbar.toolbar.my-navbar {
         -ms-flex: 7;
         flex: 7;
         padding-left: 2rem; }
-  .shoppingcart .detail .list-with-price .cart-item {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    margin-top: 0.4rem;
-    border: 0.07rem solid #ddd; }
-    .shoppingcart .detail .list-with-price .cart-item .left {
-      min-width: 8.3rem;
-      width: 8.3rem;
-      height: 8.3rem; }
-      .shoppingcart .detail .list-with-price .cart-item .left img {
-        top: 0;
-        left: 0;
-        width: 8.3rem;
-        height: 8.3rem; }
-    .shoppingcart .detail .list-with-price .cart-item .right {
-      position: relative;
-      -webkit-box-flex: 1;
-      -webkit-flex: 1;
-      -ms-flex: 1;
-      flex: 1; }
-      .shoppingcart .detail .list-with-price .cart-item .right h2 {
-        margin: 0;
-        padding-left: 0.7rem;
-        font-size: 1.6rem;
-        line-height: 3.5rem; }
-      .shoppingcart .detail .list-with-price .cart-item .right p {
-        margin: 0;
-        padding-left: 0.7rem;
-        font-size: 1.4rem;
-        line-height: 1.4rem; }
-      .shoppingcart .detail .list-with-price .cart-item .right .my-box {
-        position: absolute;
-        bottom: 0;
-        padding-left: 0.7rem;
-        width: 100%;
-        height: 2.6rem;
-        font-size: 1.14rem;
-        background-color: #EBEBEB; }
-        .shoppingcart .detail .list-with-price .cart-item .right .my-box span.line-left {
-          float: left; }
-          .shoppingcart .detail .list-with-price .cart-item .right .my-box span.line-left span {
-            float: left; }
-            .shoppingcart .detail .list-with-price .cart-item .right .my-box span.line-left span.my-label {
-              width: 2.5rem;
-              line-height: 2.6rem; }
-            .shoppingcart .detail .list-with-price .cart-item .right .my-box span.line-left span.my-input {
-              padding: 0.2rem;
-              text-align: center; }
-              .shoppingcart .detail .list-with-price .cart-item .right .my-box span.line-left span.my-input input {
-                width: 3.6rem;
-                height: 2.2rem;
-                text-align: center; }
-        .shoppingcart .detail .list-with-price .cart-item .right .my-box span.line-right {
-          float: right;
-          margin-right: 2rem;
-          padding: 0 0.7rem;
-          width: 2.14rem; }
-          .shoppingcart .detail .list-with-price .cart-item .right .my-box span.line-right ion-icon {
-            line-height: 2.6rem;
-            font-size: 1.8rem; }
 
 .product-detail .slide {
   width: 100%;
@@ -8173,15 +8187,16 @@ ion-navbar.toolbar.my-navbar {
       .product-detail .rows .row .col-right .input {
         margin-top: -0rem; }
         .product-detail .rows .row .col-right .input input {
-          margin: 0;
+          margin: 0 0.1rem;
           padding: 0;
           width: 4rem;
-          height: 1.9rem;
+          height: 2rem;
           border-color: #ddd;
           background-color: #fff;
           border-width: 0.07rem;
           border-style: solid;
-          font-size: 0.93rem; }
+          font-size: 1.6rem;
+          text-align: center; }
       .product-detail .rows .row .col-right img {
         height: 2rem; }
 
@@ -8191,6 +8206,91 @@ ion-navbar.toolbar.my-navbar {
   font-size: 1.5rem;
   line-height: 1.7rem;
   color: #464646; }
+
+.order-list h2 {
+  background-color: #EBEBEB; }
+
+.order-list .left {
+  float: left;
+  margin-right: 1.42rem; }
+  .order-list .left img {
+    width: 4.3rem;
+    height: 4.3rem; }
+
+.order-detail {
+  font-size: 1.4rem;
+  font-family: Roboto-Light; }
+  .order-detail .row .my-dark {
+    background-color: #636363; }
+  .order-detail .row .my-light {
+    background-color: #959595; }
+  .order-detail .row .col {
+    padding: 0.6rem; }
+  .order-detail .row.content .col.left {
+    padding-left: 2.14rem; }
+  .order-detail .row.title {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    color: white;
+    text-align: center;
+    padding: 0;
+    font-size: 1.6rem; }
+    .order-detail .row.title .col {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      position: relative; }
+      .order-detail .row.title .col .triangle-down {
+        position: absolute;
+        margin-left: -1.14rem;
+        z-index: 10;
+        left: 50%;
+        bottom: -0.7rem;
+        width: 0;
+        height: 0;
+        border-left: 1.14rem solid transparent;
+        border-right: 1.14rem solid transparent;
+        border-top-width: 1rem;
+        border-top-style: solid; }
+    .order-detail .row.title .col.left .triangle-down {
+      border-top-color: #636363; }
+    .order-detail .row.title .col.right .triangle-down {
+      border-top-color: #959595; }
+  .order-detail .summary {
+    margin-top: 0.71rem; }
+    .order-detail .summary .row.content {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex; }
+      .order-detail .summary .row.content .col.left {
+        width: 6.5rem; }
+      .order-detail .summary .row.content .col.right {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1; }
+    .order-detail .summary .row.title {
+      font-size: 1.6rem;
+      margin-bottom: 0.36rem; }
+    .order-detail .summary .row.address .content div.text {
+      float: left;
+      margin-right: 2.14rem; }
+    .order-detail .summary .row.address .content div.more {
+      position: absolute;
+      top: 50%;
+      margin-top: -0.71rem;
+      right: 0.71rem;
+      width: 0.71rem; }
+  .order-detail .detail ion-list ion-item ion-thumbnail img {
+    width: 5.6rem; }
+  .order-detail .detail ion-list ion-item .item-inner ion-label h2 {
+    margin-top: 0; }
+  .order-detail .detail ion-list ion-item button ion-icon {
+    color: black; }
 
 #search .searchbar-container {
   display: -webkit-box;

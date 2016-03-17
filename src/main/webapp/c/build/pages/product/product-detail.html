@@ -45,7 +45,7 @@
 	             <div class="col-right">
 	                    <div (click)="reduceQty()" class="reduceQty"><img src="assets/img/reduce.png"></div>
 	                    <div class="input">
-	                            <input type="text" ng-model="shopping.qty">
+	                            <input type="text" [(ngModel)]="qty">
 	                    </div> 
 	                    <div (click)="addQty()" class="addQty"><img src="assets/img/add.png"></div>
 	                    <div class="clear-both"></div>
@@ -64,7 +64,7 @@
 <ion-toolbar white position="bottom" class="bottom-toolbar">
     <div class="bottom-buttons">
 	  <div class="icons">
-	       <button dark clear (click)="collect(product)">
+	       <button dark clear (click)="collect()">
 	           <ion-icon *ngIf="isCollected" name="heart"></ion-icon>
 	           <ion-icon *ngIf="!isCollected" name="heart-outline"></ion-icon>
 	       </button>
@@ -73,7 +73,7 @@
 	       </button>
 	   </div>
 	   
-	   <div class="buttons orange" ng-click="addToShoppingcart(product)">
+	   <div class="buttons orange" (click)="addToShoppingcart()">
 	       <button clear class="button left">
 	         加入购物车
 	       </button>
