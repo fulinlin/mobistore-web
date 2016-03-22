@@ -148,6 +148,7 @@ public class ShoppingcartServiceImpl extends CommonServiceImpl implements Shoppi
 		order.setCreateTime(new Date());
 		
 		StrRecipient recipient = userService.getDefaultRecipient(clientId);
+		order.setRecipientId(recipient.getId());
 		order.setRecipientName(recipient.getName());
 		order.setRecipientPhone(recipient.getPhone());
 		order.setRecipientArea(recipient.getProvice() + recipient.getCity() + recipient.getRegion());

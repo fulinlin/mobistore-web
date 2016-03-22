@@ -14,6 +14,7 @@ public class OrderVo {
 	private BigDecimal totalAmount;
 	private BigDecimal payAmount;
 	
+	private String recipientId;
 	private String recipientArea;
 	private String recipientStreet;
 	private String recipientAddress;
@@ -161,6 +162,14 @@ public class OrderVo {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getRecipientId() {
+		return recipientId;
+	}
+
+	public void setRecipientId(String recipientId) {
+		this.recipientId = recipientId;
 	}
     
 }

@@ -45,7 +45,7 @@ public class AddressAction extends BaseController {
 	@Autowired
 	AreaService areaService;
 	
-	@RequestMapping(value = "opt/list", method = RequestMethod.POST)
+	@RequestMapping(value = "list", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> list(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -60,11 +60,13 @@ public class AddressAction extends BaseController {
 			BeanUtilEx.copyProperties(vo, po);
 			vos.add(vo);
 		}
+		
+		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", vos);
 		return ret;
 	}
 	
-	@RequestMapping(value = "opt/get", method = RequestMethod.POST)
+	@RequestMapping(value = "get", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> get(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -80,7 +82,7 @@ public class AddressAction extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(value = "opt/save", method = RequestMethod.POST)
+	@RequestMapping(value = "save", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> save(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -130,7 +132,7 @@ public class AddressAction extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(value = "opt/remove", method = RequestMethod.POST)
+	@RequestMapping(value = "remove", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> remove(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -144,7 +146,7 @@ public class AddressAction extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(value = "opt/getArea", method = RequestMethod.POST)
+	@RequestMapping(value = "getArea", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> getArea(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();

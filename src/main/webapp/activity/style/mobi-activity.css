@@ -1,0 +1,52 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    
+    height: 100%;
+    font-family: "Microsoft YaHei" ! important;
+}
+.activity {
+	display: flex;
+	flex-direction: column;
+	
+	margin: 0px;
+    height: 100%;
+    width: 100%;
+    background-image: url(../img/mobi-activity-background.png);
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.activity .content {
+    flex: 1;
+    
+    background-image: url(../img/mobi-activity-content.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.activity .bottom {
+	position: relative;
+	width: 100%;
+	height: 30%;
+	max-height: 200px;
+    text-align: center;
+    
+    background-image: url(../img/mobi-activity-background-bottom.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.activity .bottom input {
+  margin: auto;  
+  position: absolute;  
+  top: 0; left: 0; bottom: 0; right: 0;
+  width: 200px;
+  height: 50px; 
+  border: 0; 
+}
