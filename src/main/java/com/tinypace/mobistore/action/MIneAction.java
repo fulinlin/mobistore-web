@@ -58,7 +58,7 @@ public class MIneAction extends BaseController {
 		data.put("collectionCount", counts.get("collectionCount"));
 		data.put("msgCount", counts.get("msgCount"));
 		
-		data.put("waitPayCount", counts.get("waitPayCount"));
+		data.put("waitPay", counts.get("waitPay"));
 		data.put("waitShip", counts.get("waitShip"));
 		data.put("waitReceive", counts.get("waitReceive"));
 		data.put("waitRate", counts.get("waitRate"));

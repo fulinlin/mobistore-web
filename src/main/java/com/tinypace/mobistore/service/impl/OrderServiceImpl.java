@@ -80,7 +80,8 @@ public class OrderServiceImpl extends CommonServiceImpl implements OrderService 
 	public StrOrder changeRecipientPers(String orderId, String recipientId) {
 		StrOrder order = (StrOrder) get(StrOrder.class, orderId);
 		StrRecipient recipient = (StrRecipient) get(StrRecipient.class, recipientId);
-		
+
+		order.setRecipientId(recipientId);
 		order.setRecipientName(recipient.getName());
 		order.setRecipientPhone(recipient.getPhone());
 		order.setRecipientArea(recipient.getProvice() + recipient.getCity() + recipient.getRegion());

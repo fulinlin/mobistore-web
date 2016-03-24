@@ -202,7 +202,7 @@ public class ClientServiceImpl extends CommonServiceImpl implements ClientServic
 		ret.put("collectionCount", collectionCount);
 		ret.put("msgCount", msgCount);
 		
-		ret.put("waitPayCount", map.get("waitPay").longValue());
+		ret.put("waitPay", map.get("waitPay").longValue());
 		ret.put("waitShip", map.get("waitShip").longValue());
 		ret.put("waitReceive", map.get("waitReceive").longValue());
 		ret.put("waitRate", map.get("waitRate").longValue());
