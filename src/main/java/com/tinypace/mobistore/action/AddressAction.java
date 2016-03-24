@@ -66,11 +66,11 @@ public class AddressAction extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(value = "get", method = RequestMethod.POST)
+	@RequestMapping(value = "detail", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> get(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> detail(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
-		String id = json.get("id");
+		String id = json.get("addressId");
 		
 		StrRecipient rec = (StrRecipient) recipientService.get(StrRecipient.class, id);
 		RecipientVo vo = new RecipientVo();
@@ -146,9 +146,9 @@ public class AddressAction extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(value = "getArea", method = RequestMethod.POST)
+	@RequestMapping(value = "getAreas", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> getArea(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> getAreas(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		String type = json.get("type");

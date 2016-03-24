@@ -39,7 +39,7 @@ public class ClientAction extends BaseController {
 	SuggestionService suggestionService;
 	
 	@AuthPassport(validate=false)
-	@RequestMapping(value = "opt/signon", method = RequestMethod.POST)
+	@RequestMapping(value = "signon", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> signon(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -68,7 +68,7 @@ public class ClientAction extends BaseController {
 	}
 	
 	@AuthPassport(validate=false)
-	@RequestMapping(value = "opt/signup", method = RequestMethod.POST)
+	@RequestMapping(value = "signup", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> signup(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -97,9 +97,9 @@ public class ClientAction extends BaseController {
 	}
 	
 	@AuthPassport(validate=false)
-	@RequestMapping(value = "opt/forget", method = RequestMethod.POST)
+	@RequestMapping(value = "forgotPassword", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> forget(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> forgotPassword(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		String mobile = json.get("mobile");
@@ -118,7 +118,7 @@ public class ClientAction extends BaseController {
 	}
 	
 	@AuthPassport(validate=false)
-	@RequestMapping(value = "opt/resetPassword", method = RequestMethod.POST)
+	@RequestMapping(value = "resetPassword", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> resetPassword(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
@@ -146,10 +146,25 @@ public class ClientAction extends BaseController {
 		
 		return ret;
 	}
-	
-	@RequestMapping(value = "opt/save", method = RequestMethod.POST)
+
+	@RequestMapping(value = "getProfile", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> save(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> getProfile(HttpServletRequest request, @RequestBody Map<String, String> json) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+
+		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
+
+		ClientVo vo = new ClientVo();
+		BeanUtilEx.copyProperties(vo, client);
+		ret.put("data", vo);
+		ret.put("code", RespCode.SUCCESS.Code());
+
+		return ret;
+	}
+	
+	@RequestMapping(value = "saveProfile", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> saveProfile(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		String mobile = json.get("mobile");
@@ -165,7 +180,7 @@ public class ClientAction extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(value = "opt/suggest", method = RequestMethod.POST)
+	@RequestMapping(value = "suggest", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> suggest(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
