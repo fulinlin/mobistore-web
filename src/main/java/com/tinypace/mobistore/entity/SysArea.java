@@ -73,7 +73,7 @@ public class SysArea extends IdEntity {
 	public String getLevelname() {
 		String name = "";
 		if (this.getLevel() == 1) {
-			name = "provice";
+			name = "province";
 		} else if (this.getLevel() == 2) {
 			name = "city";
 		} else if (this.getLevel() == 3) {

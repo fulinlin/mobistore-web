@@ -4,10 +4,10 @@ public class RecipientVo {
 	private String id;
 	private String name;
 	private String phone;
-	private String provice;
+	private String province;
 	private String city;
 	private String region;
-	private Integer proviceId;
+	private Integer provinceId;
 	private Integer cityId;
 	private Integer regionId;
 	private String street;
@@ -51,11 +51,11 @@ public class RecipientVo {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getProvice() {
-		return provice;
+	public String getProvince() {
+		return province;
 	}
-	public void setProvice(String provice) {
-		this.provice = provice;
+	public void setProvince(String province) {
+		this.province = province;
 	}
 	public String getCity() {
 		return city;
@@ -69,11 +69,11 @@ public class RecipientVo {
 	public void setRegion(String region) {
 		this.region = region;
 	}
-	public Integer getProviceId() {
-		return proviceId;
+	public Integer getProvinceId() {
+		return provinceId;
 	}
-	public void setProviceId(Integer proviceId) {
-		this.proviceId = proviceId;
+	public void setProvinceId(Integer provinceId) {
+		this.provinceId = provinceId;
 	}
 	public Integer getCityId() {
 		return cityId;

@@ -13,7 +13,7 @@ import com.tinypace.mobistore.service.AreaService;
 @Service
 public class AreaServiceImpl extends CommonServiceImpl implements AreaService {
 	@Override
-	public List<SysArea> list(String type, String proviceId, String cityId) {
+	public List<SysArea> list(String type, String provinceId, String cityId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SysArea.class);
 		
 		if("region".equals(type)) {
@@ -21,7 +21,7 @@ public class AreaServiceImpl extends CommonServiceImpl implements AreaService {
 			dc.add(Restrictions.eq("parentid", Integer.valueOf(cityId)));
 		} else if ("city".equals(type)) {
 			dc.add(Restrictions.eq("level", 2));
-			dc.add(Restrictions.eq("parentid", Integer.valueOf(proviceId)));
+			dc.add(Restrictions.eq("parentid", Integer.valueOf(provinceId)));
 		} else {
 			dc.add(Restrictions.eq("level", 1));
 			dc.add(Restrictions.eq("parentid", 0));

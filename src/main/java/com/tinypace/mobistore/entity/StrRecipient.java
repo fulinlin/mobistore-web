@@ -18,8 +18,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class StrRecipient extends IdEntity {
 	private String name;
 	private String phone;
-	private String provice;
-	private Integer proviceId;
+	private String province;
+	private Integer provinceId;
 	private String city;
 	private Integer cityId;
 	private String region;
@@ -91,12 +91,12 @@ public class StrRecipient extends IdEntity {
 		this.phone = phone;
 	}
 
-	public String getProvice() {
-		return provice;
+	public String getProvince() {
+		return province;
 	}
 
-	public void setProvice(String provice) {
-		this.provice = provice;
+	public void setProvince(String province) {
+		this.province = province;
 	}
 
 	public String getCity() {
@@ -115,12 +115,12 @@ public class StrRecipient extends IdEntity {
 		this.region = region;
 	}
 
-	public Integer getProviceId() {
-		return proviceId;
+	public Integer getProvinceId() {
+		return provinceId;
 	}
 
-	public void setProviceId(Integer proviceId) {
-		this.proviceId = proviceId;
+	public void setProvinceId(Integer provinceId) {
+		this.provinceId = provinceId;
 	}
 
 	public Integer getCityId() {

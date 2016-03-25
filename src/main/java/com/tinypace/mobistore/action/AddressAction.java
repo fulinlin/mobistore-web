@@ -84,23 +84,23 @@ public class AddressAction extends BaseController {
 	
 	@RequestMapping(value = "save", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> save(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> save(HttpServletRequest request, @RequestBody Map<String, Object> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
 		
-		String id = json.get("id");
-		String name = json.get("name");
-		String phone = json.get("phone");
-		String provice = json.get("provice");
-		String city = json.get("city");
-		String region = json.get("region");
-		String proviceId = json.get("proviceId");
-		String cityId = json.get("cityId");
-		String regionId = json.get("regionId");
-		String street = json.get("street");
-		String address = json.get("address");
-		String isDefault = json.get("defaultt");
+		String id = json.get("id").toString();
+		String name = json.get("name").toString();
+		String phone = json.get("phone").toString();
+		String province = json.get("province").toString();
+		String city = json.get("city").toString();
+		String region = json.get("region").toString();
+		String provinceId = json.get("provinceId").toString();
+		String cityId = json.get("cityId").toString();
+		String regionId = json.get("regionId").toString();
+		String street = json.get("street").toString();
+		String address = json.get("address").toString();
+		String isDefault = json.get("defaultt").toString();
 		
 		StrRecipient rec = null;
 		if (StringUtil.IsEmpty(id)) {
@@ -112,11 +112,11 @@ public class AddressAction extends BaseController {
 		
 		rec.setName(name);
 		rec.setPhone(phone);
-		rec.setProvice(provice);
+		rec.setProvince(province);
 		rec.setCity(city);
 		rec.setRegion(region);
 
-		rec.setProviceId(Integer.valueOf(proviceId));
+		rec.setProvinceId(Integer.valueOf(provinceId));
 		rec.setCityId(Integer.valueOf(cityId));
 		if (!StringUtil.IsEmpty(regionId)) {
 			rec.setRegionId(Integer.valueOf(regionId));
@@ -152,10 +152,10 @@ public class AddressAction extends BaseController {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		String type = json.get("type");
-		String proviceId = json.get("proviceId");
+		String provinceId = json.get("provinceId");
 		String cityId = json.get("cityId");
 
-		List<SysArea> ls = areaService.list(type, proviceId, cityId);
+		List<SysArea> ls = areaService.list(type, provinceId, cityId);
 		List<AreaVo> vos = new ArrayList<AreaVo>();
 		
 		for (SysArea po : ls) {
@@ -163,6 +163,7 @@ public class AddressAction extends BaseController {
 			BeanUtilEx.copyProperties(vo, po);
 			vos.add(vo);
 		}
+		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", vos);
 		return ret;
 	}
