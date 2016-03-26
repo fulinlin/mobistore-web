@@ -61740,10 +61740,10 @@
 	var variable_1 = __webpack_require__(355);
 	var pub_sub_service_1 = __webpack_require__(356);
 	var home_1 = __webpack_require__(358);
-	var find_1 = __webpack_require__(375);
-	var shoppingcart_1 = __webpack_require__(378);
-	var mine_1 = __webpack_require__(380);
-	var category_1 = __webpack_require__(382);
+	var find_1 = __webpack_require__(377);
+	var shoppingcart_1 = __webpack_require__(380);
+	var mine_1 = __webpack_require__(386);
+	var category_1 = __webpack_require__(396);
 	var post_1 = __webpack_require__(363);
 	var TabsPage = (function () {
 	    function TabsPage(nav, _categoryService) {
@@ -61823,9 +61823,9 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(7);
-	var event_emitter_1 = __webpack_require__(385);
-	var event_emitter_2 = __webpack_require__(385);
-	var event_emitter_3 = __webpack_require__(385);
+	var event_emitter_1 = __webpack_require__(357);
+	var event_emitter_2 = __webpack_require__(357);
+	var event_emitter_3 = __webpack_require__(357);
 	var PubSubService = (function () {
 	    function PubSubService() {
 	        if (!PubSubService.isCreating) {
@@ -61854,7 +61854,73 @@
 
 
 /***/ },
-/* 357 */,
+/* 357 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(7);
+	var Subject_1 = __webpack_require__(55);
+	var ChangeCategoryEventEmitter = (function (_super) {
+	    __extends(ChangeCategoryEventEmitter, _super);
+	    function ChangeCategoryEventEmitter() {
+	        _super.call(this);
+	    }
+	    ChangeCategoryEventEmitter.prototype.emit = function (value) {
+	        _super.prototype.next.call(this, value);
+	    };
+	    ChangeCategoryEventEmitter = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [])
+	    ], ChangeCategoryEventEmitter);
+	    return ChangeCategoryEventEmitter;
+	})(Subject_1.Subject);
+	exports.ChangeCategoryEventEmitter = ChangeCategoryEventEmitter;
+	var GotoTabEventEmitter = (function (_super) {
+	    __extends(GotoTabEventEmitter, _super);
+	    function GotoTabEventEmitter() {
+	        _super.call(this);
+	    }
+	    GotoTabEventEmitter.prototype.emit = function (value) {
+	        _super.prototype.next.call(this, value);
+	    };
+	    GotoTabEventEmitter = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [])
+	    ], GotoTabEventEmitter);
+	    return GotoTabEventEmitter;
+	})(Subject_1.Subject);
+	exports.GotoTabEventEmitter = GotoTabEventEmitter;
+	var ShoppingcartChangeEventEmitter = (function (_super) {
+	    __extends(ShoppingcartChangeEventEmitter, _super);
+	    function ShoppingcartChangeEventEmitter() {
+	        _super.call(this);
+	    }
+	    ShoppingcartChangeEventEmitter.prototype.emit = function (value) {
+	        _super.prototype.next.call(this, value);
+	    };
+	    ShoppingcartChangeEventEmitter = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [])
+	    ], ShoppingcartChangeEventEmitter);
+	    return ShoppingcartChangeEventEmitter;
+	})(Subject_1.Subject);
+	exports.ShoppingcartChangeEventEmitter = ShoppingcartChangeEventEmitter;
+
+
+/***/ },
 /* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -61876,7 +61942,7 @@
 	var post_1 = __webpack_require__(363);
 	var home_1 = __webpack_require__(370);
 	var dropmenu_1 = __webpack_require__(371);
-	var product_list_1 = __webpack_require__(372);
+	var product_list_1 = __webpack_require__(401);
 	var product_detail_1 = __webpack_require__(373);
 	var Home = (function () {
 	    function Home(nav, _homeService, _commonService) {
@@ -61893,9 +61959,7 @@
 	    Home.prototype.onPageDidEnter = function () {
 	    };
 	    Home.prototype.onProductSelected = function (item) {
-	        console.log(this.nav.length());
 	        this.nav.push(product_detail_1.ProductDetail, item.id);
-	        console.log(this.nav.length());
 	    };
 	    Home = __decorate([
 	        ionic_1.Page({
@@ -62286,10 +62350,10 @@
 	var HomeService = (function () {
 	    function HomeService(_postService) {
 	        this._postService = _postService;
-	        this._apiPath = '/home/index';
+	        this._index = '/home/index';
 	    }
 	    HomeService.prototype.getData = function () {
-	        return this._postService.post(this._apiPath, {});
+	        return this._postService.post(this._index, {});
 	    };
 	    HomeService = __decorate([
 	        core_1.Injectable(), 
@@ -62304,14 +62368,12 @@
 /* 371 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
 	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
 	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
 	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(7);
 	var img_path_1 = __webpack_require__(359);
@@ -62331,72 +62393,23 @@
 	        this.menuShow = false;
 	    };
 	    __decorate([
-	        core_1.Input(), 
-	        __metadata('design:type', Array)
-	    ], DropmenuComponent.prototype, "categories", void 0);
+	        core_1.Input()
+	    ], DropmenuComponent.prototype, "categories");
 	    DropmenuComponent = __decorate([
 	        core_1.Component({
 	            selector: 'drop-menu',
 	            templateUrl: 'build/components/dropmenu/dropmenu.html',
 	            providers: [pub_sub_service_1.PubSubService],
 	            pipes: [img_path_1.ImgPathPipe]
-	        }), 
-	        __metadata('design:paramtypes', [])
+	        })
 	    ], DropmenuComponent);
 	    return DropmenuComponent;
-	})();
+	}());
 	exports.DropmenuComponent = DropmenuComponent;
-
-
-/***/ },
-/* 372 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(7);
-	var ionic_1 = __webpack_require__(5);
-	var img_path_1 = __webpack_require__(359);
-	var currency_cny_1 = __webpack_require__(361);
-	var ProductListComponent = (function () {
-	    function ProductListComponent() {
-	        this.selected = new core_1.EventEmitter();
-	    }
-	    ProductListComponent.prototype.ngOnInit = function () {
-	    };
-	    ProductListComponent.prototype.onSelect = function (item) {
-	        this.selected.emit(item);
-	    };
-	    __decorate([
-	        core_1.Input(), 
-	        __metadata('design:type', Array)
-	    ], ProductListComponent.prototype, "products", void 0);
-	    __decorate([
-	        core_1.Output(), 
-	        __metadata('design:type', Object)
-	    ], ProductListComponent.prototype, "selected", void 0);
-	    ProductListComponent = __decorate([
-	        core_1.Component({
-	            selector: 'product-list',
-	            templateUrl: 'build/components/product-list/product-list.html',
-	            directives: [ionic_1.List, ionic_1.Item, ionic_1.Button, ionic_1.Icon],
-	            pipes: [img_path_1.ImgPathPipe, currency_cny_1.CurrencyCnyPipe]
-	        }), 
-	        __metadata('design:paramtypes', [])
-	    ], ProductListComponent);
-	    return ProductListComponent;
-	})();
-	exports.ProductListComponent = ProductListComponent;
-
+	//# sourceMappingURL=dropmenu.js.map
 
 /***/ },
+/* 372 */,
 /* 373 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -62412,10 +62425,10 @@
 	var ionic_1 = __webpack_require__(5);
 	var img_path_1 = __webpack_require__(359);
 	var currency_cny_1 = __webpack_require__(361);
-	var string_1 = __webpack_require__(384);
+	var string_1 = __webpack_require__(374);
 	var pub_sub_service_1 = __webpack_require__(356);
-	var product_1 = __webpack_require__(374);
-	var shoppingcart_1 = __webpack_require__(379);
+	var product_1 = __webpack_require__(375);
+	var shoppingcart_1 = __webpack_require__(376);
 	var ProductDetail = (function () {
 	    function ProductDetail(nav, params, _productService, _shoppingcartService) {
 	        this._productService = _productService;
@@ -62486,18 +62499,68 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(7);
+	var StringUtil = (function () {
+	    function StringUtil() {
+	    }
+	    StringUtil.IsString = function (str) {
+	        return (typeof str == 'string') && str.constructor == String;
+	    };
+	    StringUtil.Trim = function (o) {
+	        if (StringUtil.IsEmpty(o)) {
+	            return '';
+	        }
+	        o = o.replace(/(^\s*)|(\s*$)/g, '');
+	        return o;
+	    };
+	    StringUtil.IsEmpty = function (o) {
+	        if (o === null || o === "null" || o === undefined || o === "undefined" || o === "") {
+	            return true;
+	        }
+	        else {
+	            return false;
+	        }
+	    };
+	    StringUtil.UpcaseFirst = function (str) {
+	        var first = str.substring(0, 1).toUpperCase();
+	        var others = str.substring(1, str.length);
+	        var ret = first + others;
+	        return ret;
+	    };
+	    StringUtil = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [])
+	    ], StringUtil);
+	    return StringUtil;
+	})();
+	exports.StringUtil = StringUtil;
+
+
+/***/ },
+/* 375 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(7);
 	var post_1 = __webpack_require__(363);
 	var ProductService = (function () {
 	    function ProductService(_postService) {
 	        this._postService = _postService;
-	        this._apiDetail = '/product/detail';
-	        this._apiCollect = '/product/collect';
+	        this._detail = '/product/detail';
+	        this._collect = '/product/collect';
 	    }
 	    ProductService.prototype.getDetail = function (productId) {
-	        return this._postService.post(this._apiDetail, { productId: productId });
+	        return this._postService.post(this._detail, { productId: productId });
 	    };
 	    ProductService.prototype.collect = function (productId) {
-	        return this._postService.post(this._apiCollect, { productId: productId });
+	        return this._postService.post(this._collect, { productId: productId });
 	    };
 	    ProductService = __decorate([
 	        core_1.Injectable(), 
@@ -62509,7 +62572,55 @@
 
 
 /***/ },
-/* 375 */
+/* 376 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(7);
+	var post_1 = __webpack_require__(363);
+	var ShoppingcartService = (function () {
+	    function ShoppingcartService(_postService) {
+	        this._postService = _postService;
+	        this._infoPath = '/shoppingcart/info';
+	        this._addItemPath = '/shoppingcart/addto';
+	        this._removeItemPath = '/shoppingcart/remove';
+	        this._clearPath = '/shoppingcart/clear';
+	        this._checkoutPath = '/shoppingcart/checkout';
+	    }
+	    ShoppingcartService.prototype.getData = function () {
+	        return this._postService.post(this._infoPath, {});
+	    };
+	    ShoppingcartService.prototype.addToShoppingcart = function (product, qty) {
+	        return this._postService.post(this._addItemPath, { productId: product.id, qty: qty });
+	    };
+	    ShoppingcartService.prototype.remove = function (item) {
+	        return this._postService.post(this._removeItemPath, { itemId: item.id });
+	    };
+	    ShoppingcartService.prototype.clear = function () {
+	        return this._postService.post(this._clearPath, {});
+	    };
+	    ShoppingcartService.prototype.checkout = function () {
+	        return this._postService.post(this._checkoutPath, {});
+	    };
+	    ShoppingcartService = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [post_1.PostService])
+	    ], ShoppingcartService);
+	    return ShoppingcartService;
+	})();
+	exports.ShoppingcartService = ShoppingcartService;
+
+
+/***/ },
+/* 377 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -62526,11 +62637,11 @@
 	var img_path_1 = __webpack_require__(359);
 	var pub_sub_service_1 = __webpack_require__(356);
 	var post_1 = __webpack_require__(363);
-	var search_1 = __webpack_require__(376);
+	var search_1 = __webpack_require__(378);
 	var dropmenu_1 = __webpack_require__(371);
-	var product_list_1 = __webpack_require__(372);
+	var product_list_1 = __webpack_require__(401);
 	var product_detail_1 = __webpack_require__(373);
-	var search_2 = __webpack_require__(377);
+	var search_2 = __webpack_require__(379);
 	var Find = (function () {
 	    function Find(nav, _searchService) {
 	        this.nav = nav;
@@ -62579,7 +62690,7 @@
 
 
 /***/ },
-/* 376 */
+/* 378 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -62597,18 +62708,18 @@
 	var SearchService = (function () {
 	    function SearchService(_postService) {
 	        this._postService = _postService;
-	        this._apiSearch = '/search/search';
-	        this._apiHistory = '/search/getHistory';
-	        this._apiKeywords = '/search/getMatchedKeywords';
+	        this._search = '/search/search';
+	        this._history = '/search/getHistory';
+	        this._keywords = '/search/getMatchedKeywords';
 	    }
 	    SearchService.prototype.search = function (keywords) {
-	        return this._postService.post(this._apiSearch, { keywords: keywords, category: variable_1.VARIABLE.CURRENT_CATEGORY });
+	        return this._postService.post(this._search, { keywords: keywords, category: variable_1.VARIABLE.CURRENT_CATEGORY });
 	    };
 	    SearchService.prototype.getHistory = function () {
-	        return this._postService.post(this._apiHistory, {});
+	        return this._postService.post(this._history, {});
 	    };
 	    SearchService.prototype.getMatchedKeywords = function (keywords) {
-	        return this._postService.post(this._apiKeywords, { keywords: keywords, category: variable_1.VARIABLE.CURRENT_CATEGORY });
+	        return this._postService.post(this._keywords, { keywords: keywords, category: variable_1.VARIABLE.CURRENT_CATEGORY });
 	    };
 	    SearchService = __decorate([
 	        core_1.Injectable(), 
@@ -62620,7 +62731,7 @@
 
 
 /***/ },
-/* 377 */
+/* 379 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -62636,7 +62747,7 @@
 	var ionic_2 = __webpack_require__(5);
 	var img_path_1 = __webpack_require__(359);
 	var post_1 = __webpack_require__(363);
-	var search_1 = __webpack_require__(376);
+	var search_1 = __webpack_require__(378);
 	var Search = (function () {
 	    function Search(viewCtrl, _searchService) {
 	        this.searchQuery = '';
@@ -62684,7 +62795,7 @@
 
 
 /***/ },
-/* 378 */
+/* 380 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -62701,8 +62812,8 @@
 	var img_path_1 = __webpack_require__(359);
 	var currency_cny_1 = __webpack_require__(361);
 	var pub_sub_service_1 = __webpack_require__(356);
-	var shoppingcart_1 = __webpack_require__(379);
-	var order_detail_1 = __webpack_require__(386);
+	var shoppingcart_1 = __webpack_require__(376);
+	var order_detail_1 = __webpack_require__(381);
 	var Shoppingcart = (function () {
 	    function Shoppingcart(nav, _shoppingcartService) {
 	        this.nav = nav;
@@ -62743,274 +62854,7 @@
 
 
 /***/ },
-/* 379 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(7);
-	var post_1 = __webpack_require__(363);
-	var ShoppingcartService = (function () {
-	    function ShoppingcartService(_postService) {
-	        this._postService = _postService;
-	        this._apiInfoPath = '/shoppingcart/info';
-	        this._apiAddItemPath = '/shoppingcart/addto';
-	        this._apiRemoveItemPath = '/shoppingcart/remove';
-	        this._apiClearPath = '/shoppingcart/clear';
-	        this._apiCheckoutPath = '/shoppingcart/checkout';
-	    }
-	    ShoppingcartService.prototype.getData = function () {
-	        return this._postService.post(this._apiInfoPath, {});
-	    };
-	    ShoppingcartService.prototype.addToShoppingcart = function (product, qty) {
-	        return this._postService.post(this._apiAddItemPath, { productId: product.id, qty: qty });
-	    };
-	    ShoppingcartService.prototype.remove = function (item) {
-	        return this._postService.post(this._apiRemoveItemPath, { itemId: item.id });
-	    };
-	    ShoppingcartService.prototype.clear = function () {
-	        return this._postService.post(this._apiClearPath, {});
-	    };
-	    ShoppingcartService.prototype.checkout = function () {
-	        return this._postService.post(this._apiCheckoutPath, {});
-	    };
-	    ShoppingcartService = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [post_1.PostService])
-	    ], ShoppingcartService);
-	    return ShoppingcartService;
-	})();
-	exports.ShoppingcartService = ShoppingcartService;
-
-
-/***/ },
-/* 380 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var ionic_1 = __webpack_require__(5);
-	var ionic_2 = __webpack_require__(5);
-	var img_path_1 = __webpack_require__(359);
-	var mine_1 = __webpack_require__(381);
-	var Mine = (function () {
-	    function Mine(nav, _mineService) {
-	        this.nav = nav;
-	        this._mineService = _mineService;
-	        var me = this;
-	        this._mineService.getData().subscribe(function (json) { return me.data = json.data; }, function (error) { return me.errorMessage = error; });
-	    }
-	    Mine = __decorate([
-	        ionic_1.Page({
-	            templateUrl: 'build/pages/mine/mine.html',
-	            providers: [mine_1.MineService],
-	            pipes: [img_path_1.ImgPathPipe]
-	        }), 
-	        __metadata('design:paramtypes', [ionic_2.NavController, mine_1.MineService])
-	    ], Mine);
-	    return Mine;
-	})();
-	exports.Mine = Mine;
-
-
-/***/ },
 /* 381 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(7);
-	var post_1 = __webpack_require__(363);
-	var MineService = (function () {
-	    function MineService(_postService) {
-	        this._postService = _postService;
-	        this._apiPath = '/mine/index';
-	    }
-	    MineService.prototype.getData = function () {
-	        return this._postService.post(this._apiPath, {});
-	    };
-	    MineService = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [post_1.PostService])
-	    ], MineService);
-	    return MineService;
-	})();
-	exports.MineService = MineService;
-
-
-/***/ },
-/* 382 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(7);
-	var post_1 = __webpack_require__(363);
-	var CategoryService = (function () {
-	    function CategoryService(_postService) {
-	        this._postService = _postService;
-	        this._apiPath = '/category/list';
-	    }
-	    CategoryService.prototype.getData = function () {
-	        return this._postService.post(this._apiPath, {});
-	    };
-	    CategoryService = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [post_1.PostService])
-	    ], CategoryService);
-	    return CategoryService;
-	})();
-	exports.CategoryService = CategoryService;
-
-
-/***/ },
-/* 383 */,
-/* 384 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(7);
-	var StringUtil = (function () {
-	    function StringUtil() {
-	    }
-	    StringUtil.IsString = function (str) {
-	        return (typeof str == 'string') && str.constructor == String;
-	    };
-	    StringUtil.Trim = function (o) {
-	        if (StringUtil.IsEmpty(o)) {
-	            return '';
-	        }
-	        o = o.replace(/(^\s*)|(\s*$)/g, '');
-	        return o;
-	    };
-	    StringUtil.IsEmpty = function (o) {
-	        if (o === null || o === "null" || o === undefined || o === "undefined" || o === "") {
-	            return true;
-	        }
-	        else {
-	            return false;
-	        }
-	    };
-	    StringUtil.UpcaseFirst = function (str) {
-	        var first = str.substring(0, 1).toUpperCase();
-	        var others = str.substring(1, str.length);
-	        var ret = first + others;
-	        return ret;
-	    };
-	    StringUtil = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [])
-	    ], StringUtil);
-	    return StringUtil;
-	})();
-	exports.StringUtil = StringUtil;
-
-
-/***/ },
-/* 385 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(7);
-	var Subject_1 = __webpack_require__(55);
-	var ChangeCategoryEventEmitter = (function (_super) {
-	    __extends(ChangeCategoryEventEmitter, _super);
-	    function ChangeCategoryEventEmitter() {
-	        _super.call(this);
-	    }
-	    ChangeCategoryEventEmitter.prototype.emit = function (value) {
-	        _super.prototype.next.call(this, value);
-	    };
-	    ChangeCategoryEventEmitter = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [])
-	    ], ChangeCategoryEventEmitter);
-	    return ChangeCategoryEventEmitter;
-	})(Subject_1.Subject);
-	exports.ChangeCategoryEventEmitter = ChangeCategoryEventEmitter;
-	var GotoTabEventEmitter = (function (_super) {
-	    __extends(GotoTabEventEmitter, _super);
-	    function GotoTabEventEmitter() {
-	        _super.call(this);
-	    }
-	    GotoTabEventEmitter.prototype.emit = function (value) {
-	        _super.prototype.next.call(this, value);
-	    };
-	    GotoTabEventEmitter = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [])
-	    ], GotoTabEventEmitter);
-	    return GotoTabEventEmitter;
-	})(Subject_1.Subject);
-	exports.GotoTabEventEmitter = GotoTabEventEmitter;
-	var ShoppingcartChangeEventEmitter = (function (_super) {
-	    __extends(ShoppingcartChangeEventEmitter, _super);
-	    function ShoppingcartChangeEventEmitter() {
-	        _super.call(this);
-	    }
-	    ShoppingcartChangeEventEmitter.prototype.emit = function (value) {
-	        _super.prototype.next.call(this, value);
-	    };
-	    ShoppingcartChangeEventEmitter = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [])
-	    ], ShoppingcartChangeEventEmitter);
-	    return ShoppingcartChangeEventEmitter;
-	})(Subject_1.Subject);
-	exports.ShoppingcartChangeEventEmitter = ShoppingcartChangeEventEmitter;
-
-
-/***/ },
-/* 386 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -63025,20 +62869,52 @@
 	var ionic_1 = __webpack_require__(5);
 	var img_path_1 = __webpack_require__(359);
 	var currency_cny_1 = __webpack_require__(361);
-	var order_status_1 = __webpack_require__(388);
+	var address_selection_1 = __webpack_require__(382);
+	var order_status_1 = __webpack_require__(384);
 	var pub_sub_service_1 = __webpack_require__(356);
-	var order_1 = __webpack_require__(387);
+	var order_1 = __webpack_require__(385);
 	var OrderDetail = (function () {
-	    function OrderDetail(nav, params, _orderService) {
-	        this._orderService = _orderService;
+	    function OrderDetail(nav, params, orderService) {
+	        this.nav = nav;
+	        this.orderService = orderService;
 	        this.tab = 1;
 	        var me = this;
 	        me.orderId = params.data;
-	        me.orderService = _orderService;
-	        me.orderService.getDetail(me.orderId).subscribe(function (json) { me.order = json.data; }, function (error) { return me.errorMessage = error; });
 	    }
+	    OrderDetail.prototype.onPageWillEnter = function () {
+	        var me = this;
+	        me.orderService.getDetail(me.orderId).subscribe(function (json) { me.order = json.data; }, function (error) { return me.errorMessage = error; });
+	    };
 	    OrderDetail.prototype.show = function (tab) {
 	        this.tab = tab;
+	    };
+	    OrderDetail.prototype.cancel = function (orderId) {
+	        var _this = this;
+	        var me = this;
+	        me.orderService.cancel(orderId).subscribe(function (json) { return _this.nav.pop(); }, function (error) { return me.errorMessage = error; });
+	    };
+	    OrderDetail.prototype.openAddressModel = function (order) {
+	        var me = this;
+	        var modal = ionic_1.Modal.create(address_selection_1.AddressSelection, { order: order });
+	        modal.onDismiss(function (addressId) {
+	            me.changeRecipient(order.id, addressId);
+	        });
+	        this.nav.present(modal);
+	    };
+	    OrderDetail.prototype.changeRecipient = function (orderId, addressId) {
+	        var me = this;
+	        if (!addressId) {
+	            return;
+	        }
+	        me.orderService.changeRecipient(orderId, addressId).subscribe(function (json) { me.order = json.data; }, function (error) { return me.errorMessage = error; });
+	    };
+	    OrderDetail.prototype.pay = function (orderId) {
+	        var me = this;
+	        //let recipientId = 1;
+	        //me.orderService.pay(orderId, recipientId).subscribe(
+	        //    json => {PubSubService.getInstance().gotoTab.emit(4);},
+	        //   error => me.errorMessage = <any>error
+	        //);
 	    };
 	    OrderDetail = __decorate([
 	        ionic_1.Page({
@@ -63054,7 +62930,55 @@
 
 
 /***/ },
-/* 387 */
+/* 382 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var address_1 = __webpack_require__(383);
+	var post_1 = __webpack_require__(363);
+	var AddressSelection = (function () {
+	    function AddressSelection(params, viewCtrl, addressService) {
+	        this.viewCtrl = viewCtrl;
+	        this.addressService = addressService;
+	        var me = this;
+	        me.orderId = params.data.order.id;
+	        me.recipientId = params.data.order.recipientId;
+	        console.log('me.recipientId == 01 ' + (me.recipientId == '01'));
+	        me.addressService.list().subscribe(function (json) { me.addresses = json.data; }, function (error) { return me.errorMessage = error; });
+	    }
+	    AddressSelection.prototype.onPageWillEnter = function () {
+	    };
+	    AddressSelection.prototype.selectAddress = function (addressId) {
+	        this.recipientId = addressId;
+	        this.viewCtrl.dismiss(addressId);
+	    };
+	    AddressSelection.prototype.cancel = function () {
+	        this.viewCtrl.dismiss(undefined);
+	    };
+	    AddressSelection = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/address/address-selection.html',
+	            providers: [address_1.AddressService, post_1.PostService],
+	            pipes: []
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavParams, ionic_1.ViewController, address_1.AddressService])
+	    ], AddressSelection);
+	    return AddressSelection;
+	})();
+	exports.AddressSelection = AddressSelection;
+
+
+/***/ },
+/* 383 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -63068,25 +62992,41 @@
 	};
 	var core_1 = __webpack_require__(7);
 	var post_1 = __webpack_require__(363);
-	var OrderService = (function () {
-	    function OrderService(_postService) {
+	var AddressService = (function () {
+	    function AddressService(_postService) {
 	        this._postService = _postService;
-	        this._apiDetail = '/order/detail';
+	        this._list = '/address/list';
+	        this._detail = '/address/detail';
+	        this._listAreas = '/address/getAreas';
+	        this._save = '/address/save';
+	        this._remove = '/address/remove';
 	    }
-	    OrderService.prototype.getDetail = function (orderId) {
-	        return this._postService.post(this._apiDetail, { orderId: orderId });
+	    AddressService.prototype.list = function () {
+	        return this._postService.post(this._list, {});
 	    };
-	    OrderService = __decorate([
+	    AddressService.prototype.detail = function (addressId) {
+	        return this._postService.post(this._detail, { addressId: addressId });
+	    };
+	    AddressService.prototype.listArea = function (type, provinceId, cityId) {
+	        return this._postService.post(this._listAreas, { type: type, provinceId: provinceId, cityId: cityId });
+	    };
+	    AddressService.prototype.save = function (address) {
+	        return this._postService.post(this._save, address);
+	    };
+	    AddressService.prototype.remove = function (addressId) {
+	        return this._postService.post(this._remove, { addressId: addressId });
+	    };
+	    AddressService = __decorate([
 	        core_1.Injectable(), 
 	        __metadata('design:paramtypes', [post_1.PostService])
-	    ], OrderService);
-	    return OrderService;
+	    ], AddressService);
+	    return AddressService;
 	})();
-	exports.OrderService = OrderService;
+	exports.AddressService = AddressService;
 
 
 /***/ },
-/* 388 */
+/* 384 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -63140,6 +63080,859 @@
 	    return OrderStatusPipe;
 	})();
 	exports.OrderStatusPipe = OrderStatusPipe;
+
+
+/***/ },
+/* 385 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(7);
+	var post_1 = __webpack_require__(363);
+	var OrderService = (function () {
+	    function OrderService(_postService) {
+	        this._postService = _postService;
+	        this._list = '/order/list';
+	        this._detail = '/order/detail';
+	        this._cancel = '/order/cancel';
+	        this._changeRecipient = '/order/changeRecipient';
+	    }
+	    OrderService.prototype.list = function (status) {
+	        return this._postService.post(this._list, { filter: status });
+	    };
+	    OrderService.prototype.getDetail = function (orderId) {
+	        return this._postService.post(this._detail, { orderId: orderId });
+	    };
+	    OrderService.prototype.cancel = function (orderId) {
+	        return this._postService.post(this._cancel, { orderId: orderId });
+	    };
+	    OrderService.prototype.changeRecipient = function (orderId, recipientId) {
+	        return this._postService.post(this._changeRecipient, { orderId: orderId, recipientId: recipientId });
+	    };
+	    OrderService.prototype.pay = function (orderId, recipientId) {
+	        return this._postService.post(this._cancel, { orderId: orderId, recipientId: recipientId });
+	    };
+	    OrderService = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [post_1.PostService])
+	    ], OrderService);
+	    return OrderService;
+	})();
+	exports.OrderService = OrderService;
+
+
+/***/ },
+/* 386 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var img_path_1 = __webpack_require__(359);
+	var mine_1 = __webpack_require__(387);
+	var order_1 = __webpack_require__(385);
+	var my_frame_1 = __webpack_require__(388);
+	var msg_list_1 = __webpack_require__(402);
+	var profile_1 = __webpack_require__(399);
+	var collections_1 = __webpack_require__(400);
+	var order_list_1 = __webpack_require__(389);
+	var address_list_1 = __webpack_require__(390);
+	var suggestion_1 = __webpack_require__(394);
+	var Mine = (function () {
+	    function Mine(nav, mineService, orderService) {
+	        this.nav = nav;
+	        this.mineService = mineService;
+	        this.orderService = orderService;
+	    }
+	    Mine.prototype.onPageWillEnter = function () {
+	        var me = this;
+	        me.mineService.getData().subscribe(function (json) { return me.data = json.data; }, function (error) { return me.errorMessage = error; });
+	    };
+	    Mine.prototype.showAllOrders = function () {
+	        var me = this;
+	        me.nav.push(order_list_1.OrderList, status);
+	    };
+	    Mine.prototype.showOrders = function (status) {
+	        var me = this;
+	        if (eval('me.data.' + status) > 0) {
+	            this.nav.push(order_list_1.OrderList, status);
+	        }
+	    };
+	    Mine.prototype.showAddress = function () {
+	        var me = this;
+	        this.nav.push(address_list_1.AddressList, {});
+	    };
+	    Mine.prototype.suggest = function () {
+	        var me = this;
+	        this.nav.push(suggestion_1.Suggestion, {});
+	    };
+	    Mine.prototype.gotoMkt = function () {
+	        var me = this;
+	        var modal = ionic_1.Modal.create(my_frame_1.MyFrame, { title: '请投票!', url: 'http://m.app.mi.com/#page=detail&id=1104' });
+	        modal.onDismiss(function (success) {
+	        });
+	        this.nav.present(modal);
+	    };
+	    Mine.prototype.editProfile = function () {
+	        var me = this;
+	        this.nav.push(profile_1.Profile, {});
+	    };
+	    Mine.prototype.showMsgs = function () {
+	        var me = this;
+	        this.nav.push(msg_list_1.MsgList, {});
+	    };
+	    Mine.prototype.showCollections = function () {
+	        var me = this;
+	        this.nav.push(collections_1.Collections, {});
+	    };
+	    Mine = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/mine/mine.html',
+	            providers: [mine_1.MineService, order_1.OrderService],
+	            directives: [],
+	            pipes: [img_path_1.ImgPathPipe]
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavController, mine_1.MineService, order_1.OrderService])
+	    ], Mine);
+	    return Mine;
+	})();
+	exports.Mine = Mine;
+
+
+/***/ },
+/* 387 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(7);
+	var post_1 = __webpack_require__(363);
+	var MineService = (function () {
+	    function MineService(_postService) {
+	        this._postService = _postService;
+	        this._mine = '/mine/index';
+	    }
+	    MineService.prototype.getData = function () {
+	        return this._postService.post(this._mine, {});
+	    };
+	    MineService = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [post_1.PostService])
+	    ], MineService);
+	    return MineService;
+	})();
+	exports.MineService = MineService;
+
+
+/***/ },
+/* 388 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var MyFrame = (function () {
+	    function MyFrame(params, viewCtrl) {
+	        this.viewCtrl = viewCtrl;
+	        this.info = params.data;
+	    }
+	    MyFrame.prototype.ngOnInit = function () {
+	    };
+	    MyFrame.prototype.cancel = function () {
+	        this.viewCtrl.dismiss(undefined);
+	    };
+	    MyFrame = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/my-frame/my-frame.html',
+	            providers: [],
+	            pipes: []
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavParams, ionic_1.ViewController])
+	    ], MyFrame);
+	    return MyFrame;
+	})();
+	exports.MyFrame = MyFrame;
+
+
+/***/ },
+/* 389 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var img_path_1 = __webpack_require__(359);
+	var currency_cny_1 = __webpack_require__(361);
+	var order_status_1 = __webpack_require__(384);
+	var pub_sub_service_1 = __webpack_require__(356);
+	var order_1 = __webpack_require__(385);
+	var order_detail_1 = __webpack_require__(381);
+	var OrderList = (function () {
+	    function OrderList(nav, params, orderService) {
+	        this.nav = nav;
+	        this.orderService = orderService;
+	        var me = this;
+	        me.status = params.data;
+	        me.orderService.list(me.status).subscribe(function (json) { return me.orders = json.data; }, function (error) { return me.errorMessage = error; });
+	    }
+	    OrderList.prototype.showOrder = function (orderId) {
+	        var me = this;
+	        this.nav.push(order_detail_1.OrderDetail, orderId);
+	    };
+	    OrderList = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/order/order-list.html',
+	            providers: [order_1.OrderService, pub_sub_service_1.PubSubService],
+	            pipes: [img_path_1.ImgPathPipe, currency_cny_1.CurrencyCnyPipe, order_status_1.OrderStatusPipe]
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams, order_1.OrderService])
+	    ], OrderList);
+	    return OrderList;
+	})();
+	exports.OrderList = OrderList;
+
+
+/***/ },
+/* 390 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var misc_1 = __webpack_require__(391);
+	var address_1 = __webpack_require__(383);
+	var post_1 = __webpack_require__(363);
+	var address_edit_1 = __webpack_require__(392);
+	var AddressList = (function () {
+	    function AddressList(nav, params, viewCtrl, addressService) {
+	        this.nav = nav;
+	        this.viewCtrl = viewCtrl;
+	        this.addressService = addressService;
+	    }
+	    AddressList.prototype.onPageWillEnter = function () {
+	        var me = this;
+	        me.addressService.list().subscribe(function (json) { me.addresses = json.data; }, function (error) { return me.errorMessage = error; });
+	    };
+	    AddressList.prototype.edit = function (addressId) {
+	        var me = this;
+	        this.nav.push(address_edit_1.AddressEdit, { addressId: addressId });
+	    };
+	    AddressList = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/address/address-list.html',
+	            providers: [address_1.AddressService, post_1.PostService],
+	            pipes: [misc_1.BooleanToCn]
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams, ionic_1.ViewController, address_1.AddressService])
+	    ], AddressList);
+	    return AddressList;
+	})();
+	exports.AddressList = AddressList;
+
+
+/***/ },
+/* 391 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(7);
+	var OrderStatusPipe = (function () {
+	    function OrderStatusPipe() {
+	    }
+	    OrderStatusPipe.prototype.transform = function (order) {
+	        if (!order) {
+	            return;
+	        }
+	        var s = order.status;
+	        var status;
+	        if (s === 'INIT') {
+	            status = '未支付';
+	        }
+	        else if (s === 'PAYING') {
+	            status = '支付中';
+	        }
+	        else if (s === 'PAID') {
+	            status = '已支付';
+	        }
+	        else if (s === 'SHIPPING') {
+	            status = '发货中';
+	        }
+	        else if (s === 'RECEIVED') {
+	            status = '已收货';
+	        }
+	        else if (s === 'RATED') {
+	            status = '已评价';
+	        }
+	        else if (s === 'CANCEL') {
+	            status = '已取消';
+	        }
+	        else if (s === 'PAY_FEATURE') {
+	            status = '支付错误';
+	        }
+	        else if (s === 'SHIPPING_FEATURE') {
+	            status = '快递问题';
+	        }
+	        return status;
+	    };
+	    OrderStatusPipe = __decorate([
+	        core_1.Pipe({ name: 'orderStatus' }), 
+	        __metadata('design:paramtypes', [])
+	    ], OrderStatusPipe);
+	    return OrderStatusPipe;
+	})();
+	exports.OrderStatusPipe = OrderStatusPipe;
+	var BooleanToCn = (function () {
+	    function BooleanToCn() {
+	    }
+	    BooleanToCn.prototype.transform = function (bl) {
+	        if (bl == true) {
+	            return '是';
+	        }
+	        else {
+	            return '否';
+	        }
+	    };
+	    BooleanToCn = __decorate([
+	        core_1.Pipe({ name: 'booleanToCn' }), 
+	        __metadata('design:paramtypes', [])
+	    ], BooleanToCn);
+	    return BooleanToCn;
+	})();
+	exports.BooleanToCn = BooleanToCn;
+
+
+/***/ },
+/* 392 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var address_1 = __webpack_require__(383);
+	var post_1 = __webpack_require__(363);
+	var area_selection_1 = __webpack_require__(393);
+	var AddressEdit = (function () {
+	    function AddressEdit(nav, params, addressService) {
+	        this.nav = nav;
+	        this.addressService = addressService;
+	        var me = this;
+	        me.addressId = params.data.addressId;
+	        me.addressService.detail(me.addressId).subscribe(function (json) { me.address = json.data; }, function (error) { return me.errorMessage = error; });
+	    }
+	    AddressEdit.prototype.onPageWillEnter = function () {
+	    };
+	    AddressEdit.prototype.openAreaModal = function (type) {
+	        var me = this;
+	        var modal = ionic_1.Modal.create(area_selection_1.AreaSelection, { type: type, provinceId: me.address.provinceId, cityId: me.address.cityId });
+	        modal.onDismiss(function (area) {
+	            if (!area) {
+	                return;
+	            }
+	            me.address[type] = area.areaname;
+	            me.address[type + 'Id'] = area.id;
+	            if (type == 'province') {
+	                me.address.city = undefined;
+	                me.address.region = undefined;
+	            }
+	            else if (type == 'city') {
+	                me.address.region = undefined;
+	            }
+	        });
+	        this.nav.present(modal);
+	    };
+	    AddressEdit.prototype.save = function () {
+	        var me = this;
+	        console.log(me.address);
+	        me.addressService.save(me.address).subscribe(function (json) { me.nav.pop(); }, function (error) { return me.errorMessage = error; });
+	        console.log(me.address);
+	    };
+	    AddressEdit.prototype.remove = function () {
+	        var me = this;
+	        me.addressService.remove(me.addressId).subscribe(function (json) { me.nav.pop(); }, function (error) { return me.errorMessage = error; });
+	    };
+	    AddressEdit = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/address/address-edit.html',
+	            providers: [address_1.AddressService, post_1.PostService],
+	            pipes: []
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams, address_1.AddressService])
+	    ], AddressEdit);
+	    return AddressEdit;
+	})();
+	exports.AddressEdit = AddressEdit;
+
+
+/***/ },
+/* 393 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var address_1 = __webpack_require__(383);
+	var post_1 = __webpack_require__(363);
+	var AreaSelection = (function () {
+	    function AreaSelection(params, viewCtrl, addressService) {
+	        this.viewCtrl = viewCtrl;
+	        this.addressService = addressService;
+	        var me = this;
+	        var type = params.data.type;
+	        var provinceId = params.data.provinceId;
+	        var cityId = params.data.cityId;
+	        me.addressService.listArea(type, provinceId, cityId).subscribe(function (json) { me.areas = json.data; }, function (error) { return me.errorMessage = error; });
+	    }
+	    AreaSelection.prototype.onPageWillEnter = function () {
+	    };
+	    AreaSelection.prototype.select = function (area) {
+	        this.viewCtrl.dismiss(area);
+	    };
+	    AreaSelection.prototype.cancel = function () {
+	        this.viewCtrl.dismiss(undefined);
+	    };
+	    AreaSelection = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/address/area-selection.html',
+	            providers: [address_1.AddressService, post_1.PostService],
+	            pipes: []
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavParams, ionic_1.ViewController, address_1.AddressService])
+	    ], AreaSelection);
+	    return AreaSelection;
+	})();
+	exports.AreaSelection = AreaSelection;
+
+
+/***/ },
+/* 394 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var client_1 = __webpack_require__(395);
+	var post_1 = __webpack_require__(363);
+	var Suggestion = (function () {
+	    function Suggestion(nav, params, viewCtrl, clientService) {
+	        this.nav = nav;
+	        this.viewCtrl = viewCtrl;
+	        this.clientService = clientService;
+	        this.content = '';
+	    }
+	    Suggestion.prototype.onPageWillEnter = function () {
+	    };
+	    Suggestion.prototype.save = function () {
+	        var me = this;
+	        me.clientService.saveSuggestion(me.content).subscribe(function (json) { me.nav.pop(); }, function (error) { return me.errorMessage = error; });
+	    };
+	    Suggestion = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/client/suggestion.html',
+	            providers: [client_1.ClientService, post_1.PostService],
+	            pipes: []
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams, ionic_1.ViewController, client_1.ClientService])
+	    ], Suggestion);
+	    return Suggestion;
+	})();
+	exports.Suggestion = Suggestion;
+
+
+/***/ },
+/* 395 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(7);
+	var post_1 = __webpack_require__(363);
+	var ClientService = (function () {
+	    function ClientService(_postService) {
+	        this._postService = _postService;
+	        this._getProfile = '/client/getProfile';
+	        this._saveProfile = '/client/saveProfile';
+	        this._forgotPassword = '/client/forgotPassword';
+	        this._signon = '/client/signon';
+	        this._signup = '/client/signup';
+	        this._saveSuggestion = '/client/suggest';
+	        this._resetPassword = '/client/resetPassword';
+	        this._listCollections = '/collection/list';
+	        this._removeCollection = '/client/removeCollections';
+	        this._getMsgs = '/msg/list';
+	    }
+	    ClientService.prototype.listCollections = function () {
+	        return this._postService.post(this._listCollections, {});
+	    };
+	    ClientService.prototype.removeCollection = function (collectionId) {
+	        return this._postService.post(this._removeCollection, { collectionId: collectionId });
+	    };
+	    ClientService.prototype.getMsgs = function () {
+	        return this._postService.post(this._getMsgs, {});
+	    };
+	    ClientService.prototype.getProfile = function () {
+	        return this._postService.post(this._getProfile, {});
+	    };
+	    ClientService.prototype.saveProfile = function (profile) {
+	        return this._postService.post(this._saveProfile, profile);
+	    };
+	    ClientService.prototype.forgotPassword = function (phone) {
+	        return this._postService.post(this._forgotPassword, { phone: phone });
+	    };
+	    ClientService.prototype.signon = function (phone, password, rememberMe) {
+	        return this._postService.post(this._signon, { phone: phone, password: password, rememberMe: rememberMe });
+	    };
+	    ClientService.prototype.signup = function (phone, password, repassword) {
+	        return this._postService.post(this._signup, { phone: phone, password: password, repassword: repassword });
+	    };
+	    ClientService.prototype.saveSuggestion = function (content) {
+	        return this._postService.post(this._saveSuggestion, { content: content });
+	    };
+	    ClientService.prototype.resetPassword = function (phone) {
+	        return this._postService.post(this._resetPassword, { phone: phone });
+	    };
+	    ClientService = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [post_1.PostService])
+	    ], ClientService);
+	    return ClientService;
+	})();
+	exports.ClientService = ClientService;
+
+
+/***/ },
+/* 396 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(7);
+	var post_1 = __webpack_require__(363);
+	var CategoryService = (function () {
+	    function CategoryService(_postService) {
+	        this._postService = _postService;
+	        this._path = '/category/list';
+	    }
+	    CategoryService.prototype.getData = function () {
+	        return this._postService.post(this._path, {});
+	    };
+	    CategoryService = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [post_1.PostService])
+	    ], CategoryService);
+	    return CategoryService;
+	})();
+	exports.CategoryService = CategoryService;
+
+
+/***/ },
+/* 397 */,
+/* 398 */,
+/* 399 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var client_1 = __webpack_require__(395);
+	var post_1 = __webpack_require__(363);
+	var Profile = (function () {
+	    function Profile(nav, params, viewCtrl, clientService) {
+	        this.nav = nav;
+	        this.viewCtrl = viewCtrl;
+	        this.clientService = clientService;
+	        var me = this;
+	        me.clientService.getProfile().subscribe(function (json) { me.profile = json.data; }, function (error) { return me.errorMessage = error; });
+	    }
+	    Profile.prototype.onPageWillEnter = function () {
+	    };
+	    Profile.prototype.save = function () {
+	        var me = this;
+	        console.log(me.profile);
+	        me.clientService.saveProfile(me.profile).subscribe(function (json) { me.nav.pop(); }, function (error) { return me.errorMessage = error; });
+	    };
+	    Profile = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/client/profile.html',
+	            providers: [client_1.ClientService, post_1.PostService],
+	            pipes: []
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams, ionic_1.ViewController, client_1.ClientService])
+	    ], Profile);
+	    return Profile;
+	})();
+	exports.Profile = Profile;
+
+
+/***/ },
+/* 400 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var img_path_1 = __webpack_require__(359);
+	var currency_cny_1 = __webpack_require__(361);
+	var client_1 = __webpack_require__(395);
+	var post_1 = __webpack_require__(363);
+	var product_detail_1 = __webpack_require__(373);
+	var Collections = (function () {
+	    function Collections(nav, params, viewCtrl, clientService) {
+	        this.nav = nav;
+	        this.viewCtrl = viewCtrl;
+	        this.clientService = clientService;
+	        var me = this;
+	        me.clientService.listCollections().subscribe(function (json) { me.collections = json.data; }, function (error) { return me.errorMessage = error; });
+	    }
+	    Collections.prototype.onPageWillEnter = function () {
+	    };
+	    Collections.prototype.showProdcut = function (productId) {
+	        this.nav.push(product_detail_1.ProductDetail, productId);
+	    };
+	    Collections.prototype.removeCollection = function (collectionId) {
+	        var me = this;
+	        me.clientService.removeCollection(collectionId).subscribe(function (json) { me.collections = json.data; }, function (error) { return me.errorMessage = error; });
+	    };
+	    Collections = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/client/collections.html',
+	            providers: [client_1.ClientService, post_1.PostService],
+	            pipes: [img_path_1.ImgPathPipe, currency_cny_1.CurrencyCnyPipe]
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams, ionic_1.ViewController, client_1.ClientService])
+	    ], Collections);
+	    return Collections;
+	})();
+	exports.Collections = Collections;
+
+
+/***/ },
+/* 401 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(7);
+	var ionic_1 = __webpack_require__(5);
+	var img_path_1 = __webpack_require__(359);
+	var currency_cny_1 = __webpack_require__(361);
+	var ProductListComponent = (function () {
+	    function ProductListComponent() {
+	        this.selected = new core_1.EventEmitter();
+	    }
+	    ProductListComponent.prototype.ngOnInit = function () {
+	    };
+	    ProductListComponent.prototype.onSelect = function (item) {
+	        this.selected.emit(item);
+	    };
+	    __decorate([
+	        core_1.Input(), 
+	        __metadata('design:type', Array)
+	    ], ProductListComponent.prototype, "products", void 0);
+	    __decorate([
+	        core_1.Output(), 
+	        __metadata('design:type', Object)
+	    ], ProductListComponent.prototype, "selected", void 0);
+	    ProductListComponent = __decorate([
+	        core_1.Component({
+	            selector: 'product-list',
+	            templateUrl: 'build/components/product-list/product-list.html',
+	            directives: [ionic_1.List, ionic_1.Item, ionic_1.Button, ionic_1.Icon],
+	            pipes: [img_path_1.ImgPathPipe, currency_cny_1.CurrencyCnyPipe]
+	        }), 
+	        __metadata('design:paramtypes', [])
+	    ], ProductListComponent);
+	    return ProductListComponent;
+	})();
+	exports.ProductListComponent = ProductListComponent;
+
+
+/***/ },
+/* 402 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var client_1 = __webpack_require__(395);
+	var post_1 = __webpack_require__(363);
+	var msg_detail_1 = __webpack_require__(403);
+	var MsgList = (function () {
+	    function MsgList(nav, params, clientService) {
+	        this.nav = nav;
+	        this.clientService = clientService;
+	        var me = this;
+	        me.clientService.getMsgs().subscribe(function (json) { me.msgs = json.data; }, function (error) { return me.errorMessage = error; });
+	    }
+	    MsgList.prototype.onPageWillEnter = function () {
+	    };
+	    MsgList.prototype.showMsg = function (msg) {
+	        var me = this;
+	        me.nav.push(msg_detail_1.MsgDetail, msg);
+	    };
+	    MsgList = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/msg/msg-list.html',
+	            providers: [client_1.ClientService, post_1.PostService],
+	            pipes: []
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams, client_1.ClientService])
+	    ], MsgList);
+	    return MsgList;
+	})();
+	exports.MsgList = MsgList;
+
+
+/***/ },
+/* 403 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var client_1 = __webpack_require__(395);
+	var post_1 = __webpack_require__(363);
+	var MsgDetail = (function () {
+	    function MsgDetail(params, viewCtrl, clientService) {
+	        this.viewCtrl = viewCtrl;
+	        this.clientService = clientService;
+	        var me = this;
+	        me.msg = params.data;
+	        console.log(me.msg);
+	    }
+	    MsgDetail.prototype.onPageWillEnter = function () {
+	    };
+	    MsgDetail = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/msg/msg-detail.html',
+	            providers: [client_1.ClientService, post_1.PostService],
+	            pipes: []
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavParams, ionic_1.ViewController, client_1.ClientService])
+	    ], MsgDetail);
+	    return MsgDetail;
+	})();
+	exports.MsgDetail = MsgDetail;
 
 
 /***/ }

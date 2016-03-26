@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*! Ionic: iOS */
 /*! normalize.css v3.0.2 | MIT License | github.com/necolas/normalize.css */
 audio,
@@ -7749,6 +7750,10 @@ body {
   font-size: 1.4rem;
   background-color: #fff; }
 
+html {
+  font-size: 62.5%;
+  /* 10 ÷ 16 × 100% = 62.5% */ }
+
 body {
   font-size: 200%; }
 
@@ -8076,6 +8081,10 @@ ion-navbar.toolbar.my-navbar {
               width: 3.6rem;
               height: 2.2rem;
               text-align: center; }
+          .list-with-price .list-item .right .my-box span.line-left span.my-number {
+            padding: 0.1rem;
+            line-height: 2.6rem;
+            text-align: center; }
       .list-with-price .list-item .right .my-box span.line-right {
         float: right;
         margin-right: 2rem;
@@ -8145,6 +8154,33 @@ ion-navbar.toolbar.my-navbar {
         flex: 7;
         padding-left: 2rem; }
 
+.signon button.button-small {
+  margin-right: 0.3rem;
+  width: 60px; }
+
+.suggestion textarea {
+  margin-top: 2rem; }
+
+.forget-password .virify-code label {
+  background-color: #FFFFFF; }
+
+.forget-password .virify-code button {
+  color: black; }
+
+.profile ion-list ion-item ion-label {
+  width: 4rem; }
+
+.collections ion-item ion-thumbnail img {
+  width: 5.6rem; }
+
+.my-msg-detail {
+  padding: 1rem; }
+  .my-msg-detail .title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem; }
+  .my-msg-detail .descr {
+    font-size: 1rem; }
+
 .product-detail .slide {
   width: 100%;
   height: 14rem;
@@ -8207,15 +8243,25 @@ ion-navbar.toolbar.my-navbar {
   line-height: 1.7rem;
   color: #464646; }
 
-.order-list h2 {
-  background-color: #EBEBEB; }
-
-.order-list .left {
-  float: left;
-  margin-right: 1.42rem; }
-  .order-list .left img {
-    width: 4.3rem;
-    height: 4.3rem; }
+.order-list ion-item {
+  margin-bottom: 7px;
+  padding-right: 16px; }
+  .order-list ion-item .item-inner {
+    padding-right: 0px;
+    border-bottom: 0; }
+    .order-list ion-item .item-inner ion-label {
+      margin: 0; }
+      .order-list ion-item .item-inner ion-label h2 {
+        margin: 0px;
+        background-color: #EBEBEB; }
+      .order-list ion-item .item-inner ion-label .left {
+        float: left;
+        margin-right: 1.42rem; }
+        .order-list ion-item .item-inner ion-label .left img {
+          width: 4.3rem;
+          height: 4.3rem; }
+      .order-list ion-item .item-inner ion-label .right p {
+        line-height: 2.0rem !important; }
 
 .order-detail {
   font-size: 1.4rem;
@@ -8276,15 +8322,19 @@ ion-navbar.toolbar.my-navbar {
     .order-detail .summary .row.title {
       font-size: 1.6rem;
       margin-bottom: 0.36rem; }
-    .order-detail .summary .row.address .content div.text {
-      float: left;
-      margin-right: 2.14rem; }
-    .order-detail .summary .row.address .content div.more {
-      position: absolute;
-      top: 50%;
-      margin-top: -0.71rem;
-      right: 0.71rem;
-      width: 0.71rem; }
+    .order-detail .summary .row.address .content {
+      position: relative; }
+      .order-detail .summary .row.address .content div.text {
+        float: left;
+        margin-right: 2.14rem; }
+      .order-detail .summary .row.address .content div.more {
+        position: absolute;
+        top: 50%;
+        margin-top: -0.71rem;
+        right: 1rem;
+        width: 0.71rem; }
+        .order-detail .summary .row.address .content div.more ion-icon {
+          font-size: 1.6em; }
   .order-detail .detail ion-list ion-item ion-thumbnail img {
     width: 5.6rem; }
   .order-detail .detail ion-list ion-item .item-inner ion-label h2 {
@@ -8309,6 +8359,18 @@ ion-navbar.toolbar.my-navbar {
     line-height: 3.5rem;
     font-size: 1.6rem;
     text-align: center; }
+
+.address-selection ion-item .descr {
+  word-break: break-all;
+  white-space: normal; }
+
+.address-list ion-item {
+  padding-right: 1.6rem; }
+  .address-list ion-item ion-label {
+    margin: 0px 0.8rem 0.5rem 0; }
+
+.address-edit .item-input ion-label {
+  color: #000; }
 
 .my-menu {
   position: fixed;

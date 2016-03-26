@@ -47,14 +47,14 @@
 			  <div class="col left">电话</div>
 			  <div class="col right">{{order.recipientPhone}}</div>
 			</div>
-			<div class="row content address" ng-click="openModal()">
+			<div class="row content address" (click)="openAddressModel(order)">
 			  <div class="col left">地址</div>
 			  <div class="col right content">
 			  	<div class="text">
 			  		<span>{{order.recipientArea}}{{order.recipientStreet}}{{order.recipientAddress}}</span>
 			  	</div>
 			  	<div class="more">
-			  		<i class="icon ion-chevron-right"></i>
+                    <ion-icon name="ios-arrow-forward"></ion-icon>
 			  	</div>
 			  </div>
 			</div>
@@ -65,11 +65,11 @@
         <div class="list-with-price">
                 <div *ngFor="#item of order.items" class="list-item">
                   <div class="left">
-                        <img (click)="showProdcut(item.productId)" src="{{item.image | imgPath}}">
+                        <img src="{{item.image | imgPath}}">
                   </div>
                   
                   <div class="right text-ellipsis">
-                      <h2 (click)="showProdcut(item.productId)" class="text-color-light-grey text-ellipsis">{{item.name}}</h2>
+                      <h2 class="text-color-light-grey text-ellipsis">{{item.name}}</h2>
                       <p class="text-thin text-color-light-grey">{{item.unitPrice | currency:'CNY' | cny}}</p>
                       <div class="clear-both"></div>
                       <div class="my-box text-thin text-color-light-grey">
@@ -78,8 +78,8 @@
                                 <span class="my-label">
                                     数量
                                 </span>
-                                <span class="my-input">
-                                    <input type="text" [(ngModel)]="item.qty" ng-change="qtyChange(item)" readonly="readonly">
+                                <span class="my-number">
+                                    {{item.qty}}
                                 </span>
                             </span>
                         </div>
@@ -98,7 +98,7 @@
            </button>
        </div>
        
-       <div class="buttons orange" (click)="camcel()">
+       <div class="buttons orange" (click)="cancel(order.id)">
            <button clear class="button left">
              取消订单
            </button>
