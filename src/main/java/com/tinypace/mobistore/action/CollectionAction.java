@@ -31,17 +31,17 @@ import com.tinypace.mobistore.vo.ProductVo;
 @Controller
 @RequestMapping(Constant.API + "collection/")
 public class CollectionAction extends BaseController {
-	
+
 	@Autowired
 	CollectionService collectionService;
-	
-	@RequestMapping(value = "opt/list", method = RequestMethod.POST)
+
+	@RequestMapping(value = "list", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> list(HttpServletRequest request, @RequestBody Object json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
-		
+
 		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
-		
+
 		Page page = collectionService.list(client.getId(), 0, 10);
 		List<CollectionVo> vos = new ArrayList<CollectionVo>();
 		for (Object obj : page.getItems()) {
@@ -51,27 +51,27 @@ public class CollectionAction extends BaseController {
 			BeanUtilEx.copyProperties(vo, po.getProduct());
 			vos.add(vo);
 		}
-		
+
 		ret.put("data", vos);
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
 	}
-	
-	@RequestMapping(value = "opt/get", method = RequestMethod.POST)
+
+	@RequestMapping(value = "detail", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> get(HttpServletRequest request, @RequestBody Map<String, String> json) {
+	public Map<String, Object> detail(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
-		
+
 		String msgId = json.get("msgId");
-		
+
 		StrCollection po = (StrCollection) collectionService.get(StrCollection.class, msgId);
-		
+
 		CollectionVo vo = new CollectionVo();
 		BeanUtilEx.copyProperties(vo, po);
-		
+
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", vo);
-		
+
 		return ret;
 	}
 }

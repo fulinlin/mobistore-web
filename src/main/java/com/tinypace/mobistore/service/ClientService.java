@@ -1,9 +1,11 @@
 package com.tinypace.mobistore.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.tinypace.mobistore.entity.StrClient;
 import com.tinypace.mobistore.entity.StrCollection;
+import com.tinypace.mobistore.entity.StrMsg;
 import com.tinypace.mobistore.entity.SysVerifyCode;
 
 public interface ClientService extends CommonService {

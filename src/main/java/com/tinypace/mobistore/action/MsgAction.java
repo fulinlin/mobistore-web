@@ -30,17 +30,17 @@ import com.tinypace.mobistore.vo.ProductVo;
 @Controller
 @RequestMapping(Constant.API + "msg/")
 public class MsgAction extends BaseController {
-	
+
 	@Autowired
 	MsgService msgService;
-	
-	@RequestMapping(value = "opt/list", method = RequestMethod.POST)
+
+	@RequestMapping(value = "list", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> list(HttpServletRequest request, @RequestBody Object json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
-		
+
 		StrClient client = (StrClient) request.getAttribute(Constant.REQUEST_USER);
-		
+
 		Page page = msgService.list(client.getId(), 0, 10);
 		List<MsgVo> vos = new ArrayList<MsgVo>();
 		for (Object obj : page.getItems()) {
@@ -49,27 +49,27 @@ public class MsgAction extends BaseController {
 			BeanUtilEx.copyProperties(vo, po);
 			vos.add(vo);
 		}
-		
+
 		ret.put("data", vos);
 		ret.put("code", RespCode.SUCCESS.Code());
 		return ret;
 	}
-	
-	@RequestMapping(value = "opt/get", method = RequestMethod.POST)
+
+	@RequestMapping(value = "get", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> get(HttpServletRequest request, @RequestBody Map<String, String> json) {
 		Map<String, Object> ret = new HashMap<String, Object>();
-		
+
 		String msgId = json.get("msgId");
-		
+
 		StrMsg po = (StrMsg) msgService.get(StrMsg.class, msgId);
-		
+
 		MsgVo vo = new MsgVo();
 		BeanUtilEx.copyProperties(vo, po);
-		
+
 		ret.put("code", RespCode.SUCCESS.Code());
 		ret.put("data", vo);
-		
+
 		return ret;
 	}
 }

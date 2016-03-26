@@ -8,7 +8,7 @@ public class MsgVo {
 	private String title;
 	private String descr;
 	private Date sendTime;
-	
+
 	public String getId() {
 		return id;
 	}
